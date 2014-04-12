@@ -126,6 +126,10 @@
     <Compile Include="game_states\StatesIdList.cs" />
     <Compile Include="game_states\TestState.cs" />
     <Compile Include="KeyboardHelper.cs" />
+    <Compile Include="Modo Historinha\DateBase.cs" />
+    <Compile Include="Modo Historinha\Episodio01.cs" />
+    <Compile Include="Modo Historinha\Menu.cs" />
+    <Compile Include="Modo Historinha\ModoHistorinha.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
