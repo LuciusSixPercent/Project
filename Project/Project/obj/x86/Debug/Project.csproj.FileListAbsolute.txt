@@ -1,0 +1,11 @@
+C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\obj\x86\Debug\Project.csprojResolveAssemblyReference.cache
+C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Project.exe
+C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Project.pdb
+C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\obj\x86\Debug\Project.exe
+C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\obj\x86\Debug\Project.pdb
+C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\btn.xnb
+C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Verdana.xnb
+C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\character.xnb
+C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\floor.xnb
+C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\sky.xnb

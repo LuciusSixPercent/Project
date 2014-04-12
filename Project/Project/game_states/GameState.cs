@@ -1,0 +1,124 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Microsoft.Xna.Framework;
+using Project;
+using Microsoft.Xna.Framework.Graphics;
+
+namespace game_states
+{
+    public abstract class GameState
+    {
+        private int id;
+        protected Game1 parent;
+
+        private SpriteBatch spriteBatch;
+
+        protected bool initialized;
+
+        #region Transition
+        protected bool stateEntered;
+        protected bool enteringState;
+        protected bool exitingState;
+
+        protected int enterTransitionDuration;  //qual a duração total da transição de entrada no estado
+        protected int exitTransitionDuration;   //qual a duração total da transição de saida no estado
+        protected int transitionTime;           //quanto tempo a transição já durou
+
+        protected float alpha;
+        private float alphaIncrement;
+        #endregion
+
+        private bool freezeBelow; //determina se os estados abaixo dele devem ser atualizados também
+
+        public bool FreezeBelow
+        {
+            get { return freezeBelow; }
+        }
+        public int ID
+        {
+            get { return id; }
+        }
+
+        public bool Transitioning
+        {
+            get { return enteringState || exitingState; }
+        }
+
+        public SpriteBatch SpriteBatch
+        {
+            get { return spriteBatch; }
+        }
+
+        protected GameState(int id, Game1 parent)
+        {
+            this.id = id;
+            this.parent = parent;
+            this.stateEntered = false;
+            freezeBelow = true;
+        }
+
+        public virtual void EnterState()
+        {
+            enteringState = true;
+            alphaIncrement = (float)(1 - alpha) / enterTransitionDuration;
+        }
+
+        public virtual void EnterState(bool freezeBelow)
+        {
+            enteringState = true;
+            this.freezeBelow = freezeBelow;
+            alphaIncrement = (float)(1 - alpha) / enterTransitionDuration;
+        }
+
+        public virtual void ExitState()
+        {
+            exitingState = true;
+            alphaIncrement = (alpha-1) * (float)transitionTime / exitTransitionDuration;
+        }
+
+        protected bool tryEndTransition(GameTime gameTime, bool transitionFlag, bool result)
+        {
+            if (transitionEnded(gameTime))
+            {
+                stateEntered = result;
+                transitionTime = 0;
+                return false;
+            }
+            return true;
+        }
+
+        private bool transitionEnded(GameTime gameTime)
+        {
+            transitionTime += gameTime.ElapsedGameTime.Milliseconds;
+            return transitionTime >= (enteringState ? enterTransitionDuration : exitTransitionDuration);
+        }
+
+        public virtual void Update(GameTime gameTime)
+        {
+            if (enteringState)
+            {
+                enteringState = tryEndTransition(gameTime, enteringState, true);
+            }
+            else if (exitingState)
+            {
+                exitingState = tryEndTransition(gameTime, exitingState, false);
+            }
+            if (Transitioning)
+            {
+                alpha += alphaIncrement*gameTime.ElapsedGameTime.Milliseconds;
+                if (alpha < 0) alpha = 0;
+                else if (alpha > 1) alpha = 1;
+            }
+        }
+
+        protected virtual void Initialize()
+        {
+            initialized = true;
+            spriteBatch = new SpriteBatch(parent.GraphicsDevice);
+        }
+        protected abstract void LoadContent();
+        public abstract void Draw(GameTime gameTime);
+    }
+}
