@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework;
 using game_states;
 using Microsoft.Xna.Framework.Input;
 using Project;
+using Microsoft.Xna.Framework.Media;
 
 
 class Episodio01 : GameState
@@ -16,31 +17,31 @@ class Episodio01 : GameState
     #region Cena 01
     #region Dialogo 01
     string fala01 = "Era uma vez, em uma pequena cidade... Dois irmãos muito parecidos por serem gêmeos. O menino se chama Cosme, e o seu sonho é um dia se tornar um grande engenheiro.";
-    string fala02 = "E a menina se chama Maria. Seu sonho é lançar um livro\ncom muitas histórias, que farão mais pessoas sonharem com as maravilhas do mundo.";
+    string fala02 = "E a menina se chama Maria. Seu sonho é lançar um livro com muitas histórias, que farão mais pessoas sonharem com as maravilhas do mundo.";
     #endregion
     #region Exercicio 01 - Modo Historinha
-    string pergunta00 = "Cosme e Maria nasceram juntos, por isso os dois tem\na mesma idade: sete anos. Espera, qual dos dois números é o número sete?";
+    string pergunta00 = "Cosme e Maria nasceram juntos, por isso os dois tem a mesma idade: sete anos. Espera, qual dos dois números é o número sete?";
     string alternativa00 = "7";//certo
     string alternativa01 = "1";//errado
 
     #endregion
     #region Dialogo 02
-    string fala03 = "Muito bem! Apesar dos dois terem a mesma idade, Cosme gosta de dizer que ele é o irmão mais\nvelho porque ele é um pouquinho mais alto que Maria.";
-    string fala04 = "Por outro lado... Maria diz que é a mais velha porque ela precisa\ncuidar de Cosme toda vez que ele causa alguma confusão, como se fosse sua irmã mais velha!";
-    string fala05 = "Epa... Acho que entramos em um assunto delicado para os irmãos. Vamos falar de outra coisa.\nCosme e Maria tem alguns amigos que adoram jogar futebol!";
-    string fala06 = "Os dois são amigos muito queridos. A menina se chama Serafina.\nEla adora animais e tem um pequeno cachorro de estimação que adora levar para passear.";
-    string fala07 = "O menino se chama Apuã. Ele gosta de visitar Cosme e Maria\npara brincar, sempre vindo com uma brincadeira diferente!";
+    string fala03 = "Muito bem! Apesar dos dois terem a mesma idade, Cosme gosta de dizer que ele é o irmão mais velho porque ele é um pouquinho mais alto que Maria.";
+    string fala04 = "Por outro lado... Maria diz que é a mais velha porque ela precisa cuidar de Cosme toda vez que ele causa alguma confusão, como se fosse sua irmã mais velha!";
+    string fala05 = "Epa... Acho que entramos em um assunto delicado para os irmãos. Vamos falar de outra coisa. Cosme e Maria tem alguns amigos que adoram jogar futebol!";
+    string fala06 = "Os dois são amigos muito queridos. A menina se chama Serafina. Ela adora animais e tem um pequeno cachorro de estimação que adora levar para passear.";
+    string fala07 = "O menino se chama Apuã. Ele gosta de visitar Cosme e Maria para brincar, sempre vindo com uma brincadeira diferente!";
     #endregion
     #region Exercicio 02 - Modo Historinha
-    string pergunta10 = "Esses são os amigos que formam a turma de Cosme e Maria. A turma é composta por Cosme, Maria,\nApuã e Serafina. Quantas pessoas existem na turma?";
+    string pergunta10 = "Esses são os amigos que formam a turma de Cosme e Maria. A turma é composta por Cosme, Maria, Apuã e Serafina. Quantas pessoas existem na turma?";
     string alternativa02 = "4";//certo
     string alternativa03 = "2";//errado
     string alternativa10 = "3";//errado
 
     #endregion
     #region Dialogo 03
-    string fala08 = "Dessa vez, Apuã quer convidar todo mundo para brincar de futebol.\nUma partida entre duas equipes! Cosme e Maria contra Apuã e Serafina.";
-    string fala09 = "Para organizar as equipes, Cosme entregou um número para cada amigo. Maria ganhou o número 3;\n Apuã ganhou o número 1;Serafina ganhou o número 2; Cosme ganhou o número 4.";
+    string fala08 = "Dessa vez, Apuã quer convidar todo mundo para brincar de futebol. Uma partida entre duas equipes! Cosme e Maria contra Apuã e Serafina.";
+    string fala09 = "Para organizar as equipes, Cosme entregou um número para cada amigo. Maria ganhou o número 3;  Apuã ganhou o número 1;Serafina ganhou o número 2; Cosme ganhou o número 4.";
     #endregion
     #region Exercicio 03 - Modo Historinha
     string pergunta20 = "Qual a ordem certa que eles devem ficar para dividir os times?";
@@ -58,15 +59,15 @@ class Episodio01 : GameState
     string alternativa31 = "TimeB";
     #endregion
     #region Exercicio 05 - Modo Historinha
-    string pergunta40 = "Apuã está dizendo que Cosme, Serafina e ele joguem contra Maria. Mas os times de futebol\nsempre devem ter a mesma quantidade de pessoas! Quantas pessoas devem ficar em cada time?";
+    string pergunta40 = "Apuã está dizendo que Cosme, Serafina e ele joguem contra Maria. Mas os times de futebol sempre devem ter a mesma quantidade de pessoas! Quantas pessoas devem ficar em cada time?";
     string alternativa40 = "2";
     string alternativa41 = "3";
     string alternativa42 = "5";
     #endregion
     #region Dialogo 05
     string fala11 = "Maria percebe que Apuã estava tentando enganar a todos. Apuã pede desculpas e diz que estava apenas brincando.";
-    string fala12 = "Apuã treinou bastante algumas técnicas de futebol conhecidas como firulas.\nPassar a bola por entre as pernas do adversário; chutar a bola por cima... Dessa vez, Apuã diz que não perderá para os irmãos gêmeos!";
-    string fala13 = "Cosme não quer perder para Apuã! Cosme pede para Maria encontra-lo no campo de futebol que fica próximo ao rio.\nAntes que Maria possa respondê-lo, ele sai da casa, ansioso pela partida!";
+    string fala12 = "Apuã treinou bastante algumas técnicas de futebol conhecidas como firulas. Passar a bola por entre as pernas do adversário; chutar a bola por cima... Dessa vez, Apuã diz que não perderá para os irmãos gêmeos!";
+    string fala13 = "Cosme não quer perder para Apuã! Cosme pede para Maria encontra-lo no campo de futebol que fica próximo ao rio. Antes que Maria possa respondê-lo, ele sai da casa, ansioso pela partida!";
     string fala14 = "O que Maria não conseguiu falar para Cosme é que ela precisa buscar água no rio! Vamos rápido Maria, para que dê tempo de jogar futebol!";
     #endregion
     #endregion
@@ -108,8 +109,8 @@ class Episodio01 : GameState
     SpriteFont arial;
     Vector2 posicaoText;
     
-    int FalasPorSegundo = 5;
-    int ritimo = 5;
+    int FalasPorSegundo = 10;
+    int ritimo = 10;
     int mile;
     string texto = "";
     int indice = 0;
@@ -118,6 +119,11 @@ class Episodio01 : GameState
     int CaixaTexto;
     int zerar = 1;
     Color cor;
+    int selecionar = 0; //seleciona a musica
+    bool repetir = true;
+    //-------------------------------------------//
+    Song audio01, audio02, audio03;
+    List<Song> Album;
     #endregion
 
     // Desça o código até Initialize
@@ -150,6 +156,8 @@ class Episodio01 : GameState
             Exercicio05 = new ModoHistorinha(parent.Content, pergunta40, alternativa40, alternativa41, alternativa42, 1, arial, 3);
             enterTransitionDuration = 50;
             exitTransitionDuration = 50;
+            Album = new List<Song>() { audio01, audio02, audio03 };
+            
         }
     }
     public override void Update(GameTime tempo)
@@ -158,11 +166,21 @@ class Episodio01 : GameState
         {
 
             base.Update(tempo);
-
+            //MediaPlayer.IsRepeating = false;
+            if (repetir && selecionar < Album.Count)
+            {
+                MediaPlayer.Play(Album[selecionar]);
+                repetir = false;
+            }
+            if (Album[selecionar].Duration == MediaPlayer.PlayPosition && selecionar < Album.Count-1)
+            {
+                selecionar += selecionar < Album.Count ? 1 : 0;
+                repetir = true;
+            }
             if (stateEntered)
             {
                 CaixaTexto = (int)arial.MeasureString(texto).X * zerar;
-                if (CaixaTexto > 800)
+                if (CaixaTexto > 800 &&  texto[indice-1] == ' ')
                 {
                     texto += "\n";
                     zerar = 0;
@@ -191,13 +209,10 @@ class Episodio01 : GameState
     {
         SpriteBatch.Begin();
         cor = Color.White * alpha;
-        SpriteBatch.DrawString(arial, texto.Length.ToString(), new Vector2(200, 700), cor);
-        SpriteBatch.DrawString(arial, dialogo01[Incremento0].Length.ToString(), new Vector2(300, 700), cor);
+       
+        SpriteBatch.DrawString(arial, Segundos.ToString(), new Vector2(400, 700), cor);
         //*
-        if (texto.Length == 164)
-        {
-            Console.Beep();
-        }
+        
         #region Desenho
         if (!primeiro)
         {
@@ -216,6 +231,7 @@ class Episodio01 : GameState
 
                             Incremento0++;
                             indice = 0;
+                            zerar = 1;
                             texto = "";
                             FalasPorSegundo += ritimo;
                             if (Incremento0 == dialogo01.Length)
@@ -252,7 +268,7 @@ class Episodio01 : GameState
                 {
                     if (indice < dialogo02[Incremento1].Length) { texto += dialogo02[Incremento1][indice]; }
                     indice = indice + (indice < dialogo02[Incremento1].Length ? 1 : 0);
-                    if (texto.Length == dialogo02[Incremento1].Length)
+                    if (texto.Length == dialogo02[Incremento1].Length+1)
                     {
                         mile += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
                         Segundos = mile / 1000;
@@ -294,7 +310,7 @@ class Episodio01 : GameState
                 {
                     if (indice < dialogo03[Incremento2].Length) { texto += dialogo03[Incremento2][indice]; }
                     indice = indice + (indice < dialogo03[Incremento2].Length ? 1 : 0);
-                    if (texto.Length == dialogo03[Incremento2].Length)
+                    if (texto.Length == dialogo03[Incremento2].Length+1)
                     {
                         mile += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
                         Segundos = mile / 1000;
@@ -344,6 +360,9 @@ class Episodio01 : GameState
         if (!contentLoaded)
         {
             arial = parent.Content.Load<SpriteFont>("Fonte/Verdana");
+            audio01 = parent.Content.Load<Song>("Narrar/MH001");
+            audio02 = parent.Content.Load<Song>("Narrar/MH002");
+            audio03 = parent.Content.Load<Song>("Narrar/MH003");
             contentLoaded = true;
         }
 

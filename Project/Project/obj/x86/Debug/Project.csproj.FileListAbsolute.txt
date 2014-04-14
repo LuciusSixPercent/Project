@@ -41,3 +41,17 @@ C:\Users\Lucas\Documents\Unicef\Project\Project\Project\obj\x86\Debug\Project.cs
 C:\Users\Lucas\Documents\Unicef\Project\Project\Project\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 C:\Users\Lucas\Documents\Unicef\Project\Project\Project\obj\x86\Debug\Project.exe
 C:\Users\Lucas\Documents\Unicef\Project\Project\Project\obj\x86\Debug\Project.pdb
+C:\Users\Lucas\Documents\Unicef\Project\Project\Project\bin\x86\Debug\Content\Narrar\MH001.xnb
+C:\Users\Lucas\Documents\Unicef\Project\Project\Project\bin\x86\Debug\Content\Narrar\MH002.xnb
+C:\Users\Lucas\Documents\Unicef\Project\Project\Project\bin\x86\Debug\Content\Narrar\MH003.xnb
+C:\Users\Lucas\Documents\Unicef\Project\Project\Project\bin\x86\Debug\Content\Narrar\MH004.xnb
+C:\Users\Lucas\Documents\Unicef\Project\Project\Project\bin\x86\Debug\Content\Narrar\MH005.xnb
+C:\Users\Lucas\Documents\Unicef\Project\Project\Project\bin\x86\Debug\Content\Narrar\MH006.xnb
+C:\Users\Lucas\Documents\Unicef\Project\Project\Project\bin\x86\Debug\Content\Narrar\MH007.xnb
+C:\Users\Lucas\Documents\Unicef\Project\Project\Project\bin\x86\Debug\Content\Narrar\MH001.wma
+C:\Users\Lucas\Documents\Unicef\Project\Project\Project\bin\x86\Debug\Content\Narrar\MH002.wma
+C:\Users\Lucas\Documents\Unicef\Project\Project\Project\bin\x86\Debug\Content\Narrar\MH003.wma
+C:\Users\Lucas\Documents\Unicef\Project\Project\Project\bin\x86\Debug\Content\Narrar\MH004.wma
+C:\Users\Lucas\Documents\Unicef\Project\Project\Project\bin\x86\Debug\Content\Narrar\MH005.wma
+C:\Users\Lucas\Documents\Unicef\Project\Project\Project\bin\x86\Debug\Content\Narrar\MH006.wma
+C:\Users\Lucas\Documents\Unicef\Project\Project\Project\bin\x86\Debug\Content\Narrar\MH007.wma

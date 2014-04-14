@@ -24,6 +24,8 @@ class ModoHistorinha : DateBase
     bool seq = false;
     int indice = 0;
     string texto = "";
+    int CaixaTexto = 0;
+    int zerar = 1;
     #endregion
     //teste
     bool venceu = false;
@@ -112,6 +114,13 @@ class ModoHistorinha : DateBase
         if (i == 1)
         {
             //MediaPlayer.Play(narrador);
+        }
+        CaixaTexto = (int)arial.MeasureString(texto).X * zerar;
+        if (CaixaTexto > 800 && texto[indice - 1] == ' ')
+        {
+            texto += "\n";
+            zerar = 0;
+
         }
         mouse = Mouse.GetState();
         if (!primeiroclique && seq)
