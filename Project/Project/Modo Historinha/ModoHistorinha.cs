@@ -22,6 +22,8 @@ class ModoHistorinha : DateBase
     bool terceiroclique = false;
     bool quartoclique = false;
     bool seq = false;
+    int indice = 0;
+    string texto = "";
     #endregion
     //teste
     bool venceu = false;
@@ -97,6 +99,12 @@ class ModoHistorinha : DateBase
         Calt1 = Color.White;
         Calt2 = Color.White;
         Calt3 = Color.White;
+        switch (episodio)
+        {
+            case 1:
+                EP1();
+                break;
+        }
     }
     public void Atualizar()
     {
@@ -106,19 +114,19 @@ class ModoHistorinha : DateBase
             //MediaPlayer.Play(narrador);
         }
         mouse = Mouse.GetState();
-        if (!primeiroclique)
+        if (!primeiroclique && seq)
         {
             Calt1 = Color.White;
         }
-        if (!segundoclique)
+        if (!segundoclique && seq)
         {
             Calt2 = Color.White;
         }
-        if (!terceiroclique)
+        if (!terceiroclique && seq)
         {
             Calt0 = Color.White;
         }
-        if (!quartoclique)
+        if (!quartoclique && seq)
         {
             Calt3 = Color.White;
         }
@@ -283,7 +291,9 @@ class ModoHistorinha : DateBase
     {
         //spriteBatch.Draw(TelaDeFundo, VTelaFundo, Color.White);
         //spriteBatch.Draw(PersonagemEmCena, VPersonagens, Color.White);
-        spriteBatch.DrawString(arial, pergunta, Vpergunta, Color.Red);
+        if (indice < pergunta.Length) { texto += pergunta[indice]; }
+        indice = indice + (indice < pergunta.Length ? 1 : 0);
+        spriteBatch.DrawString(arial, texto, Vpergunta, Color.Red);
         for (int respotas = 0; respotas < NoDeRespostas; respotas++)
         {
             spriteBatch.Draw(OpcoeSprite, respotas == 3 ? VOpcoes4 : respotas == 2 ? VOpcoes3 : respotas == 1 ? VOpcoes2 : VOpcoes1, respotas == 3 ? Calt3 : respotas == 2 ? Calt2 : respotas == 1 ? Calt1 : Calt0);

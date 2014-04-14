@@ -15,7 +15,7 @@ class Episodio01 : GameState
 {
     #region Cena 01
     #region Dialogo 01
-    string fala01 = "Era uma vez, em uma pequena cidade... Dois irmãos muito parecidos por serem gêmeos.\n O menino se chama Cosme, e o seu sonho é um dia se tornar um grande engenheiro.";
+    string fala01 = "Era uma vez, em uma pequena cidade... Dois irmãos muito parecidos por serem gêmeos. O menino se chama Cosme, e o seu sonho é um dia se tornar um grande engenheiro.";
     string fala02 = "E a menina se chama Maria. Seu sonho é lançar um livro\ncom muitas histórias, que farão mais pessoas sonharem com as maravilhas do mundo.";
     #endregion
     #region Exercicio 01 - Modo Historinha
@@ -40,7 +40,7 @@ class Episodio01 : GameState
     #endregion
     #region Dialogo 03
     string fala08 = "Dessa vez, Apuã quer convidar todo mundo para brincar de futebol.\nUma partida entre duas equipes! Cosme e Maria contra Apuã e Serafina.";
-    string fala09 = "Para organizar as equipes, Cosme entregou um número para cada amigo. Maria ganhou o número 3; Apuã ganhou o número 1;\nSerafina ganhou o número 2; Cosme ganhou o número 4.";
+    string fala09 = "Para organizar as equipes, Cosme entregou um número para cada amigo. Maria ganhou o número 3;\n Apuã ganhou o número 1;Serafina ganhou o número 2; Cosme ganhou o número 4.";
     #endregion
     #region Exercicio 03 - Modo Historinha
     string pergunta20 = "Qual a ordem certa que eles devem ficar para dividir os times?";
@@ -115,6 +115,9 @@ class Episodio01 : GameState
     int indice = 0;
     bool pauseFlag;
     private bool contentLoaded;
+    int CaixaTexto;
+    int zerar = 1;
+    Color cor;
     #endregion
 
     // Desça o código até Initialize
@@ -131,6 +134,7 @@ class Episodio01 : GameState
         if (!initialized)
         {
             base.Initialize();
+            LoadContent();
             //Aqui você muda a posição do texto;
             //spriteBatch = new spriteBatch(parent.GraphicsDevice);
             posicaoText = new Vector2(20, 600);
@@ -140,20 +144,30 @@ class Episodio01 : GameState
             dialogo04 = fala10;
             dialogo05 = new string[4] { fala11, fala12, fala13, fala14 };
             Exercicio01 = new ModoHistorinha(parent.Content, pergunta00, alternativa00, alternativa01, 1, arial, 2);
-            Exercicio02 = new ModoHistorinha(parent.Content, pergunta10, alternativa03, alternativa02, alternativa10, 1, arial, 3);
+            Exercicio02 = new ModoHistorinha(parent.Content, pergunta10, alternativa02, alternativa03, alternativa10, 1, arial, 3);
             Exercicio03 = new ModoHistorinha(parent.Content, pergunta20, alternativa20, alternativa21, alternativa22, alternativa23, 1, arial, 4, true);
             Exercicio04 = new ModoHistorinha(parent.Content, pergunta30, alternativa30, alternativa31, 1, arial, 2);
             Exercicio05 = new ModoHistorinha(parent.Content, pergunta40, alternativa40, alternativa41, alternativa42, 1, arial, 3);
-            
+            enterTransitionDuration = 50;
+            exitTransitionDuration = 50;
         }
     }
     public override void Update(GameTime tempo)
     {
         if (!pauseFlag)
         {
+
             base.Update(tempo);
+
             if (stateEntered)
             {
+                CaixaTexto = (int)arial.MeasureString(texto).X * zerar;
+                if (CaixaTexto > 800)
+                {
+                    texto += "\n";
+                    zerar = 0;
+                    
+                }
                 if (KeyboardHelper.IsKeyDown(Keys.Escape))
                 {
                     KeyboardHelper.LockKey(Keys.Escape);
@@ -176,36 +190,46 @@ class Episodio01 : GameState
     public override void Draw(GameTime gameTime)
     {
         SpriteBatch.Begin();
-
-        SpriteBatch.DrawString(arial, Segundos.ToString(), new Vector2(200, 700), Color.White);
+        cor = Color.White * alpha;
+        SpriteBatch.DrawString(arial, texto.Length.ToString(), new Vector2(200, 700), cor);
+        SpriteBatch.DrawString(arial, dialogo01[Incremento0].Length.ToString(), new Vector2(300, 700), cor);
+        //*
+        if (texto.Length == 164)
+        {
+            Console.Beep();
+        }
         #region Desenho
         if (!primeiro)
         {
             if (!parte1)
             {
-                if (indice < dialogo01[Incremento0].Length) { texto += dialogo01[Incremento0][indice]; }
-                indice = indice + (indice < dialogo01[Incremento0].Length ? 1 : 0);
-                SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
-
-
-                if (texto.Length == dialogo01[Incremento0].Length)
+                if (!pauseFlag)
                 {
-                    mile += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
-                    Segundos = mile / 1000;
-                    if (Segundos != 0 && Segundos % FalasPorSegundo == 0)
+                    if (indice < dialogo01[Incremento0].Length) { texto += dialogo01[Incremento0][indice]; }
+                    indice = indice + (indice < dialogo01[Incremento0].Length ? 1 : 0);
+                    if (texto.Length == dialogo01[Incremento0].Length +1)
                     {
-
-                        Incremento0++;
-                        indice = 0;
-                        texto = "";
-                        FalasPorSegundo += ritimo;
-                        if (Incremento0 == dialogo01.Length)
+                        mile += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
+                        Segundos = mile / 1000;
+                        if (Segundos != 0 && Segundos % FalasPorSegundo == 0)
                         {
-                            parte1 = true;
 
+                            Incremento0++;
+                            indice = 0;
+                            texto = "";
+                            FalasPorSegundo += ritimo;
+                            if (Incremento0 == dialogo01.Length)
+                            {
+                                parte1 = true;
+
+                            }
                         }
                     }
                 }
+                SpriteBatch.DrawString(arial, texto, posicaoText, cor);
+
+
+               
             }
 
             if (parte1 && !exercicio1)
@@ -224,28 +248,32 @@ class Episodio01 : GameState
         {
             if (!parte2)
             {
-                if (indice < dialogo02[Incremento1].Length) { texto += dialogo02[Incremento1][indice]; }
-                indice = indice + (indice < dialogo02[Incremento1].Length ? 1 : 0);
-                SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
-                if (texto.Length == dialogo02[Incremento1].Length)
+                if (!pauseFlag)
                 {
-                    mile += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
-                    Segundos = mile / 1000;
-                    if (Segundos != 0 && Segundos % FalasPorSegundo == 0)
+                    if (indice < dialogo02[Incremento1].Length) { texto += dialogo02[Incremento1][indice]; }
+                    indice = indice + (indice < dialogo02[Incremento1].Length ? 1 : 0);
+                    if (texto.Length == dialogo02[Incremento1].Length)
                     {
-
-                        Incremento1++;
-                        indice = 0;
-                        texto = "";
-                        FalasPorSegundo += ritimo;
-                        if (Incremento1 == dialogo02.Length)
+                        mile += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
+                        Segundos = mile / 1000;
+                        if (Segundos != 0 && Segundos % FalasPorSegundo == 0)
                         {
-                            parte2 = true;
 
+                            Incremento1++;
+                            indice = 0;
+                            texto = "";
+                            FalasPorSegundo += ritimo;
+                            if (Incremento1 == dialogo02.Length)
+                            {
+                                parte2 = true;
+
+                            }
                         }
-                    }
 
+                    }
                 }
+                SpriteBatch.DrawString(arial, texto, posicaoText, cor);
+                
             }
             if (!exercicio2 && parte2)
             {
@@ -262,27 +290,31 @@ class Episodio01 : GameState
         {
             if (!parte3)
             {
-                if (indice < dialogo03[Incremento2].Length) { texto += dialogo03[Incremento2][indice]; }
-                indice = indice + (indice < dialogo03[Incremento2].Length ? 1 : 0);
-                SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
-                if (texto.Length == dialogo03[Incremento2].Length)
+                if (!pauseFlag)
                 {
-                    mile += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
-                    Segundos = mile / 1000;
-                    if (Segundos != 0 && Segundos % FalasPorSegundo == 0)
+                    if (indice < dialogo03[Incremento2].Length) { texto += dialogo03[Incremento2][indice]; }
+                    indice = indice + (indice < dialogo03[Incremento2].Length ? 1 : 0);
+                    if (texto.Length == dialogo03[Incremento2].Length)
                     {
-
-                        Incremento2++;
-                        indice = 0;
-                        texto = "";
-                        FalasPorSegundo += ritimo;
-                        if (Incremento1 == dialogo03.Length)
+                        mile += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
+                        Segundos = mile / 1000;
+                        if (Segundos != 0 && Segundos % FalasPorSegundo == 0)
                         {
-                            parte3 = true;
 
+                            Incremento2++;
+                            indice = 0;
+                            texto = "";
+                            FalasPorSegundo += ritimo;
+                            if (Incremento2 == dialogo03.Length)
+                            {
+                                parte3 = true;
+
+                            }
                         }
                     }
                 }
+                SpriteBatch.DrawString(arial, texto, posicaoText, cor);
+                
             }
             if (parte3 && !exercicio3)
             {
@@ -297,14 +329,14 @@ class Episodio01 : GameState
         }
         if (primeiro && segundo && terceiro)
         {
-            SpriteBatch.DrawString(arial, "Fim da Demo", posicaoText, Color.White);
+            SpriteBatch.DrawString(arial, "Fim da Demo", posicaoText, cor);
             if ((int)Segundos % FalasPorSegundo == 0 && (int)Segundos > 0)
             {
 
             }
         }
         #endregion
-
+        //*/
         SpriteBatch.End();
     }
     protected override void LoadContent()
@@ -341,6 +373,7 @@ class Episodio01 : GameState
         }
     }
     #endregion
+    
 
 
 }

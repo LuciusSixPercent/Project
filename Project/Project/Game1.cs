@@ -31,6 +31,8 @@ namespace Project
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            graphics.PreferredBackBufferHeight = 768;
+            graphics.PreferredBackBufferWidth = 1024;
         }
 
         protected override void Initialize()
