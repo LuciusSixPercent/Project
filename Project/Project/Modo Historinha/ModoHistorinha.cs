@@ -16,7 +16,14 @@ class ModoHistorinha : DateBase
     Color Calt0, Calt1, Calt2, Calt3;
     SpriteFont arial;
     int NoDeRespostas;
-    
+    #region Sequencia
+    bool primeiroclique = false;
+    bool segundoclique = false;
+    bool terceiroclique = false;
+    bool quartoclique = false;
+    bool seq = false;
+    #endregion
+    //teste
     bool venceu = false;
     public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, string alt2, string alt3, int episodio, SpriteFont a, int n)
         : base(c)
@@ -75,6 +82,22 @@ class ModoHistorinha : DateBase
                 break;
         }
     }
+    public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, string alt2, string alt3, int episodio, SpriteFont a, int n, bool sequencia)
+        : base(c)
+    {
+        seq = sequencia;
+        NoDeRespostas = n;
+        arial = a;
+        pergunta = perguntaz;
+        res1 = alt0;
+        res2 = alt1;
+        res3 = alt2;
+        res4 = alt3;
+        Calt0 = Color.White;
+        Calt1 = Color.White;
+        Calt2 = Color.White;
+        Calt3 = Color.White;
+    }
     public void Atualizar()
     {
         i = i + (i <= 1 ? 1 : 0);
@@ -83,7 +106,26 @@ class ModoHistorinha : DateBase
             //MediaPlayer.Play(narrador);
         }
         mouse = Mouse.GetState();
-        
+        if (!primeiroclique)
+        {
+            Calt1 = Color.White;
+        }
+        if (!segundoclique)
+        {
+            Calt2 = Color.White;
+        }
+        if (!terceiroclique)
+        {
+            Calt0 = Color.White;
+        }
+        if (!quartoclique)
+        {
+            Calt3 = Color.White;
+        }
+        if (primeiroclique && segundoclique && terceiroclique && quartoclique)
+        {
+            venceu = true;
+        }
         Click(mouse);
     }
     public void Click(MouseState mouse)
@@ -92,19 +134,85 @@ class ModoHistorinha : DateBase
         {
             if ((mouse.X > VOpcoes1.X && mouse.X < VOpcoes1.X + OpcoeSprite.Width) && (mouse.Y >= VOpcoes1.Y && mouse.Y <= VOpcoes1.Y + OpcoeSprite.Height))
             {
-                venceu = true;
+                if (!seq)
+                {
+                    venceu = true;
+                }
+                else
+                {
+                    if (primeiroclique && segundoclique)
+                    {
+                        terceiroclique = true;
+                        Calt0 = Color.Transparent;
+                    }
+                    else
+                    {
+                        primeiroclique = false;
+                        segundoclique = false;
+                        terceiroclique = false;
+                        
+                    }
+                }
+                
             }
             if ((mouse.X > VOpcoes2.X && mouse.X < VOpcoes2.X + OpcoeSprite.Width) && (mouse.Y >= VOpcoes2.Y && mouse.Y <= VOpcoes2.Y + OpcoeSprite.Height))
             {
-                Calt1 = Color.Transparent;
+
+                
+                if (!seq)
+                {
+                    Calt1 = Color.Transparent;
+                }
+                else
+                {
+                    primeiroclique = true;
+                    Calt1 = Color.Transparent;
+                }
             }
             if ((mouse.X > VOpcoes3.X && mouse.X < VOpcoes3.X + OpcoeSprite.Width) && (mouse.Y >= VOpcoes3.Y && mouse.Y <= VOpcoes3.Y + OpcoeSprite.Height))
             {
-                Calt2 = Color.Transparent;
+                
+                if (!seq)
+                {
+                    Calt2 = Color.Transparent;
+                }
+                else
+                {
+                    if (primeiroclique)
+                    {
+                        segundoclique = true;
+                        Calt2 = Color.Transparent;
+                    }
+                    else
+                    {
+                        primeiroclique = false;
+                        segundoclique = false;
+                        
+                    }
+                }
             }
             if ((mouse.X > VOpcoes4.X && mouse.X < VOpcoes4.X + OpcoeSprite.Width) && (mouse.Y >= VOpcoes4.Y && mouse.Y <= VOpcoes4.Y + OpcoeSprite.Height))
             {
-                Calt3 = Color.Transparent;
+                
+                if (!seq)
+                {
+                    Calt3 = Color.Transparent;
+                }
+                else
+                {
+                    if (primeiroclique && segundoclique && terceiroclique)
+                    {
+                        quartoclique = true;
+                        Calt3 = Color.Transparent;
+                    }
+                    else
+                    {
+                        primeiroclique = false;
+                        segundoclique = false;
+                        terceiroclique = false;
+                    }
+                }
+
             }
 
         }

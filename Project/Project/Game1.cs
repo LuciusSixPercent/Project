@@ -47,10 +47,12 @@ namespace Project
             states.Add(ts.ID, ts);
             enterState(ts.ID);
             */
-
-            RunnerState rs = new RunnerState((int)StatesIdList.RUNNER, this);
-            states.Add(rs.ID, rs);
-            EnterState(rs.ID);
+            Episodio01 md = new Episodio01((int)StatesIdList.STORY, this);
+            states.Add(md.ID, md);
+            EnterState(md.ID);
+            //RunnerState rs = new RunnerState((int)StatesIdList.RUNNER, this);
+            //states.Add(rs.ID, rs);
+            //EnterState(rs.ID);
 
             PauseState ps = new PauseState((int)StatesIdList.PAUSE, this);
             states.Add(ps.ID, ps);
@@ -142,7 +144,7 @@ namespace Project
         }
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(Color.Blue);
             int stateIndex = statesStack.Count - 1;
             bool foundBottommostState = false;
             while (stateIndex < statesStack.Count)

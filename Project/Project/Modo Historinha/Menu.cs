@@ -7,7 +7,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using game_states;
-using Projeto_Historinha;
+using Project;
+
 
 namespace Projeto_Historinha
 {

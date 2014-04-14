@@ -1,5 +1,26 @@
 Content\btn.xnb
-Content\Verdana.xnb
 Content\character.xnb
-Content\sky.xnb
 Content\floor.xnb
+Content\sky.xnb
+Content\Menu\Abertura.xnb
+Content\Menu\BB.xnb
+Content\Menu\CdA.xnb
+Content\Menu\Config.xnb
+Content\Menu\Cre.xnb
+Content\Menu\MH.xnb
+Content\Menu\Sair.xnb
+Content\Menu\Seta.xnb
+Content\Imagem\Sprites\op.xnb
+Content\Imagem\Personagem\Maria.xnb
+Content\Imagem\Cenario\Cena01.xnb
+Content\Verdana.xnb
+Content\Fonte\Arial.xnb
+Content\Fonte\Verdana.xnb
+Content\Audio\N0000.xnb
+Content\Audio\N0000.wma
+Content\Audio\N0001.xnb
+Content\Audio\N0001.wma
+Content\Audio\N0002.xnb
+Content\Audio\N0002.wma
+Content\Audio\Perfect World.xnb
+Content\Audio\Perfect World.wma
