@@ -33,6 +33,8 @@ namespace Project
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferHeight = 768;
             graphics.PreferredBackBufferWidth = 1024;
+            graphics.PreferMultiSampling = true;
+            graphics.ApplyChanges();
         }
 
         protected override void Initialize()
@@ -44,17 +46,13 @@ namespace Project
             spriteBatch = new SpriteBatch(graphics.GraphicsDevice);
             states = new Dictionary<int, GameState>();
             statesStack = new List<GameState>();
-            /*
-            TestState ts = new TestState((int)StatesIdList.TEST, this);
-            states.Add(ts.ID, ts);
-            enterState(ts.ID);
-            */
+
             Episodio01 md = new Episodio01((int)StatesIdList.STORY, this);
             states.Add(md.ID, md);
-            EnterState(md.ID);
-            //RunnerState rs = new RunnerState((int)StatesIdList.RUNNER, this);
-            //states.Add(rs.ID, rs);
-            //EnterState(rs.ID);
+
+            RunnerState rs = new RunnerState((int)StatesIdList.RUNNER, this);
+            states.Add(rs.ID, rs);
+            EnterState(rs.ID);
 
             PauseState ps = new PauseState((int)StatesIdList.PAUSE, this);
             states.Add(ps.ID, ps);
@@ -90,7 +88,7 @@ namespace Project
         public void ExitState(int id)
         {
             //confirmamos que o ID passado bate com o ID do estado no topo de nossa pseudo pilha
-            if (statesStack[states.Count - 1].ID == id)
+            if (statesStack[statesStack.Count - 1].ID == id)
             {
                 statesStack.RemoveAt(statesStack.Count - 1);
                 if (statesStack.Count > 0)
@@ -122,52 +120,45 @@ namespace Project
         //Dessa forma podemos ter multiplos estados ativos simultaneamente se assim for necessário
         protected override void Update(GameTime gameTime)
         {
-            int stateIndex = statesStack.Count - 1;
-            bool foundBottommostState = false;
-            while (stateIndex < statesStack.Count)
-            {
-                if (statesStack[stateIndex].FreezeBelow == true)
-                {
-                    foundBottommostState = true;
-                }
-
-                if (foundBottommostState)
-                {
-                    statesStack[stateIndex].Update(gameTime);
-                    stateIndex++;
-                }
-                else
-                {
-                    stateIndex--;
-                }
-            }
-
+            UpdateOrDraw(gameTime, false);
             base.Update(gameTime);
         }
+
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Blue);
-            int stateIndex = statesStack.Count - 1;
-            bool foundBottommostState = false;
-            while (stateIndex < statesStack.Count)
-            {
-                if (statesStack[stateIndex].FreezeBelow == true)
-                {
-                    foundBottommostState = true;
-                }
-
-                if (foundBottommostState)
-                {
-                    statesStack[stateIndex].Draw(gameTime);
-                    stateIndex++;
-                }
-                else
-                {
-                    stateIndex--;
-                }
-            }
+            GraphicsDevice.Clear(Color.Black);
+            UpdateOrDraw(gameTime, true);
             base.Draw(gameTime);
         }
 
+        private void UpdateOrDraw(GameTime gameTime, bool methodFlag)
+        {
+            int stateIndex = statesStack.Count - 1;
+            bool foundBottommostState = false;
+            while (stateIndex < statesStack.Count)
+            {
+                if (statesStack[stateIndex].FreezeBelow == true)
+                {
+                    foundBottommostState = true;
+                }
+
+                if (foundBottommostState)
+                {
+                    if (methodFlag)
+                    {
+                        statesStack[stateIndex].Draw(gameTime);
+                    }
+                    else
+                    {
+                        statesStack[stateIndex].Update(gameTime);
+                    }
+                    stateIndex++;
+                }
+                else
+                {
+                    stateIndex--;
+                }
+            }
+        }
     }
 }

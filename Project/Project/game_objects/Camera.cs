@@ -9,13 +9,19 @@ namespace game_objects
 {
     public class Camera : GameObject
     {
-        private Vector3 position;
         private Vector3 target;
         private Vector3 up;
         private Vector2 clip;
         private Matrix view;
         private Matrix projection;
         private float fieldOfView;
+        private bool lockRotation;
+
+        public bool LockRotation
+        {
+            get { return lockRotation; }
+            set { lockRotation = value; }
+        }
 
         public Vector3 Target
         {
@@ -56,26 +62,27 @@ namespace game_objects
             get { return position.Z; }
         }
 
-        public Camera(Vector3 position, Vector3 up, Vector2 clip) : base()
+        public Camera(Vector3 position, Vector3 up, Vector2 clip)
+            : base()
         {
             this.position = position;
             this.up = up;
             this.clip = clip;
-            lookAt(Vector3.Zero);
-            ConstantMovementComponent cmc = new ConstantMovementComponent(new Vector3(0, 0, 0.1f), 10);
-            cmc.moved += new MovementComponent.Moved(cmc_moved);
+            lookAt(Vector3.Zero, true);
+            ConstantMovementComponent cmc = new ConstantMovementComponent(this, new Vector3(0, 0, 0.1f), 10);
             addComponent(cmc);
         }
 
         void cmc_moved(Vector3 amount)
         {
-            move(amount);
+            Translate(amount);
             moveTarget(amount);
         }
 
-        public void lookAt(Vector3 target)
+        public void lookAt(Vector3 target, bool lockRotation)
         {
             this.target = target;
+            this.lockRotation = lockRotation;
             view = Matrix.CreateLookAt(position, target, up);
         }
 
@@ -85,9 +92,11 @@ namespace game_objects
             projection = Matrix.CreatePerspectiveFieldOfView(fieldOfView, aspectRatio, clip.X, clip.Y);
         }
 
-        public void move(Vector3 amount)
+        public override void Translate(Vector3 amount)
         {
-            position += amount;
+            base.Translate(amount);
+            if (lockRotation)
+                moveTarget(amount);
         }
 
         public void moveTarget(Vector3 amount)
@@ -97,8 +106,11 @@ namespace game_objects
 
         public void Rotate(Matrix rotation)
         {
-            view *= rotation;
-            projection *= rotation;
+            if (!lockRotation)
+            {
+                view *= rotation;
+                projection *= rotation;
+            }
         }
 
         public override void Update(GameTime gameTime)
@@ -106,7 +118,7 @@ namespace game_objects
             Vector3 pos = position;
             base.Update(gameTime);
             if (pos != position)
-                lookAt(target);
+                lookAt(target, true);
         }
     }
 }

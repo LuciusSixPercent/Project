@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using game_objects;
 
 namespace components
 {
@@ -10,7 +11,8 @@ namespace components
     {
         private Vector3 constantMovementVector;
 
-        public ConstantMovementComponent(Vector3 movementVector, int interval) : base (interval)
+        public ConstantMovementComponent(GameObject owner, Vector3 movementVector, int interval)
+            : base(owner, interval)
         {
             constantMovementVector = movementVector;
         }
@@ -22,7 +24,7 @@ namespace components
             {
                 elapsed = 0;
                 base.move(constantMovementVector);
-            }            
+            }
         }
     }
 }

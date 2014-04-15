@@ -4,63 +4,95 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Project;
+using game_objects;
 
 namespace components
 {
     public class PlayerMovementComponent : MovementComponent
     {
-        private Keys lastPressedKey;
+        private float movementAmount;
         private float stepSize;
+        private int direction;
+        private float origin;
+        private float relativeOrigin;
+        private float destiny;
 
-        public PlayerMovementComponent(int keyRepeatInterval, float stepSize)
-            : base(keyRepeatInterval)
+        public PlayerMovementComponent(GameObject owner, int stepInterval, float stepSize, float movementAmount)
+            : base(owner, stepInterval)
         {
-            lastPressedKey = Keys.None;
+            this.movementAmount = movementAmount;
             this.stepSize = stepSize;
-            elapsed = movementInterval;
+            this.elapsed = stepInterval;
+            direction = 0;
+            origin = owner.Position.X;
+            relativeOrigin = origin;
+            destiny = origin;
         }
 
         public override void Update(GameTime gameTime)
         {
             elapsed += gameTime.ElapsedGameTime.Milliseconds;
-
-            KeyboardState ks = Keyboard.GetState();
-
-            Vector3 amount = Vector3.Zero;
-
-            int count = 0;
-            if (ks.GetPressedKeys().Contains(Keys.Left))
-            {
-                amount.X+=stepSize;
-                if (lastPressedKey != Keys.Left)
-                {
-                    lastPressedKey = Keys.Left;
-                }
-                count++;
-            }
-            if (ks.GetPressedKeys().Contains(Keys.Right))
-            {
-                amount.X -= stepSize;
-                if (lastPressedKey != Keys.Right)
-                {
-                    lastPressedKey = Keys.Right;
-                }
-                count++;
-            }
-
-            if (count == 0)
-            {
-                lastPressedKey = Keys.None;
-                elapsed = movementInterval;
-            }
-
-            if (elapsed >= movementInterval && lastPressedKey != Keys.None)
+            if (elapsed > movementInterval)
             {
                 elapsed = 0;
 
-                if (amount.X != 0)
-                    move(amount);                
+                int newDirection = getPressedKey();
+
+                //Se uma nova tecla foi pressionada, alterar a direção
+                if (newDirection != 0 && newDirection != direction)
+                {
+                    direction = newDirection;
+                    if (destiny == origin)
+                    {
+                        //relativeOrigin = owner.Position.X;
+                        destiny = owner.Position.X + movementAmount * direction;
+                    }
+                    else
+                    {
+                        //lógica falha aqui (origin vira valor quebrado ao inverter a direção a meio caminho e, quando inverte novamente, destiny se perde)
+                        float tmp = destiny;
+                        destiny = origin;
+                        origin = tmp;
+                        //relativeOrigin = owner.Position.X;
+                    }
+                }
+
+                if (direction != 0)
+                {
+                    Vector3 amount = Vector3.Zero;
+                    float actualStepSize = stepSize * direction;
+
+                    float newX = owner.Position.X + actualStepSize;
+                    if ((direction == 1 && newX > destiny) || (direction == -1 && newX < destiny))
+                    {
+                        float absX = Math.Abs(newX);
+                        float absDestiny = Math.Abs(destiny);
+                        actualStepSize += (absX - absDestiny) * (direction * -1);
+                    }
+
+                    Vector3 ownerPos = owner.Position;
+                    amount.X += actualStepSize;
+                    base.move(amount);
+                    if (ownerPos.Equals(owner.Position))
+                    {
+                        direction = 0;
+                        origin = destiny;
+                        actualStepSize = 0;
+                    }
+                }
             }
+        }
+
+        private int getPressedKey()
+        {
+            int dir = 0;
+            if (KeyboardHelper.IsKeyDown(Keys.Left))
+                dir++;
+            if (KeyboardHelper.IsKeyDown(Keys.Right))
+                dir--;
+
+            return dir;
         }
 
     }

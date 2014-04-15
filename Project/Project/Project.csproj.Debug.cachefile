@@ -1,7 +1,5 @@
 Content\btn.xnb
-Content\character.xnb
 Content\floor.xnb
-Content\sky.xnb
 Content\Menu\Abertura.xnb
 Content\Menu\BB.xnb
 Content\Menu\CdA.xnb
@@ -11,9 +9,7 @@ Content\Menu\MH.xnb
 Content\Menu\Sair.xnb
 Content\Menu\Seta.xnb
 Content\Imagem\Sprites\op.xnb
-Content\Imagem\Personagem\Maria.xnb
 Content\Imagem\Cenario\Cena01.xnb
-Content\Verdana.xnb
 Content\Fonte\Arial.xnb
 Content\Fonte\Verdana.xnb
 Content\Audio\N0000.xnb
@@ -27,6 +23,9 @@ Content\Narrar\MH004.xnb
 Content\Narrar\MH005.xnb
 Content\Narrar\MH006.xnb
 Content\Narrar\MH007.xnb
+Content\Imagem\Cenario\sky.xnb
+Content\Imagem\Cenario\grass.xnb
+Content\Imagem\Personagem\Maria.xnb
 Content\Audio\N0000.wma
 Content\Audio\N0001.wma
 Content\Audio\N0002.wma

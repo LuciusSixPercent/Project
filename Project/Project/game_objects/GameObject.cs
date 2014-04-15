@@ -11,9 +11,23 @@ namespace game_objects
     {
         private List<Component> components;
 
+        protected Vector3 position;
+
+        public virtual Vector3 Position
+        {
+            get { return position; }
+            set { position = value; }
+        }
+
+        public virtual void Translate(Vector3 amount)
+        {
+            position += amount;
+        }
+
         protected GameObject()
         {
             components = new List<Component>();
+            position = Vector3.Zero;
         }
         public virtual void Update(GameTime gameTime)
         {

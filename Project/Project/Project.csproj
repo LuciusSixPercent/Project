@@ -117,11 +117,13 @@
     <Compile Include="game_objects\GameObject.cs" />
     <Compile Include="game_objects\DrawableGameObject.cs" />
     <Compile Include="game_objects\Player.cs" />
-    <Compile Include="game_objects\questions\Answer.cs" />
     <Compile Include="game_objects\questions\Question.cs" />
+    <Compile Include="game_objects\questions\QuestionFactory.cs" />
+    <Compile Include="game_objects\questions\QuestionSubject.cs" />
     <Compile Include="game_objects\questions\QuestionType.cs" />
     <Compile Include="game_states\GameState.cs" />
     <Compile Include="game_states\PauseState.cs" />
+    <Compile Include="game_states\RunnerLevel.cs" />
     <Compile Include="game_states\RunnerState.cs" />
     <Compile Include="game_states\StatesIdList.cs" />
     <Compile Include="game_states\TestState.cs" />

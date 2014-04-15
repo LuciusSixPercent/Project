@@ -14,7 +14,13 @@ namespace game_states
     class RunnerState : GameState
     {
         #region Variables Declaration
-        Quad[,] floorTiles;
+        private RunnerLevel level;
+
+        public RunnerLevel Level
+        {
+            get { return level; }
+            set { level = value; }
+        }
 
         int columns = 10;
         int rows = 54;
@@ -22,7 +28,8 @@ namespace game_states
 
         private Camera cam;
         private Player player;
-        private Question[] questions;
+        private Stack<Question> questions;
+        private Texture2D[] questionsTex;
 
         bool pauseFlag;
 
@@ -30,8 +37,15 @@ namespace game_states
         Texture2D floor;
         Texture2D bg;
         Texture2D character;
+        private SpriteFont spriteFont;
         BasicEffect basicEffect;
+        Quad[,] floorTiles;
         #endregion
+
+        private bool contentLoaded;
+
+        Texture2D SimpleTexture;
+        private Texture2D[] answerTex;
 
         #endregion
 
@@ -47,19 +61,20 @@ namespace game_states
             {
                 base.Initialize();
                 enterTransitionDuration = 500;
-
-                floorTiles = new Quad[rows, columns];
+                exitTransitionDuration = 250;
 
                 player = new Player();
                 player.Position = new Vector3(0f, 1f, -3.5f);
 
-                cam = new Camera(new Vector3(0f, 3f, -7f), Vector3.Up, new Vector2(1, 50));
-                cam.lookAt(new Vector3(0f, 0.25f, 0f));
+                cam = new Camera(new Vector3(0f, 3f, -4f), Vector3.Up, new Vector2(0.25f, 50));
+                cam.lookAt(new Vector3(0f, 0.25f, 2f), true);
                 cam.createProjection(MathHelper.PiOver4, parent.GraphicsDevice.Viewport.AspectRatio);
 
                 initEffect();
 
                 initQuads();
+
+                level = RunnerLevel.EASY;
             }
         }
 
@@ -79,6 +94,8 @@ namespace game_states
 
         private void initQuads()
         {
+            floorTiles = new Quad[rows, columns];
+
             float leftColumnX = -scale * 0.5f * columns - scale * 0.5f;
 
             Vector3 initialCoord = new Vector3(leftColumnX, 0f, cam.Z);
@@ -102,10 +119,42 @@ namespace game_states
             if (!contentLoaded)
             {
                 contentLoaded = true;
-                floor = parent.Content.Load<Texture2D>("floor");
-                bg = parent.Content.Load<Texture2D>("sky");
-                character = parent.Content.Load<Texture2D>("character");
+                floor = parent.Content.Load<Texture2D>("Imagem/Cenario/grass");
+                bg = parent.Content.Load<Texture2D>("Imagem/Cenario/sky");
+                character = parent.Content.Load<Texture2D>("Imagem/Personagem/Maria");
+                spriteFont = parent.Content.Load<SpriteFont>("Fonte/Verdana");
+                questions = new Stack<Question>();
+                createQuestion();
             }
+        }
+
+        private void createQuestion()
+        {
+            questions.Push(QuestionFactory.CreateQuestion(level, QuestionSubject.PT, 1));
+
+            Random rdn = new Random();
+            questions.Peek().Position = new Vector3(0, player.Position.Y, player.Position.Z + rdn.Next(10, 30));
+
+            drawQuestionAnswers();
+        }
+
+        private void drawQuestionAnswers()
+        {
+            GraphicsDevice graphicsDevice = parent.GraphicsDevice;
+            string[] answers = questions.Peek().Answers;
+            answerTex = new Texture2D[answers.Length];
+            for (int i = 0; i < answers.Length; i++)
+            {
+                Vector2 size = spriteFont.MeasureString(answers[i]);
+                RenderTarget2D rt = new RenderTarget2D(graphicsDevice, (int)size.X, (int)size.Y, true, graphicsDevice.DisplayMode.Format, DepthFormat.Depth24, 4, RenderTargetUsage.PreserveContents);
+                graphicsDevice.SetRenderTarget(rt);
+                graphicsDevice.Clear(Color.Transparent);
+                answerTex[i] = (Texture2D)rt;
+                SpriteBatch.Begin();
+                SpriteBatch.DrawString(spriteFont, answers[i], Vector2.Zero, Color.Tomato, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                SpriteBatch.End();
+            }
+            graphicsDevice.SetRenderTarget(null);
         }
 
         #region Transitioning
@@ -120,8 +169,7 @@ namespace game_states
         }
         public override void EnterState()
         {
-            base.EnterState();
-            pauseFlag = false;
+            EnterState(FreezeBelow);
         }
         public override void ExitState()
         {
@@ -143,33 +191,56 @@ namespace game_states
                 {
                     if (!exitingState)
                     {
-                        cam.Update(gameTime);
-                        player.Update(gameTime);
-                        basicEffect.View = cam.View;
-                        foreach (Quad quad in floorTiles)
-                        {
-                            if (quad.Coord.Z <= cam.Z)
-                            {
-                                quad.translate(new Vector3(0, 0, scale * rows));
-                            }
-                        }
-                        
-                        if (KeyboardHelper.IsKeyDown(Keys.Escape))
-                        {
-                            KeyboardHelper.LockKey(Keys.Escape);
-                            if (parent.EnterState((int)StatesIdList.PAUSE, false))
-                            {
-                                alpha = 0.5f;
-                                pauseFlag = true;
-                                stateEntered = false;
-                            }
-                        }
-                        else if (KeyboardHelper.KeyReleased(Keys.Escape))
-                        {
-                            KeyboardHelper.UnlockKey(Keys.Escape);
-                        }
+                        updateObjects(gameTime);
+
+                        translateQuads();
+
+                        handleInput(gameTime);
                     }
                 }
+            }
+        }
+
+        private void handleInput(GameTime gameTime)
+        {
+            if (KeyboardHelper.IsKeyDown(Keys.Escape))
+            {
+                KeyboardHelper.LockKey(Keys.Escape);
+                if (parent.EnterState((int)StatesIdList.PAUSE, false))
+                {
+                    alpha = 0.5f;
+                    pauseFlag = true;
+                    stateEntered = false;
+                }
+            }
+            else if (KeyboardHelper.KeyReleased(Keys.Escape))
+            {
+                KeyboardHelper.UnlockKey(Keys.Escape);
+            }
+        }
+
+        private void translateQuads()
+        {
+            foreach (Quad quad in floorTiles)
+            {
+                if (quad.Coord.Z <= cam.Z)
+                {
+                    quad.translate(new Vector3(0, 0, scale * rows));
+                }
+            }
+        }
+
+        private void updateObjects(GameTime gameTime)
+        {
+            cam.Update(gameTime);
+            player.Update(gameTime);
+            basicEffect.View = cam.View;
+            basicEffect.Projection = cam.Projection;
+
+            if (questions.Peek().Position.Z <= cam.Z)
+            {
+                questions.Pop();
+                createQuestion();
             }
         }
 
@@ -184,9 +255,12 @@ namespace game_states
 
             DrawFloor(graphicsDevice);
 
+            DrawQuestions(graphicsDevice);
+
             DrawCharacter(graphicsDevice);
 
             #region DEBUG CODE
+
             if (SimpleTexture == null)
             {
                 SimpleTexture = new Texture2D(graphicsDevice, 1, 1, false, SurfaceFormat.Color);
@@ -196,11 +270,10 @@ namespace game_states
             DrawLine(SpriteBatch, SimpleTexture, 1, Color.Red, new Vector2(Mouse.GetState().X, 0), new Vector2(Mouse.GetState().X, graphicsDevice.Viewport.Bounds.Height));
             DrawLine(SpriteBatch, SimpleTexture, 1, Color.Red, new Vector2(0, Mouse.GetState().Y), new Vector2(graphicsDevice.Viewport.Bounds.Width, Mouse.GetState().Y));
             SpriteBatch.End();
+
+
             #endregion
         }
-
-        Texture2D SimpleTexture;
-        private bool contentLoaded;
 
         void DrawLine(SpriteBatch batch, Texture2D blank,
         float width, Color color, Vector2 point1, Vector2 point2)
@@ -213,6 +286,27 @@ namespace game_states
                        SpriteEffects.None, 0);
         }
 
+        private void DrawQuestions(GraphicsDevice graphicsDevice)
+        {
+            graphicsDevice.BlendState = BlendState.AlphaBlend;
+            Question q = questions.Peek();
+            for (int i = 0; i < q.Answers.Length; i++)
+            {
+                Texture2D tex = answerTex[i];
+                basicEffect.Texture = tex;
+
+                Quad quad = q.AnswersQuads[i];
+                foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes)
+                {
+                    pass.Apply();
+                    graphicsDevice.DrawUserIndexedPrimitives
+                            <VertexPositionNormalTexture>(
+                            PrimitiveType.TriangleList,
+                            quad.Vertices, 0, 4,
+                            Quad.Indexes, 0, 2);
+                }
+            }
+        }
 
         private void DrawCharacter(GraphicsDevice graphicsDevice)
         {

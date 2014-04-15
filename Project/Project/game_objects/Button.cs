@@ -35,7 +35,7 @@ namespace game_objects
 
         public Button(Rectangle bounds, SpriteBatch spriteBatch)
         {
-            ClickComponent cc = new ClickComponent(bounds);
+            ClickComponent cc = new ClickComponent(this, bounds);
             cc.click += new ClickComponent.Click(cc_click);
             cc.enter += new ClickComponent.Enter(cc_enter);
             cc.exit += new ClickComponent.Exit(cc_exit);

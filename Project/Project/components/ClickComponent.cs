@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using game_objects;
 
 namespace components
 {
@@ -23,7 +24,8 @@ namespace components
 
         private Rectangle bounds;
 
-        public ClickComponent(Rectangle bounds)
+        public ClickComponent(GameObject owner, Rectangle bounds)
+            : base(owner)
         {
             this.bounds = bounds;
         }
