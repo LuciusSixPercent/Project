@@ -26,12 +26,15 @@ class ModoHistorinha : DateBase
     string texto = "";
     int CaixaTexto = 0;
     int zerar = 1;
+    Song narrador;
+    bool repetir = true;
     #endregion
     //teste
     bool venceu = false;
-    public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, string alt2, string alt3, int episodio, SpriteFont a, int n)
+    public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, string alt2, string alt3, int episodio, SpriteFont a, int n, Song narra)
         : base(c)
     {
+        narrador = narra;
         NoDeRespostas = n;
         arial = a;
         pergunta = perguntaz;
@@ -50,9 +53,10 @@ class ModoHistorinha : DateBase
                 break;
         }
     }
-    public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, int episodio, SpriteFont a, int n)
+    public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, int episodio, SpriteFont a, int n, Song narra)
         : base(c)
     {
+        narrador = narra;
         NoDeRespostas = n;
         arial = a;
         pergunta = perguntaz;
@@ -67,9 +71,10 @@ class ModoHistorinha : DateBase
                 break;
         }
     }
-    public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, string alt2, int episodio, SpriteFont a, int n)
+    public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, string alt2, int episodio, SpriteFont a, int n, Song narra)
         : base(c)
     {
+        narrador = narra;
         NoDeRespostas = n;
         arial = a;
         pergunta = perguntaz;
@@ -86,9 +91,10 @@ class ModoHistorinha : DateBase
                 break;
         }
     }
-    public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, string alt2, string alt3, int episodio, SpriteFont a, int n, bool sequencia)
+    public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, string alt2, string alt3, int episodio, SpriteFont a, int n, Song narra, bool sequencia)
         : base(c)
     {
+        narrador = narra;
         seq = sequencia;
         NoDeRespostas = n;
         arial = a;
@@ -110,10 +116,10 @@ class ModoHistorinha : DateBase
     }
     public void Atualizar()
     {
-        i = i + (i <= 1 ? 1 : 0);
-        if (i == 1)
+        if (repetir)
         {
-            //MediaPlayer.Play(narrador);
+            MediaPlayer.Play(narrador);
+            repetir = false;
         }
         CaixaTexto = (int)arial.MeasureString(texto).X * zerar;
         if (CaixaTexto > 800 && texto[indice - 1] == ' ')
@@ -141,6 +147,7 @@ class ModoHistorinha : DateBase
         }
         if (primeiroclique && segundoclique && terceiroclique && quartoclique)
         {
+            MediaPlayer.Stop();
             venceu = true;
         }
         Click(mouse);
@@ -153,6 +160,7 @@ class ModoHistorinha : DateBase
             {
                 if (!seq)
                 {
+                    MediaPlayer.Stop();
                     venceu = true;
                 }
                 else

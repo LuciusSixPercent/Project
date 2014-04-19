@@ -31,16 +31,14 @@ class DateBase
     #region Episodios
     protected void EP1()
     {
-        TelaDeFundo = Content.Load<Texture2D>("Imagem/Cenario/Cena01");
-        PersonagemEmCena = Content.Load<Texture2D>("Imagem/Personagem/Maria");
+        
         OpcoeSprite = Content.Load<Texture2D>("Imagem/Sprites/op");
-        VTelaFundo = new Vector2(0, 0);
-        VPersonagens = new Vector2(50, 200);
+        
         VOpcoes1 = new Vector2(230, 200);
         VOpcoes2 = new Vector2(VOpcoes1.X + 200, VOpcoes1.Y);
         VOpcoes3 = new Vector2(VOpcoes2.X + 200, VOpcoes2.Y);
         VOpcoes4 = new Vector2(VOpcoes3.X + 200, VOpcoes3.Y);
-        narrador = Content.Load<Song>("Audio/N0002");
+       
         Valt0 = new Vector2(VOpcoes1.X, VOpcoes1.Y + 20);
         Valt1 = new Vector2(VOpcoes2.X, VOpcoes2.Y + 20);
         Valt2 = new Vector2(VOpcoes3.X, VOpcoes3.Y + 20);
