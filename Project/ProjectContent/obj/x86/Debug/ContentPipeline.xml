@@ -7,8 +7,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\btn.xnb</Output>
-      <Time>2014-04-07T11:14:19.2001052-03:00</Time>
+      <Output>C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\btn.xnb</Output>
+      <Time>2014-04-19T14:55:19.1054736-03:00</Time>
     </Item>
     <Item>
       <Source>floor.png</Source>
@@ -19,226 +19,8 @@
         <Data Key="GenerateMipmaps">True</Data>
       </Parameters>
       <Options>None</Options>
-      <Output>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\floor.xnb</Output>
-      <Time>2014-04-15T16:53:06.8093654-03:00</Time>
-    </Item>
-    <Item>
-      <Source>Menu\Abertura.jpg</Source>
-      <Name>Menu\Abertura</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Menu\Abertura.xnb</Output>
-      <Time>2014-04-11T22:15:24.0747957-03:00</Time>
-    </Item>
-    <Item>
-      <Source>Menu\BB.png</Source>
-      <Name>Menu\BB</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Menu\BB.xnb</Output>
-      <Time>2014-04-11T22:15:24.0757957-03:00</Time>
-    </Item>
-    <Item>
-      <Source>Menu\CdA.png</Source>
-      <Name>Menu\CdA</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Menu\CdA.xnb</Output>
-      <Time>2014-04-11T22:15:24.0757957-03:00</Time>
-    </Item>
-    <Item>
-      <Source>Menu\Config.png</Source>
-      <Name>Menu\Config</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Menu\Config.xnb</Output>
-      <Time>2014-04-11T22:15:24.0767958-03:00</Time>
-    </Item>
-    <Item>
-      <Source>Menu\Cre.png</Source>
-      <Name>Menu\Cre</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Menu\Cre.xnb</Output>
-      <Time>2014-04-11T22:15:24.0767958-03:00</Time>
-    </Item>
-    <Item>
-      <Source>Menu\MH.png</Source>
-      <Name>Menu\MH</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Menu\MH.xnb</Output>
-      <Time>2014-04-11T22:15:24.0777959-03:00</Time>
-    </Item>
-    <Item>
-      <Source>Menu\Sair.png</Source>
-      <Name>Menu\Sair</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Menu\Sair.xnb</Output>
-      <Time>2014-04-11T22:15:24.1067975-03:00</Time>
-    </Item>
-    <Item>
-      <Source>Menu\Seta.png</Source>
-      <Name>Menu\Seta</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Menu\Seta.xnb</Output>
-      <Time>2014-04-11T22:15:24.1077976-03:00</Time>
-    </Item>
-    <Item>
-      <Source>Imagem\Sprites\op.png</Source>
-      <Name>Imagem\Sprites\op</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Imagem\Sprites\op.xnb</Output>
-      <Time>2014-04-11T22:15:24.0657952-03:00</Time>
-    </Item>
-    <Item>
-      <Source>Imagem\Cenario\Cena01.PNG</Source>
-      <Name>Imagem\Cenario\Cena01</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Imagem\Cenario\Cena01.xnb</Output>
-      <Time>2014-04-11T22:15:24.0637951-03:00</Time>
-    </Item>
-    <Item>
-      <Source>Fonte\Arial.spritefont</Source>
-      <Name>Fonte\Arial</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Fonte\Arial.xnb</Output>
-      <Time>2014-04-11T22:15:24.0567947-03:00</Time>
-    </Item>
-    <Item>
-      <Source>Fonte\Verdana.spritefont</Source>
-      <Name>Fonte\Verdana</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Fonte\Verdana.xnb</Output>
-      <Time>2014-04-19T14:08:59.4824882-03:00</Time>
-    </Item>
-    <Item>
-      <Source>Audio\N0000.mp3</Source>
-      <Name>Audio\N0000</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Audio\N0000.xnb</Output>
-      <Extra>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Audio\N0000.wma</Extra>
-      <Time>2014-04-11T22:15:24.045794-03:00</Time>
-    </Item>
-    <Item>
-      <Source>Audio\N0001.mp3</Source>
-      <Name>Audio\N0001</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Audio\N0001.xnb</Output>
-      <Extra>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Audio\N0001.wma</Extra>
-      <Time>2014-04-11T22:15:24.0487942-03:00</Time>
-    </Item>
-    <Item>
-      <Source>Audio\N0002.mp3</Source>
-      <Name>Audio\N0002</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Audio\N0002.xnb</Output>
-      <Extra>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Audio\N0002.wma</Extra>
-      <Time>2014-04-11T22:15:24.0507943-03:00</Time>
-    </Item>
-    <Item>
-      <Source>Audio\Perfect World.mp3</Source>
-      <Name>Audio\Perfect World</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Audio\Perfect World.xnb</Output>
-      <Extra>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Audio\Perfect World.wma</Extra>
-      <Time>2014-04-11T22:15:24.0547945-03:00</Time>
-    </Item>
-    <Item>
-      <Source>Narrar\MH001.mp3</Source>
-      <Name>Narrar\MH001</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Narrar\MH001.xnb</Output>
-      <Extra>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Narrar\MH001.wma</Extra>
-      <Time>2014-04-19T14:08:59.86251-03:00</Time>
-    </Item>
-    <Item>
-      <Source>Narrar\MH002.mp3</Source>
-      <Name>Narrar\MH002</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Narrar\MH002.xnb</Output>
-      <Extra>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Narrar\MH002.wma</Extra>
-      <Time>2014-04-19T14:08:59.8585097-03:00</Time>
-    </Item>
-    <Item>
-      <Source>Narrar\MH003.mp3</Source>
-      <Name>Narrar\MH003</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Narrar\MH003.xnb</Output>
-      <Extra>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Narrar\MH003.wma</Extra>
-      <Time>2014-04-19T14:08:59.8545095-03:00</Time>
-    </Item>
-    <Item>
-      <Source>Narrar\MH004.mp3</Source>
-      <Name>Narrar\MH004</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Narrar\MH004.xnb</Output>
-      <Extra>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Narrar\MH004.wma</Extra>
-      <Time>2014-04-19T14:08:59.8495092-03:00</Time>
-    </Item>
-    <Item>
-      <Source>Narrar\MH005.mp3</Source>
-      <Name>Narrar\MH005</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Narrar\MH005.xnb</Output>
-      <Extra>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Narrar\MH005.wma</Extra>
-      <Time>2014-04-19T14:08:59.845509-03:00</Time>
-    </Item>
-    <Item>
-      <Source>Narrar\MH006.mp3</Source>
-      <Name>Narrar\MH006</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Narrar\MH006.xnb</Output>
-      <Extra>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Narrar\MH006.wma</Extra>
-      <Time>2014-04-19T14:08:59.8415087-03:00</Time>
-    </Item>
-    <Item>
-      <Source>Narrar\MH007.mp3</Source>
-      <Name>Narrar\MH007</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Narrar\MH007.xnb</Output>
-      <Extra>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Narrar\MH007.wma</Extra>
-      <Time>2014-04-19T14:08:59.8375085-03:00</Time>
+      <Output>C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\floor.xnb</Output>
+      <Time>2014-04-19T14:55:19.1084737-03:00</Time>
     </Item>
     <Item>
       <Source>Imagem\Cenario\sky.jpg</Source>
@@ -246,20 +28,89 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Imagem\Cenario\sky.xnb</Output>
-      <Time>2014-04-15T16:53:06.8883699-03:00</Time>
+      <Output>C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Imagem\Cenario\sky.xnb</Output>
+      <Time>2014-04-19T14:55:19.0684714-03:00</Time>
     </Item>
     <Item>
-      <Source>Imagem\Cenario\grass.jpg</Source>
-      <Name>Imagem\Cenario\grass</Name>
+      <Source>Menu\Abertura.jpg</Source>
+      <Name>Menu\Abertura</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-      <Parameters>
-        <Data Key="GenerateMipmaps">True</Data>
-      </Parameters>
       <Options>None</Options>
-      <Output>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Imagem\Cenario\grass.xnb</Output>
-      <Time>2014-04-15T17:29:12.5162367-03:00</Time>
+      <Output>C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Menu\Abertura.xnb</Output>
+      <Time>2014-04-19T14:55:19.078472-03:00</Time>
+    </Item>
+    <Item>
+      <Source>Menu\BB.png</Source>
+      <Name>Menu\BB</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Menu\BB.xnb</Output>
+      <Time>2014-04-19T14:55:19.078472-03:00</Time>
+    </Item>
+    <Item>
+      <Source>Menu\CdA.png</Source>
+      <Name>Menu\CdA</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Menu\CdA.xnb</Output>
+      <Time>2014-04-19T14:55:19.0794721-03:00</Time>
+    </Item>
+    <Item>
+      <Source>Menu\Config.png</Source>
+      <Name>Menu\Config</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Menu\Config.xnb</Output>
+      <Time>2014-04-19T14:55:19.0804721-03:00</Time>
+    </Item>
+    <Item>
+      <Source>Menu\Cre.png</Source>
+      <Name>Menu\Cre</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Menu\Cre.xnb</Output>
+      <Time>2014-04-19T14:55:19.0804721-03:00</Time>
+    </Item>
+    <Item>
+      <Source>Menu\MH.png</Source>
+      <Name>Menu\MH</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Menu\MH.xnb</Output>
+      <Time>2014-04-19T14:55:19.0814722-03:00</Time>
+    </Item>
+    <Item>
+      <Source>Menu\Sair.png</Source>
+      <Name>Menu\Sair</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Menu\Sair.xnb</Output>
+      <Time>2014-04-19T14:55:19.0824722-03:00</Time>
+    </Item>
+    <Item>
+      <Source>Menu\Seta.png</Source>
+      <Name>Menu\Seta</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Menu\Seta.xnb</Output>
+      <Time>2014-04-19T14:55:19.0824722-03:00</Time>
+    </Item>
+    <Item>
+      <Source>Imagem\Sprites\op.png</Source>
+      <Name>Imagem\Sprites\op</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Imagem\Sprites\op.xnb</Output>
+      <Time>2014-04-19T14:55:19.0704716-03:00</Time>
     </Item>
     <Item>
       <Source>Imagem\Personagem\Maria.PNG</Source>
@@ -270,8 +121,87 @@
         <Data Key="ColorKeyColor">255, 255, 255, 255</Data>
       </Parameters>
       <Options>None</Options>
-      <Output>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Imagem\Personagem\Maria.xnb</Output>
-      <Time>2014-04-15T20:15:20.4473698-03:00</Time>
+      <Output>C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Imagem\Personagem\Maria.xnb</Output>
+      <Time>2014-04-19T14:55:19.0694715-03:00</Time>
+    </Item>
+    <Item>
+      <Source>Imagem\Cenario\Cena01.PNG</Source>
+      <Name>Imagem\Cenario\Cena01</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Imagem\Cenario\Cena01.xnb</Output>
+      <Time>2014-04-19T14:55:19.0624711-03:00</Time>
+    </Item>
+    <Item>
+      <Source>Imagem\Cenario\grass.jpg</Source>
+      <Name>Imagem\Cenario\grass</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="GenerateMipmaps">True</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Imagem\Cenario\grass.xnb</Output>
+      <Time>2014-04-19T14:55:19.0664713-03:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\N0000.mp3</Source>
+      <Name>Audio\N0000</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Audio\N0000.xnb</Output>
+      <Extra>C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Audio\N0000.wma</Extra>
+      <Time>2014-04-19T14:55:19.0474702-03:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\N0001.mp3</Source>
+      <Name>Audio\N0001</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Audio\N0001.xnb</Output>
+      <Extra>C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Audio\N0001.wma</Extra>
+      <Time>2014-04-19T14:55:19.0494704-03:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\N0002.mp3</Source>
+      <Name>Audio\N0002</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Audio\N0002.xnb</Output>
+      <Extra>C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Audio\N0002.wma</Extra>
+      <Time>2014-04-19T14:55:19.0514705-03:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\Perfect World.mp3</Source>
+      <Name>Audio\Perfect World</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Audio\Perfect World.xnb</Output>
+      <Extra>C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Audio\Perfect World.wma</Extra>
+      <Time>2014-04-19T14:55:19.0544706-03:00</Time>
+    </Item>
+    <Item>
+      <Source>Fonte\Arial.spritefont</Source>
+      <Name>Fonte\Arial</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Fonte\Arial.xnb</Output>
+      <Time>2014-04-19T14:55:19.0554707-03:00</Time>
+    </Item>
+    <Item>
+      <Source>Fonte\Verdana.spritefont</Source>
+      <Name>Fonte\Verdana</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Fonte\Verdana.xnb</Output>
+      <Time>2014-04-19T14:55:19.0564708-03:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -279,10 +209,10 @@
       <TargetProfile>HiDef</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>C:\Users\User\Desktop\UNICEF\program\Project\Project\ProjectContent\</RootDirectory>
-      <LoggerRootDirectory>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\Users\User\Desktop\UNICEF\program\Project\Project\ProjectContent\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\ProjectContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\ProjectContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>

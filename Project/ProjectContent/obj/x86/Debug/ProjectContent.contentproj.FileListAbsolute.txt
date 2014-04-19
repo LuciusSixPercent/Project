@@ -1,2 +1,3 @@
 C:\Users\User\Desktop\UNICEF\program\Project\Project\ProjectContent\obj\x86\Debug\ProjectContent.contentprojResolveAssemblyReference.cache
 C:\Users\Lucas\Documents\Unicef\Project\Project\ProjectContent\obj\x86\Debug\ProjectContent.contentprojResolveAssemblyReference.cache
+C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\ProjectContent\obj\x86\Debug\ProjectContent.contentprojResolveAssemblyReference.cache

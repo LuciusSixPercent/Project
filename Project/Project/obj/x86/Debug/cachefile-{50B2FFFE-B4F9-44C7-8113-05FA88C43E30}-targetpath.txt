@@ -1,5 +1,6 @@
 Content\btn.xnb
 Content\floor.xnb
+Content\Imagem\Cenario\sky.xnb
 Content\Menu\Abertura.xnb
 Content\Menu\BB.xnb
 Content\Menu\CdA.xnb
@@ -9,9 +10,9 @@ Content\Menu\MH.xnb
 Content\Menu\Sair.xnb
 Content\Menu\Seta.xnb
 Content\Imagem\Sprites\op.xnb
+Content\Imagem\Personagem\Maria.xnb
 Content\Imagem\Cenario\Cena01.xnb
-Content\Fonte\Arial.xnb
-Content\Fonte\Verdana.xnb
+Content\Imagem\Cenario\grass.xnb
 Content\Audio\N0000.xnb
 Content\Audio\N0000.wma
 Content\Audio\N0001.xnb
@@ -20,20 +21,5 @@ Content\Audio\N0002.xnb
 Content\Audio\N0002.wma
 Content\Audio\Perfect World.xnb
 Content\Audio\Perfect World.wma
-Content\Narrar\MH001.xnb
-Content\Narrar\MH001.wma
-Content\Narrar\MH002.xnb
-Content\Narrar\MH002.wma
-Content\Narrar\MH003.xnb
-Content\Narrar\MH003.wma
-Content\Narrar\MH004.xnb
-Content\Narrar\MH004.wma
-Content\Narrar\MH005.xnb
-Content\Narrar\MH005.wma
-Content\Narrar\MH006.xnb
-Content\Narrar\MH006.wma
-Content\Narrar\MH007.xnb
-Content\Narrar\MH007.wma
-Content\Imagem\Cenario\sky.xnb
-Content\Imagem\Cenario\grass.xnb
-Content\Imagem\Personagem\Maria.xnb
+Content\Fonte\Arial.xnb
+Content\Fonte\Verdana.xnb

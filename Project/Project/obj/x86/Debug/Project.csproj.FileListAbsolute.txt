@@ -89,3 +89,34 @@ C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Conte
 C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Narrar\MH007.wma
 C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Imagem\Cenario\sky.xnb
 C:\Users\User\Desktop\UNICEF\program\Project\Project\Project\bin\x86\Debug\Content\Imagem\Cenario\grass.xnb
+C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\btn.xnb
+C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\floor.xnb
+C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Imagem\Cenario\sky.xnb
+C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Menu\Abertura.xnb
+C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Menu\BB.xnb
+C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Menu\CdA.xnb
+C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Menu\Config.xnb
+C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Menu\Cre.xnb
+C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Menu\MH.xnb
+C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Menu\Sair.xnb
+C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Menu\Seta.xnb
+C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Imagem\Sprites\op.xnb
+C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Imagem\Personagem\Maria.xnb
+C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Imagem\Cenario\Cena01.xnb
+C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Imagem\Cenario\grass.xnb
+C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Audio\N0000.xnb
+C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Audio\N0001.xnb
+C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Audio\N0002.xnb
+C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Audio\Perfect World.xnb
+C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Fonte\Arial.xnb
+C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Fonte\Verdana.xnb
+C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Audio\N0000.wma
+C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Audio\N0001.wma
+C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Audio\N0002.wma
+C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Content\Audio\Perfect World.wma
+C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Project.exe
+C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\bin\x86\Debug\Project.pdb
+C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\obj\x86\Debug\Project.csprojResolveAssemblyReference.cache
+C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\obj\x86\Debug\Project.exe
+C:\Users\User\Desktop\UNICEF\program\Project_Master\Project\Project\obj\x86\Debug\Project.pdb
