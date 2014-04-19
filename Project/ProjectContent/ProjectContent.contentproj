@@ -167,8 +167,203 @@
       <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
     </Compile>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Narrar\" />
+    <Compile Include="Narrar\Cena01\Exercicio01.mp3">
+      <Name>Exercicio01</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena01\Exercicio02.mp3">
+      <Name>Exercicio02</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena01\Exercicio03.mp3">
+      <Name>Exercicio03</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena01\Exercicio04.mp3">
+      <Name>Exercicio04</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena01\Exercicio05.mp3">
+      <Name>Exercicio05</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena01\Parte 1 - Fala 1.mp3">
+      <Name>Parte 1 - Fala 1</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena01\Parte 1 - Fala 2.mp3">
+      <Name>Parte 1 - Fala 2</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena01\Parte 1 - Fala 3.mp3">
+      <Name>Parte 1 - Fala 3</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena01\Parte 2 - Fala 5.mp3">
+      <Name>Parte 2 - Fala 5</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena01\Parte 2 - Fala 6.mp3">
+      <Name>Parte 2 - Fala 6</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena01\Parte 2 - Fala 7.mp3">
+      <Name>Parte 2 - Fala 7</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena01\Parte 2 - Fala 8.mp3">
+      <Name>Parte 2 - Fala 8</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena01\Parte 2 - Fala 9.mp3">
+      <Name>Parte 2 - Fala 9</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena01\Parte 3 - Fala 11.mp3">
+      <Name>Parte 3 - Fala 11</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena01\Parte 3 - Fala 12.mp3">
+      <Name>Parte 3 - Fala 12</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena01\Parte 4 - Fala 14.mp3">
+      <Name>Parte 4 - Fala 14</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena01\Parte 5 - Fala 15.mp3">
+      <Name>Parte 5 - Fala 15</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena01\Parte 5 - Fala 16.mp3">
+      <Name>Parte 5 - Fala 16</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena01\Parte 5 - Fala 17.mp3">
+      <Name>Parte 5 - Fala 17</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena01\Parte 5 - Fala 18.mp3">
+      <Name>Parte 5 - Fala 18</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena02\Exercicio06.mp3">
+      <Name>Exercicio06</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena02\Exercicio07 - Wrong.mp3">
+      <Name>Exercicio07 - Wrong</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena02\Exercicio07.mp3">
+      <Name>Exercicio07</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena02\Exercicio08.mp3">
+      <Name>Exercicio08</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena02\Exercicio09.mp3">
+      <Name>Exercicio09</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena02\Exercicio10.mp3">
+      <Name>Exercicio10</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena02\Parte 10 - Fala 30.mp3">
+      <Name>Parte 10 - Fala 30</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena02\Parte 6 - Fala 19.mp3">
+      <Name>Parte 6 - Fala 19</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena02\Parte 6 - Fala 20.mp3">
+      <Name>Parte 6 - Fala 20</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena02\Parte 7 - Fala 21.mp3">
+      <Name>Parte 7 - Fala 21</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena02\Parte 7 - Fala 22.mp3">
+      <Name>Parte 7 - Fala 22</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena02\Parte 8 - Fala 23.mp3">
+      <Name>Parte 8 - Fala 23</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena02\Parte 8 - Fala 24.mp3">
+      <Name>Parte 8 - Fala 24</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena02\Parte 9 - Fala 25.mp3">
+      <Name>Parte 9 - Fala 25</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena02\Parte 9 - Fala 26.mp3">
+      <Name>Parte 9 - Fala 26</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena02\Parte 9 - Fala 27.mp3">
+      <Name>Parte 9 - Fala 27</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena02\Parte 9 - Fala 28.mp3">
+      <Name>Parte 9 - Fala 28</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\Cena02\Parte 9 - Fala 29.mp3">
+      <Name>Parte 9 - Fala 29</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+    <Compile Include="Narrar\TelaInicial.mp3">
+      <Name>TelaInicial</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 
