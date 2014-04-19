@@ -33,7 +33,7 @@ namespace game_objects
             set { text = value; }
         }
 
-        public Button(Rectangle bounds, SpriteBatch spriteBatch)
+        public Button(Rectangle bounds, SpriteBatch spriteBatch, Renderer2D r2D) : base (r2D)
         {
             ClickComponent cc = new ClickComponent(this, bounds);
             cc.click += new ClickComponent.Click(cc_click);
@@ -54,11 +54,6 @@ namespace game_objects
         void cc_enter()
         {
             color = Color.Red;
-        }
-
-        public void LoadContent(ContentManager content)
-        {
-            texture = content.Load<Texture2D>("btn");
         }
 
         void cc_click()
@@ -90,6 +85,11 @@ namespace game_objects
                 }
                 spriteBatch.End();
             }
+        }
+
+        public override void Load(ContentManager cManager)
+        {
+            texture = cManager.Load<Texture2D>("btn");
         }
     }
 }

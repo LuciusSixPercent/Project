@@ -19,16 +19,18 @@ namespace game_objects
             set { position = value; }
         }
 
-        public virtual void Translate(Vector3 amount)
-        {
-            position += amount;
-        }
-
         protected GameObject()
         {
             components = new List<Component>();
             position = Vector3.Zero;
         }
+
+        public virtual void Translate(Vector3 amount)
+        {
+            position += amount;
+        }
+
+
         public virtual void Update(GameTime gameTime)
         {
             foreach (Component c in components)

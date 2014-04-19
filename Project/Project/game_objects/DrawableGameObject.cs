@@ -3,12 +3,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using game_objects;
+using Microsoft.Xna.Framework.Content;
 
 namespace game_objects
 {
     public abstract class DrawableGameObject : GameObject
     {
         private bool visible;
+        private Renderer renderer;
+        private bool collidable;
+
+        public bool Collidable
+        {
+            get { return collidable; }
+            set { collidable = value; }
+        }
+
+        public Renderer Renderer
+        {
+            get { return renderer; }
+        }
+
+        public DrawableGameObject(Renderer renderer) : base()
+        {
+            this.renderer = renderer;
+        }
+
+        public bool is3D
+        {
+            get { return renderer is Renderer3D; }
+        }
 
         public bool Visible
         {
@@ -16,6 +41,7 @@ namespace game_objects
             set { visible = value; }
         }
 
+        public abstract void Load(ContentManager cManager);
 
         public abstract void Draw(GameTime gameTime);
     }

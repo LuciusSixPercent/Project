@@ -150,7 +150,6 @@ class Episodio01 : GameState
         if (!initialized)
         {
             base.Initialize();
-            LoadContent();
             #region Vetores
             posicaoText = new Vector2(20, 600);
             #endregion
@@ -231,7 +230,7 @@ class Episodio01 : GameState
                     KeyboardHelper.LockKey(Keys.Escape);
                     if (parent.EnterState((int)StatesIdList.PAUSE, false))
                     {
-                        alpha = 0.5f;
+                        Alpha = 0.5f;
                         pauseFlag = true;
                         stateEntered = false;
                     }
@@ -248,7 +247,7 @@ class Episodio01 : GameState
     public override void Draw(GameTime gameTime)
     {
         SpriteBatch.Begin();
-        cor = Color.White * alpha;
+        cor = Color.White * Alpha;
        
         SpriteBatch.DrawString(arial, MediaPlayer.PlayPosition.Minutes.ToString()+" : "+ MediaPlayer.PlayPosition.Seconds, new Vector2(400, 700), cor);//Aqui eu vejo em quanto tempo está a narração
         SpriteBatch.DrawString(arial, AlbumPrincipal[NoAlbum][selecionar].Duration.Minutes.ToString() + " : " + AlbumPrincipal[NoAlbum][selecionar].Duration.Seconds, new Vector2(600, 700), cor);

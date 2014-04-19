@@ -26,7 +26,14 @@ namespace game_states
         protected int exitTransitionDuration;   //qual a duração total da transição de saida no estado
         protected int transitionTime;           //quanto tempo a transição já durou
 
-        protected float alpha;
+        private float alpha;
+
+        protected virtual float Alpha
+        {
+            get { return alpha; }
+            set { alpha = value; }
+        }
+
         private float alphaIncrement;
         #endregion
 
@@ -84,6 +91,7 @@ namespace game_states
             {
                 stateEntered = result;
                 transitionTime = 0;
+                Alpha = 1f;
                 return false;
             }
             return true;
@@ -107,9 +115,9 @@ namespace game_states
             }
             if (Transitioning)
             {
-                alpha += alphaIncrement*gameTime.ElapsedGameTime.Milliseconds;
-                if (alpha < 0) alpha = 0;
-                else if (alpha > 1) alpha = 1;
+                Alpha += alphaIncrement*gameTime.ElapsedGameTime.Milliseconds;
+                if (Alpha < 0) Alpha = 0;
+                else if (Alpha > 1) Alpha = 1;
             }
         }
 

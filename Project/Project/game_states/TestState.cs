@@ -38,7 +38,7 @@ namespace game_states
                 rdn = new Random();
                 for (int i = 0; i < buttons.Length; i++)
                 {
-                    buttons[i] = new Button(initialBounds, SpriteBatch);
+                    //buttons[i] = new Button(initialBounds, SpriteBatch);
                     buttons[i].mouseClicked += new Button.MouseClicked(TestState_mouseClicked);
                     buttons[i].Visible = i < 2;
                     initialBounds.X += 75;
@@ -62,7 +62,7 @@ namespace game_states
                 clickTime = 1000;
                 clickPosition = new Vector2(rdn.Next(700), (float)rdn.Next(400));
                 textColor = Color.Blue;
-                alpha = 1f;
+                Alpha = 1f;
                 textScale = (float)rdn.NextDouble()*2 + 0.25f;
                 textRotation = MathHelper.ToRadians(rdn.Next(361));
             }
@@ -75,7 +75,7 @@ namespace game_states
         protected override void LoadContent()
         {
             foreach (Button btn in buttons)
-                btn.LoadContent(parent.Content);
+                btn.Load(parent.Content);
             spriteFont = parent.Content.Load<SpriteFont>("Verdana");
             foreach (Button btn in buttons)
                 btn.SpriteFont = spriteFont;
@@ -93,7 +93,7 @@ namespace game_states
                     if (clickTime > 0)
                     {
                         clickTime -= gameTime.ElapsedGameTime.Milliseconds;
-                        alpha = (float)clickTime / 1000;
+                        Alpha = (float)clickTime / 1000;
                     }
                 }
             }
@@ -110,7 +110,7 @@ namespace game_states
             if (clickTime > 0)
             {
                 SpriteBatch.Begin();
-                SpriteBatch.DrawString(spriteFont, "click", clickPosition, textColor*alpha, textRotation, Vector2.Zero, textScale, SpriteEffects.None, 0f);
+                SpriteBatch.DrawString(spriteFont, "click", clickPosition, textColor*Alpha, textRotation, Vector2.Zero, textScale, SpriteEffects.None, 0f);
                 SpriteBatch.End();
             }
 

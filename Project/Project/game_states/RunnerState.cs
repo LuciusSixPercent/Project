@@ -24,30 +24,35 @@ namespace game_states
 
         int columns = 10;
         int rows = 54;
-        float scale = 1f;
 
         private Camera cam;
-        private Player player;
+        private Character player;
         private Stack<Question> questions;
-        private Texture2D[] questionsTex;
 
         bool pauseFlag;
 
         #region Graphics
-        Texture2D floor;
-        Texture2D bg;
-        Texture2D character;
         private SpriteFont spriteFont;
-        BasicEffect basicEffect;
-        Quad[,] floorTiles;
         #endregion
 
         private bool contentLoaded;
 
-        Texture2D SimpleTexture;
-        private Texture2D[] answerTex;
+        private GameObjectsManager goManager;
 
         #endregion
+
+        protected override float Alpha
+        {
+            get
+            {
+                return base.Alpha;
+            }
+            set
+            {
+                base.Alpha = value;
+                goManager.R3D.Alpha = goManager.R2D.Alpha = Alpha;
+            }
+        }
 
         public RunnerState(int id, Game1 parent)
             : base(id, parent)
@@ -60,57 +65,27 @@ namespace game_states
             if (!initialized)
             {
                 base.Initialize();
+
                 enterTransitionDuration = 500;
                 exitTransitionDuration = 250;
 
-                player = new Player();
-                player.Position = new Vector3(0f, 1f, -3.5f);
+                goManager = new GameObjectsManager(parent.GraphicsDevice);                
+
+                questions = new Stack<Question>();
+
+                player = new Character(goManager, goManager.R3D, "Maria");                
 
                 cam = new Camera(new Vector3(0f, 3f, -4f), Vector3.Up, new Vector2(0.25f, 50));
                 cam.lookAt(new Vector3(0f, 0.25f, 2f), true);
                 cam.createProjection(MathHelper.PiOver4, parent.GraphicsDevice.Viewport.AspectRatio);
+                goManager.R3D.Cam = cam;
+                goManager.AddObject(cam);
 
-                initEffect();
-
-                initQuads();
+                goManager.AddObject(new Sky(goManager.R2D));
+                goManager.AddObject(new Field(goManager.R3D, rows, columns));
+                goManager.AddObject(player);
 
                 level = RunnerLevel.EASY;
-            }
-        }
-
-        private void initEffect()
-        {
-            basicEffect = new BasicEffect(parent.GraphicsDevice);
-            basicEffect.FogEnabled = true;
-            basicEffect.FogColor = Color.Gray.ToVector3();
-            basicEffect.FogStart = cam.FarView * 0.75f; ;
-            basicEffect.FogEnd = cam.FarView;
-            basicEffect.World = Matrix.Identity;
-            basicEffect.View = cam.View;
-            basicEffect.Projection = cam.Projection;
-            basicEffect.TextureEnabled = true;
-            basicEffect.Texture = floor;
-        }
-
-        private void initQuads()
-        {
-            floorTiles = new Quad[rows, columns];
-
-            float leftColumnX = -scale * 0.5f * columns - scale * 0.5f;
-
-            Vector3 initialCoord = new Vector3(leftColumnX, 0f, cam.Z);
-            Vector3 normal = new Vector3(0, 1, 0);
-            Vector3 up = new Vector3(0, 0, -1);
-            for (int row = 0; row < floorTiles.GetLength(0); row++)
-            {
-
-                for (int col = 0; col < floorTiles.GetLength(1); col++)
-                {
-                    initialCoord.X += scale;
-                    floorTiles[row, col] = new Quad(initialCoord, normal, up, scale, scale);
-                }
-                initialCoord.Z += scale;
-                initialCoord.X = leftColumnX;
             }
         }
 
@@ -119,44 +94,11 @@ namespace game_states
             if (!contentLoaded)
             {
                 contentLoaded = true;
-                floor = parent.Content.Load<Texture2D>("Imagem/Cenario/grass");
-                bg = parent.Content.Load<Texture2D>("Imagem/Cenario/sky");
-                character = parent.Content.Load<Texture2D>("Imagem/Personagem/Maria");
+                goManager.Load(parent.Content);
+                player.Position = new Vector3(0f, 0.5f, 0f);
                 spriteFont = parent.Content.Load<SpriteFont>("Fonte/Verdana");
-                questions = new Stack<Question>();
-                createQuestion();
             }
         }
-
-        private void createQuestion()
-        {
-            questions.Push(QuestionFactory.CreateQuestion(level, QuestionSubject.PT, 1));
-
-            Random rdn = new Random();
-            questions.Peek().Position = new Vector3(0, player.Position.Y, player.Position.Z + rdn.Next(10, 30));
-
-            drawQuestionAnswers();
-        }
-
-        private void drawQuestionAnswers()
-        {
-            GraphicsDevice graphicsDevice = parent.GraphicsDevice;
-            string[] answers = questions.Peek().Answers;
-            answerTex = new Texture2D[answers.Length];
-            for (int i = 0; i < answers.Length; i++)
-            {
-                Vector2 size = spriteFont.MeasureString(answers[i]);
-                RenderTarget2D rt = new RenderTarget2D(graphicsDevice, (int)size.X, (int)size.Y, true, graphicsDevice.DisplayMode.Format, DepthFormat.Depth24, 4, RenderTargetUsage.PreserveContents);
-                graphicsDevice.SetRenderTarget(rt);
-                graphicsDevice.Clear(Color.Transparent);
-                answerTex[i] = (Texture2D)rt;
-                SpriteBatch.Begin();
-                SpriteBatch.DrawString(spriteFont, answers[i], Vector2.Zero, Color.Tomato, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
-                SpriteBatch.End();
-            }
-            graphicsDevice.SetRenderTarget(null);
-        }
-
         #region Transitioning
         public override void EnterState(bool freezeBelow)
         {
@@ -191,9 +133,7 @@ namespace game_states
                 {
                     if (!exitingState)
                     {
-                        updateObjects(gameTime);
-
-                        translateQuads();
+                        goManager.Update(gameTime);
 
                         handleInput(gameTime);
                     }
@@ -208,7 +148,8 @@ namespace game_states
                 KeyboardHelper.LockKey(Keys.Escape);
                 if (parent.EnterState((int)StatesIdList.PAUSE, false))
                 {
-                    alpha = 0.5f;
+                    Alpha = 0.5f;
+                    goManager.R3D.Alpha = goManager.R2D.Alpha = Alpha;
                     pauseFlag = true;
                     stateEntered = false;
                 }
@@ -219,141 +160,10 @@ namespace game_states
             }
         }
 
-        private void translateQuads()
-        {
-            foreach (Quad quad in floorTiles)
-            {
-                if (quad.Coord.Z <= cam.Z)
-                {
-                    quad.translate(new Vector3(0, 0, scale * rows));
-                }
-            }
-        }
-
-        private void updateObjects(GameTime gameTime)
-        {
-            cam.Update(gameTime);
-            player.Update(gameTime);
-            basicEffect.View = cam.View;
-            basicEffect.Projection = cam.Projection;
-
-            if (questions.Peek().Position.Z <= cam.Z)
-            {
-                questions.Pop();
-                createQuestion();
-            }
-        }
-
         #region DRAWING
         public override void Draw(GameTime gameTime)
         {
-            GraphicsDevice graphicsDevice = parent.GraphicsDevice;
-
-            basicEffect.Alpha = alpha;
-
-            DrawBackGround(graphicsDevice);
-
-            DrawFloor(graphicsDevice);
-
-            DrawQuestions(graphicsDevice);
-
-            DrawCharacter(graphicsDevice);
-
-            #region DEBUG CODE
-
-            if (SimpleTexture == null)
-            {
-                SimpleTexture = new Texture2D(graphicsDevice, 1, 1, false, SurfaceFormat.Color);
-                SimpleTexture.SetData(new[] { Color.White });
-            }
-            SpriteBatch.Begin();
-            DrawLine(SpriteBatch, SimpleTexture, 1, Color.Red, new Vector2(Mouse.GetState().X, 0), new Vector2(Mouse.GetState().X, graphicsDevice.Viewport.Bounds.Height));
-            DrawLine(SpriteBatch, SimpleTexture, 1, Color.Red, new Vector2(0, Mouse.GetState().Y), new Vector2(graphicsDevice.Viewport.Bounds.Width, Mouse.GetState().Y));
-            SpriteBatch.End();
-
-
-            #endregion
-        }
-
-        void DrawLine(SpriteBatch batch, Texture2D blank,
-        float width, Color color, Vector2 point1, Vector2 point2)
-        {
-            float angle = (float)Math.Atan2(point2.Y - point1.Y, point2.X - point1.X);
-            float length = Vector2.Distance(point1, point2);
-
-            batch.Draw(blank, point1, null, color,
-                       angle, Vector2.Zero, new Vector2(length, width),
-                       SpriteEffects.None, 0);
-        }
-
-        private void DrawQuestions(GraphicsDevice graphicsDevice)
-        {
-            graphicsDevice.BlendState = BlendState.AlphaBlend;
-            Question q = questions.Peek();
-            for (int i = 0; i < q.Answers.Length; i++)
-            {
-                Texture2D tex = answerTex[i];
-                basicEffect.Texture = tex;
-
-                Quad quad = q.AnswersQuads[i];
-                foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes)
-                {
-                    pass.Apply();
-                    graphicsDevice.DrawUserIndexedPrimitives
-                            <VertexPositionNormalTexture>(
-                            PrimitiveType.TriangleList,
-                            quad.Vertices, 0, 4,
-                            Quad.Indexes, 0, 2);
-                }
-            }
-        }
-
-        private void DrawCharacter(GraphicsDevice graphicsDevice)
-        {
-            graphicsDevice.BlendState = BlendState.AlphaBlend;
-            basicEffect.Texture = character;
-            foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes)
-            {
-                pass.Apply();
-                graphicsDevice.DrawUserIndexedPrimitives
-                        <VertexPositionNormalTexture>(
-                        PrimitiveType.TriangleList,
-                        player.Sprite.Vertices, 0, 4,
-                        Quad.Indexes, 0, 2);
-            }
-        }
-
-        private void DrawFloor(GraphicsDevice graphicsDevice)
-        {
-            graphicsDevice.BlendState = BlendState.Opaque;
-            basicEffect.Texture = floor;
-
-            BoundingFrustum frustum = new BoundingFrustum(basicEffect.View * basicEffect.Projection);
-
-            foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes)
-            {
-                pass.Apply();
-                foreach (Quad quad in floorTiles)
-                {
-                    BoundingBox box = new BoundingBox(quad.Vertices[1].Position, quad.Vertices[2].Position);
-                    if (frustum.Contains(box) != ContainmentType.Disjoint)
-                    {
-                        graphicsDevice.DrawUserIndexedPrimitives
-                            <VertexPositionNormalTexture>(
-                            PrimitiveType.TriangleList,
-                            quad.Vertices, 0, 4,
-                            Quad.Indexes, 0, 2);
-                    }
-                }
-            }
-        }
-
-        private void DrawBackGround(GraphicsDevice graphicsDevice)
-        {
-            graphicsDevice.BlendState = BlendState.AlphaBlend;
-            SpriteBatch.Begin();
-            SpriteBatch.Draw(bg, Vector2.Zero, Color.White * alpha);
-            SpriteBatch.End();
+            goManager.Draw(gameTime);
         }
 
         #endregion

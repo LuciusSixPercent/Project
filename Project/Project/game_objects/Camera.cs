@@ -17,6 +17,9 @@ namespace game_objects
         private float fieldOfView;
         private bool lockRotation;
 
+        public delegate void CameraMoved();
+        public event CameraMoved cam_moved;
+
         public bool LockRotation
         {
             get { return lockRotation; }
@@ -118,7 +121,13 @@ namespace game_objects
             Vector3 pos = position;
             base.Update(gameTime);
             if (pos != position)
+            {
                 lookAt(target, true);
+                if (cam_moved != null)
+                {
+                    cam_moved();
+                }
+            }
         }
     }
 }

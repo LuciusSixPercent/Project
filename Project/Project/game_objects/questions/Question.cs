@@ -4,15 +4,16 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Project;
+using Microsoft.Xna.Framework.Content;
 
 namespace game_objects.questions
 {
-    public class Question : GameObject
+    public class Question : DrawableGameObject
     {
         private QuestionSubject type;
         private string[] answers;
 
-        private int answerIndex;
+        private int correctAnswerIndex;
         private string header;
 
         private Quad[] answersQuads;
@@ -33,13 +34,12 @@ namespace game_objects.questions
             }
         }
 
-
-        public Question(QuestionSubject type, string header, string[] answers)
+        public Question(Renderer renderer, QuestionSubject type, string header, string[] answers, int correctAnswerIndex) : base(renderer)
         {
             this.type = type;
             this.header = header;
             this.answers = answers;
-            answerIndex = 0;
+            this.correctAnswerIndex = correctAnswerIndex;
             answersQuads = new Quad[answers.Length];
         }
 
@@ -78,6 +78,16 @@ namespace game_objects.questions
                 base.Position = value;
                 createQuads();
             }
+        }
+
+        public override void Load(ContentManager cManager)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Draw(GameTime gameTime)
+        {
+            throw new NotImplementedException();
         }
     }
 }
