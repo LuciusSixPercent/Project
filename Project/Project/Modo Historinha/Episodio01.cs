@@ -78,7 +78,7 @@ class Episodio01 : GameState
     string[] dialogo01;
     string[] dialogo02;
     string[] dialogo03;
-    string dialogo04;
+    string[] dialogo04;
     string[] dialogo05;
     #endregion
     #region Criada as questões
@@ -157,7 +157,7 @@ class Episodio01 : GameState
             dialogo01 = new string[2] { fala01, fala02 };
             dialogo02 = new string[5] { fala03, fala04, fala05, fala06, fala07 };
             dialogo03 = new string[2] { fala08, fala09 };
-            dialogo04 = fala10;
+            dialogo04 = new string[1]{ fala10};
             dialogo05 = new string[4] { fala11, fala12, fala13, fala14 };
             #endregion
             #region Exercicios
@@ -215,6 +215,22 @@ class Episodio01 : GameState
                 }
                 repetir = true;
             }
+            if (KeyboardHelper.IsKeyDown(Keys.Z))
+            {
+                KeyboardHelper.LockKey(Keys.Z);
+                if (AlbumPrincipal[NoAlbum].Count == selecionar + 1)//Se o Album que está tocando chegou a sua ultima música
+                {
+                    NoAlbum += NoAlbum < AlbumPrincipal.Count ? 1 : 0;//Trocar de album
+                    selecionar = 0;//eu zero o contador de musicas
+                    Incremento0++;// Incremento mais 1 na variavel que permite que o texto continue
+
+                }
+                else
+                {
+                    selecionar += selecionar < AlbumPrincipal[NoAlbum].Count ? 1 : 0;//Ele troca de música
+                }
+                repetir = true;
+            }
             //////////////////////////////////////Fim da Parte de Narração//////////////////////////////////////////////////////////////////
             if (stateEntered)
             {
@@ -248,9 +264,14 @@ class Episodio01 : GameState
     {
         SpriteBatch.Begin();
         cor = Color.White * Alpha;
-       
-        SpriteBatch.DrawString(arial, MediaPlayer.PlayPosition.Minutes.ToString()+" : "+ MediaPlayer.PlayPosition.Seconds, new Vector2(400, 700), cor);//Aqui eu vejo em quanto tempo está a narração
-        SpriteBatch.DrawString(arial, AlbumPrincipal[NoAlbum][selecionar].Duration.Minutes.ToString() + " : " + AlbumPrincipal[NoAlbum][selecionar].Duration.Seconds, new Vector2(600, 700), cor);
+
+        string Tmusica = MediaPlayer.PlayPosition.Minutes.ToString() + " : " + MediaPlayer.PlayPosition.Seconds;
+        string TpLAYER = AlbumPrincipal[NoAlbum][selecionar].Duration.Minutes.ToString() + " : " + AlbumPrincipal[NoAlbum][selecionar].Duration.Seconds;
+        string NomeMusica = AlbumPrincipal[NoAlbum][selecionar].Name;
+        SpriteBatch.Begin();
+        cor = Color.White * Alpha;
+        SpriteBatch.DrawString(arial, "Help key = [z]", new Vector2(200, 720), cor);
+        SpriteBatch.DrawString(arial, Tmusica + " / " + TpLAYER + " = " + NomeMusica, new Vector2(200, 700), cor);//Aqui eu vejo em quanto tempo está a narração
         //Aqui em cima eu imprimo o tempo total da musica;
         //*
         
@@ -417,7 +438,55 @@ class Episodio01 : GameState
             }
 
         }
-        if (primeiro && segundo && terceiro)
+        if (primeiro && segundo && terceiro && !quarto)
+        {
+            if (Incremento0 == dialogo04.Length)
+            {
+                parte4 = true;
+
+            }
+            if (!parte4)
+            {
+                ModoExercicios = false;
+                if (!pauseFlag)
+                {
+                    if (indice < dialogo04[Incremento0].Length) { texto += dialogo04[Incremento0][indice]; }
+                    indice = indice + (indice < dialogo04[Incremento0].Length ? 1 : 0);
+                    if (texto.Length == dialogo04[Incremento0].Length + 1)
+                    {
+                        //mile += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
+                        //Segundos = mile / 1000;
+                        if (repetir)
+                        {
+
+                            Incremento0++;
+                            indice = 0;
+                            zerar = 1;
+                            texto = "";
+                            FalasPorSegundo += ritimo;
+
+                        }
+                    }
+                }
+                SpriteBatch.DrawString(arial, texto, posicaoText, cor);
+
+            }
+            if (parte4 && !exercicio4)
+            {
+                texto = "";
+                indice = 0;
+                Incremento0 = 0;
+                zerar = 1;
+                mile = 0;
+                Exercicio04.Atualizar();
+                Exercicio04.Desenhar(SpriteBatch);
+                exercicio4 = Exercicio04.Continuar();
+                repetir = exercicio4;
+                quarto = exercicio4;
+            }
+
+        }
+        if (primeiro && segundo && terceiro && quarto)
         {
             SpriteBatch.DrawString(arial, "Fim da Demo", posicaoText, cor);
             if ((int)Segundos % FalasPorSegundo == 0 && (int)Segundos > 0)
