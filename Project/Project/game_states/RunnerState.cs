@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Input;
 using Project;
 using game_objects;
 using game_objects.questions;
+using System.IO;
 
 namespace game_states
 {
@@ -84,8 +85,6 @@ namespace game_states
                 goManager.AddObject(new Sky(goManager.R2D));
                 goManager.AddObject(new Field(goManager.R3D, rows, columns));
                 goManager.AddObject(player);
-
-                ChangeCurrentQuestion();
             }
         }
 
@@ -106,7 +105,7 @@ namespace game_states
         {
             /*TODO: carregar todas as questões de uma vez na pilha e apenas ir removendo as que forem resolvidas*/
             foundAnswer = 0;
-            questions.Push(QuestionFactory.CreateQuestion(level, QuestionSubject.PT, 3, goManager.R3D, goManager.R2D));
+            questions.Push(QuestionFactory.CreateQuestion(level, QuestionSubject.PT, 3, goManager.R3D));
             questions.Peek().Load(parent.Content);
             goManager.AddDrawableObject(questions.Peek(), player);
             questions.Peek().Position = new Vector3(0, 1, player.Position.Z + 10);
@@ -116,9 +115,15 @@ namespace game_states
         {
             if (!contentLoaded)
             {
-                contentLoaded = true;
+                TextureHelper.LoadDefaultFont(parent.Content);
+
+                ChangeCurrentQuestion();
+
                 goManager.Load(parent.Content);
+                
                 player.Position = new Vector3(0f, 1f, 0f);
+
+                contentLoaded = true;
             }
         }
 

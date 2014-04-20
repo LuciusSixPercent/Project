@@ -10,6 +10,11 @@ namespace game_objects
     public abstract class Renderer
     {
         protected GraphicsDevice gDevice;
+
+        public GraphicsDevice GDevice
+        {
+            get { return gDevice; }
+        }
         private float alpha;
 
         public virtual float Alpha

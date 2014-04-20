@@ -46,11 +46,15 @@ namespace Project
             IsMouseVisible = true;
             graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
             spriteBatch = new SpriteBatch(graphics.GraphicsDevice);
+
             states = new Dictionary<int, GameState>();
+
             statesStack = new List<GameState>();
+
             menu = new Menu((int)StatesIdList.MAIN_MENU, this);
             states.Add(menu.ID, menu);
             EnterState(menu.ID);
+
             md = new Episodio01((int)StatesIdList.STORY, this);
             states.Add(md.ID, md);
 
@@ -81,7 +85,7 @@ namespace Project
         //sai do estado especificado em id e entra no estado especificado em id2
         public void ExitState(int id, int id2)
         {
-            if (statesStack[states.Count - 1].ID == id)
+            if (statesStack[statesStack.Count - 1].ID == id)
             {
                 statesStack.RemoveAt(statesStack.Count - 1);
                 EnterState(id2);
@@ -124,21 +128,6 @@ namespace Project
         //Dessa forma podemos ter multiplos estados ativos simultaneamente se assim for necessário
         protected override void Update(GameTime gameTime)
         {
-            if (menu.Historinha)
-            {
-                ExitState(menu.ID);
-                EnterState(md.ID);
-            }
-            if (menu.BateBola)
-            {
-                ExitState(menu.ID);
-                EnterState(rs.ID);
-            }
-            if (md.FimDaHistoria)
-            {
-                ExitState(md.ID);
-                EnterState(rs.ID);
-            }
             UpdateOrDraw(gameTime, false);
             base.Update(gameTime);
         }

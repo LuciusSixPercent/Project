@@ -13,7 +13,33 @@ namespace game_objects.questions
     {
         private string text;
         private Quad quad;
-        private float scale = 1f;
+
+        private const float scale = 0.5f;
+        private Texture2D texture;
+
+        private bool textureLoaded;
+
+        private Quad Quad
+        {
+            get {
+                if (quad == null)
+                    CreateQuad();
+                return quad;
+            }
+        }
+
+        public override Vector3 Position
+        {
+            get
+            {
+                return base.Position;
+            }
+            set
+            {
+                base.Position = value;
+                CreateQuad();
+            }
+        }
 
         public Answer(Renderer3D renderer, string text)
             : base(renderer)
@@ -23,9 +49,13 @@ namespace game_objects.questions
 
         private void CreateQuad()
         {
-            Vector3 backUpperLeft = quad.Vertices[1].Position;
+            Vector3 nrm = new Vector3(0, 0, -1);
+            float proportion = (float)texture.Width / texture.Height;
+            quad = new Quad(position, nrm, Vector3.Up, scale * proportion, scale);
+            Vector3 test = new Vector3((1 - scale*proportion)/2, 0, 0);
+            Vector3 backUpperLeft = Quad.Vertices[1].Position + test;
 
-            Vector3 frontBottomRight = quad.Vertices[2].Position;
+            Vector3 frontBottomRight = Quad.Vertices[2].Position - test;
 
             BoundingBox = new BoundingBox(frontBottomRight, backUpperLeft);
         }
@@ -33,19 +63,20 @@ namespace game_objects.questions
         public override void Translate(Vector3 amount)
         {
             base.Translate(amount);
-            quad.Translate(amount);
+            Quad.Translate(amount);
             boundingBox.Max += amount;
             boundingBox.Min += amount;
         }
 
         public override void Load(ContentManager cManager)
         {
-            
+            textureLoaded = TextureHelper.StringToTexture(text, out texture);
         }
 
         public override void Draw(GameTime gameTime)
         {
-            //((Renderer3D)Renderer).Draw(gameTime, TextureHelper.StringToTexture(texte), quad, BlendState.AlphaBlend);
+            if(textureLoaded)
+                ((Renderer3D)Renderer).Draw(gameTime, texture, Quad, BlendState.AlphaBlend);
         }
     }
 }

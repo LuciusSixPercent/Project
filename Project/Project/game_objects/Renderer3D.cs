@@ -52,7 +52,7 @@ namespace game_objects
 
         private void initEffect()
         {
-            basicEffect = new AlphaTestEffect(gDevice);
+            basicEffect = new AlphaTestEffect(GDevice);
             basicEffect.FogEnabled = true;
             basicEffect.FogColor = Color.Gray.ToVector3();
             basicEffect.World = Matrix.Identity;
@@ -74,7 +74,7 @@ namespace game_objects
 
         public void Draw(GameTime gameTime, Texture2D texture, IEnumerable<Quad> quads, BlendState blendState)
         {
-            gDevice.BlendState = blendState;
+            GDevice.BlendState = blendState;
             basicEffect.Texture = texture;
 
             foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes)
@@ -89,7 +89,7 @@ namespace game_objects
 
         public void Draw(GameTime gameTime, Texture2D texture, Quad quad, BlendState blendState)
         {
-            gDevice.BlendState = blendState;
+            GDevice.BlendState = blendState;
             basicEffect.Texture = texture;
 
             foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes)
@@ -102,9 +102,9 @@ namespace game_objects
         private void drawQuad(Quad quad)
         {
             //necessário para que os objetos "3D" sejam desenhados na ordem correta
-            gDevice.DepthStencilState = DepthStencilState.Default;
+            GDevice.DepthStencilState = DepthStencilState.Default;
 
-            gDevice.DrawUserIndexedPrimitives
+            GDevice.DrawUserIndexedPrimitives
                 <VertexPositionNormalTexture>(
                 PrimitiveType.TriangleList,
                 quad.Vertices, 0, 4,

@@ -198,6 +198,17 @@ using Microsoft.Xna.Framework.Media;
 
                     }
                     #endregion
+
+                    if (Historinha)
+                    {
+                        MediaPlayer.Stop();
+                        parent.EnterState((int)StatesIdList.STORY);
+                    } else
+                    if (BateBola)
+                    {
+                        MediaPlayer.Stop();
+                        parent.EnterState((int)StatesIdList.RUNNER);
+                    }
                     #endregion
                 }
             }
