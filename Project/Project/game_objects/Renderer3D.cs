@@ -10,14 +10,15 @@ namespace game_objects
 {
     public class Renderer3D : Renderer
     {
-        BasicEffect basicEffect;
+        AlphaTestEffect basicEffect;
         Camera cam;
         private BoundingFrustum frustum;
 
         public Camera Cam
         {
             get { return cam; }
-            set { 
+            set
+            {
                 cam = value;
                 cam.cam_moved += new Camera.CameraMoved(cam_cam_moved);
                 changeFog(cam.NearView, cam.FarView);
@@ -51,11 +52,11 @@ namespace game_objects
 
         private void initEffect()
         {
-            basicEffect = new BasicEffect(gDevice);
+            basicEffect = new AlphaTestEffect(gDevice);
             basicEffect.FogEnabled = true;
             basicEffect.FogColor = Color.Gray.ToVector3();
             basicEffect.World = Matrix.Identity;
-            basicEffect.TextureEnabled = true;
+            //basicEffect.TextureEnabled = true;
         }
 
         public void updateEffect(Matrix view, Matrix projection)
@@ -100,15 +101,15 @@ namespace game_objects
 
         private void drawQuad(Quad quad)
         {
-            BoundingBox box = new BoundingBox(quad.Vertices[1].Position, quad.Vertices[2].Position);
-            if (frustum.Contains(box) != ContainmentType.Disjoint)
-            {
-                gDevice.DrawUserIndexedPrimitives
-                    <VertexPositionNormalTexture>(
-                    PrimitiveType.TriangleList,
-                    quad.Vertices, 0, 4,
-                    Quad.Indexes, 0, 2);
-            }
+            //necessário para que os objetos "3D" sejam desenhados na ordem correta
+            gDevice.DepthStencilState = DepthStencilState.Default;
+
+            gDevice.DrawUserIndexedPrimitives
+                <VertexPositionNormalTexture>(
+                PrimitiveType.TriangleList,
+                quad.Vertices, 0, 4,
+                Quad.Indexes, 0, 2);
+
         }
     }
 }

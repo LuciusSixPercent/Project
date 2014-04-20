@@ -75,7 +75,7 @@ namespace game_objects
             {
                 if (quad.Coord.Z <= ((Renderer3D)Renderer).Cam.Z)
                 {
-                    quad.translate(new Vector3(0, 0, scale * rows));
+                    quad.Translate(new Vector3(0, 0, scale * rows));
                 }
             }
         }

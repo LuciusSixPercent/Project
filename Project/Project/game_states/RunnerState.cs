@@ -22,7 +22,7 @@ namespace game_states
             set { level = value; }
         }
 
-        int columns = 10;
+        int columns = 4;
         int rows = 54;
 
         private Camera cam;
@@ -31,13 +31,10 @@ namespace game_states
 
         bool pauseFlag;
 
-        #region Graphics
-        private SpriteFont spriteFont;
-        #endregion
-
         private bool contentLoaded;
 
         private GameObjectsManager goManager;
+        private int foundAnswer; //0 for no; 1 for correct; -1 for incorrect
 
         #endregion
 
@@ -66,27 +63,53 @@ namespace game_states
             {
                 base.Initialize();
 
+                level = RunnerLevel.EASY;
+
                 enterTransitionDuration = 500;
                 exitTransitionDuration = 250;
 
-                goManager = new GameObjectsManager(parent.GraphicsDevice);                
+                goManager = new GameObjectsManager(parent.GraphicsDevice);
 
                 questions = new Stack<Question>();
 
-                player = new Character(goManager, goManager.R3D, "Maria");                
+                player = new Character(goManager, goManager.R3D, "cosme");
+                player.collidedWithQuestion += new Character.CollidedWithQuestion(player_collidedWithQuestion);
 
-                cam = new Camera(new Vector3(0f, 3f, -4f), Vector3.Up, new Vector2(0.25f, 50));
+                cam = new Camera(new Vector3(0f, 3f, -4f), Vector3.Up, new Vector2(0.25f, 30));
                 cam.lookAt(new Vector3(0f, 0.25f, 2f), true);
                 cam.createProjection(MathHelper.PiOver4, parent.GraphicsDevice.Viewport.AspectRatio);
                 goManager.R3D.Cam = cam;
-                goManager.AddObject(cam);
 
+                goManager.AddObject(cam);
                 goManager.AddObject(new Sky(goManager.R2D));
                 goManager.AddObject(new Field(goManager.R3D, rows, columns));
                 goManager.AddObject(player);
 
-                level = RunnerLevel.EASY;
+                ChangeCurrentQuestion();
             }
+        }
+
+        void player_collidedWithQuestion(Vector3 position, bool correctAnswer)
+        {
+            if (correctAnswer)
+            {
+                foundAnswer = 1;
+                goManager.removeObject(questions.Pop());
+            }
+            else
+            {
+                foundAnswer = -1;
+            }
+        }
+
+        private void ChangeCurrentQuestion()
+        {
+            /*TODO: carregar todas as questões de uma vez na pilha e apenas ir removendo as que forem resolvidas*/
+            foundAnswer = 0;
+            questions.Push(QuestionFactory.CreateQuestion(level, QuestionSubject.PT, 3, goManager.R3D, goManager.R2D));
+            questions.Peek().Load(parent.Content);
+            goManager.AddDrawableObject(questions.Peek(), player);
+            questions.Peek().Position = new Vector3(0, 1, player.Position.Z + 10);
         }
 
         protected override void LoadContent()
@@ -95,10 +118,10 @@ namespace game_states
             {
                 contentLoaded = true;
                 goManager.Load(parent.Content);
-                player.Position = new Vector3(0f, 0.5f, 0f);
-                spriteFont = parent.Content.Load<SpriteFont>("Fonte/Verdana");
+                player.Position = new Vector3(0f, 1f, 0f);
             }
         }
+
         #region Transitioning
         public override void EnterState(bool freezeBelow)
         {
@@ -133,6 +156,14 @@ namespace game_states
                 {
                     if (!exitingState)
                     {
+                        if (foundAnswer == 1)
+                            ChangeCurrentQuestion();
+                        else if (foundAnswer == -1)
+                        {
+                            questions.Peek().Translate(new Vector3(0, 0, 20));
+                            foundAnswer = 0;
+                        }
+
                         goManager.Update(gameTime);
 
                         handleInput(gameTime);

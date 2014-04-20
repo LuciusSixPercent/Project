@@ -114,11 +114,13 @@
     <Compile Include="components\PlayerMovementComponent.cs" />
     <Compile Include="game_objects\Button.cs" />
     <Compile Include="game_objects\Camera.cs" />
+    <Compile Include="game_objects\CollidableGameObject.cs" />
     <Compile Include="game_objects\Field.cs" />
     <Compile Include="game_objects\GameObject.cs" />
     <Compile Include="game_objects\DrawableGameObject.cs" />
     <Compile Include="game_objects\GameObjectsManager.cs" />
     <Compile Include="game_objects\Character.cs" />
+    <Compile Include="game_objects\questions\Answer.cs" />
     <Compile Include="game_objects\questions\Question.cs" />
     <Compile Include="game_objects\questions\QuestionFactory.cs" />
     <Compile Include="game_objects\questions\QuestionSubject.cs" />

@@ -72,7 +72,7 @@ namespace game_objects
             this.up = up;
             this.clip = clip;
             lookAt(Vector3.Zero, true);
-            ConstantMovementComponent cmc = new ConstantMovementComponent(this, new Vector3(0, 0, 0.1f), 10);
+            ConstantMovementComponent cmc = new ConstantMovementComponent(this, new Vector3(0, 0, 0.1f), 40);
             addComponent(cmc);
         }
 

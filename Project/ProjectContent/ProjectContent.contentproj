@@ -167,7 +167,74 @@
       <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="Imagem\Personagem\cosmecorre\cosme_corre1.png">
+      <Name>cosme_corre1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_ColorKeyColor>165, 210, 96, 255</ProcessorParameters_ColorKeyColor>
+    </Compile>
+    <Compile Include="Imagem\Personagem\cosmecorre\cosme_corre2.png">
+      <Name>cosme_corre2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_ColorKeyColor>165, 210, 96, 255</ProcessorParameters_ColorKeyColor>
+    </Compile>
+    <Compile Include="Imagem\Personagem\cosmecorre\cosme_corre3.png">
+      <Name>cosme_corre3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_ColorKeyColor>165, 210, 96, 255</ProcessorParameters_ColorKeyColor>
+    </Compile>
+    <Compile Include="Imagem\Personagem\cosmecorre\cosme_corre4.png">
+      <Name>cosme_corre4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_ColorKeyColor>165, 210, 96, 255</ProcessorParameters_ColorKeyColor>
+    </Compile>
+    <Compile Include="Imagem\Personagem\cosmecorre\cosme_corre5.png">
+      <Name>cosme_corre5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_ColorKeyColor>165, 210, 96, 255</ProcessorParameters_ColorKeyColor>
+    </Compile>
+    <Compile Include="Imagem\Personagem\cosmecorre\cosme_corre6.png">
+      <Name>cosme_corre6</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_ColorKeyColor>165, 210, 96, 255</ProcessorParameters_ColorKeyColor>
+    </Compile>
+    <Compile Include="Imagem\Personagem\cosmecorre\cosme_corre7.png">
+      <Name>cosme_corre7</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_ColorKeyColor>165, 210, 96, 255</ProcessorParameters_ColorKeyColor>
+    </Compile>
+    <Compile Include="Imagem\Personagem\cosmecorre\cosme_corre8.png">
+      <Name>cosme_corre8</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_ColorKeyColor>165, 210, 96, 255</ProcessorParameters_ColorKeyColor>
+    </Compile>
+    <Compile Include="Imagem\Personagem\cosmecorre\cosme_corre9.png">
+      <Name>cosme_corre9</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_ColorKeyColor>165, 210, 96, 255</ProcessorParameters_ColorKeyColor>
+    </Compile>
+    <Compile Include="Imagem\Personagem\cosmecorre\cosme_corre10.png">
+      <Name>cosme_corre10</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_ColorKeyColor>165, 210, 96, 255</ProcessorParameters_ColorKeyColor>
+    </Compile>
+    <Compile Include="Imagem\Personagem\cosmecorre\cosme_corre11.png">
+      <Name>cosme_corre11</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_ColorKeyColor>165, 210, 96, 255</ProcessorParameters_ColorKeyColor>
+    </Compile>
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="Narrar\Cena01\Exercicio01.mp3">
       <Name>Exercicio01</Name>

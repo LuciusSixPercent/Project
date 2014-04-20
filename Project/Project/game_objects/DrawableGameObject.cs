@@ -12,13 +12,6 @@ namespace game_objects
     {
         private bool visible;
         private Renderer renderer;
-        private bool collidable;
-
-        public bool Collidable
-        {
-            get { return collidable; }
-            set { collidable = value; }
-        }
 
         public Renderer Renderer
         {
