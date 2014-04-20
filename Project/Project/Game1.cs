@@ -17,10 +17,12 @@ namespace Project
     {
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
-
+        
         private Dictionary<int, GameState> states;
         private List<GameState> statesStack;
-
+        Menu menu;
+        Episodio01 md;
+        RunnerState rs;
         /*
         public SpriteBatch SpriteBatch
         {
@@ -46,13 +48,15 @@ namespace Project
             spriteBatch = new SpriteBatch(graphics.GraphicsDevice);
             states = new Dictionary<int, GameState>();
             statesStack = new List<GameState>();
-
-            Episodio01 md = new Episodio01((int)StatesIdList.STORY, this);
+            menu = new Menu((int)StatesIdList.MAIN_MENU, this);
+            states.Add(menu.ID, menu);
+            EnterState(menu.ID);
+            md = new Episodio01((int)StatesIdList.STORY, this);
             states.Add(md.ID, md);
 
-            RunnerState rs = new RunnerState((int)StatesIdList.RUNNER, this);
+            rs = new RunnerState((int)StatesIdList.RUNNER, this);
             states.Add(rs.ID, rs);
-            EnterState(rs.ID);
+           // EnterState(rs.ID);
 
             PauseState ps = new PauseState((int)StatesIdList.PAUSE, this);
             states.Add(ps.ID, ps);
@@ -120,6 +124,21 @@ namespace Project
         //Dessa forma podemos ter multiplos estados ativos simultaneamente se assim for necessário
         protected override void Update(GameTime gameTime)
         {
+            if (menu.Historinha)
+            {
+                ExitState(menu.ID);
+                EnterState(md.ID);
+            }
+            if (menu.BateBola)
+            {
+                ExitState(menu.ID);
+                EnterState(rs.ID);
+            }
+            if (md.FimDaHistoria)
+            {
+                ExitState(md.ID);
+                EnterState(rs.ID);
+            }
             UpdateOrDraw(gameTime, false);
             base.Update(gameTime);
         }

@@ -106,9 +106,7 @@ class Episodio01 : GameState
     #endregion
     #region Incrementos para o Dialogo
     int Incremento0 = 0;
-    int Incremento1 = 0;
-    int Incremento2 = 0;
-    int Incremento3 = 0;
+    
     #endregion
     #region RESTO
     SpriteFont arial;
@@ -140,7 +138,7 @@ class Episodio01 : GameState
     public Episodio01(int id, Game1 parent)
         : base(id, parent)
     {
-
+        FimDaHistoria = false;
         Initialize();
 
     }
@@ -149,6 +147,7 @@ class Episodio01 : GameState
 
         if (!initialized)
         {
+            LoadContent();
             base.Initialize();
             #region Vetores
             posicaoText = new Vector2(20, 600);
@@ -188,12 +187,13 @@ class Episodio01 : GameState
     }
     public override void Update(GameTime tempo)
     {
-        if (!pauseFlag)
-        {
+        //if (!pauseFlag)
+        //{
 
             base.Update(tempo);
             //MediaPlayer.IsRepeating = false;
             //////////////////////////////////////////////////////////////////Aqui é onde a narração vai acontecer////////////////////////////////////////////////
+            
             if (repetir && selecionar < AlbumPrincipal[NoAlbum].Count && !ModoExercicios)//Aqui eu vou verificar se tem algum audio rodando, se não  tiver eu toco uma nova narração.
             {
                 MediaPlayer.Play(AlbumPrincipal[NoAlbum][selecionar]);//Narração.
@@ -207,7 +207,7 @@ class Episodio01 : GameState
                     NoAlbum += NoAlbum < AlbumPrincipal.Count ? 1 : 0;//Trocar de album
                     selecionar = 0;//eu zero o contador de musicas
                     Incremento0++;// Incremento mais 1 na variavel que permite que o texto continue
-                    
+
                 }
                 else
                 {
@@ -257,13 +257,12 @@ class Episodio01 : GameState
                 }
             }
 
-        }
+        //}
     }
 
     public override void Draw(GameTime gameTime)
     {
-        SpriteBatch.Begin();
-        cor = Color.White * Alpha;
+        
 
         string Tmusica = MediaPlayer.PlayPosition.Minutes.ToString() + " : " + MediaPlayer.PlayPosition.Seconds;
         string TpLAYER = AlbumPrincipal[NoAlbum][selecionar].Duration.Minutes.ToString() + " : " + AlbumPrincipal[NoAlbum][selecionar].Duration.Seconds;
@@ -309,10 +308,10 @@ class Episodio01 : GameState
                                 indice = 0;//Falo que o numero de letras é zero;
                                 zerar = 1;//Falo que agora ele poderar pular uma linha no texto, caso a condição seja feita.(Vá no Update para ver a condição)
                                 texto = "";//O texto a ser impresso agora não possui nada;
-                                if (Incremento0 == 2) // Isso é só para testes
-                                {
-                                    Console.Beep();
-                                }
+                                //if (Incremento0 == 2) // Isso é só para testes
+                                //{
+                                //    Console.Beep();
+                                //}
                                 //FalasPorSegundo += ritimo;
                                 
                             }
@@ -393,6 +392,11 @@ class Episodio01 : GameState
         }
         if (primeiro && segundo && !terceiro)
         {
+            if (Incremento0 == dialogo03.Length)
+            {
+                parte3 = true;
+
+            }
             if (!parte3)
             {
                 ModoExercicios = false;
@@ -412,11 +416,7 @@ class Episodio01 : GameState
                             zerar = 1;
                             texto = "";
                             FalasPorSegundo += ritimo;
-                            if (Incremento0 == dialogo03.Length)
-                            {
-                                parte3 = true;
-
-                            }
+                            
                         }
                     }
                 }
@@ -481,18 +481,67 @@ class Episodio01 : GameState
                 Exercicio04.Atualizar();
                 Exercicio04.Desenhar(SpriteBatch);
                 exercicio4 = Exercicio04.Continuar();
-                repetir = exercicio4;
+                repetir = false;
                 quarto = exercicio4;
             }
 
         }
-        if (primeiro && segundo && terceiro && quarto)
-        {
-            SpriteBatch.DrawString(arial, "Fim da Demo", posicaoText, cor);
-            if ((int)Segundos % FalasPorSegundo == 0 && (int)Segundos > 0)
-            {
 
+        if (primeiro && segundo && terceiro && quarto &&!quinto)
+        {
+            mile += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
+            Segundos = mile / 1000;
+            if (Segundos > 1)
+            {
+                if (!exercicio5 && !parte5)
+                {
+
+                    mile = 0;
+                    Exercicio05.Atualizar();
+                    Exercicio05.Desenhar(SpriteBatch);
+                    exercicio5 = Exercicio05.Continuar();
+                    repetir = exercicio5;
+                }
+                if (Incremento0 == dialogo05.Length && exercicio5)
+                {
+                    texto = "";
+                    indice = 0;
+                    Incremento0 = 0;
+                    zerar = 1;
+                    parte5 = true;
+                    quinto = true;
+
+                }
+                if (!parte5 && exercicio5)
+                {
+                    if (!pauseFlag)
+                    {
+                        if (indice < dialogo05[Incremento0].Length) { texto += dialogo05[Incremento0][indice]; }
+                        indice = indice + (indice < dialogo05[Incremento0].Length ? 1 : 0);
+                        if (texto.Length == dialogo05[Incremento0].Length + 1)
+                        {
+                            //mile += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
+                            //Segundos = mile / 1000;
+                            if (repetir)
+                            {
+
+                                Incremento0++;
+                                indice = 0;
+                                zerar = 1;
+                                texto = "";
+                                FalasPorSegundo += ritimo;
+
+                            }
+                        }
+                    }
+                    SpriteBatch.DrawString(arial, texto, posicaoText, cor);
+                }
             }
+        }
+        if (primeiro && segundo && terceiro && quarto && quinto)
+        {
+            FimDaHistoria = true;
+            
         }
         #endregion
         //*/
@@ -502,7 +551,7 @@ class Episodio01 : GameState
     {
         if (!contentLoaded)
         {
-            arial = parent.Content.Load<SpriteFont>("Fonte/Verdana");
+            arial = parent.Content.Load<SpriteFont>("Fonte/Arial");
             FalasDoNarrador();
             contentLoaded = true;
         }
@@ -521,6 +570,7 @@ class Episodio01 : GameState
     public override void EnterState()
     {
         base.EnterState();
+        
         pauseFlag = false;
     }
     public override void ExitState()
@@ -575,7 +625,7 @@ class Episodio01 : GameState
         #endregion
 
     }
-    
+    public bool FimDaHistoria{ get; set; }
 
 
 }

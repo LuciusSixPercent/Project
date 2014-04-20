@@ -8,31 +8,37 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using game_states;
 using Project;
+using Microsoft.Xna.Framework.Media;
 
 
-namespace Projeto_Historinha
-{
+
     class Menu : GameState
     {
         private SpriteBatch spriteBatch;
         Texture2D seta, menu1, menu2, menu3, menu4, menu5, menu6, Fundo;
         Rectangle rcSeta, rcmenu1, rcmenu2, rcmenu3, rcmenu4, rcmenu5, rcmenu6, rcfundo;
         Vector2[] menus;
+        bool pauseFlag;
+        private bool contentLoaded;
         int escolha = 0;
+        bool repetir = true;
+        Song Inicio;
         public Menu(int id, Game1 parent)
             : base(id, parent)
         {
-           
 
+            Initialize();
         }
         protected override void Initialize()
         {
 
             if (!initialized)
             {
-                
-                spriteBatch = new SpriteBatch(parent.GraphicsDevice);
+
                 base.Initialize();
+                LoadContent();
+                spriteBatch = new SpriteBatch(parent.GraphicsDevice);
+                
                 #region Inicializar Propriedades
                 Historinha = false;
                 BateBola = false;
@@ -59,121 +65,142 @@ namespace Projeto_Historinha
         Keys lastKey = Keys.A;
         public override void Update(GameTime tempo)
         {
-            base.Update(tempo);
-            if (stateEntered)
+            if (!pauseFlag)
             {
-                rcSeta = new Rectangle((int)menus[escolha].X, (int)menus[escolha].Y, seta.Width, seta.Height);
-                MouseState mouse = Mouse.GetState();
-                KeyboardState teclado = Keyboard.GetState();
-                if (Sair)
+                base.Update(tempo);
+                if (repetir)
                 {
-                    parent.Exit();
+                    MediaPlayer.Play(Inicio);
+                    repetir = false;
                 }
-                if (Historinha)
+                if (KeyboardHelper.IsKeyDown(Keys.Escape))
                 {
-                    
-                    
-                }
-                #region Comandos Teclado
-                if ((teclado.IsKeyDown(Keys.Down)) && (lastKey != Keys.Down))
-                {
-                    escolha += escolha == 5 ? 0 : 1;
-                    Console.Beep();
-                }
-                if (teclado.IsKeyDown(Keys.Up) && lastKey != Keys.Up)
-                {
-                    escolha -= escolha == 0 ? 0 : 1;
-                    Console.Beep();
-                }
-                if (PressionarTecla(Keys.Enter, teclado))
-                {
-                    switch (escolha)
+                    KeyboardHelper.LockKey(Keys.Escape);
+                    if (parent.EnterState((int)StatesIdList.PAUSE, false))
                     {
-                        case 0:
-                            Historinha = true;
-                            break;
-                        case 1:
-                            BateBola = true;
-                            break;
-                        case 2:
-                            Caderno = true;
-                            break;
-                        case 3:
-                            Config = true;
-                            break;
-                        case 4:
-                            Creditos = true;
-                            break;
-                        case 5:
-                            Sair = true;
-                            break;
+                        Alpha = 0.5f;
+                        pauseFlag = true;
+                        stateEntered = false;
                     }
                 }
-                Keys[] ks = teclado.GetPressedKeys();
+                else if (KeyboardHelper.KeyReleased(Keys.Escape))
+                {
+                    KeyboardHelper.UnlockKey(Keys.Escape);
+                }
+                if (stateEntered)
+                {
+                    rcSeta = new Rectangle((int)menus[escolha].X, (int)menus[escolha].Y, seta.Width, seta.Height);
+                    MouseState mouse = Mouse.GetState();
+                    KeyboardState teclado = Keyboard.GetState();
+                    if (Sair)
+                    {
+                        parent.Exit();
+                    }
+                    if (Historinha)
+                    {
 
-                if (ks.Length == 0) lastKey = Keys.A;
-                else lastKey = ks[0];
-                #endregion
-                #region Comandos Mouse
-                #region Over
-                if (ColisaoMouseOver(mouse, menu1, rcmenu1))
-                {
-                    escolha = 0;
-                }
-                if (ColisaoMouseOver(mouse, menu2, rcmenu2))
-                {
-                    escolha = 1;
-                }
-                if (ColisaoMouseOver(mouse, menu3, rcmenu3))
-                {
-                    escolha = 2;
-                }
-                if (ColisaoMouseOver(mouse, menu4, rcmenu4))
-                {
-                    escolha = 3;
-                }
-                if (ColisaoMouseOver(mouse, menu5, rcmenu5))
-                {
-                    escolha = 4;
-                }
-                if (ColisaoMouseOver(mouse, menu6, rcmenu6))
-                {
-                    escolha = 5;
-                }
-                #endregion
-                #region Click
-                if (mouse.LeftButton == ButtonState.Pressed)
-                {
+
+                    }
+                    #region Comandos Teclado
+                    if ((teclado.IsKeyDown(Keys.Down)) && (lastKey != Keys.Down))
+                    {
+                        escolha += escolha == 5 ? 0 : 1;
+                        Console.Beep();
+                    }
+                    if (teclado.IsKeyDown(Keys.Up) && lastKey != Keys.Up)
+                    {
+                        escolha -= escolha == 0 ? 0 : 1;
+                        Console.Beep();
+                    }
+                    if (PressionarTecla(Keys.Enter, teclado))
+                    {
+                        switch (escolha)
+                        {
+                            case 0:
+                                Historinha = true;
+                                break;
+                            case 1:
+                                BateBola = true;
+                                break;
+                            case 2:
+                                Caderno = true;
+                                break;
+                            case 3:
+                                Config = true;
+                                break;
+                            case 4:
+                                Creditos = true;
+                                break;
+                            case 5:
+                                Sair = true;
+                                break;
+                        }
+                    }
+                    Keys[] ks = teclado.GetPressedKeys();
+
+                    if (ks.Length == 0) lastKey = Keys.A;
+                    else lastKey = ks[0];
+                    #endregion
+                    #region Comandos Mouse
+                    #region Over
                     if (ColisaoMouseOver(mouse, menu1, rcmenu1))
                     {
-                        Historinha = true;
+                        escolha = 0;
                     }
                     if (ColisaoMouseOver(mouse, menu2, rcmenu2))
                     {
-                        BateBola = true;
+                        escolha = 1;
                     }
                     if (ColisaoMouseOver(mouse, menu3, rcmenu3))
                     {
-                        Caderno = true;
+                        escolha = 2;
                     }
                     if (ColisaoMouseOver(mouse, menu4, rcmenu4))
                     {
-                        Config = true;
+                        escolha = 3;
                     }
                     if (ColisaoMouseOver(mouse, menu5, rcmenu5))
                     {
-                        Creditos = true;
+                        escolha = 4;
                     }
                     if (ColisaoMouseOver(mouse, menu6, rcmenu6))
                     {
-                        Sair = true;
+                        escolha = 5;
                     }
+                    #endregion
+                    #region Click
+                    if (mouse.LeftButton == ButtonState.Pressed)
+                    {
+                        if (ColisaoMouseOver(mouse, menu1, rcmenu1))
+                        {
+                            Historinha = true;
+                        }
+                        if (ColisaoMouseOver(mouse, menu2, rcmenu2))
+                        {
+                            BateBola = true;
+                        }
+                        if (ColisaoMouseOver(mouse, menu3, rcmenu3))
+                        {
+                            Caderno = true;
+                        }
+                        if (ColisaoMouseOver(mouse, menu4, rcmenu4))
+                        {
+                            Config = true;
+                        }
+                        if (ColisaoMouseOver(mouse, menu5, rcmenu5))
+                        {
+                            Creditos = true;
+                        }
+                        if (ColisaoMouseOver(mouse, menu6, rcmenu6))
+                        {
+                            Sair = true;
+                        }
 
+                    }
+                    #endregion
+                    #endregion
                 }
-                #endregion
-                #endregion
             }
-            
         }
         public override void Draw(GameTime gameTime)
         {
@@ -215,51 +242,56 @@ namespace Projeto_Historinha
             else lastKey = ks[0];
             return false;
         }
-        public bool Fade(GameTime tempo)
-        {
-            if ((int)tempo.TotalGameTime.TotalSeconds % 2 == 0)
-            {
-                return true;
-            }
-            return false;
-        }
-
+        
         protected override void LoadContent()
         {
+            if (!contentLoaded)
+            {
+                #region Inicializar Variaveis
+                #region Texturas
+                Fundo = parent.Content.Load<Texture2D>("Menu/Abertura");
+                seta = parent.Content.Load<Texture2D>("Menu/Seta");
+                menu1 = parent.Content.Load<Texture2D>("Menu/MH");
+                menu2 = parent.Content.Load<Texture2D>("Menu/BB");
+                menu3 = parent.Content.Load<Texture2D>("Menu/CdA");
+                menu4 = parent.Content.Load<Texture2D>("Menu/Config");
+                menu5 = parent.Content.Load<Texture2D>("Menu/Cre");
+                menu6 = parent.Content.Load<Texture2D>("Menu/Sair");
+                #endregion
+
+                #endregion
+                Inicio = parent.Content.Load<Song>("Narrar/TelaInicial");
+                contentLoaded = true;
+            }
             
-            #region Inicializar Variaveis
-            #region Texturas
-            Fundo = parent.Content.Load<Texture2D>("Menu/Abertura");
-            seta = parent.Content.Load<Texture2D>("Menu/Seta");
-            menu1 = parent.Content.Load<Texture2D>("Menu/MH");
-            menu2 = parent.Content.Load<Texture2D>("Menu/BB");
-            menu3 = parent.Content.Load<Texture2D>("Menu/CdA");
-            menu4 = parent.Content.Load<Texture2D>("Menu/Config");
-            menu5 = parent.Content.Load<Texture2D>("Menu/Cre");
-            menu6 = parent.Content.Load<Texture2D>("Menu/Sair");
-            #endregion
-           
-            #endregion
            
         }
-        public override void EnterState()
+        
+        #region Transitioning
+        public override void EnterState(bool freezeBelow)
         {
             if (!exitingState)
             {
-                base.EnterState();
+                base.EnterState(freezeBelow);
                 LoadContent();
-                Initialize();
-               
+                pauseFlag = false;
             }
         }
-
+        public override void EnterState()
+        {
+            base.EnterState();
+            
+            pauseFlag = false;
+        }
         public override void ExitState()
         {
             if (!enteringState)
             {
                 base.ExitState();
                 parent.Content.Unload();
+                contentLoaded = false;
             }
         }
+        #endregion
     }
-}
+

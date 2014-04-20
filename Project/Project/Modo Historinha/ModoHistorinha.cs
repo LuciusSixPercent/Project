@@ -34,6 +34,7 @@ class ModoHistorinha : DateBase
     public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, string alt2, string alt3, int episodio, SpriteFont a, int n, Song narra)
         : base(c)
     {
+        venceu = false;
         narrador = narra;
         NoDeRespostas = n;
         arial = a;
@@ -56,6 +57,7 @@ class ModoHistorinha : DateBase
     public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, int episodio, SpriteFont a, int n, Song narra)
         : base(c)
     {
+        venceu = false;
         narrador = narra;
         NoDeRespostas = n;
         arial = a;
@@ -74,6 +76,7 @@ class ModoHistorinha : DateBase
     public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, string alt2, int episodio, SpriteFont a, int n, Song narra)
         : base(c)
     {
+        venceu = false;
         narrador = narra;
         NoDeRespostas = n;
         arial = a;
@@ -94,6 +97,7 @@ class ModoHistorinha : DateBase
     public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, string alt2, string alt3, int episodio, SpriteFont a, int n, Song narra, bool sequencia)
         : base(c)
     {
+        venceu = false;
         narrador = narra;
         seq = sequencia;
         NoDeRespostas = n;
