@@ -43,12 +43,6 @@ namespace game_objects
             : base(gDevice)
         {
             initEffect();
-            gDevice.DeviceReset += new EventHandler<EventArgs>(gDevice_DeviceReset);
-        }
-
-        void gDevice_DeviceReset(object sender, EventArgs e)
-        {
-            TextureHelper.FlushCache();
         }
 
         void cam_cam_moved()
