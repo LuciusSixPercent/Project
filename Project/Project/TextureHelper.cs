@@ -49,7 +49,12 @@ namespace Project
                     texture = CachedTextures[text];
                 else
                 {
-                    texture = CreateTexture(text);
+                    Texture2D tmp = CreateTexture(text);
+                    texture = new Texture2D(tmp.GraphicsDevice, tmp.Width, tmp.Height);
+                    Color[] colorData = new Color[tmp.Width*tmp.Height];
+                    tmp.GetData<Color>(colorData);
+                    texture.SetData<Color>(colorData);
+                    tmp.Dispose();
                     CachedTextures.Add(text, texture);
                 }
                 return true;
@@ -87,6 +92,11 @@ namespace Project
                 defaultSpriteFont = contentManager.Load<SpriteFont>("Fonte" + Path.AltDirectorySeparatorChar + "Arial");
                 spriteFont = defaultSpriteFont;
             }
+        }
+
+        public static void FlushCache()
+        {
+            cachedTextures.Clear();
         }
     }
 }

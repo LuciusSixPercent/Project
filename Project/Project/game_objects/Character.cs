@@ -128,11 +128,11 @@ namespace game_objects
             base.Update(gameTime);
             foreach (CollidableGameObject obj in oManager.CollidableGameObjects)
             {
-                if (obj.Collided(this) && obj is Question)
+                if (obj.Collided(this) && obj is QuestionGameObject)
                 {
                     if (collidedWithQuestion != null)
                     {
-                        collidedWithQuestion(Position, ((Question)obj).CorrecAnswerAxis(Position.X));
+                        collidedWithQuestion(Position, ((QuestionGameObject)obj).CorrecAnswer());
                     }
                 }
             }
