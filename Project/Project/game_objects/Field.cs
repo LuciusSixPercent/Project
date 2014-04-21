@@ -10,7 +10,7 @@ using System.IO;
 
 namespace game_objects
 {
-    public class Field : DrawableGameObject
+    public class Field : CollidableGameObject
     {
         Quad[] floorTiles;
         Texture2D[] textures;
@@ -35,10 +35,9 @@ namespace game_objects
 
             Vector3 initialCoord = new Vector3(leftColumnX, 0f, ((Renderer3D)Renderer).Cam.Z);
             Vector3 normal = new Vector3(0, 1, 0);
-            Vector3 up = new Vector3(0, 0, -1);
+            Vector3 up = new Vector3(0, 0, 1);
             for (int row = 0; row < rows; row++)
             {
-
                 for (int col = 0; col < columns; col++)
                 {
                     if (columns * row + col >= 56)
@@ -78,6 +77,11 @@ namespace game_objects
                     quad.Translate(new Vector3(0, 0, scale * rows));
                 }
             }
+        }
+
+        public override bool Collided(CollidableGameObject obj)
+        {
+            return obj.BoundingBox.Max.Y >= position.Y;
         }
     }
 }

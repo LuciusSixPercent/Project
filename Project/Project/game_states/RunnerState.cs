@@ -28,7 +28,7 @@ namespace game_states
 
         private Camera cam;
         private Character player;
-        private Stack<Question> questions;
+        private Stack<QuestionGameObject> questions;
 
         bool pauseFlag;
 
@@ -71,7 +71,7 @@ namespace game_states
 
                 goManager = new GameObjectsManager(parent.GraphicsDevice);
 
-                questions = new Stack<Question>();
+                questions = new Stack<QuestionGameObject>();
 
                 player = new Character(goManager, goManager.R3D, "cosme");
                 player.collidedWithQuestion += new Character.CollidedWithQuestion(player_collidedWithQuestion);
@@ -93,7 +93,6 @@ namespace game_states
             if (correctAnswer)
             {
                 foundAnswer = 1;
-                goManager.removeObject(questions.Pop());
             }
             else
             {
@@ -103,25 +102,28 @@ namespace game_states
 
         private void ChangeCurrentQuestion()
         {
+            if(questions.Count > 0)
+                goManager.removeObject(questions.Pop());
             /*TODO: carregar todas as questões de uma vez na pilha e apenas ir removendo as que forem resolvidas*/
-            foundAnswer = 0;
-            questions.Push(QuestionFactory.CreateQuestion(level, QuestionSubject.PT, 3, goManager.R3D));
+            questions.Push(QuestionFactory.CreateQuestion(level, QuestionSubject.PT, goManager.R3D));
             questions.Peek().Load(parent.Content);
             goManager.AddDrawableObject(questions.Peek(), player);
-            questions.Peek().Position = new Vector3(0, 1, player.Position.Z + 10);
+            questions.Peek().Position = new Vector3(0, 0.25f, player.Position.Z + 10);
         }
 
         protected override void LoadContent()
         {
             if (!contentLoaded)
             {
+                QuestionsDatabase.LoadQuestions();
+
                 TextureHelper.LoadDefaultFont(parent.Content);
 
                 ChangeCurrentQuestion();
 
                 goManager.Load(parent.Content);
                 
-                player.Position = new Vector3(0f, 1f, 0f);
+                player.Position = new Vector3(0f, 0.5f, 0f);
 
                 contentLoaded = true;
             }
@@ -161,19 +163,35 @@ namespace game_states
                 {
                     if (!exitingState)
                     {
-                        if (foundAnswer == 1)
-                            ChangeCurrentQuestion();
-                        else if (foundAnswer == -1)
-                        {
-                            questions.Peek().Translate(new Vector3(0, 0, 20));
-                            foundAnswer = 0;
-                        }
-
+                        CheckAnswer();
                         goManager.Update(gameTime);
 
                         handleInput(gameTime);
                     }
                 }
+            }
+        }
+
+        private void CheckAnswer()
+        {
+            if (foundAnswer != 0)
+            {
+                if (foundAnswer == 1)
+                {
+                    if (!questions.Peek().Next())
+                    {
+                        ChangeCurrentQuestion();
+                    }
+                    else
+                    {
+                        questions.Peek().Translate(new Vector3(0, 0, 10));
+                    }
+                }
+                else
+                {
+                    questions.Peek().Translate(new Vector3(0, 0, 20));
+                }
+                foundAnswer = 0;
             }
         }
 

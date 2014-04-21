@@ -17,6 +17,15 @@ namespace game_objects.questions
         private const float scale = 0.5f;
         private Texture2D texture;
 
+        public Texture2D Texture
+        {
+            get { 
+                if(!textureLoaded)
+                    textureLoaded = TextureHelper.StringToTexture(text, out texture);
+                return texture; 
+            }
+        }
+
         private bool textureLoaded;
 
         private Quad Quad
@@ -50,7 +59,7 @@ namespace game_objects.questions
         private void CreateQuad()
         {
             Vector3 nrm = new Vector3(0, 0, -1);
-            float proportion = (float)texture.Width / texture.Height;
+            float proportion = (float)Texture.Width / Texture.Height;
             quad = new Quad(position, nrm, Vector3.Up, scale * proportion, scale);
             Vector3 test = new Vector3((1 - scale*proportion)/2, 0, 0);
             Vector3 backUpperLeft = Quad.Vertices[1].Position + test;
@@ -75,6 +84,7 @@ namespace game_objects.questions
 
         public override void Draw(GameTime gameTime)
         {
+            TextureHelper.StringToTexture(text, out texture);
             if(textureLoaded)
                 ((Renderer3D)Renderer).Draw(gameTime, texture, Quad, BlendState.AlphaBlend);
         }

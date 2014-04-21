@@ -88,5 +88,10 @@ namespace Project
                 spriteFont = defaultSpriteFont;
             }
         }
+
+        public static void FlushCache()
+        {
+            cachedTextures.Clear();
+        }
     }
 }
