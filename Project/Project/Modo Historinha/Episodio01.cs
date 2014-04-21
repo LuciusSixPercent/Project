@@ -204,7 +204,7 @@ class Episodio01 : GameState
     List<Song> Album1, Album2, Album3, Album4, Album5, Album6, Album7, Album8, Album9, Album10;
     List<List<Song>> AlbumPrincipal;
     #endregion
-
+    String VariavelInutil;
     // Desça o código até Initialize
     public Episodio01(int id, Game1 parent)
         : base(id, parent)

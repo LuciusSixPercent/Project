@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Input;
 
 class ModoHistorinha : DateBase
 {
+    String VariavelInutil;
     int i = 0;//contador
     string pergunta, res1, res2, res3, res4;
     Color Calt0, Calt1, Calt2, Calt3;
