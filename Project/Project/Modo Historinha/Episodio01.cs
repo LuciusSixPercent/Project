@@ -188,7 +188,7 @@ class Episodio01 : GameState
     bool pauseFlag;
     private bool contentLoaded;
     int CaixaTexto, Cy;
-    int zerar = 1;
+    int zerar = 0;
     Color cor;
     int selecionar = 0; //seleciona a musica
     bool repetir = true;
@@ -268,8 +268,10 @@ class Episodio01 : GameState
 
         }
     }
+    
     public override void Update(GameTime tempo)
     {
+        
         if (!pauseFlag)
         {
 
@@ -281,6 +283,7 @@ class Episodio01 : GameState
             }
             if (!FimDaHistoria)
             {
+                KeyboardState teclado = Keyboard.GetState();
                 //MediaPlayer.IsRepeating = false;
                 //////////////////////////////////////////////////////////////////Aqui é onde a narração vai acontecer////////////////////////////////////////////////
 
@@ -290,7 +293,7 @@ class Episodio01 : GameState
                     repetir = false;//Repetir serve para não deixar a música tocar sem parar
 
                 }
-                if (AlbumPrincipal[NoAlbum][selecionar].Duration == MediaPlayer.PlayPosition && NoAlbum < AlbumPrincipal.Count )//Se a narração chegou ao tempo final
+                if (AlbumPrincipal[NoAlbum][selecionar].Duration == MediaPlayer.PlayPosition && NoAlbum <= AlbumPrincipal.Count )//Se a narração chegou ao tempo final
                 {
                     if (AlbumPrincipal[NoAlbum].Count == selecionar + 1)//Se o Album que está tocando chegou a sua ultima música
                     {
@@ -305,23 +308,11 @@ class Episodio01 : GameState
                     }
                     repetir = true;
                 }
-                
-                //if (KeyboardHelper.IsKeyDown(Keys.Z))
-                //{
-                //    //KeyboardHelper.LockKey(Keys.Z);
-                //    if (AlbumPrincipal[NoAlbum].Count == selecionar + 1)//Se o Album que está tocando chegou a sua ultima música
-                //    {
-                //        NoAlbum += NoAlbum < AlbumPrincipal.Count ? 1 : 0;//Trocar de album
-                //        selecionar = 0;//eu zero o contador de musicas
-                //        Incremento0++;// Incremento mais 1 na variavel que permite que o texto continue
 
-                //    }
-                //    else
-                //    {
-                //        selecionar += selecionar < AlbumPrincipal[NoAlbum].Count ? 1 : 0;//Ele troca de música
-                //    }
-                //    repetir = true;
-                //}
+                if (teclado.IsKeyDown(Keys.Enter))
+                {
+                    repetir = true;
+                }
                 //////////////////////////////////////Fim da Parte de Narração//////////////////////////////////////////////////////////////////
                 if (stateEntered)
                 {
@@ -339,7 +330,7 @@ class Episodio01 : GameState
                         if (texto[indice-1] == ' ')
                         {
                             texto += "\n";
-                            zerar = 0;
+                            zerar++;
                             Limitedotexto = 80;
                         }
                         else
@@ -390,7 +381,7 @@ class Episodio01 : GameState
             //TpLAYER = AlbumPrincipal[NoAlbum][selecionar].Duration.Minutes.ToString() + " : " + AlbumPrincipal[NoAlbum][selecionar].Duration.Seconds;
             //NomeMusica = AlbumPrincipal[NoAlbum][selecionar].Name;
             SpriteBatch.DrawString(arial, "Help key = [z]", new Vector2(200, 720), cor);
-            //SpriteBatch.DrawString(arial, Tmusica + " / " + TpLAYER + " = " + NomeMusica, new Vector2(200, 700), cor);//Aqui eu vejo em quanto tempo está a narração
+            SpriteBatch.DrawString(arial, zerar.ToString(), new Vector2(200, 700), cor);//Aqui eu vejo em quanto tempo está a narração
             //Aqui em cima eu imprimo o tempo total da musica;
         }
 
@@ -412,7 +403,7 @@ class Episodio01 : GameState
                 {
                     if (indice < dialogo01[Incremento0].Length) { texto += dialogo01[Incremento0][indice]; }//Verifica se o texto impresso tem menos letras que o dialogo, se verdadeiro coloca mais uma letra;
                     indice = indice + (indice < dialogo01[Incremento0].Length ? 1 : 0);//Aumento o indice para que sempre vá para próxima letra na hora de imprimir.
-                    if (texto.Length == dialogo01[Incremento0].Length + 1)//Se o texto impresso tiver o mesmo numero de letras do dialogo...O MAIS UM É POR CAUSA DO \N QUE EU COLOCO AUTOMATICAMENTE
+                    if (texto.Length == dialogo01[Incremento0].Length + zerar)//Se o texto impresso tiver o mesmo numero de letras do dialogo...O MAIS UM É POR CAUSA DO \N QUE EU COLOCO AUTOMATICAMENTE
                     {
                         //mile += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
                         //Segundos = mile / 1000;
@@ -424,7 +415,7 @@ class Episodio01 : GameState
 
                                 Incremento0++;//Mudo o texto
                                 indice = 0;//Falo que o numero de letras é zero;
-                                zerar = 1;//Falo que agora ele poderar pular uma linha no texto, caso a condição seja feita.(Vá no Update para ver a condição)
+                                zerar = 0;//Falo que agora ele poderar pular uma linha no texto, caso a condição seja feita.(Vá no Update para ver a condição)
                                 texto = "";//O texto a ser impresso agora não possui nada;
                                 //if (Incremento0 == 2) // Isso é só para testes
                                 //{
@@ -447,7 +438,7 @@ class Episodio01 : GameState
                     texto = "";//Reseto tudo, como foi feito acima
                     indice = 0;//
                     Incremento0 = 0;// Estou usando o mesmo incremento para todas os dialogos;
-                    zerar = 1;//
+                    zerar = 0;//
                     //mile = 0;
                     //FalasPorSegundo = ritimo;
                     Exercicio01.Atualizar();//Eu chamo o atualizar do exercicio
@@ -471,7 +462,7 @@ class Episodio01 : GameState
 
                     if (indice < dialogo02[Incremento0].Length) { texto += dialogo02[Incremento0][indice]; }
                     indice = indice + (indice < dialogo02[Incremento0].Length ? 1 : 0);
-                    if (texto.Length == dialogo02[Incremento0].Length + 1)
+                    if (texto.Length == dialogo02[Incremento0].Length + zerar)
                     {
 
                         if (repetir)
@@ -479,7 +470,7 @@ class Episodio01 : GameState
 
                             Incremento0++;
                             indice = 0;
-                            zerar = 1;
+                            zerar = 0;
                             texto = "";
                             FalasPorSegundo += ritimo;
 
@@ -495,7 +486,7 @@ class Episodio01 : GameState
                     texto = "";
                     indice = 0;
                     Incremento0 = 0;
-                    zerar = 1;
+                    zerar = 0;
                     mile = 0;
                     FalasPorSegundo = ritimo;
                     Exercicio02.Atualizar();
@@ -517,7 +508,7 @@ class Episodio01 : GameState
                 {
                     if (indice < dialogo03[Incremento0].Length) { texto += dialogo03[Incremento0][indice]; }
                     indice = indice + (indice < dialogo03[Incremento0].Length ? 1 : 0);
-                    if (texto.Length == dialogo03[Incremento0].Length + 1)
+                    if (texto.Length == dialogo03[Incremento0].Length + zerar)
                     {
                         //mile += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
                         //Segundos = mile / 1000;
@@ -525,7 +516,7 @@ class Episodio01 : GameState
                         {
                             Incremento0++;
                             indice = 0;
-                            zerar = 1;
+                            zerar = 0;
                             texto = "";
                             FalasPorSegundo += ritimo;
                         }
@@ -537,7 +528,7 @@ class Episodio01 : GameState
                     texto = "";
                     indice = 0;
                     Incremento0 = 0;
-                    zerar = 1;
+                    zerar = 0;
                     mile = 0;
                     Exercicio03.Atualizar();
                     Exercicio03.Desenhar(SpriteBatch);
@@ -560,7 +551,7 @@ class Episodio01 : GameState
 
                     if (indice < dialogo04[Incremento0].Length) { texto += dialogo04[Incremento0][indice]; }
                     indice = indice + (indice < dialogo04[Incremento0].Length ? 1 : 0);
-                    if (texto.Length == dialogo04[Incremento0].Length + 1)
+                    if (texto.Length == dialogo04[Incremento0].Length + zerar)
                     {
                         //mile += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
                         //Segundos = mile / 1000;
@@ -569,7 +560,7 @@ class Episodio01 : GameState
 
                             Incremento0++;
                             indice = 0;
-                            zerar = 1;
+                            zerar = 0;
                             texto = "";
                             FalasPorSegundo += ritimo;
 
@@ -584,7 +575,7 @@ class Episodio01 : GameState
                     texto = "";
                     indice = 0;
                     Incremento0 = 0;
-                    zerar = 1;
+                    zerar = 0;
                     mile = 0;
                     Exercicio04.Atualizar();
                     Exercicio04.Desenhar(SpriteBatch);
@@ -605,7 +596,7 @@ class Episodio01 : GameState
             if (primeiro && segundo && terceiro && quarto && !quinto)
             {
 
-                if (!exercicio5 && !parte5)
+                if (!exercicio5)
                 {
 
                     mile = 0;
@@ -615,12 +606,13 @@ class Episodio01 : GameState
                     repetir = exercicio5;
                 }
 
-                if (Incremento0 == dialogo05.Length )
+                if (Incremento0 == dialogo05.Length)
                 {
                     parte5 = true;
                     texto = "";
                     indice = 0;
                     Incremento0 = 0;
+                    zerar = 0;
                     quinto = true;
                     repetir = true;
                 }
@@ -628,13 +620,13 @@ class Episodio01 : GameState
                 {
                     if (indice < dialogo05[Incremento0].Length) { texto += dialogo05[Incremento0][indice]; }
                     indice = indice + (indice < dialogo05[Incremento0].Length ? 1 : 0);
-                    if (texto.Length == dialogo05[Incremento0].Length + 1)
+                    if (texto.Length == dialogo05[Incremento0].Length + zerar)
                     {
-                        if (AlbumPrincipal[NoAlbum][selecionar].Duration == MediaPlayer.PlayPosition)
+                        if (repetir)
                         {
                             Incremento0++;
                             indice = 0;
-                            zerar = 1;
+                            zerar = 0;
                             texto = "";
                             FalasPorSegundo += ritimo;
                         }
@@ -654,14 +646,14 @@ class Episodio01 : GameState
                 {
                     if (indice < dialogo06[Incremento0].Length) { texto += dialogo06[Incremento0][indice]; }
                     indice = indice + (indice < dialogo06[Incremento0].Length ? 1 : 0);
-                    if (texto.Length == dialogo06[Incremento0].Length + 1)
+                    if (texto.Length == dialogo06[Incremento0].Length + zerar)
                     {
                         
                         if (repetir)
                         {
                             Incremento0++;
                             indice = 0;
-                            zerar = 1;
+                            zerar = 0;
                             texto = "";
                             FalasPorSegundo += ritimo;
                         }
@@ -673,7 +665,7 @@ class Episodio01 : GameState
                     texto = "";
                     indice = 0;
                     Incremento0 = 0;
-                    zerar = 1;
+                    zerar = 0;
                     mile = 0;
                     Exercicio06.Atualizar();
                     Exercicio06.Desenhar(SpriteBatch);
@@ -694,14 +686,14 @@ class Episodio01 : GameState
                 {
                     if (indice < dialogo07[Incremento0].Length) { texto += dialogo07[Incremento0][indice]; }
                     indice = indice + (indice < dialogo07[Incremento0].Length ? 1 : 0);
-                    if (texto.Length == dialogo07[Incremento0].Length + 1)
+                    if (texto.Length == dialogo07[Incremento0].Length + zerar)
                     {
 
                         if (repetir)
                         {
                             Incremento0++;
                             indice = 0;
-                            zerar = 1;
+                            zerar = 0;
                             texto = "";
                             FalasPorSegundo += ritimo;
                         }
@@ -713,7 +705,7 @@ class Episodio01 : GameState
                     texto = "";
                     indice = 0;
                     Incremento0 = 0;
-                    zerar = 1;
+                    zerar = 0;
                     mile = 0;
                     Exercicio07.Atualizar();
                     Exercicio07.Desenhar(SpriteBatch);
@@ -734,14 +726,14 @@ class Episodio01 : GameState
                 {
                     if (indice < dialogo08[Incremento0].Length) { texto += dialogo08[Incremento0][indice]; }
                     indice = indice + (indice < dialogo08[Incremento0].Length ? 1 : 0);
-                    if (texto.Length == dialogo08[Incremento0].Length + 1)
+                    if (texto.Length == dialogo08[Incremento0].Length + zerar)
                     {
 
                         if (repetir)
                         {
                             Incremento0++;
                             indice = 0;
-                            zerar = 1;
+                            zerar = 0;
                             texto = "";
                             FalasPorSegundo += ritimo;
                         }
@@ -753,7 +745,7 @@ class Episodio01 : GameState
                     texto = "";
                     indice = 0;
                     Incremento0 = 0;
-                    zerar = 1;
+                    zerar = 0;
                     mile = 0;
                     Exercicio08.Atualizar();
                     Exercicio08.Desenhar(SpriteBatch);
@@ -774,14 +766,14 @@ class Episodio01 : GameState
                 {
                     if (indice < dialogo09[Incremento0].Length) { texto += dialogo09[Incremento0][indice]; }
                     indice = indice + (indice < dialogo09[Incremento0].Length ? 1 : 0);
-                    if (texto.Length == dialogo09[Incremento0].Length + 1)
+                    if (texto.Length == dialogo09[Incremento0].Length + zerar)
                     {
 
                         if (repetir)
                         {
                             Incremento0++;
                             indice = 0;
-                            zerar = 1;
+                            zerar = 0;
                             texto = "";
                             FalasPorSegundo += ritimo;
                         }
@@ -793,7 +785,7 @@ class Episodio01 : GameState
                     texto = "";
                     indice = 0;
                     Incremento0 = 0;
-                    zerar = 1;
+                    zerar = 0;
                     mile = 0;
                     Exercicio09.Atualizar();
                     Exercicio09.Desenhar(SpriteBatch);
@@ -814,14 +806,14 @@ class Episodio01 : GameState
                 {
                     if (indice < dialogo10[Incremento0].Length) { texto += dialogo10[Incremento0][indice]; }
                     indice = indice + (indice < dialogo10[Incremento0].Length ? 1 : 0);
-                    if (texto.Length == dialogo10[Incremento0].Length + 1)
+                    if (texto.Length == dialogo10[Incremento0].Length + zerar)
                     {
 
                         if (repetir)
                         {
                             Incremento0++;
                             indice = 0;
-                            zerar = 1;
+                            zerar = 0;
                             texto = "";
                             FalasPorSegundo += ritimo;
                         }
@@ -833,7 +825,7 @@ class Episodio01 : GameState
                     texto = "";
                     indice = 0;
                     Incremento0 = 0;
-                    zerar = 1;
+                    zerar = 0;
                     mile = 0;
                     Exercicio10.Atualizar();
                     Exercicio10.Desenhar(SpriteBatch);

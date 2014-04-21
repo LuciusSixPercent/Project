@@ -25,7 +25,7 @@ class ModoHistorinha : DateBase
     bool seq = false;
     int indice = 0;
     string texto = "";
-    int CaixaTexto = 0;
+    int Limitedotexto = 80;
     int zerar = 1;
     int selecionar = 0;
     List<Song> narrador;
@@ -151,11 +151,19 @@ class ModoHistorinha : DateBase
             MediaPlayer.Play(narrador[selecionar]);
             repetir = false;
         }
-        CaixaTexto = (int)arial.MeasureString(texto).X * zerar;
-        if (CaixaTexto > 800 && texto[indice - 1] == ' ')
+       
+        if (texto.Length % Limitedotexto == 0 && texto.Length != 0)//Quando o texto atingir um limite da tela e tiver um espaço em branco ele pula uma linha;
         {
-            texto += "\n";
-            zerar = 0;
+            if (texto[indice - 1] == ' ')
+            {
+                texto += "\n";
+                
+                Limitedotexto = 80;
+            }
+            else
+            {
+                Limitedotexto++;
+            }
 
         }
         mouse = Mouse.GetState();
