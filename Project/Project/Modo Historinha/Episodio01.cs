@@ -18,7 +18,7 @@ class Episodio01 : GameState
     #region Cena 01
     #region Dialogo 01
     string fala01 = "Era uma vez, em uma pequena cidade... Dois irmãos muito parecidos por serem gêmeos. O menino se chama Cosme, e o seu sonho é um dia se tornar um grande engenheiro.";
-    string fala02 = "E a menina se chama Maria. Seu sonho é lançar um livro com muitas histórias, que farão mais pessoas sonharem com as maravilhas do mundo.";
+    string fala02 = "A menina se chama Maria.Seu sonho é escrever um livro com muitas histórias que farão as crianças sonharem com as maravilhas do mundo.";
     #endregion
     #region Exercicio 01 - Modo Historinha
     string pergunta00 = "Cosme e Maria nasceram juntos, por isso os dois tem a mesma idade: sete anos. Espera, qual dos dois números é o número sete?";
@@ -27,9 +27,9 @@ class Episodio01 : GameState
 
     #endregion
     #region Dialogo 02
-    string fala03 = "Muito bem! Apesar dos dois terem a mesma idade, Cosme gosta de dizer que ele é o irmão mais velho porque ele é um pouquinho mais alto que Maria.";
+    string fala03 = "Muito bem! Apesar dos dois terem a mesma idade, Cosme gosta de dizer que é o irmão mais velho porque ele é um pouquinho mais alto que Maria.";
     string fala04 = "Por outro lado... Maria diz que é a mais velha porque ela precisa cuidar de Cosme toda vez que ele causa alguma confusão, como se fosse sua irmã mais velha!";
-    string fala05 = "Epa... Acho que entramos em um assunto delicado para os irmãos. Vamos falar de outra coisa. Cosme e Maria tem alguns amigos que adoram jogar futebol!";
+    string fala05 = "Epa... Acho que esse é um assunto delicado para os irmãos. Vamos falar de outra coisa. Cosme e Maria tem alguns amigos que adoram jogar futebol.";
     string fala06 = "Os dois são amigos muito queridos. A menina se chama Serafina. Ela adora animais e tem um pequeno cachorro de estimação que adora levar para passear.";
     string fala07 = "O menino se chama Apuã. Ele gosta de visitar Cosme e Maria para brincar, sempre vindo com uma brincadeira diferente!";
     #endregion
@@ -55,7 +55,7 @@ class Episodio01 : GameState
     string fala10 = "Espera, há algo de errado com o que Apuã está pensando!";
     #endregion
     #region Exercicio 04 - Modo Historinha
-    string pergunta30 = "Um dos times tem mais jogadores do que o outro. Qual time tem mais jogadores?";
+    string pergunta30 = "Um dos times tem mais jogadores do que o outro... Qual dos times tem mais jogadores?";
     string alternativa30 = "TimeA";
     string alternativa31 = "TimeB";
     #endregion
@@ -97,7 +97,7 @@ class Episodio01 : GameState
     //Exercicio especial, criar um novo construtor que atenda as necessidades.
     #region Dialogo 8
     string fala19 = "Maria não está conseguindo encontrar a bola. Hmm... Olhando bem, estou vendo a bola bem ali!";
-    string fala20 = "Vamos ajudar Maria a encontra-lo!";
+    string fala20 = "Vamos ajudar Maria a encontra-la!";
     #endregion
     #region Exercicio08
     string Pergunta8 = "Maria, a bola está atrás de um objeto que começa com a letra...";
@@ -106,14 +106,14 @@ class Episodio01 : GameState
     string alt82 = "J";
     #endregion
     #region Dialogo 9
-    string fala21 = "Agora que Maria está com a bola de futebol e o balde, ela finalmente pode ir até o rio buscar água e depois jogar com os seus amigos.";
-    string fala22 = "Maria, veja só quem está próximo do rio! É Cosme. Cosme está ansioso esperando Maria, porque ela está trazendo a bola de futebol.";
+    string fala21 = "Agora que Maria está com a bola de futebol e o balde, ela pode ir até o rio buscar água e depois jogar com os seus amigos.";
+    string fala22 = "Maria, veja só quem está próximo ao rio! É Cosme. Cosme está ansioso esperando Maria, porque ela está trazendo a bola de futebol.";
     string fala23 = "Maria precisa levar a água para casa, por isso não pode jogar futebol agora.";
     string fala24 = "Cosme diz para Maria buscar água no rio mais tarde. Para que eles possam jogar futebol, Maria deve participar do time também!";
     string fala25 = "Cosme promete que ele irá ajuda-la depois a buscar água.";
     #endregion
     #region Exercicio09
-    string Pergunta9 = "Cosme diz que Maria pode sempre contar com outras pessoas para ajuda-la, pois ela é muito importante para eles. A palavra que Cosme quer falar tem três sílabas. De quem Cosme está falando?";
+    string Pergunta9 = "Cosme diz que Maria pode sempre contar com outras pessoas para ajuda-la porque ela é muito importante para eles. A palavra que Cosme quer falar tem três sílabas. De quem Cosme está falando?";
     string alt90 = "A-MI-GOS";
     string alt91 = "SOL";
     string alt92 = "RI-A-CHO";
@@ -204,7 +204,7 @@ class Episodio01 : GameState
     List<Song> Album1, Album2, Album3, Album4, Album5, Album6, Album7, Album8, Album9, Album10;
     List<List<Song>> AlbumPrincipal;
     #endregion
-    String VariavelInutil;
+    
     // Desça o código até Initialize
     public Episodio01(int id, Game1 parent)
         : base(id, parent)
@@ -268,6 +268,8 @@ class Episodio01 : GameState
 
         }
     }
+    Keys lastKey = Keys.A;
+    int incrementoTexto = 0;
     
     public override void Update(GameTime tempo)
     {
@@ -293,13 +295,17 @@ class Episodio01 : GameState
                     repetir = false;//Repetir serve para não deixar a música tocar sem parar
 
                 }
-                if (AlbumPrincipal[NoAlbum][selecionar].Duration == MediaPlayer.PlayPosition && NoAlbum <= AlbumPrincipal.Count )//Se a narração chegou ao tempo final
+                if (AlbumPrincipal[NoAlbum][selecionar].Duration == MediaPlayer.PlayPosition && NoAlbum < AlbumPrincipal.Count || teclado.IsKeyDown(Keys.Z) && lastKey != Keys.Z)//Se a narração chegou ao tempo final
                 {
                     if (AlbumPrincipal[NoAlbum].Count == selecionar + 1)//Se o Album que está tocando chegou a sua ultima música
                     {
-                        NoAlbum += NoAlbum < AlbumPrincipal.Count ? 1 : 0;//Trocar de album
+                        NoAlbum += (NoAlbum < AlbumPrincipal.Count ? 1 : 0);//Trocar de album
                         selecionar = 0;//eu zero o contador de musicas
                         Incremento0++;// Incremento mais 1 na variavel que permite que o texto continue
+                        if (NoAlbum == 10)
+                        {
+                            NoAlbum = 9;
+                        }
 
                     }
                     else
@@ -308,22 +314,15 @@ class Episodio01 : GameState
                     }
                     repetir = true;
                 }
+                Keys[] ks = teclado.GetPressedKeys();
 
-                if (teclado.IsKeyDown(Keys.Enter))
-                {
-                    repetir = true;
-                }
+                if (ks.Length == 0) lastKey = Keys.A;
+                else lastKey = ks[0];
+                
                 //////////////////////////////////////Fim da Parte de Narração//////////////////////////////////////////////////////////////////
                 if (stateEntered)
                 {
-                    CaixaTexto = (int)arial.MeasureString(texto).X * zerar;
-                    arial.MeasureString(texto).Normalize();
-                    Vector2 TTexto = arial.MeasureString(texto);
-                    Cy = (int)arial.MeasureString(texto).Y;
-                    if (Cy > 614)
-                    {
-                        zerar = 1;
-                    }
+                    
 
                     if (texto.Length % Limitedotexto == 0 && texto.Length != 0)//Quando o texto atingir um limite da tela e tiver um espaço em branco ele pula uma linha;
                     {
@@ -331,13 +330,16 @@ class Episodio01 : GameState
                         {
                             texto += "\n";
                             zerar++;
-                            Limitedotexto = 80;
+                            
+                            incrementoTexto = 0;
                         }
-                        else
+                        else 
                         {
-                            Limitedotexto++;
+                            //Limitedotexto++;
+                            incrementoTexto++;
+                            
                         }
-
+                        Limitedotexto = ((80 * (zerar + 1)) + incrementoTexto);
                     }
                     if (KeyboardHelper.IsKeyDown(Keys.Escape))
                     {
@@ -380,7 +382,7 @@ class Episodio01 : GameState
             //Tmusica = MediaPlayer.PlayPosition.Minutes.ToString() + " : " + MediaPlayer.PlayPosition.Seconds;
             //TpLAYER = AlbumPrincipal[NoAlbum][selecionar].Duration.Minutes.ToString() + " : " + AlbumPrincipal[NoAlbum][selecionar].Duration.Seconds;
             //NomeMusica = AlbumPrincipal[NoAlbum][selecionar].Name;
-            SpriteBatch.DrawString(arial, "Help key = [z]", new Vector2(200, 720), cor);
+            SpriteBatch.DrawString(arial, "Help key = [z] - Se o  jogo travar use-a", new Vector2(200, 720), cor);
             SpriteBatch.DrawString(arial, zerar.ToString(), new Vector2(200, 700), cor);//Aqui eu vejo em quanto tempo está a narração
             //Aqui em cima eu imprimo o tempo total da musica;
         }
@@ -421,7 +423,7 @@ class Episodio01 : GameState
                                 //{
                                 //    Console.Beep();
                                 //}
-                                //FalasPorSegundo += ritimo;
+                                Limitedotexto = 80;
 
                             }
                         }
@@ -440,7 +442,7 @@ class Episodio01 : GameState
                     Incremento0 = 0;// Estou usando o mesmo incremento para todas os dialogos;
                     zerar = 0;//
                     //mile = 0;
-                    //FalasPorSegundo = ritimo;
+                    Limitedotexto = 80;
                     Exercicio01.Atualizar();//Eu chamo o atualizar do exercicio
                     Exercicio01.Desenhar(SpriteBatch);//Desenho ele na tela
                     exercicio1 = Exercicio01.Continuar();// Caso o jogador vença, O Continuar() vai retornar verdadeiro, caso o contrario falso.
@@ -472,7 +474,7 @@ class Episodio01 : GameState
                             indice = 0;
                             zerar = 0;
                             texto = "";
-                            FalasPorSegundo += ritimo;
+                            Limitedotexto = 80;
 
                         }
 
@@ -488,7 +490,7 @@ class Episodio01 : GameState
                     Incremento0 = 0;
                     zerar = 0;
                     mile = 0;
-                    FalasPorSegundo = ritimo;
+                    Limitedotexto = 80;
                     Exercicio02.Atualizar();
                     Exercicio02.Desenhar(SpriteBatch);
                     exercicio2 = Exercicio02.Continuar();
@@ -518,7 +520,7 @@ class Episodio01 : GameState
                             indice = 0;
                             zerar = 0;
                             texto = "";
-                            FalasPorSegundo += ritimo;
+                            Limitedotexto = 80;
                         }
                     }
                     SpriteBatch.DrawString(arial, texto, posicaoText, cor);
@@ -530,6 +532,7 @@ class Episodio01 : GameState
                     Incremento0 = 0;
                     zerar = 0;
                     mile = 0;
+                    Limitedotexto = 80;
                     Exercicio03.Atualizar();
                     Exercicio03.Desenhar(SpriteBatch);
                     exercicio3 = Exercicio03.Continuar();
@@ -562,7 +565,7 @@ class Episodio01 : GameState
                             indice = 0;
                             zerar = 0;
                             texto = "";
-                            FalasPorSegundo += ritimo;
+                            Limitedotexto = 80;
 
                         }
                     }
@@ -577,6 +580,7 @@ class Episodio01 : GameState
                     Incremento0 = 0;
                     zerar = 0;
                     mile = 0;
+                    Limitedotexto = 80;
                     Exercicio04.Atualizar();
                     Exercicio04.Desenhar(SpriteBatch);
                     exercicio4 = Exercicio04.Continuar();
@@ -613,6 +617,7 @@ class Episodio01 : GameState
                     indice = 0;
                     Incremento0 = 0;
                     zerar = 0;
+                    Limitedotexto = 80;
                     quinto = true;
                     repetir = true;
                 }
@@ -628,7 +633,7 @@ class Episodio01 : GameState
                             indice = 0;
                             zerar = 0;
                             texto = "";
-                            FalasPorSegundo += ritimo;
+                            Limitedotexto = 80;
                         }
                     }
                     SpriteBatch.DrawString(arial, texto, posicaoText, cor);
@@ -655,7 +660,7 @@ class Episodio01 : GameState
                             indice = 0;
                             zerar = 0;
                             texto = "";
-                            FalasPorSegundo += ritimo;
+                            Limitedotexto = 80;
                         }
                     }
                     SpriteBatch.DrawString(arial, texto, posicaoText, cor);
@@ -667,6 +672,7 @@ class Episodio01 : GameState
                     Incremento0 = 0;
                     zerar = 0;
                     mile = 0;
+                    Limitedotexto = 80;
                     Exercicio06.Atualizar();
                     Exercicio06.Desenhar(SpriteBatch);
                     exercicio6 = Exercicio06.Continuar();
@@ -695,7 +701,7 @@ class Episodio01 : GameState
                             indice = 0;
                             zerar = 0;
                             texto = "";
-                            FalasPorSegundo += ritimo;
+                            Limitedotexto = 80;
                         }
                     }
                     SpriteBatch.DrawString(arial, texto, posicaoText, cor);
@@ -707,6 +713,7 @@ class Episodio01 : GameState
                     Incremento0 = 0;
                     zerar = 0;
                     mile = 0;
+                    Limitedotexto = 80;
                     Exercicio07.Atualizar();
                     Exercicio07.Desenhar(SpriteBatch);
                     exercicio7 = Exercicio07.Continuar();
@@ -735,7 +742,7 @@ class Episodio01 : GameState
                             indice = 0;
                             zerar = 0;
                             texto = "";
-                            FalasPorSegundo += ritimo;
+                            Limitedotexto = 80;
                         }
                     }
                     SpriteBatch.DrawString(arial, texto, posicaoText, cor);
@@ -747,6 +754,7 @@ class Episodio01 : GameState
                     Incremento0 = 0;
                     zerar = 0;
                     mile = 0;
+                    Limitedotexto = 80;
                     Exercicio08.Atualizar();
                     Exercicio08.Desenhar(SpriteBatch);
                     exercicio8 = Exercicio08.Continuar();
@@ -775,7 +783,7 @@ class Episodio01 : GameState
                             indice = 0;
                             zerar = 0;
                             texto = "";
-                            FalasPorSegundo += ritimo;
+                            Limitedotexto = 80;
                         }
                     }
                     SpriteBatch.DrawString(arial, texto, posicaoText, cor);
@@ -787,6 +795,7 @@ class Episodio01 : GameState
                     Incremento0 = 0;
                     zerar = 0;
                     mile = 0;
+                    Limitedotexto = 80;
                     Exercicio09.Atualizar();
                     Exercicio09.Desenhar(SpriteBatch);
                     exercicio9 = Exercicio09.Continuar();
@@ -815,7 +824,7 @@ class Episodio01 : GameState
                             indice = 0;
                             zerar = 0;
                             texto = "";
-                            FalasPorSegundo += ritimo;
+                            Limitedotexto = 80;
                         }
                     }
                     SpriteBatch.DrawString(arial, texto, posicaoText, cor);
@@ -827,6 +836,7 @@ class Episodio01 : GameState
                     Incremento0 = 0;
                     zerar = 0;
                     mile = 0;
+                    Limitedotexto = 80;
                     Exercicio10.Atualizar();
                     Exercicio10.Desenhar(SpriteBatch);
                     exercicio10 = Exercicio10.Continuar();

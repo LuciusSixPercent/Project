@@ -144,6 +144,7 @@ class ModoHistorinha : DateBase
                 break;
         }
     }
+    int incrementoTexto = 0;
     public void Atualizar()
     {
         if (repetir)
@@ -157,14 +158,17 @@ class ModoHistorinha : DateBase
             if (texto[indice - 1] == ' ')
             {
                 texto += "\n";
+
+                zerar++;
+                incrementoTexto = 0;
                 
-                Limitedotexto = 80;
             }
             else
             {
-                Limitedotexto++;
+                
+                incrementoTexto++;
             }
-
+            Limitedotexto = ((80 * (zerar + 1)) + incrementoTexto);
         }
         mouse = Mouse.GetState();
         if (!primeiroclique && seq)
