@@ -26,7 +26,8 @@ class ModoHistorinha : DateBase
     string texto = "";
     int CaixaTexto = 0;
     int zerar = 1;
-    Song narrador;
+    int selecionar = 0;
+    List<Song> narrador;
     bool repetir = true;
     #endregion
     //teste
@@ -35,7 +36,7 @@ class ModoHistorinha : DateBase
         : base(c)
     {
         venceu = false;
-        narrador = narra;
+        narrador = new List<Song>() { narra };
         NoDeRespostas = n;
         arial = a;
         pergunta = perguntaz;
@@ -58,7 +59,7 @@ class ModoHistorinha : DateBase
         : base(c)
     {
         venceu = false;
-        narrador = narra;
+        narrador = new List<Song>() { narra };
         NoDeRespostas = n;
         arial = a;
         pergunta = perguntaz;
@@ -77,7 +78,7 @@ class ModoHistorinha : DateBase
         : base(c)
     {
         venceu = false;
-        narrador = narra;
+        narrador = new List<Song>() { narra };
         NoDeRespostas = n;
         arial = a;
         pergunta = perguntaz;
@@ -98,7 +99,31 @@ class ModoHistorinha : DateBase
         : base(c)
     {
         venceu = false;
-        narrador = narra;
+        narrador = new List<Song>() { narra };
+        seq = sequencia;
+        NoDeRespostas = n;
+        arial = a;
+        pergunta = perguntaz;
+        res1 = alt0;
+        res2 = alt1;
+        res3 = alt2;
+        res4 = alt3;
+        Calt0 = Color.White;
+        Calt1 = Color.White;
+        Calt2 = Color.White;
+        Calt3 = Color.White;
+        switch (episodio)
+        {
+            case 1:
+                EP1();
+                break;
+        }
+    }
+    public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, string alt2, string alt3, int episodio, SpriteFont a, int n, Song narra1, Song narrar2, bool sequencia)
+        : base(c)
+    {
+        venceu = false;
+        narrador = new List<Song>() { narra1, narrar2 };
         seq = sequencia;
         NoDeRespostas = n;
         arial = a;
@@ -122,7 +147,7 @@ class ModoHistorinha : DateBase
     {
         if (repetir)
         {
-            MediaPlayer.Play(narrador);
+            MediaPlayer.Play(narrador[selecionar]);
             repetir = false;
         }
         CaixaTexto = (int)arial.MeasureString(texto).X * zerar;
@@ -203,6 +228,11 @@ class ModoHistorinha : DateBase
                 
                 if (!seq)
                 {
+                    if (narrador.Count == 2)
+                    {
+                        selecionar = 1;
+                        repetir = true;
+                    }
                     Calt2 = Color.Transparent;
                 }
                 else
