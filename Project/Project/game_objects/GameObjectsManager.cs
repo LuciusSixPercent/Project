@@ -84,11 +84,6 @@ namespace game_objects
 
         public void Update(GameTime gameTime)
         {
-            foreach (GameObject gObj in gameObjects)
-            {
-                gObj.Update(gameTime);
-            }
-
             for (int i = toRemove.Count - 1; i >= 0; i--)
             {
                 gameObjects.Remove(toRemove[i]);
@@ -99,6 +94,10 @@ namespace game_objects
                         collidableGameObjects.Remove((CollidableGameObject)toRemove[i]);
                 }
                 toRemove.RemoveAt(i);
+            }
+            foreach (GameObject gObj in gameObjects)
+            {
+                gObj.Update(gameTime);
             }
         }
 

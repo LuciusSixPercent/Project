@@ -184,12 +184,12 @@ namespace game_states
                     }
                     else
                     {
-                        questions.Peek().Translate(new Vector3(0, 0, 10));
+                        questions.Peek().ImediateTranslate(new Vector3(0, 0, 10));
                     }
                 }
                 else
                 {
-                    questions.Peek().Translate(new Vector3(0, 0, 20));
+                    questions.Peek().ImediateTranslate(new Vector3(0, 0, 20));
                 }
                 foundAnswer = 0;
             }
@@ -218,6 +218,8 @@ namespace game_states
         public override void Draw(GameTime gameTime)
         {
             goManager.Draw(gameTime);
+            goManager.R2D.DrawString(gameTime, questions.Peek().Header, Vector2.Zero, Color.RosyBrown, BlendState.AlphaBlend);
+            goManager.R2D.End();
         }
 
         #endregion

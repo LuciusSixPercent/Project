@@ -69,9 +69,9 @@ namespace game_objects.questions
             BoundingBox = new BoundingBox(frontBottomRight, backUpperLeft);
         }
 
-        public override void Translate(Vector3 amount)
+        public override void ImediateTranslate(Vector3 amount)
         {
-            base.Translate(amount);
+            base.ImediateTranslate(amount);
             Quad.Translate(amount);
             boundingBox.Max += amount;
             boundingBox.Min += amount;

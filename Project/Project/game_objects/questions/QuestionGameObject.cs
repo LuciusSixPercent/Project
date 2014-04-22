@@ -17,12 +17,17 @@ namespace game_objects.questions
         private Answer[] answers;
 
         private int correctAnswerIndex;
-        private string header;
 
         private const float scale = 3f;
         private int collidedAnswerIndex;
 
         private int currentAnswerIndex;
+
+
+        public string Header
+        {
+            get { return question.Header; }
+        }
         /*
         public QuestionGameObject(Renderer3D renderer, QuestionSubject subject, string header, string[] answers, int correctAnswerIndex)
             : base(renderer)
@@ -91,12 +96,12 @@ namespace game_objects.questions
                 a.Update(gameTime);
         }
 
-        public override void Translate(Vector3 amount)
+        public override void ImediateTranslate(Vector3 amount)
         {
-            base.Translate(amount);
+            base.ImediateTranslate(amount);
             for (int i = 0; i < answers.Length; i++)
             {
-                answers[i].Translate(amount);
+                answers[i].ImediateTranslate(amount);
             }
         }
 
@@ -143,16 +148,26 @@ namespace game_objects.questions
 
         public override bool Collided(CollidableGameObject obj)
         {
+            float smallestDistance = -1;
+            collidedAnswerIndex = -1;
             for (int i = 0; i < answers.Length; i++)
             {
                 Answer a = answers[i];
+                
                 if (a.Collided(obj))
                 {
-                    collidedAnswerIndex = i;
-                    return true;
+                    if (obj is Character)
+                    {
+                        float distance = (float)Math.Abs(obj.Position.X - a.Position.X);
+                        if (smallestDistance == -1 || distance < smallestDistance)
+                        {
+                            collidedAnswerIndex = i;
+                            smallestDistance = distance;
+                        }
+                    }
                 }
             }
-            return false;
+            return collidedAnswerIndex > -1;
         }
     }
 }

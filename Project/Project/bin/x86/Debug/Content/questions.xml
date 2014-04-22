@@ -18,6 +18,23 @@
       <answer>A</answer>
     </question>
 
+    <question>
+      <header>Soletre a palavra CASA</header>
+      <answer>C</answer>
+      <answer>A</answer>
+      <answer>S</answer>
+      <answer>A</answer>
+    </question>
+
+    <question>
+      <header>Soletre a palavra TERRA</header>
+      <answer>T</answer>
+      <answer>E</answer>
+      <answer>R</answer>
+      <answer>R</answer>
+      <answer>A</answer>
+    </question>
+
   </difficulty>
 
 </subject>

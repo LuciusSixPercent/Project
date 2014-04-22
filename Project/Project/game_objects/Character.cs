@@ -52,10 +52,10 @@ namespace game_objects
 
             this.name = name;
 
-            frames = new Texture2D[11];
+            frames = new Texture2D[9];
         }
 
-        public override void Translate(Vector3 amount)
+        public override void ImediateTranslate(Vector3 amount)
         {
             float newX = Position.X + amount.X;
             if (newX > MAX_X)
@@ -69,7 +69,7 @@ namespace game_objects
                 if (currentFrame >= frames.Length)
                     currentFrame = 0;
             }
-            base.Translate(amount);
+            base.ImediateTranslate(amount);
             quad.Translate(amount);
 
             Vector3 backUpperLeft = quad.Vertices[1].Position;
@@ -112,8 +112,7 @@ namespace game_objects
                     cManager.Load<Texture2D>(
                     "Imagem" + Path.AltDirectorySeparatorChar + 
                     "Personagem" + Path.AltDirectorySeparatorChar + 
-                    name + "corre" + Path.AltDirectorySeparatorChar + 
-                    name + "_corre" + (i + 1));
+                    name  + Path.AltDirectorySeparatorChar + (i + 1));
 
             quadWidthScale *= ((float)frames[0].Width / frames[0].Height);
         }

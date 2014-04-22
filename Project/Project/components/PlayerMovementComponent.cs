@@ -17,6 +17,7 @@ namespace components
         private float origin;
         private float relativeOrigin;
         private float destiny;
+        private Vector3 ownerLastPos;
 
         public PlayerMovementComponent(GameObject owner, int stepInterval, float stepSize, float movementAmount)
             : base(owner, stepInterval)
@@ -36,6 +37,12 @@ namespace components
             if (elapsed > movementInterval)
             {
                 elapsed = 0;
+
+                if (ownerLastPos.Equals(owner.Position))
+                {
+                    direction = 0;
+                    origin = destiny;
+                }
 
                 int newDirection = getPressedKey();
 
@@ -71,15 +78,16 @@ namespace components
                         actualStepSize += (absX - absDestiny) * (direction * -1);
                     }
 
-                    Vector3 ownerPos = owner.Position;
+                    ownerLastPos = owner.Position;
                     amount.X += actualStepSize;
                     base.move(amount);
-                    if (ownerPos.Equals(owner.Position))
+                    /*
+                    if (ownerLastPos.Equals(owner.Position))
                     {
                         direction = 0;
                         origin = destiny;
-                        actualStepSize = 0;
                     }
+                     */
                 }
             }
         }

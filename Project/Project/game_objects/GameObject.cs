@@ -11,6 +11,7 @@ namespace game_objects
     {
         private List<Component> components;
 
+        protected Vector3 acumulatedMovement;
         protected Vector3 position;
 
         public virtual Vector3 Position
@@ -23,16 +24,25 @@ namespace game_objects
         {
             components = new List<Component>();
             position = Vector3.Zero;
+            acumulatedMovement = Vector3.Zero;
         }
 
-        public virtual void Translate(Vector3 amount)
+        //utilizado apenas no update ou em casos específicos
+        public virtual void ImediateTranslate(Vector3 amount)
         {
             position += amount;
         }
 
+        //preferível
+        public virtual void Translate(Vector3 amount)
+        {
+            acumulatedMovement += amount;
+        }
 
         public virtual void Update(GameTime gameTime)
         {
+            ImediateTranslate(acumulatedMovement);
+            acumulatedMovement = Vector3.Zero;
             foreach (Component c in components)
                 c.Update(gameTime);
         }

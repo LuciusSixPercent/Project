@@ -50,5 +50,18 @@ namespace game_objects
                 spriteBatch.Draw(texture, position, color * Alpha);
             }
         }
+
+        public void DrawString(GameTime gameTime, string text, Vector2 position, Color color, BlendState blendState)
+        {
+            GDevice.BlendState = blendState;
+            if (!beganSpriteBatch)
+            {
+                Begin();
+            }
+            if (beganSpriteBatch)
+            {
+                spriteBatch.DrawString(TextureHelper.SpriteFont, text, position, color * Alpha);
+            }
+        }
     }
 }

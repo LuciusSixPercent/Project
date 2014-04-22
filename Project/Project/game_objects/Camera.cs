@@ -78,7 +78,7 @@ namespace game_objects
 
         void cmc_moved(Vector3 amount)
         {
-            Translate(amount);
+            ImediateTranslate(amount);
             moveTarget(amount);
         }
 
@@ -95,9 +95,9 @@ namespace game_objects
             projection = Matrix.CreatePerspectiveFieldOfView(fieldOfView, aspectRatio, clip.X, clip.Y);
         }
 
-        public override void Translate(Vector3 amount)
+        public override void ImediateTranslate(Vector3 amount)
         {
-            base.Translate(amount);
+            base.ImediateTranslate(amount);
             if (lockRotation)
                 moveTarget(amount);
         }
