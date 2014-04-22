@@ -124,7 +124,7 @@
     <Compile Include="game_objects\questions\Question.cs" />
     <Compile Include="game_objects\questions\QuestionGameObject.cs" />
     <Compile Include="game_objects\questions\QuestionFactory.cs" />
-    <Compile Include="game_objects\questions\QuestionDatabaser.cs" />
+    <Compile Include="game_objects\questions\QuestionDatabase.cs" />
     <Compile Include="game_objects\questions\QuestionSubject.cs" />
     <Compile Include="game_objects\questions\QuestionType.cs" />
     <Compile Include="game_objects\Renderer.cs" />
