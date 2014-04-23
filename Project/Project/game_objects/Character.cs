@@ -23,7 +23,6 @@ namespace game_objects
 
         private int currentFrame;
         private string name;
-        private GameObjectsManager oManager;
 
         public delegate void CollidedWithQuestion(Vector3 position, bool correctAnswer);
         public event CollidedWithQuestion collidedWithQuestion;
@@ -37,8 +36,8 @@ namespace game_objects
             }
         }
 
-        public Character(GameObjectsManager oManager, Renderer3D renderer, string name)
-            : base(renderer)
+        public Character(Renderer3D renderer, List<CollidableGameObject> collidableObjects, string name)
+            : base(renderer, collidableObjects)
         {
             PlayerMovementComponent pmc = new PlayerMovementComponent(this, 30, 0.05f, MAX_X);
             addComponent(pmc);
@@ -47,8 +46,6 @@ namespace game_objects
             addComponent(cmc);
 
             currentFrame = 0;
-
-            this.oManager = oManager;
 
             this.name = name;
 
@@ -125,7 +122,7 @@ namespace game_objects
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            foreach (CollidableGameObject obj in oManager.CollidableGameObjects)
+            foreach (CollidableGameObject obj in CollidableObjects)
             {
                 if (obj.Collided(this) && obj is QuestionGameObject)
                 {

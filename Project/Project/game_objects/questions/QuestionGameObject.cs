@@ -28,21 +28,8 @@ namespace game_objects.questions
         {
             get { return question.Header; }
         }
-        /*
-        public QuestionGameObject(Renderer3D renderer, QuestionSubject subject, string header, string[] answers, int correctAnswerIndex)
-            : base(renderer)
-        {
-            this.type = subject;
-            this.header = header;
-            this.correctAnswerIndex = correctAnswerIndex;
-
-            question = new Question(subject, header, answers);
-
-            InitAnswers(renderer);
-        }
-        */
-        public QuestionGameObject(Renderer3D renderer, Question question)
-            : base(renderer)
+        public QuestionGameObject(Renderer3D renderer, List<CollidableGameObject> collidableObjects, Question question)
+            : base(renderer, collidableObjects)
         {
             this.question = question;
             currentAnswerIndex = 0;
@@ -52,7 +39,6 @@ namespace game_objects.questions
         //gerar duas respostas falsas para serem apresentadas juntamente da correta
         private void CreateAnswers(Renderer3D renderer)
         {
-            Random rdn = new Random();
             correctAnswerIndex = 1;// rdn.Next(3);
             this.answers = new Answer[3];
             char start = 'A';
@@ -63,27 +49,27 @@ namespace game_objects.questions
                 string s = question.Answers[currentAnswerIndex];
                 if (i != correctAnswerIndex)
                 {
-                    s = GenerateFalseAnswer(usedChars, rdn, (int)start, (int)end + 1);
+                    s = GenerateFalseAnswer(usedChars, (int)start, (int)end + 1);
                     usedChars += s;
                 }
-                this.answers[i] = new Answer(renderer, s);
-                this.answers[i].Position = position + new Vector3(i-1, 0, 0);
+                this.answers[i] = new Answer(renderer, CollidableObjects, s);
+                this.answers[i].Position = position + new Vector3(i - 1, 3, 0);
             }
 
         }
 
-        private string GenerateFalseAnswer(string usedChars, Random rdn, int start, int end)
+        private string GenerateFalseAnswer(string usedChars, int start, int end)
         {
             string s = null;
             do
             {
                 if (question.Subject == QuestionSubject.PT)
                 {
-                    s = ((char)rdn.Next(start, end)).ToString();
+                    s = ((char)PublicRandom.Next(start, end)).ToString();
                 }
                 else
                 {
-                    s = rdn.Next(100).ToString();
+                    s = PublicRandom.Next(100).ToString();
                 }
             } while (usedChars.Contains(s));
             return s;
@@ -116,7 +102,7 @@ namespace game_objects.questions
                 base.Position = value;
                 for (int i = 0; i < answers.Length; i++)
                 {
-                    answers[i].Position = value + new Vector3(i - 1, 0, 0);
+                    answers[i].Position = value + new Vector3(i - 1, 3, 0);
                 }
             }
         }

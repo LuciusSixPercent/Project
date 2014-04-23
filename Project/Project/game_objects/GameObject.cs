@@ -27,13 +27,13 @@ namespace game_objects
             acumulatedMovement = Vector3.Zero;
         }
 
-        //utilizado apenas no update ou em casos específicos
+        //utilizado apenas no update ou em casos muito específicos
         public virtual void ImediateTranslate(Vector3 amount)
         {
             position += amount;
         }
 
-        //preferível
+        //para uso geral, dar preferência a esse método de translação
         public virtual void Translate(Vector3 amount)
         {
             acumulatedMovement += amount;

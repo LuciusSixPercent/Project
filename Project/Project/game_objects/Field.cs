@@ -18,8 +18,8 @@ namespace game_objects
         int columns;
         private const float scale = 1f;
 
-        public Field(Renderer3D renderer, int rows, int columns)
-            : base(renderer)
+        public Field(Renderer3D renderer, List<CollidableGameObject> collidableObjects, int rows, int columns)
+            : base(renderer, collidableObjects)
         {
             this.rows = rows;
             this.columns = columns;
@@ -81,7 +81,7 @@ namespace game_objects
 
         public override bool Collided(CollidableGameObject obj)
         {
-            return obj.BoundingBox.Max.Y >= position.Y;
+            return obj.BoundingBox.Min.Y < position.Y;
         }
     }
 }

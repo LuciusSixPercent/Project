@@ -8,17 +8,15 @@ namespace game_objects.questions
 {
     public static class QuestionFactory
     {
-
-        private static readonly Random rdn = new Random();
-        public static QuestionGameObject CreateQuestion(RunnerLevel level, QuestionSubject subject, Renderer3D renderer)
+        public static QuestionGameObject CreateQuestion(RunnerLevel level, QuestionSubject subject, Renderer3D renderer, List<CollidableGameObject> collidableObjects)
         {
             //TODO: gerar questões de forma correta utilizando o QuestionLoader
             switch (subject)
             {
                 case (QuestionSubject.PT):
-                    return new QuestionGameObject(renderer, QuestionsDatabase.PT_Questions[(int)level][rdn.Next(QuestionsDatabase.PT_Questions[(int)level].Length)]);
+                    return new QuestionGameObject(renderer, collidableObjects, QuestionsDatabase.PT_Questions[(int)level][PublicRandom.Next(QuestionsDatabase.PT_Questions[(int)level].Length)]);
                 default:
-                    return new QuestionGameObject(renderer, QuestionsDatabase.MAT_Questions[(int)level][rdn.Next(QuestionsDatabase.MAT_Questions[(int)level].Length)]);
+                    return new QuestionGameObject(renderer, collidableObjects, QuestionsDatabase.MAT_Questions[(int)level][PublicRandom.Next(QuestionsDatabase.MAT_Questions[(int)level].Length)]);
             }
         }
     }

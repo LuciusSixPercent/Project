@@ -73,7 +73,7 @@ namespace game_states
 
                 questions = new Stack<QuestionGameObject>();
 
-                player = new Character(goManager, goManager.R3D, "cosme");
+                player = new Character(goManager.R3D, goManager.CollidableGameObjects, "cosme");
                 player.collidedWithQuestion += new Character.CollidedWithQuestion(player_collidedWithQuestion);
 
                 cam = new Camera(new Vector3(0f, 3f, -4f), Vector3.Up, new Vector2(0.25f, 30));
@@ -83,7 +83,7 @@ namespace game_states
 
                 goManager.AddObject(cam);
                 goManager.AddObject(new Sky(goManager.R2D));
-                goManager.AddObject(new Field(goManager.R3D, rows, columns));
+                goManager.AddObject(new Field(goManager.R3D, goManager.CollidableGameObjects, rows, columns));
                 goManager.AddObject(player);
             }
         }
@@ -105,7 +105,7 @@ namespace game_states
             if(questions.Count > 0)
                 goManager.removeObject(questions.Pop());
             /*TODO: carregar todas as questões de uma vez na pilha e apenas ir removendo as que forem resolvidas*/
-            questions.Push(QuestionFactory.CreateQuestion(level, QuestionSubject.PT, goManager.R3D));
+            questions.Push(QuestionFactory.CreateQuestion(level, QuestionSubject.PT, goManager.R3D, goManager.CollidableGameObjects));
             questions.Peek().Load(parent.Content);
             goManager.AddDrawableObject(questions.Peek(), player);
             questions.Peek().Position = new Vector3(0, 0.25f, player.Position.Z + 10);
