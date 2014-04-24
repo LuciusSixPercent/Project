@@ -65,12 +65,18 @@ namespace game_objects
 
         private void translateQuads()
         {
+            bool quadsMoved = false;
             foreach (Quad quad in floorTiles)
             {
                 if (quad.Coord.Z <= ((Renderer3D)Renderer).Cam.Z)
                 {
                     quad.Translate(new Vector3(0, 0, scale * rows));
+                    quadsMoved = true;
                 }
+            }
+            if (quadsMoved)
+            {
+                ImediateTranslate(new Vector3(0, 0, scale));
             }
         }
 

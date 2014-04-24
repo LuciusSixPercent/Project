@@ -169,11 +169,12 @@ namespace game_states
 
         public void Reset()
         {
+            goManager.Load(parent.Content);
             player.Position = new Vector3(0f, 0.5f, 0f);
             cam.Position = new Vector3(0f, 3f, -4f);
+            field.Position = Vector3.Zero;
             score = 0;
             perfecSscoreMultiplier = 2;
-            field.Position = cam.Position;
             LoadQuestions(1);
         }
 
@@ -187,8 +188,9 @@ namespace game_states
                 pauseFlag = false;
                 if (finished)
                 {
-                    finished = false;
                     Reset();
+                    exit = false;
+                    finished = false;
                 }
             }
         }
