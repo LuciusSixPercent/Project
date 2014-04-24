@@ -9,6 +9,7 @@ using Project;
 using game_objects;
 using game_objects.questions;
 using System.IO;
+using components;
 
 namespace game_states
 {
@@ -17,18 +18,13 @@ namespace game_states
         #region Variables Declaration
         private RunnerLevel level;
 
-        public RunnerLevel Level
-        {
-            get { return level; }
-            set { level = value; }
-        }
-
         int columns = 4;
         int rows = 54;
 
         private Camera cam;
         private Character player;
-        private Stack<QuestionGameObject> questions;
+        private QuestionSubject[] subjects;
+        private List<QuestionGameObject> questions;
 
         bool pauseFlag;
 
@@ -36,6 +32,12 @@ namespace game_states
 
         private GameObjectsManager goManager;
         private int foundAnswer; //0 for no; 1 for correct; -1 for incorrect
+
+        private int score;
+        private int perfecSscoreMultiplier;
+
+        bool finished;
+        private Field field;
 
         #endregion
 
@@ -52,6 +54,18 @@ namespace game_states
             }
         }
 
+        public RunnerLevel Level
+        {
+            get { return level; }
+            set { level = value; }
+        }
+
+        public QuestionSubject[] Subjects
+        {
+            get { return subjects; }
+            set { subjects = value; }
+        }
+
         public RunnerState(int id, Game1 parent)
             : base(id, parent)
         {
@@ -65,13 +79,16 @@ namespace game_states
                 base.Initialize();
 
                 level = RunnerLevel.EASY;
+                subjects = new QuestionSubject[] { QuestionSubject.PT };
+                score = 0;
+                perfecSscoreMultiplier = 2;
 
                 enterTransitionDuration = 500;
                 exitTransitionDuration = 250;
 
                 goManager = new GameObjectsManager(parent.GraphicsDevice);
 
-                questions = new Stack<QuestionGameObject>();
+                questions = new List<QuestionGameObject>();
 
                 player = new Character(goManager.R3D, goManager.CollidableGameObjects, "cosme");
                 player.collidedWithQuestion += new Character.CollidedWithQuestion(player_collidedWithQuestion);
@@ -81,14 +98,16 @@ namespace game_states
                 cam.createProjection(MathHelper.PiOver4, parent.GraphicsDevice.Viewport.AspectRatio);
                 goManager.R3D.Cam = cam;
 
+                field = new Field(goManager.R3D, goManager.CollidableGameObjects, rows, columns);
+
                 goManager.AddObject(cam);
                 goManager.AddObject(new Sky(goManager.R2D));
-                goManager.AddObject(new Field(goManager.R3D, goManager.CollidableGameObjects, rows, columns));
+                goManager.AddObject(field);
                 goManager.AddObject(player);
             }
         }
 
-        void player_collidedWithQuestion(Vector3 position, bool correctAnswer)
+        private void player_collidedWithQuestion(Vector3 position, bool correctAnswer)
         {
             if (correctAnswer)
             {
@@ -100,15 +119,34 @@ namespace game_states
             }
         }
 
+        public void LoadQuestions(int numberOfQuestions)
+        {
+            questions.Clear();
+            for (int i = 0; i < numberOfQuestions; i++)
+            {
+                questions.Add(QuestionFactory.CreateQuestion(level, subjects[PublicRandom.Next(subjects.Length)], goManager.R3D, goManager.CollidableGameObjects, questions));
+            }
+            goManager.AddObject(questions[questions.Count - 1]);
+            questions[questions.Count - 1].Position = new Vector3(0, 0.25f, player.Position.Z + 10);
+        }
+
         private void ChangeCurrentQuestion()
         {
-            if(questions.Count > 0)
-                goManager.removeObject(questions.Pop());
-            /*TODO: carregar todas as questões de uma vez na pilha e apenas ir removendo as que forem resolvidas*/
-            questions.Push(QuestionFactory.CreateQuestion(level, QuestionSubject.PT, goManager.R3D, goManager.CollidableGameObjects));
-            questions.Peek().Load(parent.Content);
-            goManager.AddDrawableObject(questions.Peek(), player);
-            questions.Peek().Position = new Vector3(0, 0.25f, player.Position.Z + 10);
+
+            QuestionGameObject answeredQuestion = questions[questions.Count - 1];
+            questions.RemoveAt(questions.Count - 1);
+            score += answeredQuestion.Score;
+            goManager.removeObject(answeredQuestion);
+
+            if (questions.Count > 0)
+            {
+                goManager.AddObject(questions[questions.Count - 1]);
+                questions[questions.Count - 1].Position = new Vector3(0, 0.25f, player.Position.Z + 10);
+            }
+            else
+            {
+                finished = true;
+            }
         }
 
         protected override void LoadContent()
@@ -119,14 +157,24 @@ namespace game_states
 
                 TextureHelper.LoadDefaultFont(parent.Content);
 
-                ChangeCurrentQuestion();
-
                 goManager.Load(parent.Content);
-                
+
                 player.Position = new Vector3(0f, 0.5f, 0f);
+
+                LoadQuestions(1);
 
                 contentLoaded = true;
             }
+        }
+
+        public void Reset()
+        {
+            player.Position = new Vector3(0f, 0.5f, 0f);
+            cam.Position = new Vector3(0f, 3f, -4f);
+            score = 0;
+            perfecSscoreMultiplier = 2;
+            field.Position = cam.Position;
+            LoadQuestions(1);
         }
 
         #region Transitioning
@@ -137,6 +185,11 @@ namespace game_states
                 base.EnterState(freezeBelow);
                 LoadContent();
                 pauseFlag = false;
+                if (finished)
+                {
+                    finished = false;
+                    Reset();
+                }
             }
         }
         public override void EnterState()
@@ -147,28 +200,47 @@ namespace game_states
         {
             if (!enteringState)
             {
-                base.ExitState();
-                parent.Content.Unload();
-                contentLoaded = false;
+                if (!exit)
+                {
+                    base.ExitState();
+                }
+                else
+                {
+                    //parent.Content.Unload();
+                    //contentLoaded = false;
+                    parent.ExitState(ID);
+                }
             }
         }
         #endregion
 
         public override void Update(GameTime gameTime)
         {
-            if (!pauseFlag)
-            {
-                base.Update(gameTime);
-                if (stateEntered)
-                {
-                    if (!exitingState)
-                    {
-                        CheckAnswer();
-                        goManager.Update(gameTime);
 
-                        handleInput(gameTime);
+            base.Update(gameTime);
+            if (stateEntered)
+            {
+                if (!exitingState)
+                {
+                    if (!finished)
+                    {
+                        if (!pauseFlag)
+                        {
+                            CheckAnswer();
+                            goManager.Update(gameTime);
+
+                            handleInput(gameTime);
+                        }
+                    }
+                    else
+                    {
+                        ExitState();
                     }
                 }
+            }
+            else if (exit)
+            {
+                ExitState();
             }
         }
 
@@ -178,18 +250,19 @@ namespace game_states
             {
                 if (foundAnswer == 1)
                 {
-                    if (!questions.Peek().Next())
+                    if (!questions[questions.Count - 1].Next())
                     {
                         ChangeCurrentQuestion();
                     }
                     else
                     {
-                        questions.Peek().ImediateTranslate(new Vector3(0, 0, 10));
+                        questions[questions.Count - 1].Position = (new Vector3(0, 0, player.Position.Z + 10));
                     }
                 }
                 else
                 {
-                    questions.Peek().ImediateTranslate(new Vector3(0, 0, 20));
+                    perfecSscoreMultiplier = 1;    //a partir do momento que o jogador errou uma questão, não ganha mais o dobro de pontos
+                    questions[questions.Count - 1].Retreat();
                 }
                 foundAnswer = 0;
             }
@@ -218,7 +291,22 @@ namespace game_states
         public override void Draw(GameTime gameTime)
         {
             goManager.Draw(gameTime);
-            goManager.R2D.DrawString(gameTime, questions.Peek().Header, Vector2.Zero, Color.RosyBrown, BlendState.AlphaBlend);
+            string header = "";
+            int questionScore = 0;
+            int answerValue = 0;
+            if (questions.Count > 0)
+            {
+                header = questions[questions.Count - 1].Header;
+                questionScore = questions[questions.Count - 1].Score;
+                answerValue = questions[questions.Count - 1].CurrentAnswerValue;
+            }
+
+
+            goManager.R2D.DrawString(gameTime, header, Vector2.Zero, Color.RosyBrown, BlendState.AlphaBlend);
+            goManager.R2D.DrawString(gameTime, "Pontos acumulados na iteração: " + score + " x (" + perfecSscoreMultiplier + ")", new Vector2(0, 30), Color.RosyBrown, BlendState.AlphaBlend);
+            goManager.R2D.DrawString(gameTime, "Pontos acumulados na questão: " + questionScore, new Vector2(0, 60), Color.RosyBrown, BlendState.AlphaBlend);
+            goManager.R2D.DrawString(gameTime, "Valor da resposta atual: " + answerValue, new Vector2(0, 90), Color.RosyBrown, BlendState.AlphaBlend);
+            goManager.R2D.DrawString(gameTime, "Questões restantes " + questions.Count, new Vector2(0, 120), Color.RosyBrown, BlendState.AlphaBlend);
             goManager.R2D.End();
         }
 

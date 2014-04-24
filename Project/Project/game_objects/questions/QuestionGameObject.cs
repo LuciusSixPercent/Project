@@ -7,6 +7,7 @@ using Project;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
+using components;
 
 namespace game_objects.questions
 {
@@ -19,15 +20,32 @@ namespace game_objects.questions
         private int correctAnswerIndex;
 
         private const float scale = 3f;
+
+        bool pityPoint;
+
         private int collidedAnswerIndex;
 
         private int currentAnswerIndex;
 
+        private int currentAnswerValue;
+
+        private int questionScore;
+
+        public int CurrentAnswerValue
+        {
+            get { return currentAnswerValue; }
+        }
+
+        public int Score
+        {
+            get { return questionScore; }
+        }
 
         public string Header
         {
             get { return question.Header; }
         }
+
         public QuestionGameObject(Renderer3D renderer, List<CollidableGameObject> collidableObjects, Question question)
             : base(renderer, collidableObjects)
         {
@@ -39,8 +57,9 @@ namespace game_objects.questions
         //gerar duas respostas falsas para serem apresentadas juntamente da correta
         private void CreateAnswers(Renderer3D renderer)
         {
-            correctAnswerIndex = 1;// rdn.Next(3);
             this.answers = new Answer[3];
+            correctAnswerIndex = 1;// PublicRandom.Next(0, answers.Length);
+
             char start = 'A';
             char end = 'Z';
             string usedChars = question.Answers[currentAnswerIndex];
@@ -53,9 +72,12 @@ namespace game_objects.questions
                     usedChars += s;
                 }
                 this.answers[i] = new Answer(renderer, CollidableObjects, s);
-                this.answers[i].Position = position + new Vector3(i - 1, 3, 0);
             }
 
+            //se o jogador não recebeu 1 ponto de graça, então somamos 1 ao valor da questão atual
+            if(!pityPoint)
+                currentAnswerValue += 1;
+            pityPoint = false;
         }
 
         private string GenerateFalseAnswer(string usedChars, int start, int end)
@@ -85,9 +107,24 @@ namespace game_objects.questions
         public override void ImediateTranslate(Vector3 amount)
         {
             base.ImediateTranslate(amount);
-            for (int i = 0; i < answers.Length; i++)
+            foreach (Answer a in answers)
             {
-                answers[i].ImediateTranslate(amount);
+                a.ImediateTranslate(amount);
+            }
+        }
+
+        public void Retreat()
+        {
+            foreach (Answer a in answers)
+            {
+                VariableMovementComponent c = a.GetComponent<VariableMovementComponent>();
+                if (c != null)
+                {
+                    c.Acceleration = new Vector3(0, 0.05f, 0.02f);
+                    c.AccelerationVariation = Vector3.Up * - 0.01f;
+                    c.CurrentVelocity = new Vector3(0, 0.05f, 0.2f);
+                    c.TerminalVelocity = new Vector3(0, 1, 1);
+                }
             }
         }
 
@@ -102,7 +139,8 @@ namespace game_objects.questions
                 base.Position = value;
                 for (int i = 0; i < answers.Length; i++)
                 {
-                    answers[i].Position = value + new Vector3(i - 1, 3, 0);
+                    Vector3 offset = new Vector3(i - 1, PublicRandom.Next(3, 5), 0);
+                    this.answers[i].Position = position + offset;
                 }
             }
         }
@@ -110,6 +148,7 @@ namespace game_objects.questions
         public override void Load(ContentManager cManager)
         {
         }
+
         public override void Draw(GameTime gameTime)
         {
             foreach (Answer a in answers)
@@ -129,7 +168,22 @@ namespace game_objects.questions
 
         public bool CorrecAnswer()
         {
-            return collidedAnswerIndex == correctAnswerIndex;
+            bool correct = collidedAnswerIndex == correctAnswerIndex;
+            if (correct)
+            {
+                questionScore += currentAnswerValue;
+            }
+            else if (!pityPoint && currentAnswerValue > 1) //se o jogador errou e a resposta vale mais de 1 ponto, ainda damos 1 ponto de graça
+            {
+                pityPoint = true;
+                currentAnswerValue = 1;
+            }
+            else //caso a questão valha 1 ponto ou menos, ou o jogador esteja recebendo um ponto de graça, se ele errar novamente não há mais chances e a resposta vale 0 pontos
+            {
+                currentAnswerValue = 0;
+                pityPoint = false;
+            }
+            return correct;
         }
 
         public override bool Collided(CollidableGameObject obj)
@@ -139,7 +193,7 @@ namespace game_objects.questions
             for (int i = 0; i < answers.Length; i++)
             {
                 Answer a = answers[i];
-                
+
                 if (a.Collided(obj))
                 {
                     if (obj is Character)

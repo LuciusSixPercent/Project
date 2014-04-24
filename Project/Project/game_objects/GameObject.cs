@@ -20,6 +20,18 @@ namespace game_objects
             set { position = value; }
         }
 
+        public T GetComponent<T>()
+        {
+            Component comp = null;
+            foreach(Component c in components)
+                if (c is T)
+                {
+                    comp = c;
+                    break;
+                }
+            return (T)Convert.ChangeType(comp, typeof(T));
+        }
+
         protected GameObject()
         {
             components = new List<Component>();

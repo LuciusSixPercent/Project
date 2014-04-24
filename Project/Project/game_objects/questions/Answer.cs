@@ -56,8 +56,11 @@ namespace game_objects.questions
         {
             this.text = text;
             //"gravidade"
-            VariableMovementComponent vmc = new VariableMovementComponent(this, 30, Vector3.Down / 100 * (float)PublicRandom.NextDouble(), Vector3.Down / 20 * (float)PublicRandom.NextDouble(0.5));
-            vmc.TerminalVelocity = Vector3.Down/10;
+            VariableMovementComponent vmc = 
+                new VariableMovementComponent(this, 30,
+                    Vector3.Down / 1000 * (float)PublicRandom.NextDouble(0.01f), 
+                    Vector3.Down / 100);
+            vmc.TerminalVelocity = Vector3.Down/4;
             addComponent(vmc);
         }
 
@@ -93,6 +96,10 @@ namespace game_objects.questions
                         base.ImediateTranslate(upAmount); 
                         boundingBox.Max += upAmount;
                         boundingBox.Min += upAmount;
+                        VariableMovementComponent vmc = GetComponent<VariableMovementComponent>();
+                        vmc.Acceleration = Vector3.Zero;
+                        vmc.CurrentVelocity = Vector3.Zero;
+                        vmc.AccelerationVariation = Vector3.Zero;
                         amount += upAmount;
                     }
                 }
@@ -111,6 +118,11 @@ namespace game_objects.questions
             TextureHelper.StringToTexture(text, out texture);
             if(textureLoaded)
                 ((Renderer3D)Renderer).Draw(gameTime, texture, Quad, BlendState.AlphaBlend);
+        }
+
+        public override bool Collided(CollidableGameObject obj)
+        {
+            return base.Collided(obj) && GetComponent<VariableMovementComponent>().CurrentVelocity == Vector3.Zero;
         }
     }
 }

@@ -74,28 +74,34 @@ namespace game_objects
 
         public void Draw(GameTime gameTime, Texture2D texture, IEnumerable<Quad> quads, BlendState blendState)
         {
-            GDevice.BlendState = blendState;
-            basicEffect.Texture = texture;
-
-            foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes)
+            if (!texture.IsDisposed)
             {
-                pass.Apply();
-                foreach (Quad quad in quads)
+                GDevice.BlendState = blendState;
+                basicEffect.Texture = texture;
+
+                foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes)
                 {
-                    drawQuad(quad);
+                    pass.Apply();
+                    foreach (Quad quad in quads)
+                    {
+                        drawQuad(quad);
+                    }
                 }
             }
         }
 
         public void Draw(GameTime gameTime, Texture2D texture, Quad quad, BlendState blendState)
         {
-            GDevice.BlendState = blendState;
-            basicEffect.Texture = texture;
-
-            foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes)
+            if (!texture.IsDisposed)
             {
-                pass.Apply();
-                drawQuad(quad);
+                GDevice.BlendState = blendState;
+                basicEffect.Texture = texture;
+
+                foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes)
+                {
+                    pass.Apply();
+                    drawQuad(quad);
+                }
             }
         }
 

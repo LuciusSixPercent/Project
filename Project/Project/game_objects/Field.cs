@@ -24,13 +24,12 @@ namespace game_objects
             this.rows = rows;
             this.columns = columns;
             textures = new Texture2D[1];
+            floorTiles = new Quad[rows * columns];
             initQuads();
         }
 
         private void initQuads()
         {
-            floorTiles = new Quad[rows * columns];
-
             float leftColumnX = -scale * 0.5f * columns - scale * 0.5f;
 
             Vector3 initialCoord = new Vector3(leftColumnX, 0f, ((Renderer3D)Renderer).Cam.Z);
@@ -40,10 +39,6 @@ namespace game_objects
             {
                 for (int col = 0; col < columns; col++)
                 {
-                    if (columns * row + col >= 56)
-                    {
-                        int a = col;
-                    }
                     initialCoord.X += scale;
                     floorTiles[row * columns + col] = new Quad(initialCoord, normal, up, scale, scale);
                 }
@@ -76,6 +71,19 @@ namespace game_objects
                 {
                     quad.Translate(new Vector3(0, 0, scale * rows));
                 }
+            }
+        }
+
+        public override Vector3 Position
+        {
+            get
+            {
+                return base.Position;
+            }
+            set
+            {
+                base.Position = value;
+                initQuads();
             }
         }
 

@@ -22,7 +22,7 @@ namespace game_objects
 
         public void Begin()
         {
-            if (!beganSpriteBatch)
+            if (!beganSpriteBatch && !spriteBatch.IsDisposed)
             {
                 spriteBatch.Begin();
                 beganSpriteBatch = true;
@@ -31,7 +31,7 @@ namespace game_objects
 
         public void End()
         {
-            if (beganSpriteBatch)
+            if (beganSpriteBatch && !spriteBatch.IsDisposed)
             {
                 spriteBatch.End();
                 beganSpriteBatch = false;

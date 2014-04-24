@@ -21,6 +21,7 @@ namespace game_states
         protected bool stateEntered;
         protected bool enteringState;
         protected bool exitingState;
+        protected bool exit;
 
         protected int enterTransitionDuration;  //qual a duração total da transição de entrada no estado
         protected int exitTransitionDuration;   //qual a duração total da transição de saida no estado
@@ -112,6 +113,7 @@ namespace game_states
             else if (exitingState)
             {
                 exitingState = tryEndTransition(gameTime, exitingState, false);
+                exit = !exitingState;
             }
             if (Transitioning)
             {

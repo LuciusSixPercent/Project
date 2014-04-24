@@ -65,6 +65,22 @@ namespace game_objects
             get { return position.Z; }
         }
 
+        public override Vector3 Position
+        {
+            get
+            {
+                return base.Position;
+            }
+            set
+            {
+                Vector3 targetTranslation = Vector3.Zero;
+                if (lockRotation)
+                    targetTranslation -= (position - value);
+                base.Position = value;
+                moveTarget(targetTranslation);
+            }
+        }
+
         public Camera(Vector3 position, Vector3 up, Vector2 clip)
             : base()
         {

@@ -14,6 +14,7 @@ namespace components
         private Vector3 terminalVelocity;
         private Vector3 acceleration;
         private Vector3 accelerationVariation;
+        private Vector3 minimumAcceleration;
 
         public Vector3 InitialVelocity
         {
@@ -44,6 +45,11 @@ namespace components
             set { accelerationVariation = value; }
         }
 
+        public Vector3 MinimumAcceleration {
+            get { return minimumAcceleration; }
+            set { minimumAcceleration = value; }
+        }
+
         public VariableMovementComponent(GameObject owner, int interval, Vector3 initialVelocity, Vector3 acceleration)
             : base(owner, interval)
         {
@@ -62,21 +68,23 @@ namespace components
                 base.move(currentVelocity);
                 
                 currentVelocity += acceleration;
+
                 if (terminalVelocity != null)
                 {
                     if (currentVelocity != terminalVelocity && currentVelocity != terminalVelocity * -1)
                     {
-                        if (currentVelocity.X > Math.Abs(terminalVelocity.X))
+                        if (Math.Abs(currentVelocity.X) > Math.Abs(terminalVelocity.X))
                             currentVelocity.X = Math.Abs(terminalVelocity.X) * (currentVelocity.X < 0 ? -1 : 1);
 
-                        if (currentVelocity.Y > Math.Abs(terminalVelocity.Y))
+                        if (Math.Abs(currentVelocity.Y) > Math.Abs(terminalVelocity.Y))
                             currentVelocity.Y = Math.Abs(terminalVelocity.Y) * (currentVelocity.Y < 0 ? -1 : 1);
 
-                        if (currentVelocity.Z > Math.Abs(terminalVelocity.Z))
+                        if (Math.Abs(currentVelocity.Z) > Math.Abs(terminalVelocity.Z))
                             currentVelocity.Z = Math.Abs(terminalVelocity.Z) * (currentVelocity.Z < 0 ? -1 : 1);
                     }
                 }
                 acceleration += accelerationVariation;
+                    
             }
         }
     }

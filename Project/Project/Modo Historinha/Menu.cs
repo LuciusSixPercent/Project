@@ -202,11 +202,13 @@ using Microsoft.Xna.Framework.Media;
                     if (Historinha)
                     {
                         MediaPlayer.Stop();
+                        Historinha = false;
                         parent.EnterState((int)StatesIdList.STORY);
                     } else
                     if (BateBola)
                     {
                         MediaPlayer.Stop();
+                        BateBola = false;
                         parent.EnterState((int)StatesIdList.RUNNER);
                     }
                     #endregion
@@ -216,14 +218,14 @@ using Microsoft.Xna.Framework.Media;
         public override void Draw(GameTime gameTime)
         {
             spriteBatch.Begin();
-            spriteBatch.Draw(Fundo, rcfundo, Color.White);
-            spriteBatch.Draw(seta, rcSeta, Color.White);
-            spriteBatch.Draw(menu1, rcmenu1, Color.White);
-            spriteBatch.Draw(menu2, rcmenu2, Color.White);
-            spriteBatch.Draw(menu3, rcmenu3, Color.White);
-            spriteBatch.Draw(menu4, rcmenu4, Color.White);
-            spriteBatch.Draw(menu5, rcmenu5, Color.White);
-            spriteBatch.Draw(menu6, rcmenu6, Color.White);
+            spriteBatch.Draw(Fundo, rcfundo, Color.White * Alpha);
+            spriteBatch.Draw(seta, rcSeta, Color.White * Alpha);
+            spriteBatch.Draw(menu1, rcmenu1, Color.White * Alpha);
+            spriteBatch.Draw(menu2, rcmenu2, Color.White * Alpha);
+            spriteBatch.Draw(menu3, rcmenu3, Color.White * Alpha);
+            spriteBatch.Draw(menu4, rcmenu4, Color.White * Alpha);
+            spriteBatch.Draw(menu5, rcmenu5, Color.White * Alpha);
+            spriteBatch.Draw(menu6, rcmenu6, Color.White * Alpha);
             spriteBatch.End();
         }
         public bool Sair { get; set; }
