@@ -10,6 +10,7 @@ using game_objects;
 using game_objects.questions;
 using System.IO;
 using components;
+using Microsoft.Xna.Framework.Audio;
 
 namespace game_states
 {
@@ -39,7 +40,11 @@ namespace game_states
 
         private bool answeredAll;
         private bool finished;
-
+        //WAVE - Musica de fundo
+        AudioEngine audioEngine3;
+        WaveBank waveBank3;
+        SoundBank soundBank3;
+        Cue engineSound = null;
         #endregion
 
         protected override float Alpha
@@ -78,7 +83,11 @@ namespace game_states
             if (!initialized)
             {
                 base.Initialize();
-
+                //Wave
+                audioEngine3 = new AudioEngine("Content\\Audio\\MyGameAudio2.xgs");
+                waveBank3 = new WaveBank(audioEngine3, "Content\\Audio\\Wave Bank2.xwb");
+                soundBank3 = new SoundBank(audioEngine3, "Content\\Audio\\Sound Bank2.xsb");
+                //
                 level = RunnerLevel.EASY;
                 subjects = new QuestionSubject[] { QuestionSubject.PT };
                 score = 0;
@@ -231,6 +240,19 @@ namespace game_states
                     {
                         if (!pauseFlag)
                         {
+                            //Wave
+                            if (engineSound == null)
+                            {
+                                engineSound = soundBank3.GetCue("515728_Soccer-Life-97");
+                                engineSound.Play();
+                            }
+                            if (engineSound.IsPaused)
+                            {
+
+                                engineSound.Resume();
+                                
+                            }
+                            //
                             CheckAnswer();
                             if (answeredAll)
                             {
@@ -246,17 +268,20 @@ namespace game_states
 
                             handleInput(gameTime);
 
-                            
+
                         }
+                        
                     }
                     else
                     {
+                        engineSound.Stop(AudioStopOptions.AsAuthored);
                         ExitState();
                     }
                 }
             }
             else if (exit)
             {
+                engineSound.Stop(AudioStopOptions.AsAuthored);
                 ExitState();
             }
         }
@@ -294,6 +319,7 @@ namespace game_states
                 {
                     if (parent.EnterState((int)StatesIdList.PAUSE, false))
                     {
+                        engineSound.Pause();
                         Alpha = 0.5f;
                         goManager.R3D.Alpha = goManager.R2D.Alpha = Alpha;
                         pauseFlag = true;
@@ -308,6 +334,7 @@ namespace game_states
             else if (KeyboardHelper.KeyReleased(Keys.Escape))
             {
                 KeyboardHelper.UnlockKey(Keys.Escape);
+                
             }
         }
 

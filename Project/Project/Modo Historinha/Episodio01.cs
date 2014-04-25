@@ -293,13 +293,12 @@ class Episodio01 : GameState
             }
             if (engineSound == null)
             {
-                engineSound = soundBank2.GetCue("385591_Night_sea_ln_loop");
+                engineSound = soundBank2.GetCue("385591_Night_sea_ln");
                 engineSound.Play();
             }
-            if (engineSound.IsPaused || engineSound.IsStopped)
+            if (engineSound.IsPaused )
             {
-                
-                engineSound.Play();
+                engineSound.Resume();
             }
             if (!FimDaHistoria)
             {
@@ -388,6 +387,7 @@ class Episodio01 : GameState
             }
             else if (!exitingState)
             {
+                engineSound.Stop(AudioStopOptions.AsAuthored);
                 ExitState();
             }
         }
@@ -804,8 +804,6 @@ class Episodio01 : GameState
         if (!enteringState)
         {
             base.ExitState();
-            parent.Content.Unload();
-            contentLoaded = false;
             parent.ExitState(ID, (int)StatesIdList.RUNNER);
         }
     }

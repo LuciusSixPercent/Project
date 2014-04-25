@@ -225,21 +225,15 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = <none>;
-    Xbox Bank Last Modified Low = 0;
-    Xbox Bank Last Modified High = 0;
-    PC Bank Last Modified Low = 0;
-    PC Bank Last Modified High = 0;
-    Header Last Modified Low = 0;
-    Header Last Modified High = 0;
-    Bank Last Revised Low = 1094909816;
-    Bank Last Revised High = 30367764;
+    Bank Last Revised Low = 3585164923;
+    Bank Last Revised High = 30367920;
 
     Wave
     {
-        Name = 385591_Night_sea_ln_loop;
-        File = 385591_Night_sea_ln_loop.wav;
-        Build Settings Last Modified Low = 1073611428;
-        Build Settings Last Modified High = 30367764;
+        Name = 385591_Night_sea_ln;
+        File = 385591_Night_sea_ln.wav;
+        Build Settings Last Modified Low = 2876414922;
+        Build Settings Last Modified High = 30367920;
 
         Cache
         {
@@ -248,12 +242,104 @@ Wave Bank
             Sampling Rate = 44100;
             Bits Per Sample = 1;
             Play Region Offset = 44;
-            Play Region Length = 10427904;
-            Loop Region Offset = 5234688;
-            Loop Region Length = 5193216;
+            Play Region Length = 5213952;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 2999974528;
-            Last Modified High = 30367762;
+            Last Modified Low = 817942528;
+            Last Modified High = 30367782;
+        }
+    }
+
+    Wave
+    {
+        Name = 429208_Vanilla;
+        File = 429208_Vanilla.wav;
+        Build Settings Last Modified Low = 3530318195;
+        Build Settings Last Modified High = 30367920;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 10035068;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 853171456;
+            Last Modified High = 30367789;
+        }
+    }
+
+    Wave
+    {
+        Name = 515728_Soccer-Life-97;
+        File = 515728_Soccer-Life-97.wav;
+        Build Settings Last Modified Low = 3530328203;
+        Build Settings Last Modified High = 30367920;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 11422044;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2583106048;
+            Last Modified High = 30367787;
+        }
+    }
+
+    Wave
+    {
+        Name = 540428_quotSports-Fanaticq;
+        File = 540428_quotSports-Fanaticq.wav;
+        Build Settings Last Modified Low = 3530328203;
+        Build Settings Last Modified High = 30367920;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 6434080;
+            Loop Region Offset = 3211264;
+            Loop Region Length = 3222816;
+            File Type = 1;
+            Last Modified Low = 3861082112;
+            Last Modified High = 30367878;
+        }
+    }
+
+    Wave
+    {
+        Name = Silly Fun;
+        File = Silly Fun.wav;
+        Build Settings Last Modified Low = 3530328203;
+        Build Settings Last Modified High = 30367920;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 12372084;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 1248007936;
+            Last Modified High = 30367784;
         }
     }
 }
@@ -265,12 +351,10 @@ Sound Bank
     Windows File = Win\Sound Bank2.xsb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
-    Header Last Modified High = 0;
-    Header Last Modified Low = 0;
 
     Sound
     {
-        Name = 385591_Night_sea_ln_loop;
+        Name = 385591_Night_sea_ln;
         Volume = -1200;
         Pitch = 0;
         Priority = 0;
@@ -307,8 +391,200 @@ Sound Bank
                 {
                     Bank Name = Wave Bank2;
                     Bank Index = 0;
-                    Entry Name = 385591_Night_sea_ln_loop;
+                    Entry Name = 385591_Night_sea_ln;
                     Entry Index = 0;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = 429208_Vanilla;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Music;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Loop Count = 255;
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank2;
+                    Bank Index = 0;
+                    Entry Name = 429208_Vanilla;
+                    Entry Index = 1;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = 515728_Soccer-Life-97;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Music;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Loop Count = 255;
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank2;
+                    Bank Index = 0;
+                    Entry Name = 515728_Soccer-Life-97;
+                    Entry Index = 2;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = 540428_quotSports-Fanaticq;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Music;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Loop Count = 255;
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank2;
+                    Bank Index = 0;
+                    Entry Name = 540428_quotSports-Fanaticq;
+                    Entry Index = 3;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = Silly Fun;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Music;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Loop Count = 255;
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank2;
+                    Bank Index = 0;
+                    Entry Name = Silly Fun;
+                    Entry Index = 4;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -318,7 +594,7 @@ Sound Bank
 
     Cue
     {
-        Name = 385591_Night_sea_ln_loop;
+        Name = 385591_Night_sea_ln;
 
         Variation
         {
@@ -329,8 +605,88 @@ Sound Bank
 
         Sound Entry
         {
-            Name = 385591_Night_sea_ln_loop;
+            Name = 385591_Night_sea_ln;
             Index = 0;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = 429208_Vanilla;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = 429208_Vanilla;
+            Index = 1;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = 515728_Soccer-Life-97;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = 515728_Soccer-Life-97;
+            Index = 2;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = 540428_quotSports-Fanaticq;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = 540428_quotSports-Fanaticq;
+            Index = 3;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = Silly Fun;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = Silly Fun;
+            Index = 4;
             Weight Min = 0;
             Weight Max = 255;
         }
