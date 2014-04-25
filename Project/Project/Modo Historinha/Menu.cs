@@ -75,12 +75,12 @@ using Microsoft.Xna.Framework.Audio;
                 menu6 = new Texture2D[2] { menu6Normal, menu6Ouver };
                 #region Retangulos
                 rcfundo = new Rectangle(0, 0, 1024, 768);
-                rcmenu1 = new Rectangle(500, 300, menu1[mn1].Width / 2, menu1[mn1].Height / 2);
-                rcmenu2 = new Rectangle(500, 370, menu2[mn2].Width / 2, menu2[mn2].Height / 2);
-                rcmenu3 = new Rectangle(500, 430, menu3[mn3].Width / 2, menu3[mn3].Height / 2);
-                rcmenu4 = new Rectangle(500, 520, menu4[mn4].Width / 2, menu4[mn4].Height / 2);
-                rcmenu5 = new Rectangle(500, 590, menu5[mn5].Width / 2, menu5[mn5].Height / 2);
-                rcmenu6 = new Rectangle(500, 650, menu6[mn6].Width / 2, menu6[mn6].Height / 2);
+                rcmenu1 = new Rectangle(350, 300, menu1[mn1].Width / 2, menu1[mn1].Height / 2);
+                rcmenu2 = new Rectangle(350, 370, menu2[mn2].Width / 2, menu2[mn2].Height / 2);
+                rcmenu3 = new Rectangle(350, 430, menu3[mn3].Width / 2, menu3[mn3].Height / 2);
+                rcmenu4 = new Rectangle(350, 520, menu4[mn4].Width / 2, menu4[mn4].Height / 2);
+                rcmenu5 = new Rectangle(350, 590, menu5[mn5].Width / 2, menu5[mn5].Height / 2);
+                rcmenu6 = new Rectangle(350, 650, menu6[mn6].Width / 2, menu6[mn6].Height / 2);
                 menus = new Vector2[6] { new Vector2(rcmenu1.X-seta.Width, rcmenu1.Y), new Vector2(rcmenu2.X-seta.Width, rcmenu2.Y), new Vector2(rcmenu3.X-seta.Width, rcmenu3.Y), 
                 new Vector2(rcmenu4.X-seta.Width, rcmenu4.Y), new Vector2(rcmenu5.X-seta.Width, rcmenu5.Y), new Vector2(rcmenu6.X-seta.Width, rcmenu6.Y) };
                 rcSeta = new Rectangle((int)menus[escolha].X, (int)menus[escolha].Y, seta.Width, seta.Height);
@@ -135,6 +135,11 @@ using Microsoft.Xna.Framework.Audio;
                 if (stateEntered)
                 {
 
+                    if (engineSound.IsStopped)
+                    {
+                        engineSound = soundBank3.GetCue("Silly Fun");
+                        engineSound.Play();
+                    }
                     rcSeta = new Rectangle((int)menus[escolha].X, (int)menus[escolha].Y, seta.Width, seta.Height);
                     
                     if ((teclado.IsKeyDown(Keys.Back)) && (lastKey != Keys.Back))
