@@ -60,7 +60,7 @@ namespace Project
 
             rs = new RunnerState((int)StatesIdList.RUNNER, this);
             states.Add(rs.ID, rs);
-           // EnterState(rs.ID);
+            //EnterState(rs.ID);
 
             PauseState ps = new PauseState((int)StatesIdList.PAUSE, this);
             states.Add(ps.ID, ps);

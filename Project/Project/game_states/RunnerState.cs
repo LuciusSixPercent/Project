@@ -17,14 +17,15 @@ namespace game_states
     {
         #region Variables Declaration
         private RunnerLevel level;
+        private QuestionSubject[] subjects;
 
         int columns = 4;
-        int rows = 54;
+        int rows = 35;
 
         private Camera cam;
         private Character player;
-        private QuestionSubject[] subjects;
         private List<QuestionGameObject> questions;
+        private Field field;
 
         bool pauseFlag;
 
@@ -34,10 +35,10 @@ namespace game_states
         private int foundAnswer; //0 for no; 1 for correct; -1 for incorrect
 
         private int score;
-        private int perfecSscoreMultiplier;
+        private int perfectSscoreMultiplier;
 
-        bool finished;
-        private Field field;
+        private bool answeredAll;
+        private bool finished;
 
         #endregion
 
@@ -81,10 +82,10 @@ namespace game_states
                 level = RunnerLevel.EASY;
                 subjects = new QuestionSubject[] { QuestionSubject.PT };
                 score = 0;
-                perfecSscoreMultiplier = 2;
+                perfectSscoreMultiplier = 2;
 
                 enterTransitionDuration = 500;
-                exitTransitionDuration = 250;
+                exitTransitionDuration = 1000;
 
                 goManager = new GameObjectsManager(parent.GraphicsDevice);
 
@@ -127,7 +128,7 @@ namespace game_states
                 questions.Add(QuestionFactory.CreateQuestion(level, subjects[PublicRandom.Next(subjects.Length)], goManager.R3D, goManager.CollidableGameObjects, questions));
             }
             goManager.AddObject(questions[questions.Count - 1]);
-            questions[questions.Count - 1].Position = new Vector3(0, 0.25f, player.Position.Z + 10);
+            questions[questions.Count - 1].Position = new Vector3(0, 0.25f, player.Position.Z + 5);
         }
 
         private void ChangeCurrentQuestion()
@@ -141,11 +142,11 @@ namespace game_states
             if (questions.Count > 0)
             {
                 goManager.AddObject(questions[questions.Count - 1]);
-                questions[questions.Count - 1].Position = new Vector3(0, 0.25f, player.Position.Z + 10);
+                questions[questions.Count - 1].Position = new Vector3(0, 0.25f, player.Position.Z + 1);
             }
             else
             {
-                finished = true;
+                answeredAll = true;
             }
         }
 
@@ -155,11 +156,11 @@ namespace game_states
             {
                 QuestionsDatabase.LoadQuestions();
 
-                TextureHelper.LoadDefaultFont(parent.Content);
+                TextHelper.LoadDefaultFont(parent.Content);
 
                 goManager.Load(parent.Content);
 
-                player.Position = new Vector3(0f, 0.5f, 0f);
+                player.Position = new Vector3(0f, 0f, 0f);
 
                 LoadQuestions(1);
 
@@ -169,12 +170,18 @@ namespace game_states
 
         public void Reset()
         {
-            goManager.Load(parent.Content);
-            player.Position = new Vector3(0f, 0.5f, 0f);
+            exit = false;
+            finished = false;
+            answeredAll = false;
+            player.Reset();
+            cam.KeepMoving = true;
             cam.Position = new Vector3(0f, 3f, -4f);
-            field.Position = Vector3.Zero;
+            cam.lookAt(new Vector3(0f, 0.25f, 2f), true);
+            goManager.R3D.updateEffect(cam.View, cam.Projection);
+            field.KeepMoving = true;
+            field.Position = Vector3.Backward;
             score = 0;
-            perfecSscoreMultiplier = 2;
+            perfectSscoreMultiplier = 2;
             LoadQuestions(1);
         }
 
@@ -189,8 +196,6 @@ namespace game_states
                 if (finished)
                 {
                     Reset();
-                    exit = false;
-                    finished = false;
                 }
             }
         }
@@ -208,8 +213,6 @@ namespace game_states
                 }
                 else
                 {
-                    //parent.Content.Unload();
-                    //contentLoaded = false;
                     parent.ExitState(ID);
                 }
             }
@@ -229,9 +232,21 @@ namespace game_states
                         if (!pauseFlag)
                         {
                             CheckAnswer();
+                            if (answeredAll)
+                            {
+                                field.KeepMoving = false;
+                                if (field.Goal.Position.Z - player.Position.Z <= 5 && player.KeepMoving)
+                                {
+                                    player.KickBall();
+                                    cam.KeepMoving = false;
+                                }
+                            }
+
                             goManager.Update(gameTime);
 
                             handleInput(gameTime);
+
+                            
                         }
                     }
                     else
@@ -258,12 +273,12 @@ namespace game_states
                     }
                     else
                     {
-                        questions[questions.Count - 1].Position = (new Vector3(0, 0, player.Position.Z + 10));
+                        questions[questions.Count - 1].Position = (new Vector3(0, 0, player.Position.Z + 3));
                     }
                 }
                 else
                 {
-                    perfecSscoreMultiplier = 1;    //a partir do momento que o jogador errou uma questão, não ganha mais o dobro de pontos
+                    perfectSscoreMultiplier = 1;    //a partir do momento que o jogador errou uma questão, não ganha mais o dobro de pontos
                     questions[questions.Count - 1].Retreat();
                 }
                 foundAnswer = 0;
@@ -275,12 +290,19 @@ namespace game_states
             if (KeyboardHelper.IsKeyDown(Keys.Escape))
             {
                 KeyboardHelper.LockKey(Keys.Escape);
-                if (parent.EnterState((int)StatesIdList.PAUSE, false))
+                if (!answeredAll)
                 {
-                    Alpha = 0.5f;
-                    goManager.R3D.Alpha = goManager.R2D.Alpha = Alpha;
-                    pauseFlag = true;
-                    stateEntered = false;
+                    if (parent.EnterState((int)StatesIdList.PAUSE, false))
+                    {
+                        Alpha = 0.5f;
+                        goManager.R3D.Alpha = goManager.R2D.Alpha = Alpha;
+                        pauseFlag = true;
+                        stateEntered = false;
+                    }
+                }
+                else
+                {
+                    finished = true;
                 }
             }
             else if (KeyboardHelper.KeyReleased(Keys.Escape))
@@ -292,6 +314,7 @@ namespace game_states
         #region DRAWING
         public override void Draw(GameTime gameTime)
         {
+
             goManager.Draw(gameTime);
             string header = "";
             int questionScore = 0;
@@ -303,13 +326,18 @@ namespace game_states
                 answerValue = questions[questions.Count - 1].CurrentAnswerValue;
             }
 
-
-            goManager.R2D.DrawString(gameTime, header, Vector2.Zero, Color.RosyBrown, BlendState.AlphaBlend);
-            goManager.R2D.DrawString(gameTime, "Pontos acumulados na iteração: " + score + " x (" + perfecSscoreMultiplier + ")", new Vector2(0, 30), Color.RosyBrown, BlendState.AlphaBlend);
-            goManager.R2D.DrawString(gameTime, "Pontos acumulados na questão: " + questionScore, new Vector2(0, 60), Color.RosyBrown, BlendState.AlphaBlend);
-            goManager.R2D.DrawString(gameTime, "Valor da resposta atual: " + answerValue, new Vector2(0, 90), Color.RosyBrown, BlendState.AlphaBlend);
-            goManager.R2D.DrawString(gameTime, "Questões restantes " + questions.Count, new Vector2(0, 120), Color.RosyBrown, BlendState.AlphaBlend);
+            //*
+            goManager.R2D.DrawString(header, Vector2.Zero, Color.RosyBrown);
+            goManager.R2D.DrawString("Pontos acumulados na iteração: " + score + " x (" + perfectSscoreMultiplier + ")", new Vector2(0, 30), Color.RosyBrown);
+            goManager.R2D.DrawString("Pontos acumulados na questão: " + questionScore, new Vector2(0, 60), Color.RosyBrown);
+            goManager.R2D.DrawString("Valor da resposta atual: " + answerValue, new Vector2(0, 90), Color.RosyBrown);
+            goManager.R2D.DrawString("Questões restantes " + questions.Count, new Vector2(0, 120), Color.RosyBrown);
+            if (exitingState)
+            {
+                goManager.R2D.DrawString("Alpha " + Alpha, new Vector2(400, 150), Color.Black);
+            }
             goManager.R2D.End();
+            //*/
         }
 
         #endregion

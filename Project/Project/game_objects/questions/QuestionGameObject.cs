@@ -62,7 +62,10 @@ namespace game_objects.questions
 
             char start = 'A';
             char end = 'Z';
-            string usedChars = question.Answers[currentAnswerIndex];
+            string usedChars = "";
+            foreach (string answer in question.Answers)
+                usedChars += answer;
+
             for (int i = 0; i < 3; i++)
             {
                 string s = question.Answers[currentAnswerIndex];

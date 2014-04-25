@@ -33,7 +33,8 @@ namespace game_objects
             set { text = value; }
         }
 
-        public Button(Rectangle bounds, SpriteBatch spriteBatch, Renderer2D r2D) : base (r2D)
+        public Button(Rectangle bounds, SpriteBatch spriteBatch, Renderer2D r2D)
+            : base(r2D)
         {
             ClickComponent cc = new ClickComponent(this, bounds);
             cc.click += new ClickComponent.Click(cc_click);
@@ -65,25 +66,23 @@ namespace game_objects
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            
+
         }
 
         public override void Draw(GameTime gameTime)
         {
             if (Visible)
             {
-                spriteBatch.Begin();
-                spriteBatch.Draw(texture, bounds, color);
+                ((Renderer2D)Renderer).Draw(texture, bounds, color, BlendState.AlphaBlend);
                 if (!String.IsNullOrEmpty(text) && spriteFont != null)
                 {
                     Vector2 textSize = spriteFont.MeasureString(text);
                     float scale = 1;
                     //if (textSize.X > bounds.Width) -> se tirar o comentário daqui, o texto só mudará de escala caso seja maior que o botão
-                        scale = (float)bounds.Width / textSize.X;
+                    scale = (float)bounds.Width / textSize.X;
                     Vector2 position = new Vector2(bounds.X + (bounds.Width - textSize.X * scale) / 2, bounds.Y + (bounds.Height - textSize.Y * scale) / 2);
-                    spriteBatch.DrawString(spriteFont, text, position, color, 0, Vector2.Zero, scale, SpriteEffects.None, 0f);
+                    ((Renderer2D)Renderer).DrawString(text, position, color);
                 }
-                spriteBatch.End();
             }
         }
 

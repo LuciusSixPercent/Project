@@ -69,21 +69,20 @@ namespace game_states
 
         public virtual void EnterState()
         {
-            enteringState = true;
-            alphaIncrement = (float)(1 - alpha) / enterTransitionDuration;
+            EnterState(freezeBelow);
         }
 
         public virtual void EnterState(bool freezeBelow)
         {
             enteringState = true;
             this.freezeBelow = freezeBelow;
-            alphaIncrement = (float)(1 - alpha) / enterTransitionDuration;
+            alphaIncrement = (float)1 / (enterTransitionDuration == 0? 1 : enterTransitionDuration);
         }
 
         public virtual void ExitState()
         {
             exitingState = true;
-            alphaIncrement = (alpha-1) * (float)transitionTime / exitTransitionDuration;
+            alphaIncrement = -alpha / (exitTransitionDuration == 0? 1 : exitTransitionDuration);
         }
 
         protected bool tryEndTransition(GameTime gameTime, bool transitionFlag, bool result)
@@ -92,7 +91,6 @@ namespace game_states
             {
                 stateEntered = result;
                 transitionTime = 0;
-                Alpha = 1f;
                 return false;
             }
             return true;
@@ -109,11 +107,15 @@ namespace game_states
             if (enteringState)
             {
                 enteringState = tryEndTransition(gameTime, enteringState, true);
+                if (!enteringState)
+                    alpha = 1f;
             }
             else if (exitingState)
             {
                 exitingState = tryEndTransition(gameTime, exitingState, false);
                 exit = !exitingState;
+                if (exit)
+                    alpha = 0f;
             }
             if (Transitioning)
             {

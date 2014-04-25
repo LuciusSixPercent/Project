@@ -26,6 +26,8 @@ namespace game_objects
             set { lockRotation = value; }
         }
 
+        public bool KeepMoving { get; set; }
+
         public Vector3 Target
         {
             get { return target; }
@@ -90,12 +92,7 @@ namespace game_objects
             lookAt(Vector3.Zero, true);
             ConstantMovementComponent cmc = new ConstantMovementComponent(this, new Vector3(0, 0, 0.1f), 40);
             addComponent(cmc);
-        }
-
-        void cmc_moved(Vector3 amount)
-        {
-            ImediateTranslate(amount);
-            moveTarget(amount);
+            KeepMoving = true;
         }
 
         public void lookAt(Vector3 target, bool lockRotation)
@@ -113,9 +110,12 @@ namespace game_objects
 
         public override void ImediateTranslate(Vector3 amount)
         {
-            base.ImediateTranslate(amount);
-            if (lockRotation)
-                moveTarget(amount);
+            if (KeepMoving)
+            {
+                base.ImediateTranslate(amount);
+                if (lockRotation)
+                    moveTarget(amount);
+            }
         }
 
         public void moveTarget(Vector3 amount)

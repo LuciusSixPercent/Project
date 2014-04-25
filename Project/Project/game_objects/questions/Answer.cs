@@ -22,7 +22,7 @@ namespace game_objects.questions
         {
             get { 
                 if(!textureLoaded)
-                    textureLoaded = TextureHelper.StringToTexture(text, out texture);
+                    textureLoaded = TextHelper.StringToTexture(text, out texture);
                 return texture; 
             }
         }
@@ -84,7 +84,7 @@ namespace game_objects.questions
             base.ImediateTranslate(amount);
             boundingBox.Max += amount;
             boundingBox.Min += amount;
-            Vector3 upAmount = new Vector3(0,0.1f,0);
+            Vector3 upAmount = Vector3.Zero;
             foreach (CollidableGameObject cgo in CollidableObjects)
             {
                 if (cgo is Field)
@@ -110,14 +110,14 @@ namespace game_objects.questions
 
         public override void Load(ContentManager cManager)
         {
-            textureLoaded = TextureHelper.StringToTexture(text, out texture);
+            textureLoaded = TextHelper.StringToTexture(text, out texture);
         }
 
         public override void Draw(GameTime gameTime)
         {
-            TextureHelper.StringToTexture(text, out texture);
+            TextHelper.StringToTexture(text, out texture);
             if(textureLoaded)
-                ((Renderer3D)Renderer).Draw(gameTime, texture, Quad, BlendState.AlphaBlend);
+                ((Renderer3D)Renderer).Draw(texture, Quad, BlendState.AlphaBlend, BoundingBox);
         }
 
         public override bool Collided(CollidableGameObject obj)

@@ -9,7 +9,7 @@ using System.IO;
 
 namespace Project
 {
-    public static class TextureHelper
+    public static class TextHelper
     {
         private static Dictionary<string, Texture2D> cachedTextures;
 
@@ -19,15 +19,15 @@ namespace Project
 
         public static SpriteFont SpriteFont
         {
-            get { return TextureHelper.spriteFont; }
-            set { TextureHelper.spriteFont = value; }
+            get { return TextHelper.spriteFont; }
+            set { TextHelper.spriteFont = value; }
         }
 
         public static SpriteBatch SpriteBatch
         {
-            get { return TextureHelper.spriteBatch; }
+            get { return TextHelper.spriteBatch; }
             set { 
-                TextureHelper.spriteBatch = value;
+                TextHelper.spriteBatch = value;
             }
         }
 
@@ -36,7 +36,7 @@ namespace Project
             get {
                 if (cachedTextures == null)
                     cachedTextures = new Dictionary<string, Texture2D>(10);
-                return TextureHelper.cachedTextures; 
+                return TextHelper.cachedTextures; 
             }
         }
 
