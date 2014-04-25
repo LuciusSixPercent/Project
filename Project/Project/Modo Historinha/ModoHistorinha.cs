@@ -9,13 +9,14 @@ using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Input;
 
 
-class ModoHistorinha : DateBase
+class ModoHistorinha
 {
-    String VariavelInutil;
+    
     int i = 0;//contador
     string pergunta, res1, res2, res3, res4;
     Color Calt0, Calt1, Calt2, Calt3;
     SpriteFont arial;
+    Texture2D OpcoeSprite;
     int NoDeRespostas;
     #region Sequencia
     bool primeiroclique = false;
@@ -31,10 +32,11 @@ class ModoHistorinha : DateBase
     List<Song> narrador;
     bool repetir = true;
     #endregion
+    Vector2 VTelaFundo, VOpcoes1, VOpcoes2, VOpcoes3, VOpcoes4, VPersonagens, Valt0, Valt1, Valt2, Valt3, Vpergunta;
     //teste
     bool venceu = false;
-    public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, string alt2, string alt3, int episodio, SpriteFont a, int n, Song narra)
-        : base(c)
+    public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, string alt2, string alt3, SpriteFont a, int n, Song narra)
+        
     {
         venceu = false;
         narrador = new List<Song>() { narra };
@@ -49,15 +51,10 @@ class ModoHistorinha : DateBase
         Calt1 = Color.White;
         Calt2 = Color.White;
         Calt3 = Color.White;
-        switch (episodio)
-        {
-            case 1:
-                EP1();
-                break;
-        }
+        Ini(c);
     }
-    public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, int episodio, SpriteFont a, int n, Song narra)
-        : base(c)
+    public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, SpriteFont a, int n, Song narra)
+        
     {
         venceu = false;
         narrador = new List<Song>() { narra };
@@ -68,15 +65,10 @@ class ModoHistorinha : DateBase
         res2 = alt1;
         Calt0 = Color.White;
         Calt1 = Color.White;
-        switch (episodio)
-        {
-            case 1:
-                EP1();
-                break;
-        }
+        Ini(c);
     }
-    public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, string alt2, int episodio, SpriteFont a, int n, Song narra)
-        : base(c)
+    public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, string alt2, SpriteFont a, int n, Song narra)
+        
     {
         venceu = false;
         narrador = new List<Song>() { narra };
@@ -89,15 +81,10 @@ class ModoHistorinha : DateBase
         Calt0 = Color.White;
         Calt1 = Color.White;
         Calt2 = Color.White;
-        switch (episodio)
-        {
-            case 1:
-                EP1();
-                break;
-        }
+        Ini(c);
     }
-    public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, string alt2, string alt3, int episodio, SpriteFont a, int n, Song narra, bool sequencia)
-        : base(c)
+    public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, string alt2, string alt3, SpriteFont a, int n, Song narra, bool sequencia)
+        
     {
         venceu = false;
         narrador = new List<Song>() { narra };
@@ -113,15 +100,10 @@ class ModoHistorinha : DateBase
         Calt1 = Color.White;
         Calt2 = Color.White;
         Calt3 = Color.White;
-        switch (episodio)
-        {
-            case 1:
-                EP1();
-                break;
-        }
+        Ini(c);
     }
-    public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, string alt2, string alt3, int episodio, SpriteFont a, int n, Song narra1, Song narrar2, bool sequencia)
-        : base(c)
+    public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, string alt2, string alt3, SpriteFont a, int n, Song narra1, Song narrar2, bool sequencia)
+        
     {
         venceu = false;
         narrador = new List<Song>() { narra1, narrar2 };
@@ -137,16 +119,12 @@ class ModoHistorinha : DateBase
         Calt1 = Color.White;
         Calt2 = Color.White;
         Calt3 = Color.White;
-        switch (episodio)
-        {
-            case 1:
-                EP1();
-                break;
-        }
+        Ini(c);
     }
     int incrementoTexto = 0;
     public void Atualizar()
     {
+        MouseState mouse = Mouse.GetState();
         if (repetir)
         {
             MediaPlayer.Play(narrador[selecionar]);
@@ -389,6 +367,21 @@ class ModoHistorinha : DateBase
 
         return venceu ;
 
+    }
+    public void Ini(ContentManager Content)
+    {
+        OpcoeSprite = Content.Load<Texture2D>("Imagem/Sprites/op");
+
+        VOpcoes1 = new Vector2(230, 200);
+        VOpcoes2 = new Vector2(VOpcoes1.X + 200, VOpcoes1.Y);
+        VOpcoes3 = new Vector2(VOpcoes2.X + 200, VOpcoes2.Y);
+        VOpcoes4 = new Vector2(VOpcoes3.X + 200, VOpcoes3.Y);
+
+        Valt0 = new Vector2(VOpcoes1.X, VOpcoes1.Y + 20);
+        Valt1 = new Vector2(VOpcoes2.X, VOpcoes2.Y + 20);
+        Valt2 = new Vector2(VOpcoes3.X, VOpcoes3.Y + 20);
+        Valt3 = new Vector2(VOpcoes4.X, VOpcoes4.Y + 20);
+        Vpergunta = new Vector2(10, 100);
     }
 }
 

@@ -244,17 +244,17 @@ class Episodio01 : GameState
 
             // Exercicios
             //Cena 01
-            Exercicio01 = new ModoHistorinha(parent.Content, pergunta00, alternativa00, alternativa01, 1, arial, 2, audioEx01);
-            Exercicio02 = new ModoHistorinha(parent.Content, pergunta10, alternativa02, alternativa03, alternativa10, 1, arial, 3, audioEx02);
-            Exercicio03 = new ModoHistorinha(parent.Content, pergunta20, alternativa20, alternativa21, alternativa22, alternativa23, 1, arial, 4, audioEx03, true);
-            Exercicio04 = new ModoHistorinha(parent.Content, pergunta30, alternativa30, alternativa31, 1, arial, 2, audioEx04);
-            Exercicio05 = new ModoHistorinha(parent.Content, pergunta40, alternativa40, alternativa41, alternativa42, 1, arial, 3, audioEx05);
+            Exercicio01 = new ModoHistorinha(parent.Content, pergunta00, alternativa00, alternativa01, arial, 2, audioEx01);
+            Exercicio02 = new ModoHistorinha(parent.Content, pergunta10, alternativa02, alternativa03, alternativa10,arial, 3, audioEx02);
+            Exercicio03 = new ModoHistorinha(parent.Content, pergunta20, alternativa20, alternativa21, alternativa22, alternativa23,arial, 4, audioEx03, true);
+            Exercicio04 = new ModoHistorinha(parent.Content, pergunta30, alternativa30, alternativa31,arial, 2, audioEx04);
+            Exercicio05 = new ModoHistorinha(parent.Content, pergunta40, alternativa40, alternativa41, alternativa42,arial, 3, audioEx05);
             //Cena02
-            Exercicio06 = new ModoHistorinha(parent.Content, pergunta6, alt60, alt61, 1, arial, 2, audioEx06);
-            Exercicio07 = new ModoHistorinha(parent.Content, Pergunta7, alt70, alt71, alt72, alt73, 1, arial, 4, audioEx07, audioEx072, false);
-            Exercicio08 = new ModoHistorinha(parent.Content, Pergunta8, alt80, alt81, alt82, 1, arial, 3, audioEx08);
-            Exercicio09 = new ModoHistorinha(parent.Content, Pergunta9, alt90, alt91, alt92, 1, arial, 3, audioEx09);
-            Exercicio10 = new ModoHistorinha(parent.Content, Pergunta010, alt100, alt101, alt102, 1, arial, 3, audioEx10);
+            Exercicio06 = new ModoHistorinha(parent.Content, pergunta6, alt60, alt61, arial, 2, audioEx06);
+            Exercicio07 = new ModoHistorinha(parent.Content, Pergunta7, alt70, alt71, alt72, alt73,arial, 4, audioEx07, audioEx072, false);
+            Exercicio08 = new ModoHistorinha(parent.Content, Pergunta8, alt80, alt81, alt82,arial, 3, audioEx08);
+            Exercicio09 = new ModoHistorinha(parent.Content, Pergunta9, alt90, alt91, alt92,arial, 3, audioEx09);
+            Exercicio10 = new ModoHistorinha(parent.Content, Pergunta010, alt100, alt101, alt102,arial, 3, audioEx10);
             //Transições
             enterTransitionDuration = 50;
             exitTransitionDuration = 50;
