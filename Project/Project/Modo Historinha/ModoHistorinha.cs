@@ -152,23 +152,22 @@ class ModoHistorinha : DateBase
             MediaPlayer.Play(narrador[selecionar]);
             repetir = false;
         }
-       
+
         if (texto.Length % Limitedotexto == 0 && texto.Length != 0)//Quando o texto atingir um limite da tela e tiver um espaço em branco ele pula uma linha;
         {
-            if (texto[indice - 1] == ' ')
+            if (pergunta[indice - 1] == ' ')
             {
                 texto += "\n";
-
                 zerar++;
-                incrementoTexto = 0;
-                
+                Limitedotexto = 80 * zerar;
             }
             else
             {
-                
+                Limitedotexto++;  
                 incrementoTexto++;
+
             }
-            Limitedotexto = ((80 * (zerar + 1)) + incrementoTexto);
+            //Limitedotexto = ((80 * (zerar + 1)) + incrementoTexto);
         }
         mouse = Mouse.GetState();
         if (!primeiroclique && seq)

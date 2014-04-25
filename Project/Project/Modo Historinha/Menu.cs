@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Content;
 using game_states;
 using Project;
 using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Audio;
 
 
 
@@ -22,7 +23,13 @@ using Microsoft.Xna.Framework.Media;
         private bool contentLoaded;
         int escolha = 0;
         bool repetir = true;
-        Song Inicio;
+        Song Inicio,select;
+        bool bepe = false;
+        AudioEngine audioEngine;
+        WaveBank waveBank;
+        SoundBank soundBank;
+        Cue engineSound = null;
+       
         public Menu(int id, Game1 parent)
             : base(id, parent)
         {
@@ -38,7 +45,9 @@ using Microsoft.Xna.Framework.Media;
                 base.Initialize();
                 LoadContent();
                 spriteBatch = new SpriteBatch(parent.GraphicsDevice);
-                
+                audioEngine = new AudioEngine("Content\\Audio\\MyGameAudio.xgs");
+                waveBank = new WaveBank(audioEngine, "Content\\Audio\\Wave Bank.xwb");
+                soundBank = new SoundBank(audioEngine, "Content\\Audio\\Sound Bank.xsb");
                 #region Inicializar Propriedades
                 Historinha = false;
                 BateBola = false;
@@ -49,12 +58,12 @@ using Microsoft.Xna.Framework.Media;
                 #endregion
                 #region Retangulos
                 rcfundo = new Rectangle(0, 0, 1024, 768);
-                rcmenu1 = new Rectangle(500, 300, menu1.Width, menu1.Height);
-                rcmenu2 = new Rectangle(500, 350, menu2.Width, menu2.Height);
-                rcmenu3 = new Rectangle(500, 400, menu3.Width, menu3.Height);
-                rcmenu4 = new Rectangle(500, 450, menu4.Width, menu4.Height);
-                rcmenu5 = new Rectangle(500, 500, menu5.Width, menu5.Height);
-                rcmenu6 = new Rectangle(500, 550, menu6.Width, menu6.Height);
+                rcmenu1 = new Rectangle(500, 300, menu1.Width/2, menu1.Height/2);
+                rcmenu2 = new Rectangle(500, 370, menu2.Width/2, menu2.Height/2);
+                rcmenu3 = new Rectangle(500, 430, menu3.Width/2, menu3.Height/2);
+                rcmenu4 = new Rectangle(500, 520, menu4.Width/2, menu4.Height/2);
+                rcmenu5 = new Rectangle(500, 590, menu5.Width/2, menu5.Height/2);
+                rcmenu6 = new Rectangle(500, 650, menu6.Width/2, menu6.Height/2);
                 menus = new Vector2[6] { new Vector2(rcmenu1.X-seta.Width, rcmenu1.Y), new Vector2(rcmenu2.X-seta.Width, rcmenu2.Y), new Vector2(rcmenu3.X-seta.Width, rcmenu3.Y), 
                 new Vector2(rcmenu4.X-seta.Width, rcmenu4.Y), new Vector2(rcmenu5.X-seta.Width, rcmenu5.Y), new Vector2(rcmenu6.X-seta.Width, rcmenu6.Y) };
                 rcSeta = new Rectangle((int)menus[escolha].X, (int)menus[escolha].Y, seta.Width, seta.Height);
@@ -70,8 +79,19 @@ using Microsoft.Xna.Framework.Media;
                 base.Update(tempo);
                 if (repetir)
                 {
+                    
                     MediaPlayer.Play(Inicio);
                     repetir = false;
+                }
+                if (bepe)
+                {
+                    
+                        //engineSound = soundBank.GetCue("magic-chime-07");
+                        //engineSound.Play();
+                        soundBank.PlayCue("magic-chime-07");
+                        
+                        bepe = false;
+                   
                 }
                 if (KeyboardHelper.IsKeyDown(Keys.Escape))
                 {
@@ -94,7 +114,9 @@ using Microsoft.Xna.Framework.Media;
                     KeyboardState teclado = Keyboard.GetState();
                     if (Sair)
                     {
-                        parent.Exit();
+                        Alpha = 0.5f;
+                        pauseFlag = true;
+                        stateEntered = false;
                     }
                     if (Historinha)
                     {
@@ -102,15 +124,19 @@ using Microsoft.Xna.Framework.Media;
 
                     }
                     #region Comandos Teclado
+                    if((teclado.IsKeyDown(Keys.Space)) && (lastKey!= Keys.Space))
+                    {
+                        MediaPlayer.Volume -=0.1f;
+                    }
                     if ((teclado.IsKeyDown(Keys.Down)) && (lastKey != Keys.Down))
                     {
                         escolha += escolha == 5 ? 0 : 1;
-                        Console.Beep();
+                        bepe = true;
                     }
                     if (teclado.IsKeyDown(Keys.Up) && lastKey != Keys.Up)
                     {
                         escolha -= escolha == 0 ? 0 : 1;
-                        Console.Beep();
+                        bepe = true;
                     }
                     if (PressionarTecla(Keys.Enter, teclado))
                     {
@@ -238,8 +264,10 @@ using Microsoft.Xna.Framework.Media;
         {
             if ((mouse.X > rec.X && mouse.X < rec.X + rec.Width) && (mouse.Y > rec.Y && mouse.Y < rec.Y + rec.Height))
             {
+
                 return true;
             }
+            
             return false;
         }
         public bool PressionarTecla(Keys tecla, KeyboardState teclado)
@@ -264,15 +292,16 @@ using Microsoft.Xna.Framework.Media;
                 #region Texturas
                 Fundo = parent.Content.Load<Texture2D>("Menu/Abertura");
                 seta = parent.Content.Load<Texture2D>("Menu/Seta");
-                menu1 = parent.Content.Load<Texture2D>("Menu/MH");
-                menu2 = parent.Content.Load<Texture2D>("Menu/BB");
-                menu3 = parent.Content.Load<Texture2D>("Menu/CdA");
-                menu4 = parent.Content.Load<Texture2D>("Menu/Config");
-                menu5 = parent.Content.Load<Texture2D>("Menu/Cre");
-                menu6 = parent.Content.Load<Texture2D>("Menu/Sair");
+                menu1 = parent.Content.Load<Texture2D>("Menu/historinhaN");
+                menu2 = parent.Content.Load<Texture2D>("Menu/batebola_N");
+                menu3 = parent.Content.Load<Texture2D>("Menu/cadernoN");
+                menu4 = parent.Content.Load<Texture2D>("Menu/configuracoesN");
+                menu5 = parent.Content.Load<Texture2D>("Menu/creditosN");
+                menu6 = parent.Content.Load<Texture2D>("Menu/sairN");
                 #endregion
 
                 #endregion
+                //select = parent.Content.Load<Song>("Audio/magic-chime-07");
                 Inicio = parent.Content.Load<Song>("Narrar/TelaInicial");
                 contentLoaded = true;
             }
