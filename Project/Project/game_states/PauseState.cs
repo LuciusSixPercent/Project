@@ -5,11 +5,14 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Project;
 using Microsoft.Xna.Framework.Input;
+using game_objects;
 
 namespace game_states
 {
     public class PauseState : GameState
     {
+        GameObjectsManager goManager;
+
         public PauseState(int id, Game1 parent)
             : base(id, parent)
         {
@@ -20,12 +23,17 @@ namespace game_states
         {
             base.Initialize();
             enterTransitionDuration = 100;
-            exitTransitionDuration = 50;
+            exitTransitionDuration = 200;
+            goManager = new GameObjectsManager(parent.GraphicsDevice);
         }
 
         protected override void LoadContent()
         {
-            
+            if (!initialized)
+            {
+                goManager.Load(parent.Content);
+                initialized = true;
+            }
         }
 
         public override void Update(GameTime gameTime)
@@ -46,15 +54,30 @@ namespace game_states
                     }
                 }
             }
-            else if (!enteringState)
+            else if (exit)
             {
-                parent.ExitState(ID);
+                ExitState();
             }
         }
 
         public override void Draw(GameTime gameTime)
         {
-            
+            goManager.Draw(gameTime);
+        }
+
+        public override void ExitState()
+        {
+            if (!enteringState)
+            {
+                if (!exit)
+                {
+                    base.ExitState();
+                }
+                else
+                {
+                    parent.ExitState(ID);
+                }
+            }
         }
     }
 }

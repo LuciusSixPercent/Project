@@ -10,9 +10,10 @@ namespace game_objects
 {
     public class Renderer3D : Renderer
     {
-        AlphaTestEffect basicEffect;
-        Camera cam;
+        private AlphaTestEffect basicEffect;
         private BoundingFrustum frustum;
+        private Camera cam;
+        private Quad[] singleQuad;
 
         public Camera Cam
         {
@@ -43,6 +44,7 @@ namespace game_objects
             : base(gDevice)
         {
             initEffect();
+            singleQuad = new Quad[1];
         }
 
         void cam_cam_moved()
@@ -56,7 +58,6 @@ namespace game_objects
             basicEffect.FogEnabled = true;
             basicEffect.FogColor = Color.Gray.ToVector3();
             basicEffect.World = Matrix.Identity;
-            //basicEffect.TextureEnabled = true;
         }
 
         public void updateEffect(Matrix view, Matrix projection)
@@ -72,7 +73,7 @@ namespace game_objects
             basicEffect.FogEnd = end;
         }
 
-        public void Draw(GameTime gameTime, Texture2D texture, IEnumerable<Quad> quads, BlendState blendState)
+        public void Draw(Texture2D texture, IEnumerable<Quad> quads, BlendState blendState, BoundingBox bbox)
         {
             if (!texture.IsDisposed)
             {
@@ -84,38 +85,31 @@ namespace game_objects
                     pass.Apply();
                     foreach (Quad quad in quads)
                     {
-                        drawQuad(quad);
+                        drawQuad(quad, bbox);
                     }
                 }
             }
         }
 
-        public void Draw(GameTime gameTime, Texture2D texture, Quad quad, BlendState blendState)
+        public void Draw(Texture2D texture, Quad quad, BlendState blendState, BoundingBox bbox)
         {
-            if (!texture.IsDisposed)
-            {
-                GDevice.BlendState = blendState;
-                basicEffect.Texture = texture;
-
-                foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes)
-                {
-                    pass.Apply();
-                    drawQuad(quad);
-                }
-            }
+            singleQuad[0] = quad;
+            Draw(texture, singleQuad, blendState, bbox);
         }
 
-        private void drawQuad(Quad quad)
+        private void drawQuad(Quad quad, BoundingBox bbox)
         {
             //necessário para que os objetos "3D" sejam desenhados na ordem correta
             GDevice.DepthStencilState = DepthStencilState.Default;
-
-            GDevice.DrawUserIndexedPrimitives
-                <VertexPositionNormalTexture>(
-                PrimitiveType.TriangleList,
-                quad.Vertices, 0, 4,
-                Quad.Indexes, 0, 2);
-
+            ContainmentType containment = frustum.Contains(bbox);
+            if (containment != ContainmentType.Disjoint || containment == ContainmentType.Contains || containment == ContainmentType.Intersects)
+            {
+                GDevice.DrawUserIndexedPrimitives
+                    <VertexPositionNormalTexture>(
+                    PrimitiveType.TriangleList,
+                    quad.Vertices, 0, 4,
+                    Quad.Indexes, 0, 2);
+            }
         }
     }
 }

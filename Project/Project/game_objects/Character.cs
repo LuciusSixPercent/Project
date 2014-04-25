@@ -104,19 +104,20 @@ namespace game_objects
 
         public override void Load(ContentManager cManager)
         {
-            for(int i = 0; i < frames.Length; i++)
-                frames[i] = 
+            quadWidthScale = quadHeightScale;
+            for (int i = 0; i < frames.Length; i++)
+                frames[i] =
                     cManager.Load<Texture2D>(
-                    "Imagem" + Path.AltDirectorySeparatorChar + 
-                    "Personagem" + Path.AltDirectorySeparatorChar + 
-                    name  + Path.AltDirectorySeparatorChar + (i + 1));
+                    "Imagem" + Path.AltDirectorySeparatorChar +
+                    "Personagem" + Path.AltDirectorySeparatorChar +
+                    name + Path.AltDirectorySeparatorChar + (i + 1));
 
             quadWidthScale *= ((float)frames[0].Width / frames[0].Height);
         }
 
         public override void Draw(GameTime gameTime)
         {
-            ((Renderer3D)Renderer).Draw(gameTime, frames[currentFrame], quad, BlendState.AlphaBlend);
+            ((Renderer3D)Renderer).Draw(frames[currentFrame], quad, BlendState.AlphaBlend, BoundingBox);
         }
 
         public override void Update(GameTime gameTime)
@@ -131,6 +132,16 @@ namespace game_objects
                         collidedWithQuestion(Position, ((QuestionGameObject)obj).CorrecAnswer());
                     }
                 }
+            }
+        }
+
+        public int CurrentFrame
+        {
+            get { return currentFrame; }
+            set
+            {
+                if (value < frames.Length)
+                    currentFrame = value;
             }
         }
     }

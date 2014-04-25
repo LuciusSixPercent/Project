@@ -92,12 +92,6 @@ namespace game_objects
             addComponent(cmc);
         }
 
-        void cmc_moved(Vector3 amount)
-        {
-            ImediateTranslate(amount);
-            moveTarget(amount);
-        }
-
         public void lookAt(Vector3 target, bool lockRotation)
         {
             this.target = target;

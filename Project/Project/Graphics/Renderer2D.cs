@@ -17,7 +17,7 @@ namespace game_objects
             : base(gDevice)
         {
             spriteBatch = new SpriteBatch(gDevice);
-            TextureHelper.SpriteBatch = spriteBatch;
+            TextHelper.SpriteBatch = spriteBatch;
         }
 
         public void Begin()
@@ -38,7 +38,7 @@ namespace game_objects
             }
         }
 
-        public void Draw(GameTime gameTime, Texture2D texture, Vector2 position, Color color, BlendState blendState)
+        public void Draw(Texture2D texture, Vector2 position, Color color, BlendState blendState)
         {
             GDevice.BlendState = blendState;
             if (!beganSpriteBatch)
@@ -51,7 +51,7 @@ namespace game_objects
             }
         }
 
-        public void DrawString(GameTime gameTime, string text, Vector2 position, Color color, BlendState blendState)
+        public void Draw(Texture2D texture, Rectangle bounds, Color color, BlendState blendState)
         {
             GDevice.BlendState = blendState;
             if (!beganSpriteBatch)
@@ -60,7 +60,31 @@ namespace game_objects
             }
             if (beganSpriteBatch)
             {
-                spriteBatch.DrawString(TextureHelper.SpriteFont, text, position, color * Alpha);
+                spriteBatch.Draw(texture, bounds, color * Alpha);
+            }
+        }
+
+        public void DrawString(string text, Vector2 position, Color color)
+        {
+            if (!beganSpriteBatch)
+            {
+                Begin();
+            }
+            if (beganSpriteBatch)
+            {
+                spriteBatch.DrawString(TextHelper.SpriteFont, text, position, color * Alpha);
+            }
+        }
+
+        internal void DrawString(string text, Vector2 position, Color color, int rotation, Vector2 vector2, float scale)
+        {
+            if (!beganSpriteBatch)
+            {
+                Begin();
+            }
+            if (beganSpriteBatch)
+            {
+                spriteBatch.DrawString(TextHelper.SpriteFont, text, position, color * Alpha, rotation, Vector2.Zero, scale, SpriteEffects.None, 0f);
             }
         }
     }

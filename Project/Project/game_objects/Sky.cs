@@ -24,7 +24,7 @@ namespace game_objects
 
         public override void Draw(GameTime gameTime)
         {
-            ((Renderer2D)Renderer).Draw(gameTime, tex, Vector2.Zero, Color.White, BlendState.Opaque);
+            ((Renderer2D)Renderer).Draw(tex, Vector2.Zero, Color.White, BlendState.Opaque);
         }
     }
 }
