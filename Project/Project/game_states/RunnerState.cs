@@ -243,7 +243,7 @@ namespace game_states
                             //Wave
                             if (engineSound == null)
                             {
-                                engineSound = soundBank3.GetCue("515728_Soccer-Life-97");
+                                engineSound = soundBank3.GetCue("540428_quotSports-Fanaticq");
                                 engineSound.Play();
                             }
                             if (engineSound.IsPaused)

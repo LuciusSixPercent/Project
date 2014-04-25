@@ -16,7 +16,9 @@ using Microsoft.Xna.Framework.Audio;
     class Menu : GameState
     {
         private SpriteBatch spriteBatch;
-        Texture2D seta, menu1, menu2, menu3, menu4, menu5, menu6, Fundo;
+        Texture2D seta, menu1Normal, menu1Ouver, menu2Normal, menu2Ouver, menu3Normal,menu3Ouver, menu4Normal,menu4Ouver, menu5Normal,menu5Ouver, menu6Normal,menu6Ouver, Fundo;
+        Texture2D[] menu1, menu2, menu3, menu4, menu5, menu6;
+        Texture2D Fconf, Fnorm, Fcre, Fsair;
         Rectangle rcSeta, rcmenu1, rcmenu2, rcmenu3, rcmenu4, rcmenu5, rcmenu6, rcfundo;
         Vector2[] menus;
         bool pauseFlag;
@@ -25,9 +27,15 @@ using Microsoft.Xna.Framework.Audio;
         bool repetir = true;
         Song Inicio,select;
         bool bepe = false;
-        AudioEngine audioEngine;
-        WaveBank waveBank;
-        SoundBank soundBank;
+        int mn1 = 0;
+        int mn2 = 0;
+        int mn3 = 0;
+        int mn4 = 0;
+        int mn5 = 0;
+        int mn6 = 0;
+        AudioEngine audioEngine, audioEngine3;
+        WaveBank waveBank, waveBank3;
+        SoundBank soundBank, soundBank3;
         Cue engineSound = null;
        
         public Menu(int id, Game1 parent)
@@ -48,6 +56,9 @@ using Microsoft.Xna.Framework.Audio;
                 audioEngine = new AudioEngine("Content\\Audio\\MyGameAudio.xgs");
                 waveBank = new WaveBank(audioEngine, "Content\\Audio\\Wave Bank.xwb");
                 soundBank = new SoundBank(audioEngine, "Content\\Audio\\Sound Bank.xsb");
+                audioEngine3 = new AudioEngine("Content\\Audio\\MyGameAudio.xgs");
+                waveBank3 = new WaveBank(audioEngine3, "Content\\Audio\\Wave Bank.xwb");
+                soundBank3 = new SoundBank(audioEngine3, "Content\\Audio\\Sound Bank.xsb");
                 #region Inicializar Propriedades
                 Historinha = false;
                 BateBola = false;
@@ -56,14 +67,20 @@ using Microsoft.Xna.Framework.Audio;
                 Creditos = false;
                 Sair = false;
                 #endregion
+                menu1 = new Texture2D[2] {menu1Normal,menu1Ouver };
+                menu2 = new Texture2D[2] { menu2Normal, menu2Ouver };
+                menu3 = new Texture2D[2] { menu3Normal, menu3Ouver };
+                menu4 = new Texture2D[2] { menu4Normal, menu4Ouver };
+                menu5 = new Texture2D[2] { menu5Normal, menu5Ouver };
+                menu6 = new Texture2D[2] { menu6Normal, menu6Ouver };
                 #region Retangulos
                 rcfundo = new Rectangle(0, 0, 1024, 768);
-                rcmenu1 = new Rectangle(500, 300, menu1.Width/2, menu1.Height/2);
-                rcmenu2 = new Rectangle(500, 370, menu2.Width/2, menu2.Height/2);
-                rcmenu3 = new Rectangle(500, 430, menu3.Width/2, menu3.Height/2);
-                rcmenu4 = new Rectangle(500, 520, menu4.Width/2, menu4.Height/2);
-                rcmenu5 = new Rectangle(500, 590, menu5.Width/2, menu5.Height/2);
-                rcmenu6 = new Rectangle(500, 650, menu6.Width/2, menu6.Height/2);
+                rcmenu1 = new Rectangle(500, 300, menu1[mn1].Width / 2, menu1[mn1].Height / 2);
+                rcmenu2 = new Rectangle(500, 370, menu2[mn2].Width / 2, menu2[mn2].Height / 2);
+                rcmenu3 = new Rectangle(500, 430, menu3[mn3].Width / 2, menu3[mn3].Height / 2);
+                rcmenu4 = new Rectangle(500, 520, menu4[mn4].Width / 2, menu4[mn4].Height / 2);
+                rcmenu5 = new Rectangle(500, 590, menu5[mn5].Width / 2, menu5[mn5].Height / 2);
+                rcmenu6 = new Rectangle(500, 650, menu6[mn6].Width / 2, menu6[mn6].Height / 2);
                 menus = new Vector2[6] { new Vector2(rcmenu1.X-seta.Width, rcmenu1.Y), new Vector2(rcmenu2.X-seta.Width, rcmenu2.Y), new Vector2(rcmenu3.X-seta.Width, rcmenu3.Y), 
                 new Vector2(rcmenu4.X-seta.Width, rcmenu4.Y), new Vector2(rcmenu5.X-seta.Width, rcmenu5.Y), new Vector2(rcmenu6.X-seta.Width, rcmenu6.Y) };
                 rcSeta = new Rectangle((int)menus[escolha].X, (int)menus[escolha].Y, seta.Width, seta.Height);
@@ -74,6 +91,13 @@ using Microsoft.Xna.Framework.Audio;
         Keys lastKey = Keys.A;
         public override void Update(GameTime tempo)
         {
+            MouseState mouse = Mouse.GetState();
+            KeyboardState teclado = Keyboard.GetState();
+            if (engineSound == null)
+            {
+                engineSound = soundBank3.GetCue("Silly Fun");
+                engineSound.Play();
+            }
             if (!pauseFlag)
             {
                 base.Update(tempo);
@@ -83,6 +107,7 @@ using Microsoft.Xna.Framework.Audio;
                     MediaPlayer.Play(Inicio);
                     repetir = false;
                 }
+                
                 if (bepe)
                 {
                     
@@ -109,149 +134,198 @@ using Microsoft.Xna.Framework.Audio;
                 }
                 if (stateEntered)
                 {
+
                     rcSeta = new Rectangle((int)menus[escolha].X, (int)menus[escolha].Y, seta.Width, seta.Height);
-                    MouseState mouse = Mouse.GetState();
-                    KeyboardState teclado = Keyboard.GetState();
+                    
+                    if ((teclado.IsKeyDown(Keys.Back)) && (lastKey != Keys.Back))
+                    {
+                        Creditos = false;
+                        Config = false;
+                        Caderno = false;
+                        Sair = false;
+                        
+                        Alpha = 1;
+                    }
                     if (Sair)
                     {
                         Alpha = 0.5f;
-                        pauseFlag = true;
-                        stateEntered = false;
                     }
                     if (Historinha)
                     {
 
 
                     }
-                    #region Comandos Teclado
-                    if((teclado.IsKeyDown(Keys.Space)) && (lastKey!= Keys.Space))
+                    if (Creditos)
                     {
-                        MediaPlayer.Volume -=0.1f;
+                        CreditosMENU();
                     }
-                    if ((teclado.IsKeyDown(Keys.Down)) && (lastKey != Keys.Down))
+                    if (Config)
                     {
-                        escolha += escolha == 5 ? 0 : 1;
-                        bepe = true;
+                        ConfiguracoesMENU();
                     }
-                    if (teclado.IsKeyDown(Keys.Up) && lastKey != Keys.Up)
+                    if (!Historinha && !BateBola && !Caderno && !Config && !Creditos && !Sair)
                     {
-                        escolha -= escolha == 0 ? 0 : 1;
-                        bepe = true;
-                    }
-                    if (PressionarTecla(Keys.Enter, teclado))
-                    {
-                        switch (escolha)
+                        #region Comandos Teclado
+                        if ((teclado.IsKeyDown(Keys.Space)) && (lastKey != Keys.Space))
                         {
-                            case 0:
+                            MediaPlayer.Volume -= 0.1f;
+                        }
+                        if ((teclado.IsKeyDown(Keys.Down)) && (lastKey != Keys.Down))
+                        {
+                            escolha += escolha == 5 ? 0 : 1;
+
+                        }
+                        if (teclado.IsKeyDown(Keys.Up) && lastKey != Keys.Up)
+                        {
+                            escolha -= escolha == 0 ? 0 : 1;
+
+                        }
+                        if (PressionarTecla(Keys.Enter, teclado))
+                        {
+                            switch (escolha)
+                            {
+                                case 0:
+                                    Historinha = true;
+                                    break;
+                                case 1:
+                                    BateBola = true;
+                                    break;
+                                case 2:
+                                    Caderno = true;
+                                    break;
+                                case 3:
+                                    Config = true;
+                                    break;
+                                case 4:
+                                    Creditos = true;
+                                    break;
+                                case 5:
+                                    Sair = true;
+                                    break;
+                            }
+                        }
+                        Keys[] ks = teclado.GetPressedKeys();
+
+                        if (ks.Length == 0) lastKey = Keys.A;
+                        else lastKey = ks[0];
+                        #endregion
+                        #region Comandos Mouse
+                        #region Over
+                        if (ColisaoMouseOver(mouse, menu1[mn1], rcmenu1))
+                        {
+                            escolha = 0;
+                            mn1 = 1;
+                        }
+                        else { mn1 = 0; }
+                        if (ColisaoMouseOver(mouse, menu2[mn2], rcmenu2))
+                        {
+                            escolha = 1;
+                            mn2 = 1;
+                        }
+                        else { mn2 = 0; }
+                        if (ColisaoMouseOver(mouse, menu3[mn3], rcmenu3))
+                        {
+                            escolha = 2;
+                            mn3 = 1;
+                        }
+                        else { mn3 = 0; }
+                        if (ColisaoMouseOver(mouse, menu4[mn4], rcmenu4))
+                        {
+                            escolha = 3;
+                            mn4 = 1;
+                        }
+                        else { mn4 = 0; }
+                        if (ColisaoMouseOver(mouse, menu5[mn5], rcmenu5))
+                        {
+                            escolha = 4;
+                            mn5 = 1;
+                        }
+                        else { mn5 = 0; }
+                        if (ColisaoMouseOver(mouse, menu6[mn6], rcmenu6))
+                        {
+                            escolha = 5;
+                            mn6 = 1;
+                        }
+                        else { mn6 = 0; }
+                        #endregion
+
+                        #region Click
+                        if (mouse.LeftButton == ButtonState.Pressed)
+                        {
+                            bepe = true;
+                            if (ColisaoMouseOver(mouse, menu1[mn1], rcmenu1))
+                            {
                                 Historinha = true;
-                                break;
-                            case 1:
+                            }
+                            if (ColisaoMouseOver(mouse, menu2[mn2], rcmenu2))
+                            {
                                 BateBola = true;
-                                break;
-                            case 2:
+                            }
+                            if (ColisaoMouseOver(mouse, menu3[mn3], rcmenu3))
+                            {
                                 Caderno = true;
-                                break;
-                            case 3:
+                            }
+                            if (ColisaoMouseOver(mouse, menu4[mn4], rcmenu4))
+                            {
                                 Config = true;
-                                break;
-                            case 4:
+                            }
+                            if (ColisaoMouseOver(mouse, menu5[mn5], rcmenu5))
+                            {
                                 Creditos = true;
-                                break;
-                            case 5:
+                            }
+                            if (ColisaoMouseOver(mouse, menu6[mn6], rcmenu6))
+                            {
                                 Sair = true;
-                                break;
-                        }
-                    }
-                    Keys[] ks = teclado.GetPressedKeys();
+                            }
 
-                    if (ks.Length == 0) lastKey = Keys.A;
-                    else lastKey = ks[0];
-                    #endregion
-                    #region Comandos Mouse
-                    #region Over
-                    if (ColisaoMouseOver(mouse, menu1, rcmenu1))
-                    {
-                        escolha = 0;
-                    }
-                    if (ColisaoMouseOver(mouse, menu2, rcmenu2))
-                    {
-                        escolha = 1;
-                    }
-                    if (ColisaoMouseOver(mouse, menu3, rcmenu3))
-                    {
-                        escolha = 2;
-                    }
-                    if (ColisaoMouseOver(mouse, menu4, rcmenu4))
-                    {
-                        escolha = 3;
-                    }
-                    if (ColisaoMouseOver(mouse, menu5, rcmenu5))
-                    {
-                        escolha = 4;
-                    }
-                    if (ColisaoMouseOver(mouse, menu6, rcmenu6))
-                    {
-                        escolha = 5;
-                    }
-                    #endregion
-                    #region Click
-                    if (mouse.LeftButton == ButtonState.Pressed)
-                    {
-                        if (ColisaoMouseOver(mouse, menu1, rcmenu1))
-                        {
-                            Historinha = true;
                         }
-                        if (ColisaoMouseOver(mouse, menu2, rcmenu2))
-                        {
-                            BateBola = true;
-                        }
-                        if (ColisaoMouseOver(mouse, menu3, rcmenu3))
-                        {
-                            Caderno = true;
-                        }
-                        if (ColisaoMouseOver(mouse, menu4, rcmenu4))
-                        {
-                            Config = true;
-                        }
-                        if (ColisaoMouseOver(mouse, menu5, rcmenu5))
-                        {
-                            Creditos = true;
-                        }
-                        if (ColisaoMouseOver(mouse, menu6, rcmenu6))
-                        {
-                            Sair = true;
-                        }
+                        #endregion
 
+                        if (Historinha)
+                        {
+                            MediaPlayer.Stop();
+                            engineSound.Stop(AudioStopOptions.AsAuthored);
+                            Historinha = false;
+                            parent.EnterState((int)StatesIdList.STORY);
+                        }
+                        else
+                            if (BateBola)
+                            {
+                                engineSound.Stop(AudioStopOptions.AsAuthored);
+                                MediaPlayer.Stop();
+                                BateBola = false;
+                                parent.EnterState((int)StatesIdList.RUNNER);
+                            }
+                        #endregion
                     }
-                    #endregion
-
-                    if (Historinha)
+                    if (Caderno)
                     {
-                        MediaPlayer.Stop();
-                        Historinha = false;
-                        parent.EnterState((int)StatesIdList.STORY);
-                    } else
-                    if (BateBola)
-                    {
-                        MediaPlayer.Stop();
-                        BateBola = false;
-                        parent.EnterState((int)StatesIdList.RUNNER);
+                        Alpha = 0.5f;
+                        
                     }
-                    #endregion
                 }
             }
         }
         public override void Draw(GameTime gameTime)
         {
             spriteBatch.Begin();
+            if (!Config && !Creditos)
+            {
+                Fundo = Fnorm;
+            }
+            spriteBatch.Draw(Fundo, rcfundo, Color.White * Alpha);
+            if(!Config && !Creditos)
+            {
+            Fundo = Fnorm;
             spriteBatch.Draw(Fundo, rcfundo, Color.White * Alpha);
             spriteBatch.Draw(seta, rcSeta, Color.White * Alpha);
-            spriteBatch.Draw(menu1, rcmenu1, Color.White * Alpha);
-            spriteBatch.Draw(menu2, rcmenu2, Color.White * Alpha);
-            spriteBatch.Draw(menu3, rcmenu3, Color.White * Alpha);
-            spriteBatch.Draw(menu4, rcmenu4, Color.White * Alpha);
-            spriteBatch.Draw(menu5, rcmenu5, Color.White * Alpha);
-            spriteBatch.Draw(menu6, rcmenu6, Color.White * Alpha);
+            spriteBatch.Draw(menu1[mn1], rcmenu1, Color.White * Alpha);
+            spriteBatch.Draw(menu2[mn2], rcmenu2, Color.White * Alpha);
+            spriteBatch.Draw(menu3[mn3], rcmenu3, Color.White * Alpha);
+            spriteBatch.Draw(menu4[mn4], rcmenu4, Color.White * Alpha);
+            spriteBatch.Draw(menu5[mn5], rcmenu5, Color.White * Alpha);
+            spriteBatch.Draw(menu6[mn6], rcmenu6, Color.White * Alpha);
+            }
             spriteBatch.End();
         }
         public bool Sair { get; set; }
@@ -290,14 +364,22 @@ using Microsoft.Xna.Framework.Audio;
             {
                 #region Inicializar Variaveis
                 #region Texturas
-                Fundo = parent.Content.Load<Texture2D>("Menu/Abertura");
+                Fnorm = parent.Content.Load<Texture2D>("Menu/Abertura");
+                Fconf = parent.Content.Load<Texture2D>("Menu/FundoConfiguracoes");
+                Fcre = parent.Content.Load<Texture2D>("Menu/FundoCreditos");
                 seta = parent.Content.Load<Texture2D>("Menu/Seta");
-                menu1 = parent.Content.Load<Texture2D>("Menu/historinhaN");
-                menu2 = parent.Content.Load<Texture2D>("Menu/batebola_N");
-                menu3 = parent.Content.Load<Texture2D>("Menu/cadernoN");
-                menu4 = parent.Content.Load<Texture2D>("Menu/configuracoesN");
-                menu5 = parent.Content.Load<Texture2D>("Menu/creditosN");
-                menu6 = parent.Content.Load<Texture2D>("Menu/sairN");
+                menu1Normal = parent.Content.Load<Texture2D>("Menu/historinhaN");
+                menu2Normal = parent.Content.Load<Texture2D>("Menu/batebola_N");
+                menu3Normal = parent.Content.Load<Texture2D>("Menu/cadernoN");
+                menu4Normal = parent.Content.Load<Texture2D>("Menu/configuracoesN");
+                menu5Normal = parent.Content.Load<Texture2D>("Menu/creditosN");
+                menu6Normal = parent.Content.Load<Texture2D>("Menu/sairN");
+                menu1Ouver = parent.Content.Load<Texture2D>("Menu/historinhaH");
+                menu2Ouver = parent.Content.Load<Texture2D>("Menu/batebola_H");
+                menu3Ouver = parent.Content.Load<Texture2D>("Menu/cadernoH");
+                menu4Ouver = parent.Content.Load<Texture2D>("Menu/configuracoesH");
+                menu5Ouver = parent.Content.Load<Texture2D>("Menu/creditosH");
+                menu6Ouver = parent.Content.Load<Texture2D>("Menu/sairH");
                 #endregion
 
                 #endregion
@@ -308,7 +390,18 @@ using Microsoft.Xna.Framework.Audio;
             
            
         }
-        
+        public void ConfiguracoesMENU()
+        {
+            Fundo = Fconf;
+        }
+        public void CreditosMENU()
+        {
+            Fundo = Fcre;
+        }
+        public void SairMENU()
+        {
+
+        }
         #region Transitioning
         public override void EnterState(bool freezeBelow)
         {
