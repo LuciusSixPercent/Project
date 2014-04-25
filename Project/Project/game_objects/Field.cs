@@ -23,6 +23,11 @@ namespace game_objects
         private const float scale = 1f;
         private bool keepMoving;
 
+        public Goal Goal
+        {
+            get { return goal; }
+        }
+
         public bool KeepMoving
         {
             get { return keepMoving; }

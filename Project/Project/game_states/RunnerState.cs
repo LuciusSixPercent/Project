@@ -160,7 +160,7 @@ namespace game_states
 
                 goManager.Load(parent.Content);
 
-                player.Position = new Vector3(0f, 0.5f, 0f);
+                player.Position = new Vector3(0f, 0f, 0f);
 
                 LoadQuestions(1);
 
@@ -173,8 +173,8 @@ namespace game_states
             exit = false;
             finished = false;
             answeredAll = false;
-            player.Position = new Vector3(0f, 0.5f, 0f);
-            player.CurrentFrame = 0;
+            player.Reset();
+            cam.KeepMoving = true;
             cam.Position = new Vector3(0f, 3f, -4f);
             cam.lookAt(new Vector3(0f, 0.25f, 2f), true);
             goManager.R3D.updateEffect(cam.View, cam.Projection);
@@ -235,6 +235,11 @@ namespace game_states
                             if (answeredAll)
                             {
                                 field.KeepMoving = false;
+                                if (field.Goal.Position.Z - player.Position.Z <= 5 && player.KeepMoving)
+                                {
+                                    player.KickBall();
+                                    cam.KeepMoving = false;
+                                }
                             }
 
                             goManager.Update(gameTime);
