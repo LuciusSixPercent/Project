@@ -324,7 +324,7 @@ class Episodio01 : GameState
                         //engineSound.Stop(AudioStopOptions.AsAuthored);
                         //MediaPlayer.Stop();
                         VoltarBool = true;
-                        FimDaHistoria = true;
+                        //FimDaHistoria = true;
                     }
                 }
                 KeyboardState teclado = Keyboard.GetState();
@@ -409,6 +409,7 @@ class Episodio01 : GameState
                         KeyboardHelper.UnlockKey(Keys.Escape);
                     }
                 }
+                
             }
             else if (!exitingState)
             {
@@ -417,6 +418,14 @@ class Episodio01 : GameState
 
                 ExitState();
             }
+            if (VoltarBool)
+            {
+                MediaPlayer.Stop();
+                engineSound.Stop(AudioStopOptions.AsAuthored);
+
+                ExitState();
+            }
+            
         }
         else
         {
@@ -833,9 +842,7 @@ class Episodio01 : GameState
     }
     public override void EnterState()
     {
-        base.EnterState();
-        Resetar();
-        pauseFlag = false;
+        EnterState(FreezeBelow);
     }
     public override void ExitState()
     {
@@ -848,7 +855,7 @@ class Episodio01 : GameState
             }
             else
             {
-                base.ExitState();
+                
                 parent.ExitState(ID);
             }
 
