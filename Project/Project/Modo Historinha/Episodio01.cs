@@ -120,7 +120,7 @@ class Episodio01 : GameState
     string alt92 = "RI-A-CHO";
     #endregion
     #region Dialogo 10
-    string fala26 = "Maria concorda em jogar com Cosme, pois sabe que seus amigos irão ajuda-la sempre que ela precisar!";
+    string fala26 = "Maria conColor.Whiteda em jogar com Cosme, pois sabe que seus amigos irão ajuda-la sempre que ela precisar!";
     #endregion
     #region Exercicio10
     string Pergunta010 = "Agora, finalmente nós iremos jogar...";
@@ -299,7 +299,7 @@ class Episodio01 : GameState
                 MediaPlayer.Resume();
                 pause = false;
             }
-            if (engineSound == null)
+            if (engineSound == null || engineSound.IsStopped)
             {
                 engineSound = soundBank2.GetCue("385591_Night_sea_ln");
                 engineSound.Play();
@@ -307,6 +307,23 @@ class Episodio01 : GameState
             if (engineSound.IsPaused)
             {
                 engineSound.Resume();
+            }
+            if (texto.Length % Limitedotexto == 0 && texto.Length != 0)//Quando o texto atingir um limite da tela e tiver um espaço em branco ele pula uma linha;
+            {
+                if (texto[indice - 1] == ' ')
+                {
+                    texto += "\n";
+                    zerar++;
+                    Limitedotexto = 80 * zerar;
+
+                }
+                else
+                {
+                    Limitedotexto++;
+
+
+                }
+
             }
             if (!FimDaHistoria)
             {
@@ -377,23 +394,7 @@ class Episodio01 : GameState
                 {
 
 
-                    if (texto.Length % Limitedotexto == 0 && texto.Length != 0)//Quando o texto atingir um limite da tela e tiver um espaço em branco ele pula uma linha;
-                    {
-                        if (texto[indice - 1] == ' ')
-                        {
-                            texto += "\n";
-                            zerar++;
-                            Limitedotexto = 80 * zerar;
-
-                        }
-                        else
-                        {
-                            Limitedotexto++;
-
-
-                        }
-
-                    }
+                    
                     if (KeyboardHelper.IsKeyDown(Keys.Escape))
                     {
                         KeyboardHelper.LockKey(Keys.Escape);
@@ -448,8 +449,8 @@ class Episodio01 : GameState
             //Tmusica = MediaPlayer.PlayPosition.Minutes.ToString() + " : " + MediaPlayer.PlayPosition.Seconds;
             //TpLAYER = AlbumPrincipal[NoAlbum][selecionar].Duration.Minutes.ToString() + " : " + AlbumPrincipal[NoAlbum][selecionar].Duration.Seconds;
             //NomeMusica = AlbumPrincipal[NoAlbum][selecionar].Name;
-            SpriteBatch.DrawString(arial, "Pressione a tecla [z] para avançar o texto", new Vector2(200, 720), cor);
-            SpriteBatch.DrawString(arial, zerar.ToString(), new Vector2(200, 700), cor);//Aqui eu vejo em quanto tempo está a narração
+            SpriteBatch.DrawString(arial, "Pressione a tecla [z] para avançar o texto", new Vector2(200, 720), Color.White);
+            SpriteBatch.DrawString(arial, zerar.ToString(), new Vector2(200, 700), Color.White);//Aqui eu vejo em quanto tempo está a narração
             //Aqui em cima eu imprimo o tempo total da musica;
         }
 
@@ -480,7 +481,7 @@ class Episodio01 : GameState
                     }
 
 
-                    SpriteBatch.DrawString(arial, texto, posicaoText, cor);//Imprimir texto
+                    SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);//Imprimir texto
 
                 }
 
@@ -517,7 +518,7 @@ class Episodio01 : GameState
                     indice = indice + (indice < dialogo02[Incremento0].Length ? 1 : 0);
 
 
-                    SpriteBatch.DrawString(arial, texto, posicaoText, cor);
+                    SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
 
                 }
                 if (!exercicio2 && parte2)
@@ -549,7 +550,7 @@ class Episodio01 : GameState
                     if (indice < dialogo03[Incremento0].Length) { texto += dialogo03[Incremento0][indice]; }
                     indice = indice + (indice < dialogo03[Incremento0].Length ? 1 : 0);
 
-                    SpriteBatch.DrawString(arial, texto, posicaoText, cor);
+                    SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
                 }
                 if (parte3 && !exercicio3)
                 {
@@ -581,7 +582,7 @@ class Episodio01 : GameState
 
                     if (indice < dialogo04[Incremento0].Length) { texto += dialogo04[Incremento0][indice]; }
                     indice = indice + (indice < dialogo04[Incremento0].Length ? 1 : 0);
-                    SpriteBatch.DrawString(arial, texto, posicaoText, cor);
+                    SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
 
                 }
                 if (parte4 && !exercicio4)
@@ -640,7 +641,7 @@ class Episodio01 : GameState
                     if (indice < dialogo05[Incremento0].Length) { texto += dialogo05[Incremento0][indice]; }
                     indice = indice + (indice < dialogo05[Incremento0].Length ? 1 : 0);
 
-                    SpriteBatch.DrawString(arial, texto, posicaoText, cor);
+                    SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
                 }
 
             }
@@ -656,7 +657,7 @@ class Episodio01 : GameState
                     if (indice < dialogo06[Incremento0].Length) { texto += dialogo06[Incremento0][indice]; }
                     indice = indice + (indice < dialogo06[Incremento0].Length ? 1 : 0);
 
-                    SpriteBatch.DrawString(arial, texto, posicaoText, cor);
+                    SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
                 }
                 if (parte6 && !exercicio6)
                 {
@@ -687,7 +688,7 @@ class Episodio01 : GameState
                     if (indice < dialogo07[Incremento0].Length) { texto += dialogo07[Incremento0][indice]; }
                     indice = indice + (indice < dialogo07[Incremento0].Length ? 1 : 0);
 
-                    SpriteBatch.DrawString(arial, texto, posicaoText, cor);
+                    SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
                 }
                 if (parte7 && !exercicio7)
                 {
@@ -718,7 +719,7 @@ class Episodio01 : GameState
                     if (indice < dialogo08[Incremento0].Length) { texto += dialogo08[Incremento0][indice]; }
                     indice = indice + (indice < dialogo08[Incremento0].Length ? 1 : 0);
 
-                    SpriteBatch.DrawString(arial, texto, posicaoText, cor);
+                    SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
                 }
                 if (parte8 && !exercicio8)
                 {
@@ -749,7 +750,7 @@ class Episodio01 : GameState
                     if (indice < dialogo09[Incremento0].Length) { texto += dialogo09[Incremento0][indice]; }
                     indice = indice + (indice < dialogo09[Incremento0].Length ? 1 : 0);
 
-                    SpriteBatch.DrawString(arial, texto, posicaoText, cor);
+                    SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
                 }
                 if (parte9 && !exercicio9)
                 {
@@ -780,7 +781,7 @@ class Episodio01 : GameState
                     if (indice < dialogo10[Incremento0].Length) { texto += dialogo10[Incremento0][indice]; }
                     indice = indice + (indice < dialogo10[Incremento0].Length ? 1 : 0);
 
-                    SpriteBatch.DrawString(arial, texto, posicaoText, cor);
+                    SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
                 }
                 if (parte10 && !exercicio10)
                 {
@@ -835,7 +836,8 @@ class Episodio01 : GameState
         if (VoltarBool || FimDaHistoria)
         {
             base.EnterState(freezeBelow);
-            LoadContent();
+            
+            //LoadContent();
             pauseFlag = false;
             Resetar();
         }
@@ -922,46 +924,49 @@ class Episodio01 : GameState
     }
     public void Resetar()
     {
+        
         FimDaHistoria = false;
-        int selecionar = 0; //seleciona a musica
-        bool repetir = true;
-        int NoAlbum = 0;
-        bool ModoExercicios = false;
-        bool pause = false;
-        int Limitedotexto = 80;
+        selecionar = 0; //seleciona a musica
+         repetir = true;
+        NoAlbum = 0;
+        ModoExercicios = false;
+        pause = false;
+        Limitedotexto = 80;
+        indice = 0;
+        
         #region Cena 01
-        bool parte1 = false;
-        bool parte2 = false;
-        bool parte3 = false;
-        bool parte4 = false;
-        bool parte5 = false;
-        bool exercicio1 = false;
-        bool exercicio2 = false;
-        bool exercicio3 = false;
-        bool exercicio4 = false;
-        bool exercicio5 = false;
-        bool primeiro = false;
-        bool segundo = false;
-        bool terceiro = false;
-        bool quarto = false;
-        bool quinto = false;
+        parte1 = false;
+         parte2 = false;
+         parte3 = false;
+         parte4 = false;
+         parte5 = false;
+         exercicio1 = false;
+         exercicio2 = false;
+         exercicio3 = false;
+         exercicio4 = false;
+         exercicio5 = false;
+         primeiro = false;
+         segundo = false;
+         terceiro = false;
+         quarto = false;
+         quinto = false;
         #endregion
         #region Cena 02
-        bool parte6 = false;
-        bool parte7 = false;
-        bool parte8 = false;
-        bool parte9 = false;
-        bool parte10 = false;
-        bool sexto = false;
-        bool setimo = false;
-        bool oitavo = false;
-        bool nono = false;
-        bool decimo = false;
-        bool exercicio6 = false;
-        bool exercicio7 = false;
-        bool exercicio8 = false;
-        bool exercicio9 = false;
-        bool exercicio10 = false;
+         parte6 = false;
+         parte7 = false;
+         parte8 = false;
+         parte9 = false;
+         parte10 = false;
+         sexto = false;
+         setimo = false;
+         oitavo = false;
+         nono = false;
+         decimo = false;
+         exercicio6 = false;
+         exercicio7 = false;
+         exercicio8 = false;
+         exercicio9 = false;
+         exercicio10 = false;
         #endregion
         texto = "";
         VoltarBool = false;
