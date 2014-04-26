@@ -9,15 +9,16 @@ namespace game_objects
     public abstract class CollidableGameObject : DrawableGameObject
     {
         protected BoundingBox boundingBox;
-        private List<CollidableGameObject> collidableObjects;
+        private IEnumerable<CollidableGameObject> collidableObjects;
 
-        public List<CollidableGameObject> CollidableObjects
+        public IEnumerable<CollidableGameObject> CollidableObjects
         {
             get { return collidableObjects; }
             set { collidableObjects = value; }
         }
 
-        public CollidableGameObject(Renderer renderer, List<CollidableGameObject> collidableObjects) : base(renderer)
+        public CollidableGameObject(Renderer renderer, IEnumerable<CollidableGameObject> collidableObjects)
+            : base(renderer)
         {
             this.collidableObjects = collidableObjects;
         }

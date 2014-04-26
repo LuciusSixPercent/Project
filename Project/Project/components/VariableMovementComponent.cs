@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using game_objects;
 using Microsoft.Xna.Framework;
+using game_objects.questions;
 
 namespace components
 {
@@ -11,10 +12,10 @@ namespace components
     {
         private readonly Vector3 initialVelocity;
         private Vector3 currentVelocity;
-        private Vector3 terminalVelocity;
+        private Vector3 upperVelocityThreshold;
+        private Vector3 lowerVelocityThreshold;
         private Vector3 acceleration;
         private Vector3 accelerationVariation;
-        private Vector3 minimumAcceleration;
 
         public Vector3 InitialVelocity
         {
@@ -27,12 +28,25 @@ namespace components
             set { currentVelocity = value; }
         }
 
-        public Vector3 TerminalVelocity
+        public Vector3 UpperVelocityThreshold
         {
-            get { return terminalVelocity; }
-            set { terminalVelocity = value; }
+            get { return upperVelocityThreshold; }
+            set
+            {
+                upperVelocityThreshold = value;
+                CheckThreshold(ref upperVelocityThreshold, ref lowerVelocityThreshold, false, true);
+            }
         }
 
+        public Vector3 LowerVelocityThreshold
+        {
+            get { return lowerVelocityThreshold; }
+            set
+            {
+                lowerVelocityThreshold = value;
+                CheckThreshold(ref lowerVelocityThreshold, ref upperVelocityThreshold, true, true);
+            }
+        }
         public Vector3 Acceleration
         {
             get { return acceleration; }
@@ -45,11 +59,6 @@ namespace components
             set { accelerationVariation = value; }
         }
 
-        public Vector3 MinimumAcceleration {
-            get { return minimumAcceleration; }
-            set { minimumAcceleration = value; }
-        }
-
         public VariableMovementComponent(GameObject owner, int interval, Vector3 initialVelocity, Vector3 acceleration)
             : base(owner, interval)
         {
@@ -57,6 +66,8 @@ namespace components
             this.currentVelocity = initialVelocity;
             this.acceleration = acceleration;
             this.accelerationVariation = Vector3.Zero;
+            this.upperVelocityThreshold = new Vector3(float.MaxValue);
+            this.lowerVelocityThreshold = new Vector3(float.MinValue);
         }
 
         public override void Update(GameTime gameTime)
@@ -66,25 +77,35 @@ namespace components
             {
                 elapsed = 0;
                 base.move(currentVelocity);
-                
+
                 currentVelocity += acceleration;
 
-                if (terminalVelocity != null)
-                {
-                    if (currentVelocity != terminalVelocity && currentVelocity != terminalVelocity * -1)
-                    {
-                        if (Math.Abs(currentVelocity.X) > Math.Abs(terminalVelocity.X))
-                            currentVelocity.X = Math.Abs(terminalVelocity.X) * (currentVelocity.X < 0 ? -1 : 1);
+                CheckThreshold(ref currentVelocity, ref upperVelocityThreshold, true, false);
+                CheckThreshold(ref currentVelocity, ref lowerVelocityThreshold, false, false);
 
-                        if (Math.Abs(currentVelocity.Y) > Math.Abs(terminalVelocity.Y))
-                            currentVelocity.Y = Math.Abs(terminalVelocity.Y) * (currentVelocity.Y < 0 ? -1 : 1);
-
-                        if (Math.Abs(currentVelocity.Z) > Math.Abs(terminalVelocity.Z))
-                            currentVelocity.Z = Math.Abs(terminalVelocity.Z) * (currentVelocity.Z < 0 ? -1 : 1);
-                    }
-                }
                 acceleration += accelerationVariation;
-                    
+                if (owner is Ball)
+                {
+                    int a = 0;
+                }
+            }
+        }
+
+        private void CheckThreshold(ref Vector3 value, ref Vector3 threshold, bool upperThreshold, bool pushThreshold)
+        {
+            if (upperThreshold)
+            {
+                if (pushThreshold)
+                    Vector3.Max(ref value, ref threshold, out threshold);
+                else
+                    Vector3.Min(ref value, ref threshold, out value);
+            }
+            else
+            {
+                if (pushThreshold)
+                    Vector3.Min(ref value, ref threshold, out threshold);
+                else
+                    Vector3.Max(ref value, ref threshold, out value);
             }
         }
     }

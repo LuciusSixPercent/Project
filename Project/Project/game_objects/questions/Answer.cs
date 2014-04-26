@@ -51,7 +51,7 @@ namespace game_objects.questions
             }
         }
 
-        public Answer(Renderer3D renderer, List<CollidableGameObject> collidableObjects, string text)
+        public Answer(Renderer3D renderer, IEnumerable<CollidableGameObject> collidableObjects, string text)
             : base(renderer, collidableObjects)
         {
             this.text = text;
@@ -60,7 +60,8 @@ namespace game_objects.questions
                 new VariableMovementComponent(this, 30,
                     Vector3.Down / 1000 * (float)PublicRandom.NextDouble(0.01f), 
                     Vector3.Down / 100);
-            vmc.TerminalVelocity = Vector3.Down/4;
+            //vmc.TerminalVelocity = Vector3.Down/4;
+            vmc.LowerVelocityThreshold = Vector3.Down / 4;
             addComponent(vmc);
         }
 
@@ -102,6 +103,7 @@ namespace game_objects.questions
                         vmc.AccelerationVariation = Vector3.Zero;
                         amount += upAmount;
                     }
+                    break;
                 }
             }
             Quad.Translate(amount);            

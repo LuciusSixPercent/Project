@@ -113,6 +113,7 @@
     <Compile Include="components\MovementComponent.cs" />
     <Compile Include="components\PlayerMovementComponent.cs" />
     <Compile Include="components\VariableMovementComponent.cs" />
+    <Compile Include="game_objects\Ball.cs" />
     <Compile Include="game_objects\Button.cs" />
     <Compile Include="game_objects\Camera.cs" />
     <Compile Include="game_objects\CollidableGameObject.cs" />
@@ -140,7 +141,6 @@
     <Compile Include="game_states\StatesIdList.cs" />
     <Compile Include="game_states\TestState.cs" />
     <Compile Include="KeyboardHelper.cs" />
-    <Compile Include="Modo Historinha\DateBase.cs" />
     <Compile Include="Modo Historinha\Episodio01.cs" />
     <Compile Include="Modo Historinha\Menu.cs" />
     <Compile Include="Modo Historinha\ModoHistorinha.cs" />

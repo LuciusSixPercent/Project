@@ -25,6 +25,7 @@ namespace game_states
 
         private Camera cam;
         private Character player;
+        private Ball ball;
         private List<QuestionGameObject> questions;
         private Field field;
 
@@ -99,9 +100,11 @@ namespace game_states
                 goManager = new GameObjectsManager(parent.GraphicsDevice);
 
                 questions = new List<QuestionGameObject>();
+                
+                ball = new Ball(goManager.R3D, goManager.CollidableGameObjects);
 
-                player = new Character(goManager.R3D, goManager.CollidableGameObjects, "cosme");
-                player.collidedWithQuestion += new Character.CollidedWithQuestion(player_collidedWithQuestion);
+                player = new Character(goManager.R3D, goManager.CollidableGameObjects, "cosme", ball);
+                player.collidedWithQuestion += new Character.CollidedWithQuestion(player_collidedWithQuestion);                
 
                 cam = new Camera(new Vector3(0f, 3f, -4f), Vector3.Up, new Vector2(0.25f, 30));
                 cam.lookAt(new Vector3(0f, 0.25f, 2f), true);
@@ -113,6 +116,7 @@ namespace game_states
                 goManager.AddObject(cam);
                 goManager.AddObject(new Sky(goManager.R2D));
                 goManager.AddObject(field);
+                goManager.AddObject(ball);
                 goManager.AddObject(player);
             }
         }
@@ -169,7 +173,8 @@ namespace game_states
 
                 goManager.Load(parent.Content);
 
-                player.Position = new Vector3(0f, 0f, 0f);
+                player.Position = Vector3.Zero;
+                ball.Position = new Vector3(0, 0, 0.1f);
 
                 LoadQuestions(1);
 
@@ -244,13 +249,11 @@ namespace game_states
                             if (engineSound == null)
                             {
                                 engineSound = soundBank3.GetCue("540428_quotSports-Fanaticq");
-                                engineSound.Play();
+                                //engineSound.Play();
                             }
                             if (engineSound.IsPaused)
                             {
-
-                                engineSound.Resume();
-                                
+                                //engineSound.Resume();
                             }
                             //
                             CheckAnswer();
@@ -267,7 +270,6 @@ namespace game_states
                             goManager.Update(gameTime);
 
                             handleInput(gameTime);
-
 
                         }
                         

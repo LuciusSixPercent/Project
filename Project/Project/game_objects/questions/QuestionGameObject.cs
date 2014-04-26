@@ -126,7 +126,7 @@ namespace game_objects.questions
                     c.Acceleration = new Vector3(0, 0.05f, 0.02f);
                     c.AccelerationVariation = Vector3.Up * - 0.01f;
                     c.CurrentVelocity = new Vector3(0, 0.05f, 0.2f);
-                    c.TerminalVelocity = new Vector3(0, 1, 1);
+                    c.UpperVelocityThreshold = new Vector3(0, 1, 1);
                 }
             }
         }

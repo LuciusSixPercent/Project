@@ -34,6 +34,8 @@ namespace game_objects
         public delegate void CollidedWithQuestion(Vector3 position, bool correctAnswer);
         public event CollidedWithQuestion collidedWithQuestion;
 
+        private Ball ball;
+
         private bool keepMoving;
         private bool kickingBall;
 
@@ -67,7 +69,7 @@ namespace game_objects
             }
         }
 
-        public Character(Renderer3D renderer, List<CollidableGameObject> collidableObjects, string name)
+        public Character(Renderer3D renderer, IEnumerable<CollidableGameObject> collidableObjects, string name, Ball ball)
             : base(renderer, collidableObjects)
         {
             PlayerMovementComponent pmc = new PlayerMovementComponent(this, 30, 0.05f, MAX_X);
@@ -81,6 +83,8 @@ namespace game_objects
             framesRunning = new Texture2D[9];
 
             framesKicking = new Texture2D[4];
+
+            this.ball = ball;
         }
 
         public override void ImediateTranslate(Vector3 amount)
@@ -102,12 +106,10 @@ namespace game_objects
                 base.ImediateTranslate(amount);
                 quad.Translate(amount);
 
-                Vector3 backUpperLeft = quad.Vertices[1].Position;
-                backUpperLeft.Z += 0.1f;
+                boundingBox.Min += amount;
+                boundingBox.Max += amount;
 
-                Vector3 frontBottomRight = quad.Vertices[2].Position;
-
-                BoundingBox = new BoundingBox(frontBottomRight, backUpperLeft);
+                ball.Translate(amount * Vector3.Right);
             }
         }
 
@@ -132,10 +134,9 @@ namespace game_objects
         {
             quad = new Quad(position + new Vector3(0, quadHeightScale / 2, 0), new Vector3(0, 0, -1), Vector3.Up, quadWidthScale, quadHeightScale);
             Vector3 backUpperLeft = quad.Vertices[1].Position;
-            backUpperLeft.Z += 2;
+            backUpperLeft.Z += 0.1f;
 
             Vector3 frontBottomRight = quad.Vertices[2].Position;
-            frontBottomRight.Z -= 2;
 
             BoundingBox = new BoundingBox(frontBottomRight, backUpperLeft);
         }
@@ -175,11 +176,18 @@ namespace game_objects
             base.Update(gameTime);
             foreach (CollidableGameObject obj in CollidableObjects)
             {
-                if (obj.Collided(this) && obj is QuestionGameObject)
+                if (obj.Collided(this))
                 {
-                    if (collidedWithQuestion != null)
+                    if (obj is QuestionGameObject)
                     {
-                        collidedWithQuestion(Position, ((QuestionGameObject)obj).CorrecAnswer());
+                        if (collidedWithQuestion != null)
+                        {
+                            collidedWithQuestion(Position, ((QuestionGameObject)obj).CorrecAnswer());
+                        }
+                    }
+                    else if (obj is Ball)
+                    {
+                        ((Ball)obj).KickOff();
                     }
                 }
             }

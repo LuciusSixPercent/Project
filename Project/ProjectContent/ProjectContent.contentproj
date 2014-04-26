@@ -683,6 +683,12 @@
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
+    <Compile Include="ball1.png">
+      <Name>ball1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
+    </Compile>
     <Content Include="questions.xml">
       <Name>questions</Name>
       <Importer>XmlImporter</Importer>
