@@ -16,10 +16,10 @@ using Microsoft.Xna.Framework.Audio;
     class Menu : GameState
     {
         private SpriteBatch spriteBatch;
-        Texture2D seta, menu1Normal, menu1Over, menu2Normal, menu2Over, menu3Normal,menu3Over, menu4Normal,menu4Over, menu5Normal,menu5Over, menu6Normal,menu6Over, Fundo,OKOver,OKNormal,CancelarOver,CancelarNormal;
-        Texture2D[] menu1, menu2, menu3, menu4, menu5, menu6,OK,Cancelar;
+        Texture2D seta, menu1Normal, menu1Over, menu2Normal, menu2Over, menu3Normal,menu3Over, menu4Normal,menu4Over, menu5Normal,menu5Over, menu6Normal,menu6Over, Fundo,OKOver,OKNormal,CancelarOver,CancelarNormal,Barra,Medidor,VoltarOver, VoltarNormal;
+        Texture2D[] menu1, menu2, menu3, menu4, menu5, menu6, OK, Cancelar, Voltar;
         Texture2D Fconf, Fnorm, Fcre, Fsair;
-        Rectangle rcSeta, rcmenu1, rcmenu2, rcmenu3, rcmenu4, rcmenu5, rcmenu6, rcfundo,rcOK,rcCancelar;
+        Rectangle rcSeta, rcmenu1, rcmenu2, rcmenu3, rcmenu4, rcmenu5, rcmenu6, rcfundo, rcOK, rcCancelar, rcbarra, rcMedidor, vVoltar;
         Vector2[] menus;
         bool pauseFlag;
         private bool contentLoaded;
@@ -35,6 +35,7 @@ using Microsoft.Xna.Framework.Audio;
         int mn6 = 0;
         int OKin = 0;
         int CancIN = 0;
+        int VoltarIndice = 0;
         SpriteFont arial;
         AudioEngine audioEngine, audioEngine3;
         WaveBank waveBank, waveBank3;
@@ -78,6 +79,7 @@ using Microsoft.Xna.Framework.Audio;
                 menu6 = new Texture2D[2] { menu6Normal, menu6Over };
                 OK = new Texture2D[2] { OKNormal, OKOver };
                 Cancelar = new Texture2D[2] { CancelarNormal, CancelarOver };
+                Voltar = new Texture2D[2] { VoltarNormal, VoltarOver };
                 #region Retangulos
                 rcfundo = new Rectangle(0, 0, 1024, 768);
                 rcmenu1 = new Rectangle(350, 300, menu1[mn1].Width / 2, menu1[mn1].Height / 2);
@@ -88,6 +90,9 @@ using Microsoft.Xna.Framework.Audio;
                 rcmenu6 = new Rectangle(350, 650, menu6[mn6].Width / 2, menu6[mn6].Height / 2);
                 rcOK = new Rectangle(300, 350, OK[OKin].Width / 2, OK[OKin].Height / 2);
                 rcCancelar = new Rectangle(550, 350, Cancelar[CancIN].Width / 2, Cancelar[CancIN].Height / 2);
+                rcbarra = new Rectangle(120, 350, Barra.Width, Barra.Height*2);
+                vVoltar = new Rectangle(850, 700, Voltar[VoltarIndice].Width / 2, Voltar[VoltarIndice].Height / 2);
+                rcMedidor = new Rectangle(rcbarra.X + rcbarra.Width, rcbarra.Y - Medidor.Height/2, Medidor.Width*3, Medidor.Height);
                 menus = new Vector2[6] { new Vector2(rcmenu1.X-seta.Width, rcmenu1.Y), new Vector2(rcmenu2.X-seta.Width, rcmenu2.Y), new Vector2(rcmenu3.X-seta.Width, rcmenu3.Y), 
                 new Vector2(rcmenu4.X-seta.Width, rcmenu4.Y), new Vector2(rcmenu5.X-seta.Width, rcmenu5.Y), new Vector2(rcmenu6.X-seta.Width, rcmenu6.Y) };
                 rcSeta = new Rectangle((int)menus[escolha].X, (int)menus[escolha].Y, seta.Width, seta.Height);
@@ -100,6 +105,7 @@ using Microsoft.Xna.Framework.Audio;
         {
             MouseState mouse = Mouse.GetState();
             KeyboardState teclado = Keyboard.GetState();
+            MediaPlayer.Volume = (rcMedidor.X / (rcbarra.X + rcbarra.Width));
             if (engineSound == null)
             {
                 engineSound = soundBank3.GetCue("Silly Fun");
@@ -149,15 +155,7 @@ using Microsoft.Xna.Framework.Audio;
                     }
                     rcSeta = new Rectangle((int)menus[escolha].X, (int)menus[escolha].Y, seta.Width, seta.Height);
                     
-                    if ((teclado.IsKeyDown(Keys.Back)) && (lastKey != Keys.Back))
-                    {
-                        Creditos = false;
-                        Config = false;
-                        Caderno = false;
-                        Sair = false;
-                        
-                        Alpha = 1;
-                    }
+                    
                     if (Sair)
                     {
                         
@@ -194,10 +192,50 @@ using Microsoft.Xna.Framework.Audio;
                     if (Creditos)
                     {
                         CreditosMENU();
+                        if (ColisaoMouseOver(mouse, Voltar[VoltarIndice], vVoltar))
+                        {
+                            VoltarIndice = 1;
+                        }
+                        else { VoltarIndice = 0; }
+                        if (mouse.LeftButton == ButtonState.Pressed)
+                        {
+                            if (ColisaoMouseOver(mouse, Voltar[VoltarIndice], vVoltar))
+                            {
+                                Creditos = false;
+                                
+                            }
+                        }
                     }
                     if (Config)
                     {
                         ConfiguracoesMENU();
+                        if (ColisaoMouseOver(mouse, Voltar[VoltarIndice], vVoltar))
+                        {
+                            VoltarIndice = 1;
+                        }
+                        else { VoltarIndice = 0; }
+                        if (mouse.LeftButton == ButtonState.Pressed)
+                        {
+                            if (ColisaoMouseOver(mouse, Voltar[VoltarIndice], vVoltar))
+                            {
+                                Config = false;
+
+                            }
+                            if (ColisaoMouseOver(mouse, Medidor, rcMedidor))
+                            {
+                                rcMedidor.X = mouse.X- rcMedidor.Width/2;
+                                if (mouse.X > rcbarra.X + rcbarra.Width +1)
+                                {
+                                    rcMedidor.X = rcbarra.X + rcbarra.Width;
+                                }
+                                if (mouse.X < rcbarra.X)
+                                {
+                                    rcMedidor.X = rcbarra.X;
+                                }
+                            }
+                            
+                        }
+                        
                     }
                     if (!Historinha && !BateBola && !Caderno && !Config && !Creditos && !Sair)
                     {
@@ -351,23 +389,32 @@ using Microsoft.Xna.Framework.Audio;
                 Fundo = Fnorm;
             }
             spriteBatch.Draw(Fundo, rcfundo, Color.White * Alpha);
-            if(!Config && !Creditos)
+            if (!Config && !Creditos)
             {
-            Fundo = Fnorm;
-            spriteBatch.Draw(Fundo, rcfundo, Color.White * Alpha);
-            spriteBatch.Draw(seta, rcSeta, Color.White * Alpha);
-            spriteBatch.Draw(menu1[mn1], rcmenu1, Color.White * Alpha);
-            spriteBatch.Draw(menu2[mn2], rcmenu2, Color.White * Alpha);
-            spriteBatch.Draw(menu3[mn3], rcmenu3, Color.White * Alpha);
-            spriteBatch.Draw(menu4[mn4], rcmenu4, Color.White * Alpha);
-            spriteBatch.Draw(menu5[mn5], rcmenu5, Color.White * Alpha);
-            spriteBatch.Draw(menu6[mn6], rcmenu6, Color.White * Alpha);
+                Fundo = Fnorm;
+                spriteBatch.Draw(Fundo, rcfundo, Color.White * Alpha);
+                spriteBatch.Draw(seta, rcSeta, Color.White * Alpha);
+                spriteBatch.Draw(menu1[mn1], rcmenu1, Color.White * Alpha);
+                spriteBatch.Draw(menu2[mn2], rcmenu2, Color.White * Alpha);
+                spriteBatch.Draw(menu3[mn3], rcmenu3, Color.White * Alpha);
+                spriteBatch.Draw(menu4[mn4], rcmenu4, Color.White * Alpha);
+                spriteBatch.Draw(menu5[mn5], rcmenu5, Color.White * Alpha);
+                spriteBatch.Draw(menu6[mn6], rcmenu6, Color.White * Alpha);
+            }
+            else
+            {
+                spriteBatch.Draw(Voltar[VoltarIndice], vVoltar, Color.White);
             }
             if (Sair)
             {
                 spriteBatch.DrawString(arial, MsgSair, new Vector2(350, 300), Color.White);
                 spriteBatch.Draw(OK[OKin], rcOK, Color.White);
                 spriteBatch.Draw(Cancelar[CancIN], rcCancelar, Color.White);
+            }
+            if (Config)
+            {
+                spriteBatch.Draw(Barra, rcbarra, Color.White);
+                spriteBatch.Draw(Medidor, rcMedidor, Color.White);
             }
             spriteBatch.End();
         }
@@ -428,6 +475,10 @@ using Microsoft.Xna.Framework.Audio;
                 CancelarNormal = parent.Content.Load<Texture2D>("Menu/cancelarN");
                 CancelarOver = parent.Content.Load<Texture2D>("Menu/cancelarH");
                 arial = parent.Content.Load<SpriteFont>("Fonte/Arial");
+                Medidor = parent.Content.Load<Texture2D>("Menu/MedidorBarra");
+                Barra = parent.Content.Load<Texture2D>("Menu/BarraBalanco");
+                VoltarNormal = parent.Content.Load<Texture2D>("Menu/voltarN");
+                VoltarOver = parent.Content.Load<Texture2D>("Menu/voltarH");
                 #endregion
 
                 #endregion
@@ -441,6 +492,7 @@ using Microsoft.Xna.Framework.Audio;
         public void ConfiguracoesMENU()
         {
             Fundo = Fconf;
+            
         }
         public void CreditosMENU()
         {
