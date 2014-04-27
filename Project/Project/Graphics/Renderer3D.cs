@@ -22,7 +22,7 @@ namespace game_objects
             {
                 cam = value;
                 cam.cam_moved += new Camera.CameraMoved(cam_cam_moved);
-                changeFog(cam.NearView, cam.FarView);
+                changeFog((float)cam.FarView - 5, cam.FarView);
                 updateEffect(cam.View, cam.Projection);
             }
         }
@@ -102,7 +102,7 @@ namespace game_objects
             //necessário para que os objetos "3D" sejam desenhados na ordem correta
             GDevice.DepthStencilState = DepthStencilState.Default;
             ContainmentType containment = frustum.Contains(bbox);
-            if (containment != ContainmentType.Disjoint || containment == ContainmentType.Contains || containment == ContainmentType.Intersects)
+            if (containment != ContainmentType.Disjoint)
             {
                 GDevice.DrawUserIndexedPrimitives
                     <VertexPositionNormalTexture>(

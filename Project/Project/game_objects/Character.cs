@@ -37,7 +37,9 @@ namespace game_objects
         private Ball ball;
 
         private bool keepMoving;
+        private bool kickBall;
         private bool kickingBall;
+        private bool makeGoal;
 
         public bool KeepMoving
         {
@@ -65,6 +67,7 @@ namespace game_objects
             set
             {
                 base.Position = value;
+                ball.Position = position + new Vector3(0, 0, 0.25f);
                 createQuad();
             }
         }
@@ -118,16 +121,15 @@ namespace game_objects
             currentFrame = 0;
             framesBeingUsed = framesRunning;
             keepMoving = true;
-            kickingBall = false;
+            kickBall = kickingBall = false;
+            GetComponent<PlayerMovementComponent>().Unlock();
             Position = Vector3.Zero;
         }
 
-        public void KickBall()
+        public void KickBall(bool makeGoal)
         {
-            keepMoving = false;
-            currentFrame = 0;
-            framesBeingUsed = framesKicking;
-            kickingBall = true;
+            kickBall = true;
+            this.makeGoal = makeGoal;
         }
 
         private void createQuad()
@@ -174,6 +176,19 @@ namespace game_objects
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            if (kickBall && position.Z >= ball.Position.Z - 0.1f && keepMoving)
+            {
+                keepMoving = false;
+                currentFrame = 0;
+                framesBeingUsed = framesKicking;
+                kickingBall = true;
+            }
+            CheckCollisions();
+            UpdateBallKick(gameTime);
+        }
+
+        private void CheckCollisions()
+        {
             foreach (CollidableGameObject obj in CollidableObjects)
             {
                 if (obj.Collided(this))
@@ -185,13 +200,12 @@ namespace game_objects
                             collidedWithQuestion(Position, ((QuestionGameObject)obj).CorrecAnswer());
                         }
                     }
-                    else if (obj is Ball)
+                    else if (obj is Ball && !kickBall)
                     {
-                        ((Ball)obj).KickOff();
+                        ((Ball)obj).Kick(new Vector3(0, 0.005f, 0.08f), new Vector3(0, 0.001f, 0.002f), new Vector3(0, 1f, 1f));
                     }
                 }
             }
-            UpdateBallKick(gameTime);
         }
 
         private void UpdateBallKick(GameTime gameTime)
@@ -199,26 +213,23 @@ namespace game_objects
             if (kickingBall)
             {
                 elapsedTime += gameTime.ElapsedGameTime.Milliseconds;
-                if (elapsedTime >= 200)
+                if (elapsedTime >= 100)
                 {
                     elapsedTime = 0;
                     currentFrame++;
-                    if (currentFrame >= framesKicking.Length)
+                    if (currentFrame >= framesBeingUsed.Length)
                     {
                         kickingBall = false;
                         currentFrame = 0;
+                        Vector3 kickDeviation = Vector3.Zero;
+                        if (!makeGoal)
+                        {                            
+                            kickDeviation.Y = (float)PublicRandom.NextDouble(0, 0.05);
+                            kickDeviation.Z = -(float)PublicRandom.NextDouble(0, 0.1);
+                        }
+                        ball.Kick(new Vector3(0, 0.2f, 0.15f) + kickDeviation, new Vector3(0, 0.001f, 0.00001f), new Vector3(-kickDeviation.X/10, 2f, 0.0000005f));
                     }
                 }
-            }
-        }
-
-        public int CurrentFrame
-        {
-            get { return currentFrame; }
-            set
-            {
-                if (value < framesRunning.Length)
-                    currentFrame = value;
             }
         }
     }

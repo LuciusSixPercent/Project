@@ -114,6 +114,7 @@
     <Compile Include="components\PlayerMovementComponent.cs" />
     <Compile Include="components\VariableMovementComponent.cs" />
     <Compile Include="game_objects\Ball.cs" />
+    <Compile Include="game_objects\Bleachers.cs" />
     <Compile Include="game_objects\Button.cs" />
     <Compile Include="game_objects\Camera.cs" />
     <Compile Include="game_objects\CollidableGameObject.cs" />
@@ -130,9 +131,9 @@
     <Compile Include="game_objects\questions\QuestionDatabase.cs" />
     <Compile Include="game_objects\questions\QuestionSubject.cs" />
     <Compile Include="game_objects\questions\QuestionType.cs" />
-    <Compile Include="Graphics\Renderer.cs" />
-    <Compile Include="Graphics\Renderer2D.cs" />
-    <Compile Include="Graphics\Renderer3D.cs" />
+    <Compile Include="graphics\Renderer.cs" />
+    <Compile Include="graphics\Renderer2D.cs" />
+    <Compile Include="graphics\Renderer3D.cs" />
     <Compile Include="game_objects\Sky.cs" />
     <Compile Include="game_states\GameState.cs" />
     <Compile Include="game_states\PauseState.cs" />
@@ -148,8 +149,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="PublicRandom.cs" />
-    <Compile Include="Graphics\Quad.cs" />
-    <Compile Include="Graphics\TextureHelper.cs" />
+    <Compile Include="graphics\Quad.cs" />
+    <Compile Include="graphics\TextureHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

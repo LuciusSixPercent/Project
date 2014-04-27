@@ -10,16 +10,20 @@ namespace components
 {
     public class VariableMovementComponent : MovementComponent
     {
-        private readonly Vector3 initialVelocity;
+        private Vector3 initialVelocity;
         private Vector3 currentVelocity;
         private Vector3 upperVelocityThreshold;
         private Vector3 lowerVelocityThreshold;
+        private Vector3 initialAcceleration;
         private Vector3 acceleration;
         private Vector3 accelerationVariation;
 
         public Vector3 InitialVelocity
         {
             get { return initialVelocity; }
+            set { 
+                initialVelocity = value;
+            }
         }
 
         public Vector3 CurrentVelocity
@@ -47,6 +51,13 @@ namespace components
                 CheckThreshold(ref lowerVelocityThreshold, ref upperVelocityThreshold, true, true);
             }
         }
+
+        public Vector3 InitialAcceleration
+        {
+            get { return initialAcceleration; }
+            set { initialAcceleration = value; }
+        }
+
         public Vector3 Acceleration
         {
             get { return acceleration; }
@@ -65,6 +76,7 @@ namespace components
             this.initialVelocity = initialVelocity;
             this.currentVelocity = initialVelocity;
             this.acceleration = acceleration;
+            this.initialAcceleration = acceleration;
             this.accelerationVariation = Vector3.Zero;
             this.upperVelocityThreshold = new Vector3(float.MaxValue);
             this.lowerVelocityThreshold = new Vector3(float.MinValue);
@@ -84,10 +96,6 @@ namespace components
                 CheckThreshold(ref currentVelocity, ref lowerVelocityThreshold, false, false);
 
                 acceleration += accelerationVariation;
-                if (owner is Ball)
-                {
-                    int a = 0;
-                }
             }
         }
 

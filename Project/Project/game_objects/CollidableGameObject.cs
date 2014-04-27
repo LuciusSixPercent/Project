@@ -23,6 +23,12 @@ namespace game_objects
             this.collidableObjects = collidableObjects;
         }
 
+        public CollidableGameObject(Renderer renderer)
+            : base(renderer)
+        {
+        }
+
+
         public BoundingBox BoundingBox
         {
             get { return boundingBox; }

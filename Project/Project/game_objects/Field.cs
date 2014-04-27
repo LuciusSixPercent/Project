@@ -17,11 +17,15 @@ namespace game_objects
         private Texture2D[] textures;
 
         private Goal goal;
+        private Bleachers bleachers;
 
         private int rows;
         private int columns;
         private const float scale = 1f;
         private bool keepMoving;
+
+        //quantas linhas a frente serão solo normal e não gramado
+        private int fieldPadding = 6;
 
         public Goal Goal
         {
@@ -34,14 +38,15 @@ namespace game_objects
             set { keepMoving = value; }
         }
 
-        public Field(Renderer3D renderer, List<CollidableGameObject> collidableObjects, int rows, int columns)
-            : base(renderer, collidableObjects)
+        public Field(Renderer3D renderer, int rows, int columns)
+            : base(renderer)
         {
-            goal = new Goal(renderer, collidableObjects);
+            goal = new Goal(renderer);
+            bleachers = new Bleachers(renderer);
             this.rows = rows;
             this.columns = columns;
             keepMoving = true;
-            textures = new Texture2D[1];
+            textures = new Texture2D[2];
             floorTiles = new Quad[rows * columns];
             initQuads();
         }
@@ -63,19 +68,36 @@ namespace game_objects
                 initialCoord.Z += scale;
                 initialCoord.X = leftColumnX;
             }
-            BoundingBox = new BoundingBox(floorTiles[0].Vertices[1].Position, floorTiles[floorTiles.Length - 1].Vertices[2].Position);
-            goal.Position = new Vector3(0, 0, boundingBox.Max.Z);
+            BoundingBox = new BoundingBox(floorTiles[0].Vertices[0].Position, floorTiles[floorTiles.Length - 1].Vertices[3].Position);
+            goal.Position = new Vector3(0, 0, boundingBox.Max.Z - fieldPadding - 0.5f);
+            bleachers.Position = new Vector3(0, 0, boundingBox.Max.Z - fieldPadding + 1.5f);
         }
 
         public override void Load(ContentManager cManager)
         {
             textures[0] = cManager.Load<Texture2D>("Imagem" + Path.AltDirectorySeparatorChar + "Cenario" + Path.AltDirectorySeparatorChar + "grass");
+            textures[1] = cManager.Load<Texture2D>("Imagem" + Path.AltDirectorySeparatorChar + "Cenario" + Path.AltDirectorySeparatorChar + "soil");
             goal.Load(cManager);
+            bleachers.Load(cManager);
         }
 
         public override void Draw(GameTime gameTime)
         {
-            ((Renderer3D)Renderer).Draw(textures[0], floorTiles, BlendState.Opaque, BoundingBox);
+            int textureIndex = 1;
+            for (int i = 0; i < floorTiles.Length; i++)
+            {
+                if (i % columns == Math.Round((float)columns / 2, MidpointRounding.ToEven) + 3 || i / columns >= rows - fieldPadding)
+                {
+                    textureIndex = 1;
+                } else
+                if (i % columns == Math.Round((float)columns/2, MidpointRounding.AwayFromZero) - 3)
+                {
+                    textureIndex = 0;
+                }
+
+                ((Renderer3D)Renderer).Draw(textures[textureIndex], floorTiles[i], BlendState.Opaque, BoundingBox);
+            }
+            bleachers.Draw(gameTime);
             goal.Draw(gameTime);
         }
 
@@ -84,6 +106,7 @@ namespace game_objects
             base.Update(gameTime);
             translateQuads();
             goal.Update(gameTime);
+            bleachers.Update(gameTime);
         }
 
         private void translateQuads()
@@ -91,16 +114,25 @@ namespace game_objects
             if (KeepMoving)
             {
                 bool quadsMoved = false;
-                foreach (Quad quad in floorTiles)
+                for (int i = 0; i < floorTiles.Length; i++)
                 {
+                    Quad quad = floorTiles[i];
                     if (quad.Coord.Z <= ((Renderer3D)Renderer).Cam.Z)
                     {
-                        quad.Translate(new Vector3(0, 0, scale * rows));
+                        quad.Translate(new Vector3(0, 0, scale * (rows - fieldPadding)));
                         quadsMoved = true;
                     }
                 }
+
                 if (quadsMoved)
                 {
+                    for (int row = rows - 1; row >= rows - fieldPadding; row--)
+                    {
+                        for (int col = 0; col < columns; col++)
+                        {
+                            floorTiles[row * columns + col].Translate(new Vector3(0, 0, scale));
+                        }
+                    }
                     ImediateTranslate(new Vector3(0, 0, scale));
                 }
             }
@@ -112,6 +144,7 @@ namespace game_objects
             boundingBox.Min += amount;
             boundingBox.Max += amount;
             goal.Translate(amount);
+            bleachers.Translate(amount);
         }
 
         public override Vector3 Position

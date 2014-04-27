@@ -17,6 +17,7 @@ namespace game_objects
         private float scale = 0.125f;
         private Texture2D[] frames;
         private int currentFrame;
+        private float maxArcHeight;
 
         public override Vector3 Position
         {
@@ -42,7 +43,7 @@ namespace game_objects
         {
             for (int i = 0; i < frames.Length; i++)
             {
-                frames[i] = cManager.Load<Texture2D>("ball" + (i+1));
+                frames[i] = cManager.Load<Texture2D>("ball" + (i + 1));
             }
         }
 
@@ -62,29 +63,53 @@ namespace game_objects
             boundingBox.Min += amount;
             boundingBox.Max += amount;
 
+            amount += GetUpAmount();
+
+            quad.Translate(amount);
+            if (position.Y > maxArcHeight)
+                maxArcHeight = position.Y;
+        }
+
+        private Vector3 GetUpAmount()
+        {
             Vector3 upAmount = Vector3.Zero;
             foreach (CollidableGameObject cgo in CollidableObjects)
             {
                 if (cgo is Field)
                 {
-                    while (cgo.Collided(this))
+                    if (cgo.Collided(this))
                     {
                         upAmount = cgo.Position - boundingBox.Min;
                         upAmount *= Vector3.Up;
                         base.ImediateTranslate(upAmount);
                         boundingBox.Max += upAmount;
                         boundingBox.Min += upAmount;
-                        VariableMovementComponent vmc = GetComponent<VariableMovementComponent>();
-                        vmc.Acceleration = Vector3.Zero;
-                        vmc.CurrentVelocity = Vector3.Zero;
-                        vmc.AccelerationVariation = Vector3.Zero;
-                        amount += upAmount;
+                        Bounce();
+                        maxArcHeight = 0;
                     }
                     break;
                 }
             }
-            quad.Translate(amount);
+            return upAmount;
         }
+
+        private void Bounce()
+        {
+            VariableMovementComponent vmc = GetComponent<VariableMovementComponent>();
+            if (vmc.CurrentVelocity.Z > 0 || maxArcHeight >= 0.05f)
+            {
+                vmc.Acceleration = vmc.InitialAcceleration * -1f;
+                float xFactor = 1 / (vmc.InitialVelocity.X == 0 ? 1 : vmc.InitialVelocity.X);
+                vmc.CurrentVelocity *= vmc.InitialVelocity * new Vector3(xFactor, -0.75f, 5);
+            }
+            else
+            {
+                vmc.Acceleration = Vector3.Zero;
+                vmc.AccelerationVariation = Vector3.Zero;
+                vmc.CurrentVelocity = Vector3.Zero;
+            }
+        }
+
         private void createQuad()
         {
             quad = new Quad(position + new Vector3(0, scale / 2, 0), new Vector3(0, 0, -1), Vector3.Up, scale, scale);
@@ -95,12 +120,19 @@ namespace game_objects
             BoundingBox = new BoundingBox(frontBottomRight, backUpperLeft);
         }
 
-        public void KickOff()
+        public void Kick(Vector3 velocity, Vector3 acceleration, Vector3 decelerationFactor)
         {
             VariableMovementComponent vmc = GetComponent<VariableMovementComponent>();
-            vmc.CurrentVelocity = new Vector3(0, boundingBox.Min.Y == 0 ? 0.01f : 0f, 0.125f);
-            vmc.Acceleration = new Vector3(0, boundingBox.Min.Y == 0 ? 0.01f : 0f, 0.005f);
-            vmc.AccelerationVariation = new Vector3(0, -0.005f, -0.001f);
+            if (boundingBox.Min.Y > 0)
+            {
+                velocity.Y /= 5;
+            }
+            vmc.InitialVelocity = velocity;
+            vmc.CurrentVelocity = velocity;
+            vmc.Acceleration = acceleration;
+            vmc.InitialAcceleration = acceleration;
+            vmc.AccelerationVariation = acceleration * -decelerationFactor;
+            vmc.LowerVelocityThreshold = new Vector3(0, -1, 0);
         }
 
         internal void Reset()

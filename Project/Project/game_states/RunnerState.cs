@@ -20,8 +20,8 @@ namespace game_states
         private RunnerLevel level;
         private QuestionSubject[] subjects;
 
-        int columns = 4;
-        int rows = 35;
+        int columns = 33;
+        int rows = 28;
 
         private Camera cam;
         private Character player;
@@ -106,12 +106,12 @@ namespace game_states
                 player = new Character(goManager.R3D, goManager.CollidableGameObjects, "cosme", ball);
                 player.collidedWithQuestion += new Character.CollidedWithQuestion(player_collidedWithQuestion);                
 
-                cam = new Camera(new Vector3(0f, 3f, -4f), Vector3.Up, new Vector2(0.25f, 30));
+                cam = new Camera(new Vector3(0f, 3f, -4f), Vector3.Up, new Vector2(0.25f, 19.5f));
                 cam.lookAt(new Vector3(0f, 0.25f, 2f), true);
                 cam.createProjection(MathHelper.PiOver4, parent.GraphicsDevice.Viewport.AspectRatio);
                 goManager.R3D.Cam = cam;
 
-                field = new Field(goManager.R3D, goManager.CollidableGameObjects, rows, columns);
+                field = new Field(goManager.R3D, rows, columns);
 
                 goManager.AddObject(cam);
                 goManager.AddObject(new Sky(goManager.R2D));
@@ -160,7 +160,15 @@ namespace game_states
             else
             {
                 answeredAll = true;
+                centerPlayer();
             }
+        }
+
+        private void centerPlayer()
+        {
+            PlayerMovementComponent pmc = player.GetComponent<PlayerMovementComponent>();
+            pmc.Destiny = 0;
+            pmc.Lock();
         }
 
         protected override void LoadContent()
@@ -174,7 +182,6 @@ namespace game_states
                 goManager.Load(parent.Content);
 
                 player.Position = Vector3.Zero;
-                ball.Position = new Vector3(0, 0, 0.1f);
 
                 LoadQuestions(1);
 
@@ -187,6 +194,7 @@ namespace game_states
             exit = false;
             finished = false;
             answeredAll = false;
+
             player.Reset();
             cam.KeepMoving = true;
             cam.Position = new Vector3(0f, 3f, -4f);
@@ -196,6 +204,8 @@ namespace game_states
             field.Position = Vector3.Backward;
             score = 0;
             perfectSscoreMultiplier = 2;
+            foreach (QuestionGameObject q in questions)
+                goManager.removeObject(q);
             LoadQuestions(1);
         }
 
@@ -235,7 +245,6 @@ namespace game_states
 
         public override void Update(GameTime gameTime)
         {
-
             base.Update(gameTime);
             if (stateEntered)
             {
@@ -260,9 +269,9 @@ namespace game_states
                             if (answeredAll)
                             {
                                 field.KeepMoving = false;
-                                if (field.Goal.Position.Z - player.Position.Z <= 5 && player.KeepMoving)
+                                if (field.Goal.Position.Z - player.Position.Z <= 8 && player.KeepMoving)
                                 {
-                                    player.KickBall();
+                                    player.KickBall(perfectSscoreMultiplier == 2);
                                     cam.KeepMoving = false;
                                 }
                             }

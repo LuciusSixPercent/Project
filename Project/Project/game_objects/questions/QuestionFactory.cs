@@ -18,6 +18,10 @@ namespace game_objects.questions
                 case (QuestionSubject.PT):
                     usedIndexes = new bool[QuestionsDatabase.PT_Questions[(int)level].Length];
                     int testingIndex = PublicRandom.Next(QuestionsDatabase.PT_Questions[(int)level].Length);
+                    while (testingIndex == 3)
+                    {
+                        testingIndex = PublicRandom.Next(QuestionsDatabase.PT_Questions[(int)level].Length);
+                    }
                     usedIndexes[testingIndex] = true;
 
                     q = QuestionsDatabase.PT_Questions[(int)level][testingIndex];

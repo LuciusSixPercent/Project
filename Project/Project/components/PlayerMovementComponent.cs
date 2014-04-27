@@ -15,9 +15,31 @@ namespace components
         private float stepSize;
         private int direction;
         private float origin;
-        private float relativeOrigin;
         private float destiny;
         private Vector3 ownerLastPos;
+        private bool lockMovement;
+
+        public int Direction
+        {
+            get { return direction; }
+            set
+            {
+                if (value >= -1 && value <= 1)
+                    direction = value;
+            }
+        }
+
+        public float Destiny
+        {
+            get { return destiny; }
+            set { 
+                destiny = value;
+                if (destiny > owner.Position.X)
+                    Direction = 1;
+                else if (destiny < owner.Position.X)
+                    Direction = -1;
+            }
+        }
 
         public PlayerMovementComponent(GameObject owner, int stepInterval, float stepSize, float movementAmount)
             : base(owner, stepInterval)
@@ -25,9 +47,8 @@ namespace components
             this.movementAmount = movementAmount;
             this.stepSize = stepSize;
             this.elapsed = stepInterval;
-            direction = 0;
+            Direction = 0;
             origin = owner.Position.X;
-            relativeOrigin = origin;
             destiny = origin;
         }
 
@@ -40,38 +61,43 @@ namespace components
 
                 if (ownerLastPos.Equals(owner.Position))
                 {
-                    direction = 0;
+                    Direction = 0;
                     origin = destiny;
                 }
 
-                int newDirection = getPressedKey();
-
-                //Se uma nova tecla foi pressionada, alterar a direção
-                if (newDirection != 0 && newDirection != direction)
+                if (!lockMovement)
                 {
-                    direction = newDirection;
-                    if (destiny == origin)
+                    int newDirection = getPressedKey();
+
+                    //Se uma nova tecla foi pressionada, alterar a direção
+                    if (newDirection != 0 && newDirection != Direction)
                     {
-                        //relativeOrigin = owner.Position.X;
-                        destiny = owner.Position.X + movementAmount * direction;
-                    }
-                    else
-                    {
-                        //lógica falha aqui (origin vira valor quebrado ao inverter a direção a meio caminho e, quando inverte novamente, destiny se perde)
-                        float tmp = destiny;
-                        destiny = origin;
-                        origin = tmp;
-                        //relativeOrigin = owner.Position.X;
+                        Direction = newDirection;
+                        float oldDestiny = destiny;
+                        if (destiny == origin)
+                        {
+                            destiny = owner.Position.X + movementAmount * Direction;
+                        }
+                        else
+                        {
+                            float tmp = destiny;
+                            destiny = origin;
+                            origin = tmp;
+                        }
+                        if (destiny > owner.Position.X + movementAmount || destiny < owner.Position.X - movementAmount)
+                        {
+                            destiny = oldDestiny;
+                        }
                     }
                 }
-
-                if (direction != 0)
+               
+                if (Direction != 0)
                 {
                     Vector3 amount = Vector3.Zero;
-                    float actualStepSize = stepSize * direction;
+                    float actualStepSize = stepSize * Direction;
 
                     float newX = owner.Position.X + actualStepSize;
-                    if ((direction == 1 && newX > destiny) || (direction == -1 && newX < destiny))
+                    if ((Direction == 1 && newX > destiny) || (Direction == -1 && newX < destiny))
                     {
                         float absX = Math.Abs(newX);
                         float absDestiny = Math.Abs(destiny);
@@ -81,13 +107,6 @@ namespace components
                     ownerLastPos = owner.Position;
                     amount.X += actualStepSize;
                     base.move(amount);
-                    /*
-                    if (ownerLastPos.Equals(owner.Position))
-                    {
-                        direction = 0;
-                        origin = destiny;
-                    }
-                     */
                 }
             }
         }
@@ -101,6 +120,16 @@ namespace components
                 dir--;
 
             return dir;
+        }
+
+        public void Lock()
+        {
+            lockMovement = true;
+        }
+
+        public void Unlock()
+        {
+            lockMovement = false;
         }
 
     }

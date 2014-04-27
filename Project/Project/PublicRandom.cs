@@ -31,8 +31,10 @@ namespace Project
             return d;
         }
         
-        public static double NextDouble(double min, double max)
+        public static double NextDouble(double min, double max = 1.0)
         {
+            if (min > max)
+                throw new ArgumentOutOfRangeException("max", "O valor de max(" + max +") não pode ser superior ao valor de min(" + min + ")");
             double d = 0;
             while ((d = Rdn.NextDouble()) < min || d > max);
             return d;

@@ -58,7 +58,7 @@ namespace game_objects.questions
         private void CreateAnswers(Renderer3D renderer)
         {
             this.answers = new Answer[3];
-            correctAnswerIndex = 1;// PublicRandom.Next(0, answers.Length);
+            correctAnswerIndex = 0;// PublicRandom.Next(0, answers.Length);
 
             char start = 'A';
             char end = 'Z';
