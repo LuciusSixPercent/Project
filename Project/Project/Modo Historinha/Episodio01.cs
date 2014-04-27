@@ -208,10 +208,11 @@ class Episodio01 : GameState
     WaveBank waveBank2;
     SoundBank soundBank2;
     Cue engineSound = null;
-    Texture2D VoltarOver, VoltarNormal;
-    Texture2D[] Voltar;
-    Rectangle vVoltar;
+    Texture2D VoltarOver, VoltarNormal,CenarioInterior,CenarioExterior,CenarioCampo,CenarioRio;
+    Texture2D[] Voltar,Cenario;
+    Rectangle vVoltar,rcCenario;
     int VoltarIndice = 0;
+    int CenarioIndice = 0;
     bool VoltarBool = false;
     #endregion
     bool ex = true;
@@ -280,7 +281,9 @@ class Episodio01 : GameState
             Album10 = new List<Song>() { audio27 };
             //Album onde todos os album devem ficar.
             AlbumPrincipal = new List<List<Song>>() { Album1, Album2, Album3, Album4, Album5, Album6, Album7, Album8, Album9, Album10 };
-
+            //Cenario
+            Cenario = new Texture2D[4] { CenarioInterior, CenarioExterior, CenarioRio, CenarioCampo };
+            rcCenario = new Rectangle(0, 0, Cenario[CenarioIndice].Width, Cenario[CenarioIndice].Height);
 
         }
     }
@@ -445,6 +448,7 @@ class Episodio01 : GameState
         cor = Color.White * Alpha;
         if (!FimDaHistoria)
         {
+            SpriteBatch.Draw(Cenario[CenarioIndice], rcCenario, Color.White);
             SpriteBatch.Draw(Voltar[VoltarIndice], vVoltar, Color.White);
             //Tmusica = MediaPlayer.PlayPosition.Minutes.ToString() + " : " + MediaPlayer.PlayPosition.Seconds;
             //TpLAYER = AlbumPrincipal[NoAlbum][selecionar].Duration.Minutes.ToString() + " : " + AlbumPrincipal[NoAlbum][selecionar].Duration.Seconds;
@@ -647,6 +651,7 @@ class Episodio01 : GameState
             }
             if (primeiro && segundo && terceiro && quarto && quinto && !sexto)
             {
+                CenarioIndice = 1;
                 if (Incremento0 == dialogo06.Length)
                 {
                     parte6 = true;
@@ -678,6 +683,7 @@ class Episodio01 : GameState
             }
             if (primeiro && segundo && terceiro && quarto && quinto && sexto && !setimo)
             {
+                CenarioIndice = 0;
                 if (Incremento0 == dialogo07.Length)
                 {
                     parte7 = true;
@@ -740,6 +746,14 @@ class Episodio01 : GameState
             }
             if (primeiro && segundo && terceiro && quarto && quinto && sexto && setimo && oitavo && !nono)
             {
+                if (Incremento0 == 0)
+                {
+                    CenarioIndice = 1;
+                }
+                if (Incremento0 > 0)
+                {
+                    CenarioIndice = 2;
+                }
                 if (Incremento0 == dialogo09.Length)
                 {
                     parte9 = true;
@@ -817,6 +831,10 @@ class Episodio01 : GameState
             arial = parent.Content.Load<SpriteFont>("Fonte/Arial");
             VoltarNormal = parent.Content.Load<Texture2D>("Menu/voltarN");
             VoltarOver = parent.Content.Load<Texture2D>("Menu/voltarH");
+            CenarioInterior = parent.Content.Load<Texture2D>("Imagem/Cenario/Casa_Int");
+            CenarioExterior = parent.Content.Load<Texture2D>("Imagem/Cenario/Casa_Ext");
+            CenarioRio = parent.Content.Load<Texture2D>("Imagem/Cenario/CenarioRio");
+            CenarioCampo = parent.Content.Load<Texture2D>("Imagem/Cenario/Campinho");
             FalasDoNarrador();
             contentLoaded = true;
         }
