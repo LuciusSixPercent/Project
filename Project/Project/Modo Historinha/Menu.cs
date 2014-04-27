@@ -16,10 +16,10 @@ using Microsoft.Xna.Framework.Audio;
     class Menu : GameState
     {
         private SpriteBatch spriteBatch;
-        Texture2D seta, menu1Normal, menu1Ouver, menu2Normal, menu2Ouver, menu3Normal,menu3Ouver, menu4Normal,menu4Ouver, menu5Normal,menu5Ouver, menu6Normal,menu6Ouver, Fundo;
-        Texture2D[] menu1, menu2, menu3, menu4, menu5, menu6;
+        Texture2D seta, menu1Normal, menu1Over, menu2Normal, menu2Over, menu3Normal,menu3Over, menu4Normal,menu4Over, menu5Normal,menu5Over, menu6Normal,menu6Over, Fundo,OKOver,OKNormal,CancelarOver,CancelarNormal;
+        Texture2D[] menu1, menu2, menu3, menu4, menu5, menu6,OK,Cancelar;
         Texture2D Fconf, Fnorm, Fcre, Fsair;
-        Rectangle rcSeta, rcmenu1, rcmenu2, rcmenu3, rcmenu4, rcmenu5, rcmenu6, rcfundo;
+        Rectangle rcSeta, rcmenu1, rcmenu2, rcmenu3, rcmenu4, rcmenu5, rcmenu6, rcfundo,rcOK,rcCancelar;
         Vector2[] menus;
         bool pauseFlag;
         private bool contentLoaded;
@@ -33,6 +33,9 @@ using Microsoft.Xna.Framework.Audio;
         int mn4 = 0;
         int mn5 = 0;
         int mn6 = 0;
+        int OKin = 0;
+        int CancIN = 0;
+        SpriteFont arial;
         AudioEngine audioEngine, audioEngine3;
         WaveBank waveBank, waveBank3;
         SoundBank soundBank, soundBank3;
@@ -67,12 +70,14 @@ using Microsoft.Xna.Framework.Audio;
                 Creditos = false;
                 Sair = false;
                 #endregion
-                menu1 = new Texture2D[2] {menu1Normal,menu1Ouver };
-                menu2 = new Texture2D[2] { menu2Normal, menu2Ouver };
-                menu3 = new Texture2D[2] { menu3Normal, menu3Ouver };
-                menu4 = new Texture2D[2] { menu4Normal, menu4Ouver };
-                menu5 = new Texture2D[2] { menu5Normal, menu5Ouver };
-                menu6 = new Texture2D[2] { menu6Normal, menu6Ouver };
+                menu1 = new Texture2D[2] {menu1Normal,menu1Over };
+                menu2 = new Texture2D[2] { menu2Normal, menu2Over };
+                menu3 = new Texture2D[2] { menu3Normal, menu3Over };
+                menu4 = new Texture2D[2] { menu4Normal, menu4Over };
+                menu5 = new Texture2D[2] { menu5Normal, menu5Over };
+                menu6 = new Texture2D[2] { menu6Normal, menu6Over };
+                OK = new Texture2D[2] { OKNormal, OKOver };
+                Cancelar = new Texture2D[2] { CancelarNormal, CancelarOver };
                 #region Retangulos
                 rcfundo = new Rectangle(0, 0, 1024, 768);
                 rcmenu1 = new Rectangle(350, 300, menu1[mn1].Width / 2, menu1[mn1].Height / 2);
@@ -81,6 +86,8 @@ using Microsoft.Xna.Framework.Audio;
                 rcmenu4 = new Rectangle(350, 520, menu4[mn4].Width / 2, menu4[mn4].Height / 2);
                 rcmenu5 = new Rectangle(350, 590, menu5[mn5].Width / 2, menu5[mn5].Height / 2);
                 rcmenu6 = new Rectangle(350, 650, menu6[mn6].Width / 2, menu6[mn6].Height / 2);
+                rcOK = new Rectangle(300, 350, OK[OKin].Width / 2, OK[OKin].Height / 2);
+                rcCancelar = new Rectangle(550, 350, Cancelar[CancIN].Width / 2, Cancelar[CancIN].Height / 2);
                 menus = new Vector2[6] { new Vector2(rcmenu1.X-seta.Width, rcmenu1.Y), new Vector2(rcmenu2.X-seta.Width, rcmenu2.Y), new Vector2(rcmenu3.X-seta.Width, rcmenu3.Y), 
                 new Vector2(rcmenu4.X-seta.Width, rcmenu4.Y), new Vector2(rcmenu5.X-seta.Width, rcmenu5.Y), new Vector2(rcmenu6.X-seta.Width, rcmenu6.Y) };
                 rcSeta = new Rectangle((int)menus[escolha].X, (int)menus[escolha].Y, seta.Width, seta.Height);
@@ -153,7 +160,31 @@ using Microsoft.Xna.Framework.Audio;
                     }
                     if (Sair)
                     {
+                        
                         Alpha = 0.5f;
+                        if (ColisaoMouseOver(mouse, OK[OKin], rcOK))
+                        {
+                            OKin = 1;
+                        }
+                        else { OKin = 0; }
+                        if (ColisaoMouseOver(mouse, Cancelar[CancIN], rcCancelar))
+                        {
+                            CancIN = 1;
+                        }
+                        else { CancIN = 0; }
+                        if (mouse.LeftButton == ButtonState.Pressed)
+                        {
+                            if (ColisaoMouseOver(mouse, OK[OKin], rcOK))
+                            {
+                                parent.Exit();
+                            }
+                            if (ColisaoMouseOver(mouse, Cancelar[CancIN], rcCancelar))
+                            {
+                                Alpha = 1;
+                                Sair = false;
+                            }
+                        }
+
                     }
                     if (Historinha)
                     {
@@ -311,6 +342,7 @@ using Microsoft.Xna.Framework.Audio;
                 }
             }
         }
+        string MsgSair = "Deseja realmente sair?";
         public override void Draw(GameTime gameTime)
         {
             spriteBatch.Begin();
@@ -330,6 +362,12 @@ using Microsoft.Xna.Framework.Audio;
             spriteBatch.Draw(menu4[mn4], rcmenu4, Color.White * Alpha);
             spriteBatch.Draw(menu5[mn5], rcmenu5, Color.White * Alpha);
             spriteBatch.Draw(menu6[mn6], rcmenu6, Color.White * Alpha);
+            }
+            if (Sair)
+            {
+                spriteBatch.DrawString(arial, MsgSair, new Vector2(350, 300), Color.White);
+                spriteBatch.Draw(OK[OKin], rcOK, Color.White);
+                spriteBatch.Draw(Cancelar[CancIN], rcCancelar, Color.White);
             }
             spriteBatch.End();
         }
@@ -379,12 +417,17 @@ using Microsoft.Xna.Framework.Audio;
                 menu4Normal = parent.Content.Load<Texture2D>("Menu/configuracoesN");
                 menu5Normal = parent.Content.Load<Texture2D>("Menu/creditosN");
                 menu6Normal = parent.Content.Load<Texture2D>("Menu/sairN");
-                menu1Ouver = parent.Content.Load<Texture2D>("Menu/historinhaH");
-                menu2Ouver = parent.Content.Load<Texture2D>("Menu/batebola_H");
-                menu3Ouver = parent.Content.Load<Texture2D>("Menu/cadernoH");
-                menu4Ouver = parent.Content.Load<Texture2D>("Menu/configuracoesH");
-                menu5Ouver = parent.Content.Load<Texture2D>("Menu/creditosH");
-                menu6Ouver = parent.Content.Load<Texture2D>("Menu/sairH");
+                menu1Over = parent.Content.Load<Texture2D>("Menu/historinhaH");
+                menu2Over = parent.Content.Load<Texture2D>("Menu/batebola_H");
+                menu3Over = parent.Content.Load<Texture2D>("Menu/cadernoH");
+                menu4Over = parent.Content.Load<Texture2D>("Menu/configuracoesH");
+                menu5Over = parent.Content.Load<Texture2D>("Menu/creditosH");
+                menu6Over = parent.Content.Load<Texture2D>("Menu/sairH");
+                OKNormal = parent.Content.Load<Texture2D>("Menu/okN");
+                OKOver = parent.Content.Load<Texture2D>("Menu/okH");
+                CancelarNormal = parent.Content.Load<Texture2D>("Menu/cancelarN");
+                CancelarOver = parent.Content.Load<Texture2D>("Menu/cancelarH");
+                arial = parent.Content.Load<SpriteFont>("Fonte/Arial");
                 #endregion
 
                 #endregion
