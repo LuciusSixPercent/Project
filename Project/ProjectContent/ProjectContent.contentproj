@@ -744,26 +744,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Pose\Apua.png">
-      <Name>Apua</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Imagem\Personagem\Pose\Cosme.png">
-      <Name>Cosme</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Imagem\Personagem\Pose\Maria.png">
-      <Name>Maria</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Imagem\Personagem\Pose\Serafina.png">
-      <Name>Serafina</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Content Include="questions.xml">
       <Name>questions</Name>
       <Importer>XmlImporter</Importer>
@@ -783,6 +763,7 @@
     <Folder Include="Audio\Menu\Xbox\" />
     <Folder Include="Audio\Win\" />
     <Folder Include="Audio\Xbox\" />
+    <Folder Include="Imagem\Personagem\Pose\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 
