@@ -23,6 +23,7 @@ namespace Project
         Menu menu;
         Episodio01 md;
         RunnerState rs;
+        CadernoDeAtividades cda;
         /*
         public SpriteBatch SpriteBatch
         {
@@ -61,7 +62,8 @@ namespace Project
             rs = new RunnerState((int)StatesIdList.RUNNER, this);
             states.Add(rs.ID, rs);
             //EnterState(rs.ID);
-
+            cda = new CadernoDeAtividades((int)StatesIdList.OPTIONS, this,md);
+            states.Add(cda.ID, cda);
             PauseState ps = new PauseState((int)StatesIdList.PAUSE, this);
             states.Add(ps.ID, ps);
         }

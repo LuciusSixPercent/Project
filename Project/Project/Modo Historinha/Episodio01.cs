@@ -22,9 +22,9 @@ class Episodio01 : GameState
     string fala02 = "A menina se chama Maria.Seu sonho é escrever um livro com muitas histórias que farão as crianças sonharem com as maravilhas do mundo.";
     #endregion
     #region Exercicio 01 - Modo Historinha
-    string pergunta00 = "Cosme e Maria nasceram juntos, por isso os dois tem a mesma idade: sete anos. Espera, qual dos dois números é o número sete?";
-    string alternativa00 = "7";//certo
-    string alternativa01 = "1";//errado
+    public string pergunta00 = "Cosme e Maria nasceram juntos, por isso os dois tem a mesma idade: sete anos. Espera, qual dos dois números é o número sete?";
+    public string alternativa00 = "7";//certo
+    public string alternativa01 = "1";//errado
 
     #endregion
     #region Dialogo 02
@@ -35,10 +35,10 @@ class Episodio01 : GameState
     string fala07 = "O menino se chama Apuã. Ele gosta de visitar Cosme e Maria para brincar, sempre vindo com uma brincadeira diferente!";
     #endregion
     #region Exercicio 02 - Modo Historinha
-    string pergunta10 = "Esses são os amigos que formam a turma de Cosme e Maria. A turma é composta por Cosme, Maria, Apuã e Serafina. Quantas pessoas existem na turma?";
-    string alternativa02 = "4";//certo
-    string alternativa03 = "2";//errado
-    string alternativa10 = "3";//errado
+    public string pergunta10 = "Esses são os amigos que formam a turma de Cosme e Maria. A turma é composta por Cosme, Maria, Apuã e Serafina. Quantas pessoas existem na turma?";
+    public string alternativa02 = "4";//certo
+    public string alternativa03 = "2";//errado
+    public string alternativa10 = "3";//errado
 
     #endregion
     #region Dialogo 03
@@ -46,25 +46,25 @@ class Episodio01 : GameState
     string fala09 = "Para organizar as equipes, Cosme entregou um número para cada amigo. Maria ganhou o número 3;  Apuã ganhou o número 1;Serafina ganhou o número 2; Cosme ganhou o número 4.";
     #endregion
     #region Exercicio 03 - Modo Historinha
-    string pergunta20 = "Qual a ordem certa que eles devem ficar para dividir os times?";
-    string alternativa20 = "Maria, 3";
-    string alternativa21 = "Apuã, 1";
-    string alternativa22 = "Serafina, 2";
-    string alternativa23 = "Cosme, 4";
+    public string pergunta20 = "Qual a ordem certa que eles devem ficar para dividir os times?";
+    public string alternativa20 = "Maria, 3";
+    public string alternativa21 = "Apuã, 1";
+    public string alternativa22 = "Serafina, 2";
+    public string alternativa23 = "Cosme, 4";
     #endregion
     #region Dialogo 04
     string fala10 = "Espera, há algo de errado com o que Apuã está pensando!";
     #endregion
     #region Exercicio 04 - Modo Historinha
-    string pergunta30 = "Um dos times tem mais jogadores do que o outro... Qual dos times tem mais jogadores?";
-    string alternativa30 = "TimeA";
-    string alternativa31 = "TimeB";
+    public string pergunta30 = "Um dos times tem mais jogadores do que o outro... Qual dos times tem mais jogadores?";
+    public string alternativa30 = "TimeA";
+    public string alternativa31 = "TimeB";
     #endregion
     #region Exercicio 05 - Modo Historinha
-    string pergunta40 = "Apuã está dizendo que Cosme, Serafina e ele joguem contra Maria. Mas os times de futebol sempre devem ter a mesma quantidade de pessoas! Quantas pessoas devem ficar em cada time?";
-    string alternativa40 = "2";
-    string alternativa41 = "3";
-    string alternativa42 = "5";
+    public string pergunta40 = "Apuã está dizendo que Cosme, Serafina e ele joguem contra Maria. Mas os times de futebol sempre devem ter a mesma quantidade de pessoas! Quantas pessoas devem ficar em cada time?";
+    public string alternativa40 = "2";
+    public string alternativa41 = "3";
+    public string alternativa42 = "5";
     #endregion
     #region Dialogo 05
     string fala11 = "Maria percebe que Apuã estava tentando enganar a todos. Apuã pede desculpas e diz que estava apenas brincando.";
@@ -80,20 +80,20 @@ class Episodio01 : GameState
     string fala16 = "Maria, o que aconteceu? Esqueceu-se de alguma coisa?";
     #endregion
     #region Exercicio06
-    string pergunta6 = "É algo que começa com a letra B? Vamos tentar escrever o que é! Qual é mesmo a letra B?";
-    string alt60 = "b";
-    string alt61 = "6";
+    public string pergunta6 = "É algo que começa com a letra B? Vamos tentar escrever o que é! Qual é mesmo a letra B?";
+    public string alt60 = "b";
+    public string alt61 = "6";
     #endregion
     #region Dialogo 7
     string fala17 = "Então é uma palavra que começa com a letra B... Espera, por acaso seria algo para jogar futebol?";
     string fala18 = "Onde será que está o que você está procurando, Maria? Falando nisso... O que é que você está procurando? Eu sei que é algo usado para jogar futebol e começa com a letra B... É uma palavra com duas sílabas?";
     #endregion
     #region Exercicio07
-    string Pergunta7 = "Maria está procurando algo que começa com a letra B, tem duas sílabas e é usada no futebol... O que poderia ser?";
-    string alt70 = "BO-LA";//Certa
-    string alt71 = "BA-NA-NA";
-    string alt72 = "BO-LO";//Errado, mas com fala do narrador
-    string alt73 = "BE-RIN-GE-LA";
+    public string Pergunta7 = "Maria está procurando algo que começa com a letra B, tem duas sílabas e é usada no futebol... O que poderia ser?";
+    public string alt70 = "BO-LA";//Certa
+    public string alt71 = "BA-NA-NA";
+    public string alt72 = "BO-LO";//Errado, mas com fala do narrador
+    public string alt73 = "BE-RIN-GE-LA";
     #endregion
     //Exercicio especial, criar um novo construtor que atenda as necessidades.
     #region Dialogo 8
@@ -101,10 +101,10 @@ class Episodio01 : GameState
     string fala20 = "Vamos ajudar Maria a encontra-la!";
     #endregion
     #region Exercicio08
-    string Pergunta8 = "Maria, a bola está atrás de um objeto que começa com a letra...";
-    string alt80 = "L";
-    string alt81 = "O";
-    string alt82 = "J";
+    public string Pergunta8 = "Maria, a bola está atrás de um objeto que começa com a letra...";
+    public string alt80 = "L";
+    public string alt81 = "O";
+    public string alt82 = "J";
     #endregion
     #region Dialogo 9
     string fala21 = "Agora que Maria está com a bola de futebol e o balde, ela pode ir até o rio buscar água e depois jogar com os seus amigos.";
@@ -114,19 +114,19 @@ class Episodio01 : GameState
     string fala25 = "Cosme promete que ele irá ajuda-la depois a buscar água.";
     #endregion
     #region Exercicio09
-    string Pergunta9 = "Cosme diz que Maria pode sempre contar com outras pessoas para ajuda-la porque ela é muito importante para eles. A palavra que Cosme quer falar tem três sílabas. De quem Cosme está falando?";
-    string alt90 = "A-MI-GOS";
-    string alt91 = "SOL";
-    string alt92 = "RI-A-CHO";
+    public string Pergunta9 = "Cosme diz que Maria pode sempre contar com outras pessoas para ajuda-la porque ela é muito importante para eles. A palavra que Cosme quer falar tem três sílabas. De quem Cosme está falando?";
+    public string alt90 = "A-MI-GOS";
+    public string alt91 = "SOL";
+    public string alt92 = "RI-A-CHO";
     #endregion
     #region Dialogo 10
     string fala26 = "Maria conColor.Whiteda em jogar com Cosme, pois sabe que seus amigos irão ajuda-la sempre que ela precisar!";
     #endregion
     #region Exercicio10
-    string Pergunta010 = "Agora, finalmente nós iremos jogar...";
-    string alt100 = "FU-TE-BOL";
-    string alt101 = "FUT-E-BOL";
-    string alt102 = "FUTE-BOL";
+    public string Pergunta010 = "Agora, finalmente nós iremos jogar...";
+    public string alt100 = "FU-TE-BOL";
+    public string alt101 = "FUT-E-BOL";
+    public string alt102 = "FUTE-BOL";
     #endregion
     #endregion
     #region Variaveis
@@ -214,8 +214,21 @@ class Episodio01 : GameState
     int VoltarIndice = 0;
     int CenarioIndice = 0;
     bool VoltarBool = false;
+    /// <summary>
+    Texture2D Pcosme, Pmaria, Papua, Pserafina;
+    Texture2D CosmeA01, CosmeA02, CosmeA03, CosmeA04, CosmeA05, CosmeA06, CosmeA07, CosmeA08;
+    Texture2D MariaA01, MariaA02, MariaA03, MariaA04, MariaA05, MariaA06, MariaA07, MariaA08;//Animação de Maria Andando
+    Texture2D MariaACBola01, MariaACBola02, MariaACBola03, MariaACBola04, MariaACBola05, MariaACBola06, MariaACBola07, MariaACBola08;//Animação de Maria andando com o balde e com a bola
+    Texture2D MariaASBola01, MariaASBola02, MariaASBola03, MariaASBola04, MariaASBola05, MariaASBola06, MariaASBola07, MariaASBola08;//Animação de Maria andando com o balde sem a bola
+    Texture2D[] CosmeAndando, MariaAndando, MariaAndandoComBola, MariaAndandoSemBola, ApuaPose, ApuaAndando, SerafinaAndando,CosmePoses,MariaPoses;
+    Rectangle rcCosme, rcMaria, rcApua, rcSerafina;
+    Color CosmeColor, MariaColor;
+    Vector2 CosmeTeste;
+    /// </summary>
     #endregion
     bool ex = true;
+    int teste = 0;
+    bool caderno = false;
     // Desça o código até Initialize
     public Episodio01(int id, Game1 parent)
         : base(id, parent)
@@ -231,6 +244,8 @@ class Episodio01 : GameState
         {
             LoadContent();
             base.Initialize();
+            CosmeColor = Color.Black;
+            MariaColor = Color.Black;
             VoltarBool = false;
             Voltar = new Texture2D[2] { VoltarNormal, VoltarOver };
             vVoltar = new Rectangle(850, 700, Voltar[VoltarIndice].Width / 2, Voltar[VoltarIndice].Height / 2);
@@ -281,10 +296,17 @@ class Episodio01 : GameState
             Album10 = new List<Song>() { audio27 };
             //Album onde todos os album devem ficar.
             AlbumPrincipal = new List<List<Song>>() { Album1, Album2, Album3, Album4, Album5, Album6, Album7, Album8, Album9, Album10 };
+            //Animação
+            CosmeAndando = new Texture2D[8] { CosmeA01, CosmeA02, CosmeA03, CosmeA04, CosmeA05, CosmeA06, CosmeA07, CosmeA08 };
             //Cenario
             Cenario = new Texture2D[4] { CenarioInterior, CenarioExterior, CenarioRio, CenarioCampo };
             rcCenario = new Rectangle(0, 0, Cenario[CenarioIndice].Width, Cenario[CenarioIndice].Height);
-
+            rcCosme = new Rectangle(300, 400, CosmeAndando[teste].Width, CosmeAndando[teste].Height);
+            rcMaria = new Rectangle(400, 400, Pmaria.Width, Pmaria.Height);
+            CosmeTeste = new Vector2(300, 400);
+            //rcApua = new Rectangle(300, 200, Papua.Width / 2, Papua.Height / 2);
+            //rcSerafina = new Rectangle(400, 200, Pserafina.Width / 2, Pserafina.Height / 2);
+           
         }
     }
     Keys lastKey = Keys.A;
@@ -292,160 +314,181 @@ class Episodio01 : GameState
 
     public override void Update(GameTime tempo)
     {
-        MouseState mouse = Mouse.GetState();
-        if (!pauseFlag)
+        if (!caderno)
         {
+            rcCosme = new Rectangle(300, 400, CosmeAndando[teste].Width, CosmeAndando[teste].Height);
+            MouseState mouse = Mouse.GetState();
+            if (!pauseFlag)
+            {
 
-            base.Update(tempo);
-            if (pause)
-            {
-                MediaPlayer.Resume();
-                pause = false;
-            }
-            if (engineSound == null || engineSound.IsStopped)
-            {
-                engineSound = soundBank2.GetCue("385591_Night_sea_ln");
-                engineSound.Play();
-            }
-            if (engineSound.IsPaused)
-            {
-                engineSound.Resume();
-            }
-            if (texto.Length % Limitedotexto == 0 && texto.Length != 0)//Quando o texto atingir um limite da tela e tiver um espaço em branco ele pula uma linha;
-            {
-                if (texto[indice - 1] == ' ')
+                base.Update(tempo);
+                if (pause)
                 {
-                    texto += "\n";
-                    zerar++;
-                    Limitedotexto = 80 * zerar;
+                    MediaPlayer.Resume();
+                    pause = false;
+                }
+                if (engineSound == null || engineSound.IsStopped)
+                {
+                    engineSound = soundBank2.GetCue("385591_Night_sea_ln");
+                    engineSound.Play();
+                }
+                if (engineSound.IsPaused)
+                {
+                    engineSound.Resume();
+                }
+                if (texto.Length % Limitedotexto == 0 && texto.Length != 0)//Quando o texto atingir um limite da tela e tiver um espaço em branco ele pula uma linha;
+                {
+                    if (texto[indice - 1] == ' ')
+                    {
+                        texto += "\n";
+                        zerar++;
+                        Limitedotexto = 80 * zerar;
+
+                    }
+                    else
+                    {
+                        Limitedotexto++;
+
+
+                    }
 
                 }
-                else
-                {
-                    Limitedotexto++;
-
-
-                }
-
-            }
-            if (!FimDaHistoria)
-            {
-                if (ColisaoMouseOver(mouse, vVoltar))
-                {
-                    VoltarIndice = 1;
-
-                }
-                else { VoltarIndice = 0; }
-                if (mouse.LeftButton == ButtonState.Pressed)
+                if (!FimDaHistoria)
                 {
                     if (ColisaoMouseOver(mouse, vVoltar))
                     {
+                        VoltarIndice = 1;
 
-                        //engineSound.Stop(AudioStopOptions.AsAuthored);
-                        //MediaPlayer.Stop();
-                        VoltarBool = true;
-                        //FimDaHistoria = true;
                     }
-                }
-                KeyboardState teclado = Keyboard.GetState();
-                //MediaPlayer.IsRepeating = false;
-                //////////////////////////////////////////////////////////////////Aqui é onde a narração vai acontecer////////////////////////////////////////////////
-
-                if (repetir && selecionar < AlbumPrincipal[NoAlbum].Count && !ModoExercicios)//Aqui eu vou verificar se tem algum audio rodando, se não  tiver eu toco uma nova narração.
-                {
-                    MediaPlayer.Play(AlbumPrincipal[NoAlbum][selecionar]);//Narração.
-                    repetir = false;//Repetir serve para não deixar a música tocar sem parar
-
-                }
-                if (ex)
-                {
-                    if (teclado.IsKeyDown(Keys.Z) && lastKey != Keys.Z)//Se a narração chegou ao tempo final
+                    else { VoltarIndice = 0; }
+                    if (mouse.LeftButton == ButtonState.Pressed)
                     {
-
-                        if (AlbumPrincipal[NoAlbum].Count == selecionar + 1)//Se o Album que está tocando chegou a sua ultima música
+                        if (ColisaoMouseOver(mouse, vVoltar))
                         {
-                            NoAlbum += (NoAlbum < AlbumPrincipal.Count ? 1 : 0);//Trocar de album
-                            selecionar = 0;//eu zero o contador de musicas
-                            Incremento0++;// Incremento mais 1 na variavel que permite que o texto continue
-                            if (NoAlbum == 10)
+
+                            //engineSound.Stop(AudioStopOptions.AsAuthored);
+                            //MediaPlayer.Stop();
+                            VoltarBool = true;
+                            //FimDaHistoria = true;
+                        }
+                    }
+                    KeyboardState teclado = Keyboard.GetState();
+                    //MediaPlayer.IsRepeating = false;
+                    //////////////////////////////////////////////////////////////////Aqui é onde a narração vai acontecer////////////////////////////////////////////////
+
+                    if (repetir && selecionar < AlbumPrincipal[NoAlbum].Count && !ModoExercicios)//Aqui eu vou verificar se tem algum audio rodando, se não  tiver eu toco uma nova narração.
+                    {
+                        MediaPlayer.Play(AlbumPrincipal[NoAlbum][selecionar]);//Narração.
+                        repetir = false;//Repetir serve para não deixar a música tocar sem parar
+
+                    }
+                    if (ex)
+                    {
+                        if (teclado.IsKeyDown(Keys.Z) && lastKey != Keys.Z)//Se a narração chegou ao tempo final
+                        {
+
+                            if (AlbumPrincipal[NoAlbum].Count == selecionar + 1)//Se o Album que está tocando chegou a sua ultima música
                             {
-                                NoAlbum = 9;
+                                NoAlbum += (NoAlbum < AlbumPrincipal.Count ? 1 : 0);//Trocar de album
+                                selecionar = 0;//eu zero o contador de musicas
+                                Incremento0++;// Incremento mais 1 na variavel que permite que o texto continue
+                                if (NoAlbum == 10)
+                                {
+                                    NoAlbum = 9;
+                                }
+
+                            }
+                            else
+                            {
+                                selecionar += selecionar < AlbumPrincipal[NoAlbum].Count ? 1 : 0;//Ele troca de música
+                                Incremento0++;//Mudo o texto
+                                indice = 0;//Falo que o numero de letras é zero;
+                                zerar = 0;//Falo que agora ele poderar pular uma linha no texto, caso a condição seja feita.(Vá no Update para ver a condição)
+                                texto = "";//O texto a ser impresso agora não possui nada;
+
+                                Limitedotexto = 80;
                             }
 
+                            repetir = true;
                         }
-                        else
-                        {
-                            selecionar += selecionar < AlbumPrincipal[NoAlbum].Count ? 1 : 0;//Ele troca de música
-                            Incremento0++;//Mudo o texto
-                            indice = 0;//Falo que o numero de letras é zero;
-                            zerar = 0;//Falo que agora ele poderar pular uma linha no texto, caso a condição seja feita.(Vá no Update para ver a condição)
-                            texto = "";//O texto a ser impresso agora não possui nada;
-
-                            Limitedotexto = 80;
-                        }
-
-                        repetir = true;
                     }
+                    if (teclado.IsKeyDown(Keys.C) && lastKey != Keys.C)
+                    {
+                        MediaPlayer.Pause();
+                        caderno = true;
+                    }
+                    Keys[] ks = teclado.GetPressedKeys();
+
+                    if (ks.Length == 0) lastKey = Keys.A;
+                    else lastKey = ks[0];
+
+                    //////////////////////////////////////Fim da Parte de Narração//////////////////////////////////////////////////////////////////
+                    if (stateEntered)
+                    {
+
+
+
+                        if (KeyboardHelper.IsKeyDown(Keys.Escape))
+                        {
+                            KeyboardHelper.LockKey(Keys.Escape);
+                            if (parent.EnterState((int)StatesIdList.PAUSE, false))
+                            {
+                                Alpha = 0.5f;
+                                pauseFlag = true;
+                                stateEntered = false;
+                            }
+                        }
+                        else if (KeyboardHelper.KeyReleased(Keys.Escape))
+                        {
+                            KeyboardHelper.UnlockKey(Keys.Escape);
+                        }
+                    }
+
                 }
-                Keys[] ks = teclado.GetPressedKeys();
-
-                if (ks.Length == 0) lastKey = Keys.A;
-                else lastKey = ks[0];
-
-                //////////////////////////////////////Fim da Parte de Narração//////////////////////////////////////////////////////////////////
-                if (stateEntered)
+                else if (!exitingState)
                 {
+                    MediaPlayer.Stop();
+                    engineSound.Stop(AudioStopOptions.AsAuthored);
 
-
-                    
-                    if (KeyboardHelper.IsKeyDown(Keys.Escape))
-                    {
-                        KeyboardHelper.LockKey(Keys.Escape);
-                        if (parent.EnterState((int)StatesIdList.PAUSE, false))
-                        {
-                            Alpha = 0.5f;
-                            pauseFlag = true;
-                            stateEntered = false;
-                        }
-                    }
-                    else if (KeyboardHelper.KeyReleased(Keys.Escape))
-                    {
-                        KeyboardHelper.UnlockKey(Keys.Escape);
-                    }
+                    ExitState();
                 }
-                
-            }
-            else if (!exitingState)
-            {
-                MediaPlayer.Stop();
-                engineSound.Stop(AudioStopOptions.AsAuthored);
+                if (VoltarBool)
+                {
+                    MediaPlayer.Stop();
+                    engineSound.Stop(AudioStopOptions.AsAuthored);
 
-                ExitState();
-            }
-            if (VoltarBool)
-            {
-                MediaPlayer.Stop();
-                engineSound.Stop(AudioStopOptions.AsAuthored);
+                    ExitState();
+                }
 
-                ExitState();
             }
-            
+            else
+            {
+                MediaPlayer.Pause();
+                pause = true;
+                engineSound.Pause();
+
+            }
         }
         else
         {
-            MediaPlayer.Pause();
-            pause = true;
-            engineSound.Pause();
-
+            parent.EnterState((int)StatesIdList.OPTIONS);
         }
     }
     string Tmusica, TpLAYER, NomeMusica;
+    int frames = 30;
+
     public override void Draw(GameTime gameTime)
     {
 
 
         SpriteBatch.Begin();
         cor = Color.White * Alpha;
+        
+        if ((int)gameTime.TotalGameTime.TotalMilliseconds % 250 == 0)
+        {
+            teste = (teste + 1) % 8;
+            
+        }
         if (!FimDaHistoria)
         {
             SpriteBatch.Draw(Cenario[CenarioIndice], rcCenario, Color.White);
@@ -454,372 +497,384 @@ class Episodio01 : GameState
             //TpLAYER = AlbumPrincipal[NoAlbum][selecionar].Duration.Minutes.ToString() + " : " + AlbumPrincipal[NoAlbum][selecionar].Duration.Seconds;
             //NomeMusica = AlbumPrincipal[NoAlbum][selecionar].Name;
             SpriteBatch.DrawString(arial, "Pressione a tecla [z] para avançar o texto", new Vector2(200, 720), Color.White);
-            SpriteBatch.DrawString(arial, zerar.ToString(), new Vector2(200, 700), Color.White);//Aqui eu vejo em quanto tempo está a narração
+            SpriteBatch.DrawString(arial, teste.ToString(), new Vector2(200, 700), Color.White);//Aqui eu vejo em quanto tempo está a narração
             //Aqui em cima eu imprimo o tempo total da musica;
         }
-
+        SpriteBatch.Draw(CosmeAndando[teste], CosmeTeste, CosmeColor);
+        SpriteBatch.Draw(Pmaria, rcMaria, MariaColor);
         //*
-        if (!pauseFlag)
+        if (!caderno)
         {
-            #region Desenho
-            //Irei explicar a primeira parte, pois as seguintes são iguais.
-            if (!primeiro)//Primeira parte do jogo possui uma sequencia de dialogos e um exercicio.
+            if (!pauseFlag)
             {
-                if (Incremento0 == dialogo01.Length)//Verifico se o dialogo chegou ao seu fim
+                #region Desenho
+                //Irei explicar a primeira parte, pois as seguintes são iguais.
+                if (!primeiro)//Primeira parte do jogo possui uma sequencia de dialogos e um exercicio.
                 {
-
-                    parte1 = true;//Se chegou a parte 1 termina
-
-                }
-
-                if (!parte1)//S e a parte um não terminou
-                {
-                    if (indice < dialogo01[Incremento0].Length) { texto += dialogo01[Incremento0][indice]; }//Verifica se o texto impresso tem menos letras que o dialogo, se verdadeiro coloca mais uma letra;
-                    indice = indice + (indice < dialogo01[Incremento0].Length ? 1 : 0);//Aumento o indice para que sempre vá para próxima letra na hora de imprimir.
-                    if (texto.Length == dialogo01[Incremento0].Length + zerar)//Se o texto impresso tiver o mesmo numero de letras do dialogo...O MAIS UM É POR CAUSA DO \N QUE EU COLOCO AUTOMATICAMENTE
+                    if (Incremento0 == dialogo01.Length)//Verifico se o dialogo chegou ao seu fim
                     {
-                        //mile += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
-                        //Segundos = mile / 1000;
 
+                        parte1 = true;//Se chegou a parte 1 termina
 
                     }
 
-
-                    SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);//Imprimir texto
-
-                }
-
-                if (parte1 && !exercicio1)//Caso a primeira parte tenha chegado ao fim, mas o exercicio não foi feito.
-                {
-
-                    texto = "";//Reseto tudo, como foi feito acima
-                    indice = 0;//
-                    Incremento0 = 0;// Estou usando o mesmo incremento para todas os dialogos;
-                    zerar = 0;//
-                    //mile = 0;
-                    Limitedotexto = 80;
-                    Exercicio01.Atualizar();//Eu chamo o atualizar do exercicio
-                    Exercicio01.Desenhar(SpriteBatch);//Desenho ele na tela
-                    exercicio1 = Exercicio01.Continuar();// Caso o jogador vença, O Continuar() vai retornar verdadeiro, caso o contrario falso.
-                    ex = exercicio1;
-                    repetir = exercicio1;// Se repetir for falso, nenhum audio será tocado.
-                    primeiro = exercicio1;//Caso o jogador vença o exercicio ele termina a primeira parte.
-                }
-            }
-
-            if (primeiro && !segundo)
-            {
-                if (Incremento0 == dialogo02.Length)
-                {
-                    parte2 = true;
-
-                }
-                if (!parte2)
-                {
-
-
-                    if (indice < dialogo02[Incremento0].Length) { texto += dialogo02[Incremento0][indice]; }
-                    indice = indice + (indice < dialogo02[Incremento0].Length ? 1 : 0);
-
-
-                    SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
-
-                }
-                if (!exercicio2 && parte2)
-                {
-                    texto = "";
-                    indice = 0;
-                    Incremento0 = 0;
-                    zerar = 0;
-                    mile = 0;
-                    Limitedotexto = 80;
-                    Exercicio02.Atualizar();
-                    Exercicio02.Desenhar(SpriteBatch);
-                    exercicio2 = Exercicio02.Continuar();
-                    ex = exercicio2;
-                    repetir = exercicio2;
-                    segundo = exercicio2;
-                }
-
-            }
-            if (primeiro && segundo && !terceiro)
-            {
-                if (Incremento0 == dialogo03.Length)
-                {
-                    parte3 = true;
-
-                }
-                if (!parte3)
-                {
-                    if (indice < dialogo03[Incremento0].Length) { texto += dialogo03[Incremento0][indice]; }
-                    indice = indice + (indice < dialogo03[Incremento0].Length ? 1 : 0);
-
-                    SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
-                }
-                if (parte3 && !exercicio3)
-                {
-                    texto = "";
-                    indice = 0;
-                    Incremento0 = 0;
-                    zerar = 0;
-                    mile = 0;
-                    Limitedotexto = 80;
-                    Exercicio03.Atualizar();
-                    Exercicio03.Desenhar(SpriteBatch);
-                    exercicio3 = Exercicio03.Continuar();
-                    ex = exercicio3;
-                    repetir = exercicio3;
-                    terceiro = exercicio3;
-                }
-
-            }
-            if (primeiro && segundo && terceiro && !quarto)
-            {
-                if (Incremento0 == dialogo04.Length)
-                {
-                    parte4 = true;
-
-                }
-                if (!parte4)
-                {
-                    ModoExercicios = false;
-
-                    if (indice < dialogo04[Incremento0].Length) { texto += dialogo04[Incremento0][indice]; }
-                    indice = indice + (indice < dialogo04[Incremento0].Length ? 1 : 0);
-                    SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
-
-                }
-                if (parte4 && !exercicio4)
-                {
-                    texto = "";
-                    indice = 0;
-                    Incremento0 = 0;
-                    zerar = 0;
-                    mile = 0;
-                    Limitedotexto = 80;
-                    Exercicio04.Atualizar();
-                    Exercicio04.Desenhar(SpriteBatch);
-                    exercicio4 = Exercicio04.Continuar();
-                    ex = false;
-                    repetir = false;
-                    quarto = exercicio4;
-                    if (quarto)
+                    if (!parte1)//S e a parte um não terminou
                     {
-                        if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+                        if (indice < dialogo01[Incremento0].Length) { texto += dialogo01[Incremento0][indice]; }//Verifica se o texto impresso tem menos letras que o dialogo, se verdadeiro coloca mais uma letra;
+                        indice = indice + (indice < dialogo01[Incremento0].Length ? 1 : 0);//Aumento o indice para que sempre vá para próxima letra na hora de imprimir.
+                        if (texto.Length == dialogo01[Incremento0].Length + zerar)//Se o texto impresso tiver o mesmo numero de letras do dialogo...O MAIS UM É POR CAUSA DO \N QUE EU COLOCO AUTOMATICAMENTE
                         {
-                            Mouse.SetPosition(0, 0);
+                            //mile += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
+                            //Segundos = mile / 1000;
+
+
+                        }
+                        if (Incremento0 == 0)
+                        {
+                            CosmeColor = Color.White;
+                        }
+                        if (Incremento0 == 1)
+                        {
+                            MariaColor = Color.White;
+                        }
+
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);//Imprimir texto
+
+                    }
+
+                    if (parte1 && !exercicio1)//Caso a primeira parte tenha chegado ao fim, mas o exercicio não foi feito.
+                    {
+
+                        texto = "";//Reseto tudo, como foi feito acima
+                        indice = 0;//
+                        Incremento0 = 0;// Estou usando o mesmo incremento para todas os dialogos;
+                        zerar = 0;//
+                        //mile = 0;
+                        Limitedotexto = 80;
+                        Exercicio01.Atualizar();//Eu chamo o atualizar do exercicio
+                        Exercicio01.Desenhar(SpriteBatch);//Desenho ele na tela
+                        exercicio1 = Exercicio01.Continuar();// Caso o jogador vença, O Continuar() vai retornar verdadeiro, caso o contrario falso.
+                        ex = exercicio1;
+                        repetir = exercicio1;// Se repetir for falso, nenhum audio será tocado.
+                        primeiro = exercicio1;//Caso o jogador vença o exercicio ele termina a primeira parte.
+                    }
+                }
+
+                if (primeiro && !segundo)
+                {
+                    if (Incremento0 == dialogo02.Length)
+                    {
+                        parte2 = true;
+
+                    }
+                    if (!parte2)
+                    {
+
+
+                        if (indice < dialogo02[Incremento0].Length) { texto += dialogo02[Incremento0][indice]; }
+                        indice = indice + (indice < dialogo02[Incremento0].Length ? 1 : 0);
+
+
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
+
+                    }
+                    if (!exercicio2 && parte2)
+                    {
+                        texto = "";
+                        indice = 0;
+                        Incremento0 = 0;
+                        zerar = 0;
+                        mile = 0;
+                        Limitedotexto = 80;
+                        Exercicio02.Atualizar();
+                        Exercicio02.Desenhar(SpriteBatch);
+                        exercicio2 = Exercicio02.Continuar();
+                        ex = exercicio2;
+                        repetir = exercicio2;
+                        segundo = exercicio2;
+                    }
+
+                }
+                if (primeiro && segundo && !terceiro)
+                {
+                    if (Incremento0 == dialogo03.Length)
+                    {
+                        parte3 = true;
+
+                    }
+                    if (!parte3)
+                    {
+                        if (indice < dialogo03[Incremento0].Length) { texto += dialogo03[Incremento0][indice]; }
+                        indice = indice + (indice < dialogo03[Incremento0].Length ? 1 : 0);
+
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
+                    }
+                    if (parte3 && !exercicio3)
+                    {
+                        texto = "";
+                        indice = 0;
+                        Incremento0 = 0;
+                        zerar = 0;
+                        mile = 0;
+                        Limitedotexto = 80;
+                        Exercicio03.Atualizar();
+                        Exercicio03.Desenhar(SpriteBatch);
+                        exercicio3 = Exercicio03.Continuar();
+                        ex = exercicio3;
+                        repetir = exercicio3;
+                        terceiro = exercicio3;
+                    }
+
+                }
+                if (primeiro && segundo && terceiro && !quarto)
+                {
+                    if (Incremento0 == dialogo04.Length)
+                    {
+                        parte4 = true;
+
+                    }
+                    if (!parte4)
+                    {
+                        ModoExercicios = false;
+
+                        if (indice < dialogo04[Incremento0].Length) { texto += dialogo04[Incremento0][indice]; }
+                        indice = indice + (indice < dialogo04[Incremento0].Length ? 1 : 0);
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
+
+                    }
+                    if (parte4 && !exercicio4)
+                    {
+                        texto = "";
+                        indice = 0;
+                        Incremento0 = 0;
+                        zerar = 0;
+                        mile = 0;
+                        Limitedotexto = 80;
+                        Exercicio04.Atualizar();
+                        Exercicio04.Desenhar(SpriteBatch);
+                        exercicio4 = Exercicio04.Continuar();
+                        ex = false;
+                        repetir = false;
+                        quarto = exercicio4;
+                        if (quarto)
+                        {
+                            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+                            {
+                                Mouse.SetPosition(0, 0);
+                            }
                         }
                     }
+
                 }
 
-            }
-
-            if (primeiro && segundo && terceiro && quarto && !quinto)
-            {
-
-                if (!exercicio5)
+                if (primeiro && segundo && terceiro && quarto && !quinto)
                 {
 
-                    mile = 0;
-                    Exercicio05.Atualizar();
-                    Exercicio05.Desenhar(SpriteBatch);
-                    exercicio5 = Exercicio05.Continuar();
-                    ex = exercicio5;
-                    repetir = exercicio5;
-                }
+                    if (!exercicio5)
+                    {
 
-                if (Incremento0 == dialogo05.Length)
-                {
-                    parte5 = true;
-                    texto = "";
-                    indice = 0;
-                    Incremento0 = 0;
-                    zerar = 0;
-                    Limitedotexto = 80;
-                    quinto = true;
-                    repetir = true;
-                    ex = true;
-                }
-                if (!parte5 && exercicio5)
-                {
-                    if (indice < dialogo05[Incremento0].Length) { texto += dialogo05[Incremento0][indice]; }
-                    indice = indice + (indice < dialogo05[Incremento0].Length ? 1 : 0);
+                        mile = 0;
+                        Exercicio05.Atualizar();
+                        Exercicio05.Desenhar(SpriteBatch);
+                        exercicio5 = Exercicio05.Continuar();
+                        ex = exercicio5;
+                        repetir = exercicio5;
+                    }
 
-                    SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
-                }
+                    if (Incremento0 == dialogo05.Length)
+                    {
+                        parte5 = true;
+                        texto = "";
+                        indice = 0;
+                        Incremento0 = 0;
+                        zerar = 0;
+                        Limitedotexto = 80;
+                        quinto = true;
+                        repetir = true;
+                        ex = true;
+                    }
+                    if (!parte5 && exercicio5)
+                    {
+                        if (indice < dialogo05[Incremento0].Length) { texto += dialogo05[Incremento0][indice]; }
+                        indice = indice + (indice < dialogo05[Incremento0].Length ? 1 : 0);
 
-            }
-            if (primeiro && segundo && terceiro && quarto && quinto && !sexto)
-            {
-                CenarioIndice = 1;
-                if (Incremento0 == dialogo06.Length)
-                {
-                    parte6 = true;
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
+                    }
 
                 }
-                if (!parte6)
-                {
-                    if (indice < dialogo06[Incremento0].Length) { texto += dialogo06[Incremento0][indice]; }
-                    indice = indice + (indice < dialogo06[Incremento0].Length ? 1 : 0);
-
-                    SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
-                }
-                if (parte6 && !exercicio6)
-                {
-                    texto = "";
-                    indice = 0;
-                    Incremento0 = 0;
-                    zerar = 0;
-                    mile = 0;
-                    Limitedotexto = 80;
-                    Exercicio06.Atualizar();
-                    Exercicio06.Desenhar(SpriteBatch);
-                    exercicio6 = Exercicio06.Continuar();
-                    repetir = exercicio6;
-                    ex = exercicio6;
-                    sexto = exercicio6;
-                }
-
-            }
-            if (primeiro && segundo && terceiro && quarto && quinto && sexto && !setimo)
-            {
-                CenarioIndice = 0;
-                if (Incremento0 == dialogo07.Length)
-                {
-                    parte7 = true;
-
-                }
-                if (!parte7)
-                {
-                    if (indice < dialogo07[Incremento0].Length) { texto += dialogo07[Incremento0][indice]; }
-                    indice = indice + (indice < dialogo07[Incremento0].Length ? 1 : 0);
-
-                    SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
-                }
-                if (parte7 && !exercicio7)
-                {
-                    texto = "";
-                    indice = 0;
-                    Incremento0 = 0;
-                    zerar = 0;
-                    mile = 0;
-                    Limitedotexto = 80;
-                    Exercicio07.Atualizar();
-                    Exercicio07.Desenhar(SpriteBatch);
-                    exercicio7 = Exercicio07.Continuar();
-                    repetir = exercicio7;
-                    ex = exercicio7;
-                    setimo = exercicio7;
-                }
-
-            }
-            if (primeiro && segundo && terceiro && quarto && quinto && sexto && setimo && !oitavo)
-            {
-                if (Incremento0 == dialogo08.Length)
-                {
-                    parte8 = true;
-
-                }
-                if (!parte8)
-                {
-                    if (indice < dialogo08[Incremento0].Length) { texto += dialogo08[Incremento0][indice]; }
-                    indice = indice + (indice < dialogo08[Incremento0].Length ? 1 : 0);
-
-                    SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
-                }
-                if (parte8 && !exercicio8)
-                {
-                    texto = "";
-                    indice = 0;
-                    Incremento0 = 0;
-                    zerar = 0;
-                    mile = 0;
-                    Limitedotexto = 80;
-                    Exercicio08.Atualizar();
-                    Exercicio08.Desenhar(SpriteBatch);
-                    exercicio8 = Exercicio08.Continuar();
-                    repetir = exercicio8;
-                    ex = exercicio8;
-                    oitavo = exercicio8;
-                }
-
-            }
-            if (primeiro && segundo && terceiro && quarto && quinto && sexto && setimo && oitavo && !nono)
-            {
-                if (Incremento0 == 0)
+                if (primeiro && segundo && terceiro && quarto && quinto && !sexto)
                 {
                     CenarioIndice = 1;
-                }
-                if (Incremento0 > 0)
-                {
-                    CenarioIndice = 2;
-                }
-                if (Incremento0 == dialogo09.Length)
-                {
-                    parte9 = true;
+                    if (Incremento0 == dialogo06.Length)
+                    {
+                        parte6 = true;
+
+                    }
+                    if (!parte6)
+                    {
+                        if (indice < dialogo06[Incremento0].Length) { texto += dialogo06[Incremento0][indice]; }
+                        indice = indice + (indice < dialogo06[Incremento0].Length ? 1 : 0);
+
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
+                    }
+                    if (parte6 && !exercicio6)
+                    {
+                        texto = "";
+                        indice = 0;
+                        Incremento0 = 0;
+                        zerar = 0;
+                        mile = 0;
+                        Limitedotexto = 80;
+                        Exercicio06.Atualizar();
+                        Exercicio06.Desenhar(SpriteBatch);
+                        exercicio6 = Exercicio06.Continuar();
+                        repetir = exercicio6;
+                        ex = exercicio6;
+                        sexto = exercicio6;
+                    }
 
                 }
-                if (!parte9)
+                if (primeiro && segundo && terceiro && quarto && quinto && sexto && !setimo)
                 {
-                    if (indice < dialogo09[Incremento0].Length) { texto += dialogo09[Incremento0][indice]; }
-                    indice = indice + (indice < dialogo09[Incremento0].Length ? 1 : 0);
+                    CenarioIndice = 0;
+                    if (Incremento0 == dialogo07.Length)
+                    {
+                        parte7 = true;
 
-                    SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
+                    }
+                    if (!parte7)
+                    {
+                        if (indice < dialogo07[Incremento0].Length) { texto += dialogo07[Incremento0][indice]; }
+                        indice = indice + (indice < dialogo07[Incremento0].Length ? 1 : 0);
+
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
+                    }
+                    if (parte7 && !exercicio7)
+                    {
+                        texto = "";
+                        indice = 0;
+                        Incremento0 = 0;
+                        zerar = 0;
+                        mile = 0;
+                        Limitedotexto = 80;
+                        Exercicio07.Atualizar();
+                        Exercicio07.Desenhar(SpriteBatch);
+                        exercicio7 = Exercicio07.Continuar();
+                        repetir = exercicio7;
+                        ex = exercicio7;
+                        setimo = exercicio7;
+                    }
+
                 }
-                if (parte9 && !exercicio9)
+                if (primeiro && segundo && terceiro && quarto && quinto && sexto && setimo && !oitavo)
                 {
-                    texto = "";
-                    indice = 0;
-                    Incremento0 = 0;
-                    zerar = 0;
-                    mile = 0;
-                    Limitedotexto = 80;
-                    Exercicio09.Atualizar();
-                    Exercicio09.Desenhar(SpriteBatch);
-                    exercicio9 = Exercicio09.Continuar();
-                    repetir = exercicio9;
-                    ex = exercicio9;
-                    nono = exercicio9;
+                    if (Incremento0 == dialogo08.Length)
+                    {
+                        parte8 = true;
+
+                    }
+                    if (!parte8)
+                    {
+                        if (indice < dialogo08[Incremento0].Length) { texto += dialogo08[Incremento0][indice]; }
+                        indice = indice + (indice < dialogo08[Incremento0].Length ? 1 : 0);
+
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
+                    }
+                    if (parte8 && !exercicio8)
+                    {
+                        texto = "";
+                        indice = 0;
+                        Incremento0 = 0;
+                        zerar = 0;
+                        mile = 0;
+                        Limitedotexto = 80;
+                        Exercicio08.Atualizar();
+                        Exercicio08.Desenhar(SpriteBatch);
+                        exercicio8 = Exercicio08.Continuar();
+                        repetir = exercicio8;
+                        ex = exercicio8;
+                        oitavo = exercicio8;
+                    }
+
+                }
+                if (primeiro && segundo && terceiro && quarto && quinto && sexto && setimo && oitavo && !nono)
+                {
+                    if (Incremento0 == 0)
+                    {
+                        CenarioIndice = 1;
+                    }
+                    if (Incremento0 > 0)
+                    {
+                        CenarioIndice = 2;
+                    }
+                    if (Incremento0 == dialogo09.Length)
+                    {
+                        parte9 = true;
+
+                    }
+                    if (!parte9)
+                    {
+                        if (indice < dialogo09[Incremento0].Length) { texto += dialogo09[Incremento0][indice]; }
+                        indice = indice + (indice < dialogo09[Incremento0].Length ? 1 : 0);
+
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
+                    }
+                    if (parte9 && !exercicio9)
+                    {
+                        texto = "";
+                        indice = 0;
+                        Incremento0 = 0;
+                        zerar = 0;
+                        mile = 0;
+                        Limitedotexto = 80;
+                        Exercicio09.Atualizar();
+                        Exercicio09.Desenhar(SpriteBatch);
+                        exercicio9 = Exercicio09.Continuar();
+                        repetir = exercicio9;
+                        ex = exercicio9;
+                        nono = exercicio9;
+                    }
+
+                }
+                if (primeiro && segundo && terceiro && quarto && quinto && sexto && setimo && oitavo && nono && !decimo)
+                {
+                    if (Incremento0 == dialogo10.Length)
+                    {
+                        parte10 = true;
+
+                    }
+                    if (!parte10)
+                    {
+                        if (indice < dialogo10[Incremento0].Length) { texto += dialogo10[Incremento0][indice]; }
+                        indice = indice + (indice < dialogo10[Incremento0].Length ? 1 : 0);
+
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
+                    }
+                    if (parte10 && !exercicio10)
+                    {
+                        texto = "";
+                        indice = 0;
+                        Incremento0 = 0;
+                        zerar = 0;
+                        mile = 0;
+                        Limitedotexto = 80;
+                        Exercicio10.Atualizar();
+                        Exercicio10.Desenhar(SpriteBatch);
+                        exercicio10 = Exercicio10.Continuar();
+                        repetir = exercicio10;
+                        ex = exercicio10;
+                        decimo = exercicio10;
+                    }
+
+                }
+                if (primeiro && segundo && terceiro && quarto && quinto && sexto && setimo && oitavo && nono && decimo)
+                {
+                    FimDaHistoria = true;
+
                 }
 
+                #endregion
             }
-            if (primeiro && segundo && terceiro && quarto && quinto && sexto && setimo && oitavo && nono && !decimo)
-            {
-                if (Incremento0 == dialogo10.Length)
-                {
-                    parte10 = true;
-
-                }
-                if (!parte10)
-                {
-                    if (indice < dialogo10[Incremento0].Length) { texto += dialogo10[Incremento0][indice]; }
-                    indice = indice + (indice < dialogo10[Incremento0].Length ? 1 : 0);
-
-                    SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
-                }
-                if (parte10 && !exercicio10)
-                {
-                    texto = "";
-                    indice = 0;
-                    Incremento0 = 0;
-                    zerar = 0;
-                    mile = 0;
-                    Limitedotexto = 80;
-                    Exercicio10.Atualizar();
-                    Exercicio10.Desenhar(SpriteBatch);
-                    exercicio10 = Exercicio10.Continuar();
-                    repetir = exercicio10;
-                    ex = exercicio10;
-                    decimo = exercicio10;
-                }
-
-            }
-            if (primeiro && segundo && terceiro && quarto && quinto && sexto && setimo && oitavo && nono && decimo)
-            {
-                FimDaHistoria = true;
-
-            }
-            #endregion
         }
         //*/
         SpriteBatch.End();
@@ -835,6 +890,20 @@ class Episodio01 : GameState
             CenarioExterior = parent.Content.Load<Texture2D>("Imagem/Cenario/Casa_Ext");
             CenarioRio = parent.Content.Load<Texture2D>("Imagem/Cenario/CenarioRio");
             CenarioCampo = parent.Content.Load<Texture2D>("Imagem/Cenario/Campinho");
+            Pmaria = parent.Content.Load<Texture2D>("Imagem/Personagem/Pose/Maria");
+            Pcosme = parent.Content.Load<Texture2D>("Imagem/Personagem/Pose/Cosme");
+            //Papua = parent.Content.Load<Texture2D>("Imagem/Personagem/Pose/Apua");
+            //Pserafina = parent.Content.Load<Texture2D>("Imagem/Personagem/Pose/Serafina");
+            #region Cosme Andando
+            CosmeA01 = parent.Content.Load<Texture2D>("Imagem/Personagem/Cosme_Andando/1");
+            CosmeA02 = parent.Content.Load<Texture2D>("Imagem/Personagem/Cosme_Andando/2");
+            CosmeA03 = parent.Content.Load<Texture2D>("Imagem/Personagem/Cosme_Andando/3");
+            CosmeA04 = parent.Content.Load<Texture2D>("Imagem/Personagem/Cosme_Andando/4");
+            CosmeA05 = parent.Content.Load<Texture2D>("Imagem/Personagem/Cosme_Andando/5");
+            CosmeA06 = parent.Content.Load<Texture2D>("Imagem/Personagem/Cosme_Andando/6");
+            CosmeA07 = parent.Content.Load<Texture2D>("Imagem/Personagem/Cosme_Andando/7");
+            CosmeA08 = parent.Content.Load<Texture2D>("Imagem/Personagem/Cosme_Andando/8");
+            #endregion
             FalasDoNarrador();
             contentLoaded = true;
         }
@@ -942,7 +1011,9 @@ class Episodio01 : GameState
     }
     public void Resetar()
     {
-        
+        CosmeColor = Color.Black;
+        MariaColor = Color.Black;
+        CenarioIndice = 0;
         FimDaHistoria = false;
         selecionar = 0; //seleciona a musica
          repetir = true;
@@ -989,8 +1060,24 @@ class Episodio01 : GameState
         texto = "";
         VoltarBool = false;
     }
+    public void Cad(bool cd)
+    {
+        if (MediaPlayer.State == MediaState.Paused)
+        {
+            MediaPlayer.Resume();
+        }
+        caderno = cd;
+    }
     public bool FimDaHistoria { get; set; }
-
-
+    public bool EX1 { get { return exercicio1; } }
+    public bool EX2 { get { return exercicio2; } }
+    public bool EX3 { get { return exercicio3; } }
+    public bool EX4 { get { return exercicio4; } }
+    public bool EX5 { get { return exercicio5; } }
+    public bool EX6 { get { return exercicio6; } }
+    public bool EX7 { get { return exercicio7; } }
+    public bool EX8 { get { return exercicio8; } }
+    public bool EX9 { get { return exercicio9; } }
+    public bool EX10 { get { return exercicio10; } }
 }
 

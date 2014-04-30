@@ -354,7 +354,11 @@ using Microsoft.Xna.Framework.Audio;
 
                         }
                         #endregion
-
+                        if (Caderno)
+                        {
+                            Caderno = false;
+                            parent.EnterState((int)StatesIdList.OPTIONS);
+                        }
                         if (Historinha)
                         {
                             MediaPlayer.Stop();
@@ -372,11 +376,7 @@ using Microsoft.Xna.Framework.Audio;
                             }
                         #endregion
                     }
-                    if (Caderno)
-                    {
-                        Alpha = 0.5f;
-                        
-                    }
+                    
                 }
             }
         }
