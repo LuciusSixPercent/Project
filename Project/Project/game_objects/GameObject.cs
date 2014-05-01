@@ -34,9 +34,9 @@ namespace game_objects
 
         protected GameObject()
         {
-            components = new List<Component>();
-            position = Vector3.Zero;
-            acumulatedMovement = Vector3.Zero;
+            this.components = new List<Component>();
+            this.position = Vector3.Zero;
+            this.acumulatedMovement = Vector3.Zero;
         }
 
         //utilizado apenas no update ou em casos muito específicos

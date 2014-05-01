@@ -99,7 +99,7 @@ namespace game_objects
             if (vmc.CurrentVelocity.Z > 0 || maxArcHeight >= 0.05f)
             {
                 vmc.Acceleration = vmc.InitialAcceleration * -1f;
-                float xFactor = 1 / (vmc.InitialVelocity.X == 0 ? 1 : vmc.InitialVelocity.X);
+                float xFactor = 0.5f / (vmc.InitialVelocity.X == 0 ? 1 : vmc.InitialVelocity.X);
                 vmc.CurrentVelocity *= vmc.InitialVelocity * new Vector3(xFactor, -0.75f, 5);
             }
             else

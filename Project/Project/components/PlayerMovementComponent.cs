@@ -67,46 +67,53 @@ namespace components
 
                 if (!lockMovement)
                 {
-                    int newDirection = getPressedKey();
-
-                    //Se uma nova tecla foi pressionada, alterar a direção
-                    if (newDirection != 0 && newDirection != Direction)
-                    {
-                        Direction = newDirection;
-                        float oldDestiny = destiny;
-                        if (destiny == origin)
-                        {
-                            destiny = owner.Position.X + movementAmount * Direction;
-                        }
-                        else
-                        {
-                            float tmp = destiny;
-                            destiny = origin;
-                            origin = tmp;
-                        }
-                        if (destiny > owner.Position.X + movementAmount || destiny < owner.Position.X - movementAmount)
-                        {
-                            destiny = oldDestiny;
-                        }
-                    }
+                    UpdateDirection(getPressedKey());
                 }
                
                 if (Direction != 0)
                 {
-                    Vector3 amount = Vector3.Zero;
-                    float actualStepSize = stepSize * Direction;
+                    move(Vector3.Zero);                    
+                }
+            }
+        }
 
-                    float newX = owner.Position.X + actualStepSize;
-                    if ((Direction == 1 && newX > destiny) || (Direction == -1 && newX < destiny))
-                    {
-                        float absX = Math.Abs(newX);
-                        float absDestiny = Math.Abs(destiny);
-                        actualStepSize += (absX - absDestiny) * (direction * -1);
-                    }
+        protected override void move(Vector3 movementVector)
+        {
+            float actualStepSize = stepSize * Direction;
 
-                    ownerLastPos = owner.Position;
-                    amount.X += actualStepSize;
-                    base.move(amount);
+            float newX = owner.Position.X + actualStepSize;
+            if ((Direction == 1 && newX > destiny) || (Direction == -1 && newX < destiny))
+            {
+                float absX = Math.Abs(newX);
+                float absDestiny = Math.Abs(destiny);
+                actualStepSize += (absX - absDestiny) * (direction * -1);
+            }
+
+            ownerLastPos = owner.Position;
+            movementVector.X += actualStepSize;
+            base.move(movementVector);
+        }
+
+        private void UpdateDirection(int newDirection)
+        {
+            //Se uma nova tecla foi pressionada, alterar a direção
+            if (newDirection != 0 && newDirection != Direction)
+            {
+                Direction = newDirection;
+                float oldDestiny = destiny;
+                if (destiny == origin)
+                {
+                    destiny = owner.Position.X + movementAmount * Direction;
+                }
+                else
+                {
+                    float tmp = destiny;
+                    destiny = origin;
+                    origin = tmp;
+                }
+                if (destiny > owner.Position.X + movementAmount || destiny < owner.Position.X - movementAmount)
+                {
+                    destiny = oldDestiny;
                 }
             }
         }

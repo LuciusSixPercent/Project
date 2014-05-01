@@ -219,18 +219,23 @@ namespace game_objects
                     currentFrame++;
                     if (currentFrame >= framesBeingUsed.Length)
                     {
-                        kickingBall = false;
                         currentFrame = 0;
-                        Vector3 kickDeviation = Vector3.Zero;
-                        if (!makeGoal)
-                        {                            
-                            kickDeviation.Y = (float)PublicRandom.NextDouble(0, 0.05);
-                            kickDeviation.Z = -(float)PublicRandom.NextDouble(0, 0.1);
-                        }
-                        ball.Kick(new Vector3(0, 0.2f, 0.15f) + kickDeviation, new Vector3(0, 0.001f, 0.00001f), new Vector3(-kickDeviation.X/10, 2f, 0.0000005f));
+                        KickBall();
                     }
                 }
             }
+        }
+
+        private void KickBall()
+        {
+            kickingBall = false;
+            Vector3 kickDeviation = Vector3.Zero;
+            if (!makeGoal)
+            {
+                kickDeviation.Y = (float)PublicRandom.NextDouble(0, 0.05);
+                kickDeviation.Z = -(float)PublicRandom.NextDouble(0, 0.1);
+            }
+            ball.Kick(new Vector3(0, 0.2f, 0.15f) + kickDeviation, new Vector3(0, 0.001f, 0.00001f), new Vector3(-kickDeviation.X / 10, 2f, 0.0000005f));
         }
     }
 }
