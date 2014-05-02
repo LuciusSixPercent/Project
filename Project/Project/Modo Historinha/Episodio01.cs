@@ -301,6 +301,12 @@ class Episodio01 : GameState
             AlbumPrincipal = new List<List<Song>>() { Album1, Album2, Album3, Album4, Album5, Album6, Album7, Album8, Album9, Album10 };
             //Animação
             CosmeAndando = new Texture2D[8] { CosmeA01, CosmeA02, CosmeA03, CosmeA04, CosmeA05, CosmeA06, CosmeA07, CosmeA08 };
+            MariaAndando = new Texture2D[8] { MariaA01, MariaA02, MariaA03, MariaA04, MariaA05, MariaA06, MariaA07, MariaA08 };
+            MariaAndandoComBola = new Texture2D[8] { MariaACBola01, MariaACBola02, MariaACBola03, MariaACBola04, MariaACBola05, MariaACBola06, MariaACBola07, MariaACBola08 };
+            MariaAndandoSemBola = new Texture2D[8] { MariaASBola01, MariaASBola02, MariaASBola03, MariaASBola04, MariaASBola05, MariaASBola06, MariaASBola07, MariaASBola08 };
+            ApuaAndando = new Texture2D[8] { ApuaAndando01, ApuaAndando02, ApuaAndando03, ApuaAndando04, ApuaAndando05, ApuaAndando06, ApuaAndando07, ApuaAndando08 };
+            ApuaPose = new Texture2D[4] { ApuaPose01, ApuaPose02, ApuaPose03, ApuaPose04 };
+            SerafinaAndando = new Texture2D[8] { SerafinaAndando01, SerafinaAndando02, SerafinaAndando03, SerafinaAndando04, SerafinaAndando05, SerafinaAndando06, SerafinaAndando07, SerafinaAndando08 };
             //Cenario
             Cenario = new Texture2D[4] { CenarioInterior, CenarioExterior, CenarioRio, CenarioCampo };
             rcCenario = new Rectangle(0, 0, Cenario[CenarioIndice].Width, Cenario[CenarioIndice].Height);
@@ -503,7 +509,7 @@ class Episodio01 : GameState
             SpriteBatch.DrawString(arial, teste.ToString(), new Vector2(200, 700), Color.White);//Aqui eu vejo em quanto tempo está a narração
             //Aqui em cima eu imprimo o tempo total da musica;
         }
-        SpriteBatch.Draw(CosmeAndando[teste], vCosme, CosmeColor);
+        SpriteBatch.Draw(MariaAndando[teste], vCosme, CosmeColor);
         SpriteBatch.Draw(Pmaria, rcMaria, MariaColor);
         //*
         if (!caderno)
@@ -948,20 +954,20 @@ class Episodio01 : GameState
             SerafinaAndando08 = parent.Content.Load<Texture2D>("Imagem/Personagem/Serafina/Serafina_Andando/8");
             #endregion
             #region Apua Andando
-            ApuaAndando01 = parent.Content.Load<Texture2D>("Imagem/Personagem/Apua/Apua_Andando/1");
-            ApuaAndando02 = parent.Content.Load<Texture2D>("Imagem/Personagem/Apua/Apua_Andando/2");
-            ApuaAndando03 = parent.Content.Load<Texture2D>("Imagem/Personagem/Apua/Apua_Andando/3");
-            ApuaAndando04 = parent.Content.Load<Texture2D>("Imagem/Personagem/Apua/Apua_Andando/4");
-            ApuaAndando05 = parent.Content.Load<Texture2D>("Imagem/Personagem/Apua/Apua_Andando/5");
-            ApuaAndando06 = parent.Content.Load<Texture2D>("Imagem/Personagem/Apua/Apua_Andando/6");
-            ApuaAndando07 = parent.Content.Load<Texture2D>("Imagem/Personagem/Apua/Apua_Andando/7");
-            ApuaAndando08 = parent.Content.Load<Texture2D>("Imagem/Personagem/Apua/Apua_Andando/8");
+            ApuaAndando01 = parent.Content.Load<Texture2D>("Imagem/Personagem/Apua/Apua_Andando/0001");
+            ApuaAndando02 = parent.Content.Load<Texture2D>("Imagem/Personagem/Apua/Apua_Andando/0002");
+            ApuaAndando03 = parent.Content.Load<Texture2D>("Imagem/Personagem/Apua/Apua_Andando/0003");
+            ApuaAndando04 = parent.Content.Load<Texture2D>("Imagem/Personagem/Apua/Apua_Andando/0004");
+            ApuaAndando05 = parent.Content.Load<Texture2D>("Imagem/Personagem/Apua/Apua_Andando/0005");
+            ApuaAndando06 = parent.Content.Load<Texture2D>("Imagem/Personagem/Apua/Apua_Andando/0006");
+            ApuaAndando07 = parent.Content.Load<Texture2D>("Imagem/Personagem/Apua/Apua_Andando/0007");
+            ApuaAndando08 = parent.Content.Load<Texture2D>("Imagem/Personagem/Apua/Apua_Andando/0008");
             #endregion
             #region Apua Pose
-            ApuaPose01 = parent.Content.Load<Texture2D>("Imagem/Personagem/Apua/Apua_Pose/1");
-            ApuaPose02 = parent.Content.Load<Texture2D>("Imagem/Personagem/Apua/Apua_Pose/2");
-            ApuaPose03 = parent.Content.Load<Texture2D>("Imagem/Personagem/Apua/Apua_Pose/3");
-            ApuaPose04 = parent.Content.Load<Texture2D>("Imagem/Personagem/Apua/Apua_Pose/4");
+            ApuaPose01 = parent.Content.Load<Texture2D>("Imagem/Personagem/Apua/Apua_Pose/0001");
+            ApuaPose02 = parent.Content.Load<Texture2D>("Imagem/Personagem/Apua/Apua_Pose/0002");
+            ApuaPose03 = parent.Content.Load<Texture2D>("Imagem/Personagem/Apua/Apua_Pose/0003");
+            ApuaPose04 = parent.Content.Load<Texture2D>("Imagem/Personagem/Apua/Apua_Pose/0004");
             #endregion
             FalasDoNarrador();
             contentLoaded = true;
