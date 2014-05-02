@@ -18,7 +18,7 @@ namespace components
             movementInterval = interval;
         }
 
-        public abstract void Update(GameTime gameTime);
+        public override void Update(GameTime gameTime){}
 
         protected virtual void move(Vector3 movementVector)
         {

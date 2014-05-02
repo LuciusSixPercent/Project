@@ -53,6 +53,8 @@ namespace game_objects
 
         public void Draw(Texture2D texture, Rectangle bounds, Color color, BlendState blendState)
         {
+            if (texture == null)
+                return;
             GDevice.BlendState = blendState;
             if (!beganSpriteBatch)
             {

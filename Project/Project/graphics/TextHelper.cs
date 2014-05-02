@@ -45,18 +45,11 @@ namespace Project
         {
             if (spriteBatch != null)
             {
-                if (CachedTextures.ContainsKey(text))
-                    texture = CachedTextures[text];
-                else
+                if (!CachedTextures.ContainsKey(text))
                 {
-                    Texture2D tmp = CreateTexture(text);
-                    texture = new Texture2D(tmp.GraphicsDevice, tmp.Width, tmp.Height);
-                    Color[] colorData = new Color[tmp.Width*tmp.Height];
-                    tmp.GetData<Color>(colorData);
-                    texture.SetData<Color>(colorData);
-                    tmp.Dispose();
-                    CachedTextures.Add(text, texture);
+                    AddToCache(text);
                 }
+                texture = CachedTextures[text];
                 return true;
             }
             texture = new Texture2D(spriteBatch.GraphicsDevice, 0, 0);
@@ -91,6 +84,20 @@ namespace Project
             {
                 defaultSpriteFont = contentManager.Load<SpriteFont>("Fonte" + Path.AltDirectorySeparatorChar + "Arial");
                 spriteFont = defaultSpriteFont;
+            }
+        }
+
+        public static void AddToCache(string text)
+        {
+            if (!CachedTextures.ContainsKey(text))
+            {
+                Texture2D tmp = CreateTexture(text);
+                Texture2D texture = new Texture2D(tmp.GraphicsDevice, tmp.Width, tmp.Height);
+                Color[] colorData = new Color[tmp.Width * tmp.Height];
+                tmp.GetData<Color>(colorData);
+                texture.SetData<Color>(colorData);
+                tmp.Dispose();
+                CachedTextures.Add(text, texture);
             }
         }
 

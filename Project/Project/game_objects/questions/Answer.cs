@@ -13,16 +13,25 @@ namespace game_objects.questions
     public class Answer : CollidableGameObject
     {
         private string text;
-        private Quad quad;
 
         private const float scale = 0.5f;
+        private Quad quad;
         private Texture2D texture;
+
+        public string Text
+        {
+            get { return text; }
+            set { 
+                text = value;
+                CreateQuad();
+            }
+        }
 
         public Texture2D Texture
         {
             get { 
                 if(!textureLoaded)
-                    textureLoaded = TextHelper.StringToTexture(text, out texture);
+                    textureLoaded = TextHelper.StringToTexture(Text, out texture);
                 return texture; 
             }
         }
@@ -47,9 +56,16 @@ namespace game_objects.questions
             set
             {
                 base.Position = value;
+                if (value.Y > 0)
+                {
+                    VariableMovementComponent vmc = GetComponent<VariableMovementComponent>();
+                    vmc.CurrentVelocity = Vector3.Down / 1000 * (float)PublicRandom.NextDouble(0.05f);
+                    vmc.Acceleration = Vector3.Down / 10;
+                }
                 CreateQuad();
             }
         }
+
 
         public Answer(Renderer3D renderer, IEnumerable<CollidableGameObject> collidableObjects, string text)
             : base(renderer, collidableObjects)
@@ -60,24 +76,8 @@ namespace game_objects.questions
                 new VariableMovementComponent(this, 30,
                     Vector3.Down / 1000 * (float)PublicRandom.NextDouble(0.01f), 
                     Vector3.Down / 100);
-            //vmc.TerminalVelocity = Vector3.Down/4;
             vmc.LowerVelocityThreshold = Vector3.Down / 4;
             addComponent(vmc);
-        }
-
-        private void CreateQuad()
-        {
-            Vector3 nrm = new Vector3(0, 0, -1);
-            float proportion = (float)Texture.Width / Texture.Height;
-            quad = new Quad(position, nrm, Vector3.Up, scale * proportion, scale);
-
-            Vector3 scaleVector = new Vector3((1 - scale*proportion)/2, 0, 0);
-
-            Vector3 backUpperLeft = Quad.Vertices[1].Position + scaleVector;
-
-            Vector3 frontBottomRight = Quad.Vertices[2].Position - scaleVector;
-
-            BoundingBox = new BoundingBox(frontBottomRight, backUpperLeft);
         }
 
         public override void ImediateTranslate(Vector3 amount)
@@ -112,19 +112,43 @@ namespace game_objects.questions
 
         public override void Load(ContentManager cManager)
         {
-            textureLoaded = TextHelper.StringToTexture(text, out texture);
+            textureLoaded = TextHelper.StringToTexture(Text, out texture);
         }
 
         public override void Draw(GameTime gameTime)
         {
-            TextHelper.StringToTexture(text, out texture);
-            if(textureLoaded)
-                ((Renderer3D)Renderer).Draw(texture, Quad, BlendState.AlphaBlend, BoundingBox);
+            if (Visible)
+            {
+                TextHelper.StringToTexture(Text, out texture);
+                if (textureLoaded)
+                    ((Renderer3D)Renderer).Draw(texture, Quad, BlendState.AlphaBlend, BoundingBox);
+            }
         }
 
+        public override void Update(GameTime gameTime)
+        {
+            if (Visible)
+            {
+                base.Update(gameTime);
+            }
+        }
         public override bool Collided(CollidableGameObject obj)
         {
             return base.Collided(obj) && GetComponent<VariableMovementComponent>().CurrentVelocity == Vector3.Zero;
         }
+
+        private void CreateQuad()
+        {
+            Vector3 nrm = new Vector3(0, 0, -1);
+            float proportion = (float)Texture.Width / Texture.Height;
+            quad = new Quad(position, nrm, Vector3.Up, scale * proportion, scale);
+
+            Vector3 backUpperLeft = Quad.Vertices[1].Position;
+
+            Vector3 frontBottomRight = Quad.Vertices[2].Position;
+
+            BoundingBox = new BoundingBox(frontBottomRight, backUpperLeft);
+        }
+
     }
 }

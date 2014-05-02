@@ -24,12 +24,7 @@ namespace Project
         Episodio01 md;
         RunnerState rs;
         CadernoDeAtividades cda;
-        /*
-        public SpriteBatch SpriteBatch
-        {
-            get { return spriteBatch; }
-        }
-        */
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -61,9 +56,10 @@ namespace Project
 
             rs = new RunnerState((int)StatesIdList.RUNNER, this);
             states.Add(rs.ID, rs);
-            //EnterState(rs.ID);
+
             cda = new CadernoDeAtividades((int)StatesIdList.OPTIONS, this,md);
             states.Add(cda.ID, cda);
+
             PauseState ps = new PauseState((int)StatesIdList.PAUSE, this);
             states.Add(ps.ID, ps);
         }
@@ -84,7 +80,11 @@ namespace Project
             return false;
         }
 
-        //sai do estado especificado em id e entra no estado especificado em id2
+        /// <summary>
+        /// Sai de um estado e imediatamente entra em outro.
+        /// </summary>
+        /// <param name="id">ID do estado do qual o jogo sairá.</param>
+        /// <param name="id2">ID do estado no qual o jogo entrará.</param>
         public void ExitState(int id, int id2)
         {
             if (statesStack[statesStack.Count - 1].ID == id)
@@ -95,6 +95,10 @@ namespace Project
         }
 
         //sai do estado especificado
+        /// <summary>
+        /// Sai do estado especificado.
+        /// </summary>
+        /// <param name="id">ID do estado no qual o jogo entrará.</param>
         public void ExitState(int id)
         {
             //confirmamos que o ID passado bate com o ID do estado no topo de nossa pseudo pilha
@@ -141,6 +145,11 @@ namespace Project
             base.Draw(gameTime);
         }
 
+        /// <summary>
+        /// Atualiza ou desenha o jogo.
+        /// </summary>
+        /// <param name="gameTime">Tempo do jogo.</param>
+        /// <param name="methodFlag">Indica se o método deve desenhar (true) ou atualizar (false) os estados.</param>
         private void UpdateOrDraw(GameTime gameTime, bool methodFlag)
         {
             int stateIndex = statesStack.Count - 1;

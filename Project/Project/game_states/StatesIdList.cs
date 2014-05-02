@@ -5,8 +5,11 @@ using System.Text;
 
 namespace game_states
 {
-    //enum que todas as classes possam acessar para facilitar a transição entre estados
-    //todo e qualquer estado deve ter seu ID listado aqui
+    
+    /// <summary>
+    /// Enum acessível por todas as classes para facilitar a transição entre estados.
+    /// Todo e qualquer estado deve ter seu ID listado aqui.
+    /// </summary>
     public enum StatesIdList
     {
         EMPTY_STATE = -1,
@@ -15,7 +18,6 @@ namespace game_states
         OPTIONS = 30,
         STORY = 40,
         RUNNER = 50,
-        PAUSE = 60,
-        TEST = 1000 //-> remover no futuro
+        PAUSE = 60
     }
 }

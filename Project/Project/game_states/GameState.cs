@@ -28,17 +28,17 @@ namespace game_states
         protected int transitionTime;           //quanto tempo a transição já durou
 
         private float alpha;
-
-        protected virtual float Alpha
-        {
-            get { return alpha; }
-            set { alpha = value; }
-        }
-
         private float alphaIncrement;
         #endregion
 
         private bool freezeBelow; //determina se os estados abaixo dele devem ser atualizados também
+
+        private bool contentLoaded;
+
+        public bool ContentLoaded
+        {
+            get { return contentLoaded; }
+        }
 
         public bool FreezeBelow
         {
@@ -57,6 +57,12 @@ namespace game_states
         public SpriteBatch SpriteBatch
         {
             get { return spriteBatch; }
+        }
+
+        protected virtual float Alpha
+        {
+            get { return alpha; }
+            set { alpha = value; }
         }
 
         protected GameState(int id, Game1 parent)
@@ -102,20 +108,24 @@ namespace game_states
             return transitionTime >= (enteringState ? enterTransitionDuration : exitTransitionDuration);
         }
 
+        /// <summary>
+        /// Atualiza a transição do estado.
+        /// </summary>
+        /// <param name="gameTime">O tempo de jogo</param>
         public virtual void Update(GameTime gameTime)
         {
             if (enteringState)
             {
                 enteringState = tryEndTransition(gameTime, enteringState, true);
                 if (!enteringState)
-                    alpha = 1f;
+                    Alpha = 1f;
             }
             else if (exitingState)
             {
                 exitingState = tryEndTransition(gameTime, exitingState, false);
                 exit = !exitingState;
                 if (exit)
-                    alpha = 0f;
+                    Alpha = 0f;
             }
             if (Transitioning)
             {
@@ -130,7 +140,10 @@ namespace game_states
             initialized = true;
             spriteBatch = new SpriteBatch(parent.GraphicsDevice);
         }
-        protected abstract void LoadContent();
+        protected virtual void LoadContent()
+        {
+            contentLoaded = true;
+        }
         public abstract void Draw(GameTime gameTime);
     }
 }

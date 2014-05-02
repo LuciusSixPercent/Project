@@ -13,11 +13,20 @@ namespace components
         public delegate void Click();
         public event Click click;
 
+        public delegate void Press();
+        public event Press press;
+
+        public delegate void Release();
+        public event Release release;
+
         public delegate void Enter();
         public event Enter enter;
 
         public delegate void Exit();
         public event Exit exit;
+
+        public delegate void Hover(bool hovering);
+        public event Hover hover;
 
         private bool mousePressing;
         private bool mouseHovering;
@@ -37,12 +46,16 @@ namespace components
             mouseHovering = mouseWithinBounds(state);
             if (mouseHovering)
             {
+                if (hover != null)
+                    hover(true);
                 if (!wasHovering && enter != null)
                 {
                     enter();
                 }
                 if (state.LeftButton == ButtonState.Pressed)
                 {
+                    if (press != null)
+                        press();
                     mousePressing = true;
                 }
                 else
@@ -53,11 +66,24 @@ namespace components
                             click();
                     }
                     mousePressing = false;
+                    if (release != null)
+                        release();
                 }
             }
-            else if (wasHovering && exit != null)
+            else
             {
-                exit();
+                if (hover != null)
+                    hover(false);
+                if (wasHovering && exit != null)
+                {
+                    exit();
+                }
+                else if (state.LeftButton != ButtonState.Pressed && mousePressing)
+                {
+                    mousePressing = false;
+                    if (release != null)
+                        release();
+                }
             }
         }
 

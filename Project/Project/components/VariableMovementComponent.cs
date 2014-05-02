@@ -21,9 +21,7 @@ namespace components
         public Vector3 InitialVelocity
         {
             get { return initialVelocity; }
-            set { 
-                initialVelocity = value;
-            }
+            set { initialVelocity = value;}
         }
 
         public Vector3 CurrentVelocity

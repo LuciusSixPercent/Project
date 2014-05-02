@@ -37,7 +37,7 @@ namespace game_objects
             : base(renderer)
         {
             animationInterval = 100;
-            frames = new Texture2D[4];
+            frames = new Texture2D[3];
         }
 
         public override void ImediateTranslate(Vector3 amount)

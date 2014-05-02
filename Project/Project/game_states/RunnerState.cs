@@ -31,8 +31,6 @@ namespace game_states
 
         bool pauseFlag;
 
-        private bool contentLoaded;
-
         private GameObjectsManager goManager;
         private int foundAnswer; //0 for no; 1 for correct; -1 for incorrect
 
@@ -104,7 +102,7 @@ namespace game_states
                 ball = new Ball(goManager.R3D, goManager.CollidableGameObjects);
 
                 player = new Character(goManager.R3D, goManager.CollidableGameObjects, "cosme", ball);
-                player.collidedWithQuestion += new Character.CollidedWithQuestion(player_collidedWithQuestion);                
+                player.collidedWithAnswer += new Character.CollidedWithAnswer(player_collidedWithQuestion);                
 
                 cam = new Camera(new Vector3(0f, 3f, -4f), Vector3.Up, new Vector2(0.25f, 19.5f));
                 cam.lookAt(new Vector3(0f, 0.25f, 2f), true);
@@ -121,9 +119,9 @@ namespace game_states
             }
         }
 
-        private void player_collidedWithQuestion(Vector3 position, bool correctAnswer)
+        private void player_collidedWithQuestion(Vector3 position, Answer answer)
         {
-            if (correctAnswer)
+            if (questions[questions.Count-1].CheckAnswer(answer, false))
             {
                 foundAnswer = 1;
             }
@@ -141,7 +139,9 @@ namespace game_states
                 questions.Add(QuestionFactory.CreateQuestion(level, subjects[PublicRandom.Next(subjects.Length)], goManager.R3D, goManager.CollidableGameObjects, questions));
             }
             goManager.AddObject(questions[questions.Count - 1]);
-            questions[questions.Count - 1].Position = new Vector3(0, 0.25f, player.Position.Z + 5);
+            questions[questions.Count - 1].Player = player;
+            questions[questions.Count - 1].Position = new Vector3(0, 0.25f, player.Position.Z + 10);
+            
         }
 
         private void ChangeCurrentQuestion()
@@ -156,6 +156,7 @@ namespace game_states
             {
                 goManager.AddObject(questions[questions.Count - 1]);
                 questions[questions.Count - 1].Position = new Vector3(0, 0.25f, player.Position.Z + 1);
+                questions[questions.Count - 1].Player = player;
             }
             else
             {
@@ -173,8 +174,10 @@ namespace game_states
 
         protected override void LoadContent()
         {
-            if (!contentLoaded)
+            if (!ContentLoaded)
             {
+                base.LoadContent();
+
                 QuestionsDatabase.LoadQuestions();
 
                 TextHelper.LoadDefaultFont(parent.Content);
@@ -183,9 +186,12 @@ namespace game_states
 
                 player.Position = Vector3.Zero;
 
-                LoadQuestions(1);
+                for (char c = 'A'; c <= 'Z'; c++)
+                {
+                    TextHelper.AddToCache(c.ToString());
+                }
 
-                contentLoaded = true;
+                LoadQuestions(1);
             }
         }
 
@@ -223,10 +229,12 @@ namespace game_states
                 }
             }
         }
+
         public override void EnterState()
         {
             EnterState(FreezeBelow);
         }
+
         public override void ExitState()
         {
             if (!enteringState)
@@ -278,8 +286,7 @@ namespace game_states
 
                             goManager.Update(gameTime);
 
-                            handleInput(gameTime);
-
+                            handleInput();
                         }
                         
                     }
@@ -297,31 +304,56 @@ namespace game_states
             }
         }
 
+        /// <summary>
+        /// Verifica se o jogador colidiu ou passou por alguma resposta.
+        /// </summary>
         private void CheckAnswer()
         {
             if (foundAnswer != 0)
             {
-                if (foundAnswer == 1)
+                UpdateScoreAndQuestion();
+            }
+            else if(!answeredAll)
+            {
+                QuestionGameObject question = questions[questions.Count - 1];
+                Answer a = question.GetClosestAnswer();
+                if (a.Position.Z <= player.Position.Z - 2)
                 {
-                    if (!questions[questions.Count - 1].Next())
-                    {
-                        ChangeCurrentQuestion();
-                    }
-                    else
-                    {
-                        questions[questions.Count - 1].Position = (new Vector3(0, 0, player.Position.Z + 3));
-                    }
+                    if(question.CheckAnswer(a, true))
+                        perfectSscoreMultiplier = 1;    //a partir do momento que o jogador errou uma questão, não ganha mais o dobro de pontos
+                    question.MoveAnswer(a);
                 }
-                else
-                {
-                    perfectSscoreMultiplier = 1;    //a partir do momento que o jogador errou uma questão, não ganha mais o dobro de pontos
-                    questions[questions.Count - 1].Retreat();
-                }
-                foundAnswer = 0;
             }
         }
 
-        private void handleInput(GameTime gameTime)
+        /// <summary>
+        /// Atualiza a posição das respostas e muda o multiplicador do score caso o jogador tenha errado.
+        /// </summary>
+        private void UpdateScoreAndQuestion()
+        {
+            if (foundAnswer == 1)
+            {
+                if (!questions[questions.Count - 1].Next())
+                {
+                    ChangeCurrentQuestion();
+                }
+                else
+                {
+                    questions[questions.Count - 1].Position = (new Vector3(0, 0, player.Position.Z + 10));
+                }
+            }
+            else
+            {
+                perfectSscoreMultiplier = 1;    //a partir do momento que o jogador errou uma questão, não ganha mais o dobro de pontos
+                questions[questions.Count - 1].MoveAnswer(questions[questions.Count - 1].GetClosestAnswer());
+            }
+            foundAnswer = 0;
+        }
+
+        /// <summary>
+        /// Verifica quais teclas estão sendo pressionadas e realiza alguma ação de acordo (quando necessário)
+        /// </summary>
+        private void handleInput()
         {
             if (KeyboardHelper.IsKeyDown(Keys.Escape))
             {
@@ -330,7 +362,7 @@ namespace game_states
                 {
                     if (parent.EnterState((int)StatesIdList.PAUSE, false))
                     {
-                        engineSound.Pause();
+                        //engineSound.Pause();
                         Alpha = 0.5f;
                         goManager.R3D.Alpha = goManager.R2D.Alpha = Alpha;
                         pauseFlag = true;
@@ -344,8 +376,7 @@ namespace game_states
             }
             else if (KeyboardHelper.KeyReleased(Keys.Escape))
             {
-                KeyboardHelper.UnlockKey(Keys.Escape);
-                
+                KeyboardHelper.UnlockKey(Keys.Escape);                
             }
         }
 

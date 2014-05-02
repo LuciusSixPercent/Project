@@ -53,8 +53,11 @@ namespace game_objects
 
         public virtual void Update(GameTime gameTime)
         {
-            ImediateTranslate(acumulatedMovement);
-            acumulatedMovement = Vector3.Zero;
+            if (acumulatedMovement != Vector3.Zero)
+            {
+                ImediateTranslate(acumulatedMovement);
+                acumulatedMovement = Vector3.Zero;
+            }
             foreach (Component c in components)
                 c.Update(gameTime);
         }

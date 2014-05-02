@@ -31,8 +31,8 @@ namespace game_objects
         private int currentFrame;
         private int elapsedTime;
 
-        public delegate void CollidedWithQuestion(Vector3 position, bool correctAnswer);
-        public event CollidedWithQuestion collidedWithQuestion;
+        public delegate void CollidedWithAnswer(Vector3 position, Answer answer);
+        public event CollidedWithAnswer collidedWithAnswer;
 
         private Ball ball;
 
@@ -56,7 +56,6 @@ namespace game_objects
                 return quad;
             }
         }
-
 
         public override Vector3 Position
         {
@@ -85,7 +84,7 @@ namespace game_objects
 
             framesRunning = new Texture2D[9];
 
-            framesKicking = new Texture2D[4];
+            framesKicking = new Texture2D[7];
 
             this.ball = ball;
         }
@@ -112,7 +111,7 @@ namespace game_objects
                 boundingBox.Min += amount;
                 boundingBox.Max += amount;
 
-                ball.Translate(amount * Vector3.Right);
+                ball.Translate(amount * Vector3.Right); //certifica-se que a bola só se mova no eixo X aqui
             }
         }
 
@@ -195,9 +194,9 @@ namespace game_objects
                 {
                     if (obj is QuestionGameObject)
                     {
-                        if (collidedWithQuestion != null)
+                        if (collidedWithAnswer != null)
                         {
-                            collidedWithQuestion(Position, ((QuestionGameObject)obj).CorrecAnswer());
+                            collidedWithAnswer(Position, ((QuestionGameObject)obj).CollidedAnswer);
                         }
                     }
                     else if (obj is Ball && !kickBall)
