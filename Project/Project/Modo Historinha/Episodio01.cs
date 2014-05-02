@@ -381,9 +381,9 @@ class Episodio01 : GameState
                 {
                     engineSound.Resume();
                 }
-                if (texto.Length % Limitedotexto == 0 && texto.Length != 0 && zerar < 2) //Quando o texto atingir um limite da tela e tiver um espaço em branco ele pula uma linha;
+                if ((texto.Length % Limitedotexto == 0 && texto.Length != 0 )) //Quando o texto atingir um limite da tela e tiver um espaço em branco ele pula uma linha;
                 {
-                    if (texto[indice - 1] == ' ' && texto[indice-2] != ' ')
+                    if (texto[indice - 1] == ' ' && texto[indice-2] != ' ' && zerar < 1)
                     {
                         texto += "\n";
                         zerar++;
