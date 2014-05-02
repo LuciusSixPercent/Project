@@ -32,7 +32,8 @@ class ModoHistorinha
     List<Song> narrador;
     bool repetir = true;
     #endregion
-    Vector2 VTelaFundo, VOpcoes1, VOpcoes2, VOpcoes3, VOpcoes4, VPersonagens, Valt0, Valt1, Valt2, Valt3, Vpergunta;
+    Vector2  Valt0, Valt1, Valt2, Valt3, Vpergunta;
+    Rectangle VOpcoes1, VOpcoes2, VOpcoes3, VOpcoes4;
     //teste
     bool venceu = false;
     public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, string alt2, string alt3, SpriteFont a, int n, Song narra)
@@ -175,7 +176,7 @@ class ModoHistorinha
     {
         if (mouse.LeftButton == ButtonState.Pressed)
         {
-            if ((mouse.X > VOpcoes1.X && mouse.X < VOpcoes1.X + OpcoeSprite.Width) && (mouse.Y >= VOpcoes1.Y && mouse.Y <= VOpcoes1.Y + OpcoeSprite.Height))
+            if ((mouse.X > VOpcoes1.X && mouse.X < VOpcoes1.X + VOpcoes1.Width) && (mouse.Y >= VOpcoes1.Y && mouse.Y <= VOpcoes1.Y + VOpcoes1.Height))
             {
                 if (!seq)
                 {
@@ -199,7 +200,7 @@ class ModoHistorinha
                 }
                 
             }
-            if ((mouse.X > VOpcoes2.X && mouse.X < VOpcoes2.X + OpcoeSprite.Width) && (mouse.Y >= VOpcoes2.Y && mouse.Y <= VOpcoes2.Y + OpcoeSprite.Height))
+            if ((mouse.X > VOpcoes2.X && mouse.X < VOpcoes2.X + VOpcoes2.Width) && (mouse.Y >= VOpcoes2.Y && mouse.Y <= VOpcoes2.Y + VOpcoes2.Height))
             {
 
                 
@@ -213,7 +214,7 @@ class ModoHistorinha
                     Calt1 = Color.Transparent;
                 }
             }
-            if ((mouse.X > VOpcoes3.X && mouse.X < VOpcoes3.X + OpcoeSprite.Width) && (mouse.Y >= VOpcoes3.Y && mouse.Y <= VOpcoes3.Y + OpcoeSprite.Height))
+            if ((mouse.X > VOpcoes3.X && mouse.X < VOpcoes3.X + VOpcoes3.Width) && (mouse.Y >= VOpcoes3.Y && mouse.Y <= VOpcoes3.Y + VOpcoes3.Height))
             {
                 
                 if (!seq)
@@ -240,7 +241,7 @@ class ModoHistorinha
                     }
                 }
             }
-            if ((mouse.X > VOpcoes4.X && mouse.X < VOpcoes4.X + OpcoeSprite.Width) && (mouse.Y >= VOpcoes4.Y && mouse.Y <= VOpcoes4.Y + OpcoeSprite.Height))
+            if ((mouse.X > VOpcoes4.X && mouse.X < VOpcoes4.X + VOpcoes4.Width) && (mouse.Y >= VOpcoes4.Y && mouse.Y <= VOpcoes4.Y + VOpcoes4.Height))
             {
                 
                 if (!seq)
@@ -266,7 +267,7 @@ class ModoHistorinha
 
         }
         #region Mouse Over (Mouse sobre o objeto)
-        if ((mouse.X > VOpcoes1.X && mouse.X < VOpcoes1.X + OpcoeSprite.Width) && (mouse.Y >= VOpcoes1.Y && mouse.Y <= VOpcoes1.Y + OpcoeSprite.Height))
+        if ((mouse.X > VOpcoes1.X && mouse.X < VOpcoes1.X + VOpcoes1.Width) && (mouse.Y >= VOpcoes1.Y && mouse.Y <= VOpcoes1.Y + VOpcoes1.Height))
         {
 
             if (VOpcoes1.Y > 190)
@@ -275,21 +276,21 @@ class ModoHistorinha
 
             }
         }
-        if ((mouse.X > VOpcoes2.X && mouse.X < VOpcoes2.X + OpcoeSprite.Width) && (mouse.Y >= VOpcoes2.Y && mouse.Y <= VOpcoes2.Y + OpcoeSprite.Height))
+        if ((mouse.X > VOpcoes2.X && mouse.X < VOpcoes2.X + VOpcoes2.Width) && (mouse.Y >= VOpcoes2.Y && mouse.Y <= VOpcoes2.Y + VOpcoes2.Height))
         {
             if (VOpcoes2.Y > 190)
             {
                 VOpcoes2.Y -= 1;
             }
         }
-        if ((mouse.X > VOpcoes3.X && mouse.X < VOpcoes3.X + OpcoeSprite.Width) && (mouse.Y >= VOpcoes3.Y && mouse.Y <= VOpcoes3.Y + OpcoeSprite.Height))
+        if ((mouse.X > VOpcoes3.X && mouse.X < VOpcoes3.X + VOpcoes3.Width) && (mouse.Y >= VOpcoes3.Y && mouse.Y <= VOpcoes3.Y + VOpcoes3.Height))
         {
             if (VOpcoes3.Y > 190)
             {
                 VOpcoes3.Y -= 1;
             }
         }
-        if ((mouse.X > VOpcoes4.X && mouse.X < VOpcoes4.X + OpcoeSprite.Width) && (mouse.Y >= VOpcoes4.Y && mouse.Y <= VOpcoes4.Y + OpcoeSprite.Height))
+        if ((mouse.X > VOpcoes4.X && mouse.X < VOpcoes4.X + VOpcoes4.Width) && (mouse.Y >= VOpcoes4.Y && mouse.Y <= VOpcoes4.Y + VOpcoes4.Height))
         {
             if (VOpcoes4.Y > 190)
             {
@@ -298,28 +299,28 @@ class ModoHistorinha
         }
         #endregion
         #region Mouse fora do objeto
-        if ((mouse.X < VOpcoes1.X || mouse.X > VOpcoes1.X + OpcoeSprite.Width) || (mouse.Y < VOpcoes1.Y || mouse.Y > VOpcoes1.Y + OpcoeSprite.Height))
+        if ((mouse.X < VOpcoes1.X || mouse.X > VOpcoes1.X + VOpcoes1.Width) || (mouse.Y < VOpcoes1.Y || mouse.Y > VOpcoes1.Y + VOpcoes1.Height))
         {
             if (VOpcoes1.Y < 200)
             {
                 VOpcoes1.Y += 1;
             }
         }
-        if ((mouse.X < VOpcoes2.X || mouse.X > VOpcoes2.X + OpcoeSprite.Width) || (mouse.Y < VOpcoes2.Y || mouse.Y > VOpcoes2.Y + OpcoeSprite.Height))
+        if ((mouse.X < VOpcoes2.X || mouse.X > VOpcoes2.X + VOpcoes2.Width) || (mouse.Y < VOpcoes2.Y || mouse.Y > VOpcoes2.Y + VOpcoes2.Height))
         {
             if (VOpcoes2.Y < 200)
             {
                 VOpcoes2.Y += 1;
             }
         }
-        if ((mouse.X < VOpcoes3.X || mouse.X > VOpcoes3.X + OpcoeSprite.Width) || (mouse.Y < VOpcoes3.Y || mouse.Y > VOpcoes3.Y + OpcoeSprite.Height))
+        if ((mouse.X < VOpcoes3.X || mouse.X > VOpcoes3.X + VOpcoes3.Width) || (mouse.Y < VOpcoes3.Y || mouse.Y > VOpcoes3.Y + VOpcoes3.Height))
         {
             if (VOpcoes3.Y < 200)
             {
                 VOpcoes3.Y += 1;
             }
         }
-        if ((mouse.X < VOpcoes4.X || mouse.X > VOpcoes4.X + OpcoeSprite.Width) || (mouse.Y < VOpcoes4.Y || mouse.Y > VOpcoes4.Y + OpcoeSprite.Height))
+        if ((mouse.X < VOpcoes4.X || mouse.X > VOpcoes4.X + VOpcoes4.Width) || (mouse.Y < VOpcoes4.Y || mouse.Y > VOpcoes4.Y + VOpcoes4.Height))
         {
             if (VOpcoes4.Y < 200)
             {
@@ -372,10 +373,10 @@ class ModoHistorinha
     {
         OpcoeSprite = Content.Load<Texture2D>("Imagem/Sprites/op");
 
-        VOpcoes1 = new Vector2(230, 200);
-        VOpcoes2 = new Vector2(VOpcoes1.X + 200, VOpcoes1.Y);
-        VOpcoes3 = new Vector2(VOpcoes2.X + 200, VOpcoes2.Y);
-        VOpcoes4 = new Vector2(VOpcoes3.X + 200, VOpcoes3.Y);
+        VOpcoes1 = new Rectangle(230, 200,100,200);
+        VOpcoes2 = new Rectangle(VOpcoes1.X + VOpcoes1.Width +20, VOpcoes1.Y, VOpcoes1.Width, VOpcoes1.Height);
+        VOpcoes3 = new Rectangle(VOpcoes2.X + VOpcoes1.Width+20, VOpcoes2.Y, VOpcoes1.Width, VOpcoes1.Height);
+        VOpcoes4 = new Rectangle(VOpcoes3.X + VOpcoes1.Width+20, VOpcoes3.Y, VOpcoes1.Width, VOpcoes1.Height);
 
         Valt0 = new Vector2(VOpcoes1.X, VOpcoes1.Y + 20);
         Valt1 = new Vector2(VOpcoes2.X, VOpcoes2.Y + 20);
