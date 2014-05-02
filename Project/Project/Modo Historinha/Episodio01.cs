@@ -120,7 +120,7 @@ class Episodio01 : GameState
     public string alt92 = "RI-A-CHO";
     #endregion
     #region Dialogo 10
-    string fala26 = "Maria conColor.Whiteda em jogar com Cosme, pois sabe que seus amigos irão ajuda-la sempre que ela precisar!";
+    string fala26 = "Maria concorda em jogar com Cosme, pois sabe que seus amigos irão ajuda-la sempre que ela precisar!";
     #endregion
     #region Exercicio10
     public string Pergunta010 = "Agora, finalmente nós iremos jogar...";
