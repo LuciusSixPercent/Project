@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Project;
 using Microsoft.Xna.Framework.Graphics;
+using game_objects;
 
 namespace game_states
 {
@@ -33,6 +34,8 @@ namespace game_states
 
         private bool freezeBelow; //determina se os estados abaixo dele devem ser atualizados também
 
+        protected GameObjectsManager goManager;
+
         private bool contentLoaded;
 
         public bool ContentLoaded
@@ -49,6 +52,11 @@ namespace game_states
             get { return id; }
         }
 
+        public bool ExitingState
+        {
+            get { return exitingState; }
+        }
+
         public bool Transitioning
         {
             get { return enteringState || exitingState; }
@@ -62,7 +70,11 @@ namespace game_states
         protected virtual float Alpha
         {
             get { return alpha; }
-            set { alpha = value; }
+            set
+            {
+                alpha = value;
+                goManager.R3D.Alpha = goManager.R2D.Alpha = Alpha;
+            }
         }
 
         protected GameState(int id, Game1 parent)
@@ -82,13 +94,14 @@ namespace game_states
         {
             enteringState = true;
             this.freezeBelow = freezeBelow;
-            alphaIncrement = (float)1 / (enterTransitionDuration == 0? 1 : enterTransitionDuration);
+            alphaIncrement = (float)1 / (enterTransitionDuration == 0 ? 1 : enterTransitionDuration);
         }
 
         public virtual void ExitState()
         {
             exitingState = true;
-            alphaIncrement = -alpha / (exitTransitionDuration == 0? 1 : exitTransitionDuration);
+            enteringState = false;
+            alphaIncrement = -alpha / (exitTransitionDuration == 0 ? 1 : exitTransitionDuration);
         }
 
         protected bool tryEndTransition(GameTime gameTime, bool transitionFlag, bool result)
@@ -129,9 +142,13 @@ namespace game_states
             }
             if (Transitioning)
             {
-                Alpha += alphaIncrement*gameTime.ElapsedGameTime.Milliseconds;
+                Alpha += alphaIncrement * gameTime.ElapsedGameTime.Milliseconds;
                 if (Alpha < 0) Alpha = 0;
                 else if (Alpha > 1) Alpha = 1;
+            }
+            if (stateEntered)
+            {
+                goManager.Update(gameTime);
             }
         }
 
@@ -139,11 +156,16 @@ namespace game_states
         {
             initialized = true;
             spriteBatch = new SpriteBatch(parent.GraphicsDevice);
+            goManager = new GameObjectsManager(parent.GraphicsDevice);
         }
         protected virtual void LoadContent()
         {
             contentLoaded = true;
+            goManager.Load(parent.Content);
         }
-        public abstract void Draw(GameTime gameTime);
+        public virtual void Draw(GameTime gameTime)
+        {
+            goManager.Draw(gameTime);
+        }
     }
 }

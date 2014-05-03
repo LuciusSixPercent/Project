@@ -41,9 +41,10 @@ namespace game_objects
 
         public override void Load(ContentManager cManager)
         {
+            string path = "Imagem" + Path.AltDirectorySeparatorChar + "Cenario" + Path.AltDirectorySeparatorChar + "Bate_Bola" + Path.AltDirectorySeparatorChar;
             for (int i = 0; i < frames.Length; i++)
             {
-                frames[i] = cManager.Load<Texture2D>("ball" + (i + 1));
+                frames[i] = cManager.Load<Texture2D>(path + "ball" + (i + 1));
             }
         }
 

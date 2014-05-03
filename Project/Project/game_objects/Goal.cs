@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 using Project;
 using Microsoft.Xna.Framework.Graphics;
+using System.IO;
 
 namespace game_objects
 {
@@ -24,7 +25,8 @@ namespace game_objects
 
         public override void Load(ContentManager cManager)
         {
-            texture = cManager.Load<Texture2D>("tmp_goal");
+            string path = "Imagem" + Path.AltDirectorySeparatorChar + "Cenario" + Path.AltDirectorySeparatorChar + "Bate_Bola" + Path.AltDirectorySeparatorChar;
+            texture = cManager.Load<Texture2D>(path+"tmp_goal");
             quadHeightScale *= ((float)texture.Height / texture.Width);
             createQuad();
         }

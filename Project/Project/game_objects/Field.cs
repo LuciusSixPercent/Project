@@ -15,6 +15,12 @@ namespace game_objects
 
         private Quad[] floorTiles;
         private Texture2D[] textures;
+        private Prop[] props;
+        private Texture2D[] cactus;
+        private Texture2D[] grass;
+        private Texture2D[] rock;
+        private Texture2D[] tree;
+        private float[] propsWeight;
 
         private Goal goal;
         private Bleachers bleachers;
@@ -25,7 +31,7 @@ namespace game_objects
         private bool keepMoving;
 
         //quantas linhas a frente serão solo normal e não gramado
-        private int fieldPadding = 6;
+        private int fieldPadding = 8;
 
         public Goal Goal
         {
@@ -48,7 +54,22 @@ namespace game_objects
             keepMoving = true;
             textures = new Texture2D[2];
             floorTiles = new Quad[rows * columns];
+            props = new Prop[80];
+            cactus = new Texture2D[4];
+            grass = new Texture2D[12];
+            rock = new Texture2D[13];
+            tree = new Texture2D[4];
+            DefinePropsWeight();
             initQuads();
+        }
+
+        private void DefinePropsWeight()
+        {
+            propsWeight = new float[4];
+            propsWeight[0] = 0.4f;  //tree
+            propsWeight[1] = 0.5f;  //cactus
+            propsWeight[2] = 0.6f;  //grass
+            propsWeight[3] = 0.85f;  //rock
         }
 
         private void initQuads()
@@ -75,10 +96,102 @@ namespace game_objects
 
         public override void Load(ContentManager cManager)
         {
-            textures[0] = cManager.Load<Texture2D>("Imagem" + Path.AltDirectorySeparatorChar + "Cenario" + Path.AltDirectorySeparatorChar + "grass");
-            textures[1] = cManager.Load<Texture2D>("Imagem" + Path.AltDirectorySeparatorChar + "Cenario" + Path.AltDirectorySeparatorChar + "soil");
+            string path = "Imagem" + Path.AltDirectorySeparatorChar + "Cenario" + Path.AltDirectorySeparatorChar + "Bate_Bola" + Path.AltDirectorySeparatorChar;
+            textures[0] = cManager.Load<Texture2D>(path + "grass");
+            textures[1] = cManager.Load<Texture2D>(path + "soil");
             goal.Load(cManager);
             bleachers.Load(cManager);
+            path += "Props" + Path.AltDirectorySeparatorChar;
+            LoadPropsTexture(path, "Cactus", cactus, cManager);
+            LoadPropsTexture(path, "Grass", grass, cManager);
+            LoadPropsTexture(path, "Rock", rock, cManager);
+            LoadPropsTexture(path, "Tree", tree, cManager);
+            CreateProps();
+        }
+
+        private void CreateProps()
+        {
+            for (int i = 0; i < props.Length; i++)
+            {
+                float baseScale = 0f;
+                Texture2D tex = GetRandomPropTexture(out baseScale, 0.75);
+                props[i] = new Prop((Renderer3D)Renderer, baseScale);
+                props[i].Texture = tex;
+                props[i].Position = GetRandomPropPosition();
+            }
+        }
+
+        private Vector3 GetRandomPropPosition(int min = 0)
+        {
+            float x;
+            do
+            {
+                x = (float)(PublicRandom.Next(columns * 100) - PublicRandom.Next(columns * 50)) / 100;
+            } while ((x >= -3 && x <= 3) || (x > 10 || x < -10));
+            float z = (float)PublicRandom.Next(min, rows * 100) / 100;
+
+            return new Vector3(x, 0, z) + position;
+        }
+
+        private Texture2D GetRandomPropTexture(out float baseScale, double max = 1.0)
+        {
+            baseScale = 0;
+            Texture2D tex;
+            switch (GetRandomPropType(max))
+            {
+                case PropType.CACTUS:
+                    tex = cactus[PublicRandom.Next(cactus.Length)];
+                    baseScale = (float)PublicRandom.NextDouble(0.5, 0.8);
+                    break;
+                case PropType.GRASS:
+                    tex = grass[PublicRandom.Next(grass.Length)];
+                    baseScale = (float)PublicRandom.NextDouble(0.2, 0.5);
+                    break;
+                case PropType.ROCK:
+                    tex = rock[PublicRandom.Next(rock.Length)];
+                    baseScale = (float)PublicRandom.NextDouble(0.1, 0.5);
+                    break;
+                case PropType.TREE:
+                    tex = tree[PublicRandom.Next(tree.Length)];
+                    baseScale = (float)PublicRandom.NextDouble(0.75) * PublicRandom.Next(3);
+                    break;
+                default:
+                    tex = null;
+                    break;
+            }
+
+            return tex;
+        }
+
+        private PropType GetRandomPropType(double max = 1.0)
+        {
+            double rdn = PublicRandom.NextDouble(0, max);
+            PropType type = PropType.NONE;
+            if (rdn < propsWeight[0])
+            {
+                type = PropType.TREE;
+            }
+            else if (rdn < propsWeight[1])
+            {
+                type = PropType.CACTUS;
+            }
+            else if (rdn < propsWeight[2])
+            {
+                type = PropType.GRASS;
+            }
+            else if (rdn < propsWeight[3])
+            {
+                type = PropType.ROCK;
+            }
+            return type;
+        }
+        private void LoadPropsTexture(string path, string name, Texture2D[] tex, ContentManager cManager)
+        {
+            path += name + Path.AltDirectorySeparatorChar;
+            for (int i = 0; i < tex.Length; i++)
+            {
+                tex[i] = cManager.Load<Texture2D>(path + name + "_" + (i + 1));
+            }
         }
 
         public override void Draw(GameTime gameTime)
@@ -99,6 +212,8 @@ namespace game_objects
             }
             bleachers.Draw(gameTime);
             goal.Draw(gameTime);
+            foreach (Prop p in props)
+                p.Draw(gameTime);
         }
 
         public override void Update(GameTime gameTime)
@@ -107,6 +222,27 @@ namespace game_objects
             translateQuads();
             goal.Update(gameTime);
             bleachers.Update(gameTime);
+            CheckProps();
+        }
+
+        private void CheckProps()
+        {
+            float minZ = ((Renderer3D)Renderer).Cam.Position.Z + 2;
+            int minSpawnZ = ((Renderer3D)Renderer).Cam.FarView * 100;
+            foreach (Prop p in props)
+            {
+                if (p.Position.Z <= minZ)
+                {
+                    float baseScale;
+                    Texture2D tex = GetRandomPropTexture(out baseScale);
+                    if (baseScale > 0)
+                    {
+                        p.BaseScale = baseScale;
+                        p.Texture = tex;
+                    }
+                    p.Position = GetRandomPropPosition(minSpawnZ);
+                }
+            }
         }
 
         private void translateQuads()

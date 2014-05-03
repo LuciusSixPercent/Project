@@ -56,6 +56,8 @@ namespace game_objects
                 frames[i] =
                     cManager.Load<Texture2D>(
                     "Imagem" + Path.AltDirectorySeparatorChar +
+                    "Cenario" + Path.AltDirectorySeparatorChar +
+                    "Bate_Bola" + Path.AltDirectorySeparatorChar +
                     "Props" + Path.AltDirectorySeparatorChar +
                     "Arquibancada" + Path.AltDirectorySeparatorChar + (i + 1));
             quadHeightScale *= ((float)frames[0].Height/frames[0].Width);

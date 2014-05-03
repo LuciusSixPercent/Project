@@ -19,6 +19,8 @@ namespace game_states
         Button configMenu;
         Button titleScreen;
 
+        bool toTile;
+
         protected override float Alpha
         {
             get { return base.Alpha; }
@@ -67,6 +69,8 @@ namespace game_states
 
         void titleScreen_mouseClicked(Button btn)
         {
+            toTile = true;
+            ExitState();
         }
 
         void optionsMenu_mouseClicked(Button btn)
@@ -156,7 +160,14 @@ namespace game_states
                 }
                 else
                 {
-                    parent.ExitState(ID);
+                    if (toTile)
+                    {
+                        parent.ExitState(ID, (int)StatesIdList.MAIN_MENU);
+                    }
+                    else
+                    {
+                        parent.ExitState(ID);
+                    }
                 }
             }
         }

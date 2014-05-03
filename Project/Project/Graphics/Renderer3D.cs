@@ -102,7 +102,8 @@ namespace game_objects
             //necessário para que os objetos "3D" sejam desenhados na ordem correta
             GDevice.DepthStencilState = DepthStencilState.Default;
             ContainmentType containment = frustum.Contains(bbox);
-            if (containment != ContainmentType.Disjoint)
+            bool visibleToCamera = containment != ContainmentType.Disjoint;
+            if (visibleToCamera)
             {
                 GDevice.DrawUserIndexedPrimitives
                     <VertexPositionNormalTexture>(

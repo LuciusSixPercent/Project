@@ -20,6 +20,7 @@ namespace Project
         
         private Dictionary<int, GameState> states;
         private List<GameState> statesStack;
+        private StatesIdList querriedState;
         Menu menu;
         Episodio01 md;
         RunnerState rs;
@@ -42,6 +43,8 @@ namespace Project
             IsMouseVisible = true;
             graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
             spriteBatch = new SpriteBatch(graphics.GraphicsDevice);
+
+            querriedState = StatesIdList.EMPTY_STATE;
 
             states = new Dictionary<int, GameState>();
 
@@ -87,11 +90,27 @@ namespace Project
         /// <param name="id2">ID do estado no qual o jogo entrará.</param>
         public void ExitState(int id, int id2)
         {
-            if (statesStack[statesStack.Count - 1].ID == id)
+            if (StateAlreadyOnStack(id2))
             {
-                statesStack.RemoveAt(statesStack.Count - 1);
-                EnterState(id2);
+                ExitState(id);
+                querriedState = (StatesIdList)id2;
             }
+            else
+            {
+                if (statesStack[statesStack.Count - 1].ID == id)
+                {
+                    statesStack.RemoveAt(statesStack.Count - 1);
+                    EnterState(id2);
+                }
+            }
+        }
+
+        private bool StateAlreadyOnStack(int id2)
+        {
+            foreach (GameState state in statesStack)
+                if (state.ID == id2)
+                    return true;
+            return false;
         }
 
         //sai do estado especificado
@@ -169,6 +188,17 @@ namespace Project
                     }
                     else
                     {
+                        if (querriedState != StatesIdList.EMPTY_STATE)
+                        {
+                            if (statesStack[stateIndex].ID == (int)querriedState)
+                            {
+                                querriedState = StatesIdList.EMPTY_STATE;
+                            }
+                            else if (!statesStack[stateIndex].ExitingState)
+                            {
+                                statesStack[stateIndex].ExitState();
+                            }
+                        }
                         statesStack[stateIndex].Update(gameTime);
                     }
                     stateIndex++;

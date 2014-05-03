@@ -21,7 +21,7 @@ namespace game_states
         private QuestionSubject[] subjects;
 
         int columns = 33;
-        int rows = 28;
+        int rows = 34;
 
         private Camera cam;
         private Character player;
@@ -29,9 +29,7 @@ namespace game_states
         private List<QuestionGameObject> questions;
         private Field field;
 
-        bool pauseFlag;
-
-        private GameObjectsManager goManager;
+        //private GameObjectsManager goManager;
         private int foundAnswer; //0 for no; 1 for correct; -1 for incorrect
 
         private int score;
@@ -45,19 +43,6 @@ namespace game_states
         SoundBank soundBank3;
         Cue engineSound = null;
         #endregion
-
-        protected override float Alpha
-        {
-            get
-            {
-                return base.Alpha;
-            }
-            set
-            {
-                base.Alpha = value;
-                goManager.R3D.Alpha = goManager.R2D.Alpha = Alpha;
-            }
-        }
 
         public RunnerLevel Level
         {
@@ -95,16 +80,14 @@ namespace game_states
                 enterTransitionDuration = 500;
                 exitTransitionDuration = 1000;
 
-                goManager = new GameObjectsManager(parent.GraphicsDevice);
-
                 questions = new List<QuestionGameObject>();
-                
+
                 ball = new Ball(goManager.R3D, goManager.CollidableGameObjects);
 
                 player = new Character(goManager.R3D, goManager.CollidableGameObjects, "cosme", ball);
-                player.collidedWithAnswer += new Character.CollidedWithAnswer(player_collidedWithQuestion);                
+                player.collidedWithAnswer += new Character.CollidedWithAnswer(player_collidedWithQuestion);
 
-                cam = new Camera(new Vector3(0f, 3f, -4f), Vector3.Up, new Vector2(0.25f, 19.5f));
+                cam = new Camera(new Vector3(0f, 3f, -4f), Vector3.Up, new Vector2(0.25f, 20f));
                 cam.lookAt(new Vector3(0f, 0.25f, 2f), true);
                 cam.createProjection(MathHelper.PiOver4, parent.GraphicsDevice.Viewport.AspectRatio);
                 goManager.R3D.Cam = cam;
@@ -112,7 +95,7 @@ namespace game_states
                 field = new Field(goManager.R3D, rows, columns);
 
                 goManager.AddObject(cam);
-                goManager.AddObject(new Sky(goManager.R2D));
+                goManager.AddObject(new Background(goManager.R2D));
                 goManager.AddObject(field);
                 goManager.AddObject(ball);
                 goManager.AddObject(player);
@@ -121,7 +104,7 @@ namespace game_states
 
         private void player_collidedWithQuestion(Vector3 position, Answer answer)
         {
-            if (questions[questions.Count-1].CheckAnswer(answer, false))
+            if (questions[questions.Count - 1].CheckAnswer(answer, false))
             {
                 foundAnswer = 1;
             }
@@ -140,8 +123,8 @@ namespace game_states
             }
             goManager.AddObject(questions[questions.Count - 1]);
             questions[questions.Count - 1].Player = player;
-            questions[questions.Count - 1].Position = new Vector3(0, 0.25f, player.Position.Z + 10);
-            
+            questions[questions.Count - 1].Position = new Vector3(0, 0.25f, player.Position.Z + 5);
+
         }
 
         private void ChangeCurrentQuestion()
@@ -155,7 +138,7 @@ namespace game_states
             if (questions.Count > 0)
             {
                 goManager.AddObject(questions[questions.Count - 1]);
-                questions[questions.Count - 1].Position = new Vector3(0, 0.25f, player.Position.Z + 1);
+                questions[questions.Count - 1].Position = new Vector3(0, 0.25f, player.Position.Z + 5);
                 questions[questions.Count - 1].Player = player;
             }
             else
@@ -181,8 +164,6 @@ namespace game_states
                 QuestionsDatabase.LoadQuestions();
 
                 TextHelper.LoadDefaultFont(parent.Content);
-
-                goManager.Load(parent.Content);
 
                 player.Position = Vector3.Zero;
 
@@ -222,11 +203,6 @@ namespace game_states
             {
                 base.EnterState(freezeBelow);
                 LoadContent();
-                pauseFlag = false;
-                if (finished)
-                {
-                    Reset();
-                }
             }
         }
 
@@ -237,17 +213,16 @@ namespace game_states
 
         public override void ExitState()
         {
-            if (!enteringState)
+            if (!exit)
             {
-                if (!exit)
-                {
-                    base.ExitState();
-                }
-                else
-                {
-                    parent.ExitState(ID);
-                }
+                base.ExitState();
             }
+            else
+            {
+                parent.ExitState(ID);
+                Reset();
+            }
+
         }
         #endregion
 
@@ -260,42 +235,38 @@ namespace game_states
                 {
                     if (!finished)
                     {
-                        if (!pauseFlag)
+                        //Wave
+                        if (engineSound == null)
                         {
-                            //Wave
-                            if (engineSound == null)
-                            {
-                                engineSound = soundBank3.GetCue("540428_quotSports-Fanaticq");
-                                //engineSound.Play();
-                            }
-                            if (engineSound.IsPaused)
-                            {
-                                //engineSound.Resume();
-                            }
-                            //
-                            CheckAnswer();
-                            if (answeredAll)
-                            {
-                                field.KeepMoving = false;
-                                if (field.Goal.Position.Z - player.Position.Z <= 8 && player.KeepMoving)
-                                {
-                                    player.KickBall(perfectSscoreMultiplier == 2);
-                                    cam.KeepMoving = false;
-                                }
-                            }
-
-                            goManager.Update(gameTime);
-
-                            handleInput();
+                            engineSound = soundBank3.GetCue("540428_quotSports-Fanaticq");
+                            //engineSound.Play();
                         }
-                        
+                        if (engineSound.IsPaused)
+                        {
+                            //engineSound.Resume();
+                        }
+                        //
+                        CheckAnswer();
+                        if (answeredAll)
+                        {
+                            field.KeepMoving = false;
+                            if (field.Goal.Position.Z - player.Position.Z <= 8 && player.KeepMoving)
+                            {
+                                player.KickBall(perfectSscoreMultiplier == 2);
+                                cam.KeepMoving = false;
+                            }
+                        }
+
+                        handleInput();
                     }
-                    else
-                    {
-                        engineSound.Stop(AudioStopOptions.AsAuthored);
-                        ExitState();
-                    }
+                    
                 }
+                else
+                {
+                    engineSound.Stop(AudioStopOptions.AsAuthored);
+                    ExitState();
+                }
+
             }
             else if (exit)
             {
@@ -313,13 +284,13 @@ namespace game_states
             {
                 UpdateScoreAndQuestion();
             }
-            else if(!answeredAll)
+            else if (!answeredAll)
             {
                 QuestionGameObject question = questions[questions.Count - 1];
                 Answer a = question.GetClosestAnswer();
                 if (a.Position.Z <= player.Position.Z - 2)
                 {
-                    if(question.CheckAnswer(a, true))
+                    if (question.CheckAnswer(a, true))
                         perfectSscoreMultiplier = 1;    //a partir do momento que o jogador errou uma questão, não ganha mais o dobro de pontos
                     question.MoveAnswer(a);
                 }
@@ -339,7 +310,7 @@ namespace game_states
                 }
                 else
                 {
-                    questions[questions.Count - 1].Position = (new Vector3(0, 0, player.Position.Z + 10));
+                    questions[questions.Count - 1].Position = (new Vector3(0, 0, player.Position.Z + 5));
                 }
             }
             else
@@ -365,18 +336,18 @@ namespace game_states
                         //engineSound.Pause();
                         Alpha = 0.5f;
                         goManager.R3D.Alpha = goManager.R2D.Alpha = Alpha;
-                        pauseFlag = true;
                         stateEntered = false;
                     }
                 }
                 else
                 {
                     finished = true;
+                    ExitState();
                 }
             }
             else if (KeyboardHelper.KeyReleased(Keys.Escape))
             {
-                KeyboardHelper.UnlockKey(Keys.Escape);                
+                KeyboardHelper.UnlockKey(Keys.Escape);
             }
         }
 
@@ -384,7 +355,7 @@ namespace game_states
         public override void Draw(GameTime gameTime)
         {
 
-            goManager.Draw(gameTime);
+            base.Draw(gameTime);
             string header = "";
             int questionScore = 0;
             int answerValue = 0;

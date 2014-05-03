@@ -114,8 +114,11 @@
     <Compile Include="components\MovementComponent.cs" />
     <Compile Include="components\PlayerMovementComponent.cs" />
     <Compile Include="components\VariableMovementComponent.cs" />
+    <Compile Include="game_objects\Background.cs" />
     <Compile Include="game_objects\Ball.cs" />
     <Compile Include="game_objects\Bleachers.cs" />
+    <Compile Include="game_objects\Prop.cs" />
+    <Compile Include="game_objects\PropType.cs" />
     <Compile Include="game_objects\ui\Button.cs" />
     <Compile Include="game_objects\Camera.cs" />
     <Compile Include="game_objects\CollidableGameObject.cs" />
@@ -136,7 +139,6 @@
     <Compile Include="graphics\Renderer.cs" />
     <Compile Include="graphics\Renderer2D.cs" />
     <Compile Include="graphics\Renderer3D.cs" />
-    <Compile Include="game_objects\Sky.cs" />
     <Compile Include="game_states\GameState.cs" />
     <Compile Include="game_states\PauseState.cs" />
     <Compile Include="game_states\RunnerLevel.cs" />

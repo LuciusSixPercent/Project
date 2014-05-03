@@ -197,7 +197,7 @@ namespace game_objects.questions
         /// </summary>
         private void PositionAnswers()
         {
-            float zIncrement = PublicRandom.Next(0, 2);
+            float zIncrement = 0;
             bool[] answersPositioned = new bool[answers.Length];
             int max = 3;
             bool visible = true;
@@ -217,7 +217,7 @@ namespace game_objects.questions
                 this.answers[i].Position = position + offset;
                 this.answers[i].Visible = visible;
                 visible = false;
-                zIncrement += PublicRandom.Next(4, 7);
+                zIncrement += PublicRandom.Next(3, 8);
                 max--;
             }
         }
@@ -297,14 +297,14 @@ namespace game_objects.questions
         /// <param name="a">A resposta a ser movida.</param>
         public void MoveAnswer(Answer a)
         {
-            float newZ = player.Position.Z;
+            float newZ = player.Position.Z + PublicRandom.Next(5, 8);
             bool usableZ = false; //utilizado para garantir que as respostas mantenham uma distância mínima de 2.5 (no eixo Z) umas das outras
             do
             {
-                newZ += PublicRandom.Next(3, 5);
+                newZ += PublicRandom.Next(1, 4);
                 foreach (Answer answer in answers)
                 {
-                    usableZ = (answer.Position.Z >= newZ + 2.5 || answer.Position.Z <= newZ - 2.5);
+                    usableZ = (answer.Position.Z >= newZ + 2 || answer.Position.Z <= newZ - 2);
                     if (!usableZ) break;
                 }
             } while (!usableZ);
