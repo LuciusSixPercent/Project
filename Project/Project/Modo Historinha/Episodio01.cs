@@ -215,6 +215,8 @@ class Episodio01 : GameState
     int CenarioIndice = 0;
     bool VoltarBool = false;
     /// <summary>
+    Texture2D CenarioTv, CenarioBola;
+    Vector2 vTV, vBolaCenario;
     Texture2D Pcosme, Pmaria, Papua, Pserafina;
     Texture2D CosmeA01, CosmeA02, CosmeA03, CosmeA04, CosmeA05, CosmeA06, CosmeA07, CosmeA08;
     Texture2D MariaA01, MariaA02, MariaA03, MariaA04, MariaA05, MariaA06, MariaA07, MariaA08;//Animação de Maria Andando
@@ -349,6 +351,8 @@ class Episodio01 : GameState
             vMariaObj = vMaria;
             vApuaObj = vApua;
             vSerafinaObj = vSerafina;
+            vBolaCenario = new Vector2(451, 328);
+            vTV = new Vector2(873, 457);
             //rcApua = new Rectangle(300, 200, Papua.Width / 2, Papua.Height / 2);
             //rcSerafina = new Rectangle(400, 200, Pserafina.Width / 2, Pserafina.Height / 2);
            
@@ -538,7 +542,7 @@ class Episodio01 : GameState
         if (!FimDaHistoria)
         {
             SpriteBatch.Draw(Cenario[CenarioIndice], rcCenario, Color.White);
-            SpriteBatch.Draw(Voltar[VoltarIndice], vVoltar, Color.White);
+            
             //Tmusica = MediaPlayer.PlayPosition.Minutes.ToString() + " : " + MediaPlayer.PlayPosition.Seconds;
             //TpLAYER = AlbumPrincipal[NoAlbum][selecionar].Duration.Minutes.ToString() + " : " + AlbumPrincipal[NoAlbum][selecionar].Duration.Seconds;
             //NomeMusica = AlbumPrincipal[NoAlbum][selecionar].Name;
@@ -546,11 +550,20 @@ class Episodio01 : GameState
             SpriteBatch.DrawString(arial, Frame.ToString(), new Vector2(200, 700), Color.White);//Aqui eu vejo em quanto tempo está a narração
             //Aqui em cima eu imprimo o tempo total da musica;
         }
+        if (CenarioIndice == 0)
+        {
+            SpriteBatch.Draw(CenarioBola, vBolaCenario, Color.White);
+        }
         SpriteBatch.Draw(Cosme, vCosme, CosmeColor);
         SpriteBatch.Draw(Maria, vMaria, MariaColor);
         SpriteBatch.Draw(Apua, vApua,ApuaColor);
         SpriteBatch.Draw(Serafina, vSerafina, SerafinaColor);
         SpriteBatch.Draw(Cachorro, vCachorro, CachorroColor);
+        if (CenarioIndice == 0)
+        {
+            SpriteBatch.Draw(CenarioTv, vTV, Color.White);
+        }
+        SpriteBatch.Draw(Voltar[VoltarIndice], vVoltar, Color.White);
         //*
         if (!caderno)
         {
@@ -999,6 +1012,8 @@ class Episodio01 : GameState
             Pcosme = parent.Content.Load<Texture2D>("Imagem/Personagem/Cosme/Cosme_Andando/0");
             Papua = parent.Content.Load<Texture2D>("Imagem/Personagem/Apua/Apua_Andando/0");
             Pserafina = parent.Content.Load<Texture2D>("Imagem/Personagem/Serafina/Serafina_Andando/0");
+            CenarioTv = parent.Content.Load<Texture2D>("Imagem/Cenario/Televisao_SOLTA");
+            CenarioBola = parent.Content.Load<Texture2D>("Imagem/Cenario/Bola_Solta");
             #region Cosme Andando
             CosmeA01 = parent.Content.Load<Texture2D>("Imagem/Personagem/Cosme/Cosme_Andando/1");
             CosmeA02 = parent.Content.Load<Texture2D>("Imagem/Personagem/Cosme/Cosme_Andando/2");

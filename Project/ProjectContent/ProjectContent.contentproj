@@ -1192,6 +1192,16 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="Imagem\Cenario\Bola_Solta.png">
+      <Name>Bola_Solta</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Imagem\Cenario\Televisao_SOLTA.png">
+      <Name>Televisao_SOLTA</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="questions.xml">
       <Name>questions</Name>
       <Importer>XmlImporter</Importer>
