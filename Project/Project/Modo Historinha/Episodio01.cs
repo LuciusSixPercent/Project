@@ -341,12 +341,13 @@ class Episodio01 : GameState
             Serafina = Pserafina;
             Cachorro = CachorroSentado[Frame];
             Cenario = new Texture2D[4] { CenarioInterior, CenarioExterior, CenarioRio, CenarioCampo };
+            rcCenario = new Rectangle(0, 0, 1024, 768);
             vMaria = new Vector2(400, 400);
             vCosme = new Vector2(300, 400);
             vApua = new Vector2(500, 400);
             vSerafina = new Vector2(600, 400);
             vCachorro = new Vector2(700, 400);
-            rcCenario = new Rectangle(0, 0, 1024, 768);
+            
             vCosmeObj = vCosme;
             vMariaObj = vMaria;
             vApuaObj = vApua;
@@ -509,7 +510,7 @@ class Episodio01 : GameState
                 }
                 if (VoltarBool)
                 {
-                    MediaPlayer.Stop();
+                    MediaPlayer.Pause();
                     engineSound.Stop(AudioStopOptions.AsAuthored);
 
                     ExitState();
@@ -944,24 +945,28 @@ class Episodio01 : GameState
                     }
 
                 }
+
                 if (primeiro && segundo && terceiro && quarto && quinto && sexto && setimo && oitavo && !nono)
                 {
-                    int segurança = 0;
-                    if (Incremento0 == 0 && segurança == 0)
+                    
+                    if (Incremento0 == 0)
                     {
                         
                         CenarioIndice = 1;
-                        vMariaObj.X = 1020;
-                        MariaAndeComBaldeComBola = true;
-                        if (vMaria.X > 500)
+                        if (segurança == 0)
                         {
-                            vMariaObj.Y = 400;
+                            
+                            vMariaObj.X = 1020;
+                            MariaAndeComBaldeComBola = true;
+                            if (vMaria.X > 500)
+                            {
+                                vMariaObj.Y = 400;
+                            }
                         }
-                        
                     }
-                    if (Incremento0 == 1 && segurança ==0)
+                    if (Incremento0 == 1 )
                     {
-                        
+                        segurança = 1;
                         CenarioIndice = 2;
                         vMaria.X = 200;
                         vMaria.Y = 500;
@@ -972,7 +977,7 @@ class Episodio01 : GameState
                     }
                     if (Incremento0 == 2)
                     {
-                        segurança = 1;
+                       
                         vMaria.X = 200;
                         vMariaObj.X = 200;
                         vCosme.X = 400;
@@ -1066,6 +1071,7 @@ class Episodio01 : GameState
         //*/
         SpriteBatch.End();
     }
+    int segurança = 0;
     protected override void LoadContent()
     {
         if (!contentLoaded)
@@ -1177,15 +1183,15 @@ class Episodio01 : GameState
     #region Transitioning
     public override void EnterState(bool freezeBelow)
     {
-        if (!exitingState)
+        if (!exitingState || VoltarBool)
         {
             base.EnterState(freezeBelow);
             LoadContent();
             pauseFlag = false;
-
+            VoltarBool = false;
 
         }
-        if (VoltarBool || FimDaHistoria)
+        if (FimDaHistoria)
         {
             base.EnterState(freezeBelow);
 
@@ -1276,9 +1282,27 @@ class Episodio01 : GameState
     }
     public void Resetar()
     {
+       
+        #region Reset das Cores
         CosmeColor = Color.Black;
         MariaColor = Color.Black;
-        Initialize();
+        SerafinaColor = Color.Transparent;
+        ApuaColor = Color.Transparent;
+        #endregion
+        #region Reset dos exercicios
+        //Cena 01
+        Exercicio01 = new ModoHistorinha(parent.Content, pergunta00, alternativa00, alternativa01, arial, 2, audioEx01);
+        Exercicio02 = new ModoHistorinha(parent.Content, pergunta10, alternativa02, alternativa03, alternativa10, arial, 3, audioEx02);
+        Exercicio03 = new ModoHistorinha(parent.Content, pergunta20, alternativa20, alternativa21, alternativa22, alternativa23, arial, 4, audioEx03, true);
+        Exercicio04 = new ModoHistorinha(parent.Content, pergunta30, alternativa30, alternativa31, arial, 2, audioEx04);
+        Exercicio05 = new ModoHistorinha(parent.Content, pergunta40, alternativa40, alternativa41, alternativa42, arial, 3, audioEx05);
+        //Cena02
+        Exercicio06 = new ModoHistorinha(parent.Content, pergunta6, alt60, alt61, arial, 2, audioEx06);
+        Exercicio07 = new ModoHistorinha(parent.Content, Pergunta7, alt70, alt71, alt72, alt73, arial, 4, audioEx07, audioEx072, false);
+        Exercicio08 = new ModoHistorinha(parent.Content, Pergunta8, alt80, alt81, alt82, arial, 3, audioEx08);
+        Exercicio09 = new ModoHistorinha(parent.Content, Pergunta9, alt90, alt91, alt92, arial, 3, audioEx09);
+        Exercicio10 = new ModoHistorinha(parent.Content, Pergunta010, alt100, alt101, alt102, arial, 3, audioEx10);
+        #endregion
         CenarioIndice = 0;
         FimDaHistoria = false;
         selecionar = 0; //seleciona a musica
@@ -1289,10 +1313,33 @@ class Episodio01 : GameState
         Limitedotexto = 80;
         indice = 0;
         zerar = 0;
+        #region Reset Sprites
         Cosme = Pcosme;
         Maria = Pmaria;
         Apua = Papua;
         Serafina = Pserafina;
+        #endregion
+        #region Reset dos Efeitos
+        rotApua = false;
+        rotCosme = false;
+        rotMaria = false;
+        rotSerafina = false;
+        
+        #endregion
+        #region Resete das Posições
+        vMaria = new Vector2(400, 400);
+        vCosme = new Vector2(300, 400);
+        vApua = new Vector2(500, 400);
+        vSerafina = new Vector2(600, 400);
+        vCachorro = new Vector2(700, 400);
+        vCosmeObj = vCosme;
+        vMariaObj = vMaria;
+        vApuaObj = vApua;
+        vSerafinaObj = vSerafina;
+        vBolaCenario = new Vector2(451, 328);
+        vTV = new Vector2(873, 457);
+        BolaColor = Color.White;
+        #endregion
         #region Cena 01
         parte1 = false;
         parte2 = false;
