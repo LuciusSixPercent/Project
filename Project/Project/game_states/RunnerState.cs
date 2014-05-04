@@ -98,7 +98,7 @@ namespace game_states
                 bg = new Background(goManager.R2D);
                 field = new Field(goManager.R3D, rows, columns);
 
-                totalLoadingSteps = 5;
+                totalLoadingSteps = 6;
                 currentLoadingStep = 0;
 
                 goManager.AddObject(cam);
@@ -184,9 +184,12 @@ namespace game_states
                             player.Load(parent.Content);
                             break;
                         case 4:
-                            field.Load(parent.Content);
+                            ball.Load(parent.Content);
                             break;
                         case 5:
+                            field.Load(parent.Content);
+                            break;
+                        case 6:
                             LoadQuestions(1);
                             break;
                     }
@@ -197,21 +200,6 @@ namespace game_states
                     player.Position = Vector3.Zero;
                     contentLoaded = true;
                 }
-
-                /*
-                QuestionsDatabase.LoadQuestions();
-
-                player.Position = Vector3.Zero;
-
-                for (char c = 'A'; c <= 'Z'; c++)
-                {
-                    TextHelper.AddToCache(c.ToString());
-                }
-
-                LoadQuestions(1);
-
-                contentLoaded = true;
-                */
             }
         }
 
@@ -254,7 +242,6 @@ namespace game_states
                     ls.OverseeingState = this;
                     parent.EnterState(ls.ID);
                 }
-                //LoadContent();
             }
         }
 

@@ -35,6 +35,8 @@ namespace game_states
             base.Initialize();
             ab = new AnimatedBackground(goManager.R2D, "Menu" + Path.AltDirectorySeparatorChar + "Loading" + Path.AltDirectorySeparatorChar, "loading", 4, 250);
             goManager.AddObject(ab);
+            enterTransitionDuration = 300;
+            exitTransitionDuration = 100;
         }
 
         public override void Update(GameTime gameTime)

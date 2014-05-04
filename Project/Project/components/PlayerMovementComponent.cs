@@ -59,7 +59,7 @@ namespace components
             {
                 elapsed = 0;
 
-                if (ownerLastPos.Equals(owner.Position))
+                if (ownerLastPos.Equals(owner.Position) && direction != 0)
                 {
                     Direction = 0;
                     origin = destiny;
@@ -110,10 +110,6 @@ namespace components
                     float tmp = destiny;
                     destiny = origin;
                     origin = tmp;
-                }
-                if (destiny > owner.Position.X + movementAmount || destiny < owner.Position.X - movementAmount)
-                {
-                    destiny = oldDestiny;
                 }
             }
         }
