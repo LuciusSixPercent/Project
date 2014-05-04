@@ -82,6 +82,7 @@ namespace game_states
         {
             if (parent.IsActive)
             {
+                goToState = StatesIdList.MAIN_MENU;
                 ExitState();
             }
         }

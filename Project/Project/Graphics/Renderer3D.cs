@@ -16,7 +16,6 @@ namespace game_objects
         private Quad[] singleQuad;
         private SamplerState sampler;
         public static readonly BoundingBox DEFAULT_BOX = new BoundingBox(Vector3.Zero, Vector3.Zero);
-        public static readonly BoundingSphere DEFAULT_SPHERE = new BoundingSphere(Vector3.Zero, 0);
 
         public Camera Cam
         {
