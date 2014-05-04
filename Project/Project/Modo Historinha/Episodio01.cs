@@ -352,8 +352,8 @@ class Episodio01 : GameState
             vMariaObj = vMaria;
             vApuaObj = vApua;
             vSerafinaObj = vSerafina;
-            vBolaCenario = new Vector2(451, 328);
-            vTV = new Vector2(873, 457);
+            vBolaCenario = new Vector2(449, 328);
+            vTV = new Vector2(872, 457);
             BolaColor = Color.White;
             //rcApua = new Rectangle(300, 200, Papua.Width / 2, Papua.Height / 2);
             //rcSerafina = new Rectangle(400, 200, Pserafina.Width / 2, Pserafina.Height / 2);
@@ -367,6 +367,8 @@ class Episodio01 : GameState
     bool rotMaria = false;
     bool rotApua = false;
     bool rotSerafina = false;
+    int musica = 0;
+    int rep = 0;
     public override void Update(GameTime tempo)
     {
         if (!caderno)
@@ -384,8 +386,25 @@ class Episodio01 : GameState
                 }
                 if (engineSound == null || engineSound.IsStopped)
                 {
-                    engineSound = soundBank2.GetCue("385591_Night_sea_ln");
+                    if (musica == 0)
+                    {
+                        engineSound = soundBank2.GetCue("385591_Night_sea_ln");
+                        
+                        
+                    }
+                    if (musica == 1)
+                    {
+                        
+                        engineSound = null;
+                        engineSound = soundBank2.GetCue("549944_Trickster");
+                    }
+                    if (musica == 2)
+                    {
+                        engineSound = null;
+                        engineSound = soundBank2.GetCue("558441_Raikoh---Hoppy");
+                    }
                     engineSound.Play();
+
                 }
                 if (engineSound.IsPaused)
                 {
@@ -646,12 +665,20 @@ class Episodio01 : GameState
                             SerafinaColor = Color.White;
                             CachorroColor = Color.White;
                             CachorroSentar = true;
-
+                            
+                            //engineSound = null;
+                            
                         }
                         if (Incremento0 == 4)
                         {
                             ApuaColor = Color.White;
-
+                            if (rep == 0)
+                            {
+                                engineSound.Stop(AudioStopOptions.AsAuthored);
+                                musica = 1;
+                                rep = 1;
+                            }
+                            
                         }
 
                         SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
@@ -791,6 +818,7 @@ class Episodio01 : GameState
                         {
                             vCosmeObj.X = 600;
                             vApuaObj.X = 300;
+                            
                         }
                         if (Incremento0 == 1)
                         {
@@ -805,7 +833,7 @@ class Episodio01 : GameState
                             vApuaObj.X = 850;
                             vSerafinaObj.X = 850;
                             vCosmeObj.X = 850;
-
+                            rep = 0;
                         }
                         if (Incremento0 == 3)
                         {
@@ -829,11 +857,17 @@ class Episodio01 : GameState
                             CosmeColor = Color.Transparent;
                         }
                         SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
-                    }
+                   }
 
                 }
                 if (primeiro && segundo && terceiro && quarto && quinto && !sexto)
                 {
+                    if (rep == 0)
+                    {
+                        engineSound.Stop(AudioStopOptions.Immediate);
+                        musica = 2;
+                        rep = 1;
+                    }
                     CenarioIndice = 1;
                     vMariaObj.X = 350;
                     MariaAndeComBaldeSemBola = true;
@@ -849,7 +883,7 @@ class Episodio01 : GameState
                         if (Incremento0 == 0)
                         {
                             vMaria.X = 250;
-                            vMaria.Y = 350;
+                            vMaria.Y = 400;
                             
                             vMariaObj = vMaria;
 
@@ -860,6 +894,7 @@ class Episodio01 : GameState
                     }
                     if (parte6 && !exercicio6)
                     {
+                        vMaria = vMariaObj;
                         texto = "";
                         indice = 0;
                         Incremento0 = 0;
@@ -949,7 +984,7 @@ class Episodio01 : GameState
                 if (primeiro && segundo && terceiro && quarto && quinto && sexto && setimo && oitavo && !nono)
                 {
                     
-                    if (Incremento0 == 0)
+                    if (Incremento0 < 1 && oitavo)
                     {
                         
                         CenarioIndice = 1;
