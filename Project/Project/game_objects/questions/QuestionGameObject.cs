@@ -217,7 +217,7 @@ namespace game_objects.questions
                 this.answers[i].Position = position + offset;
                 this.answers[i].Visible = visible;
                 visible = false;
-                zIncrement += PublicRandom.Next(3, 8);
+                zIncrement += PublicRandom.Next(4, 8);
                 max--;
             }
         }
@@ -299,15 +299,17 @@ namespace game_objects.questions
         {
             float newZ = player.Position.Z + PublicRandom.Next(5, 8);
             bool usableZ = false; //utilizado para garantir que as respostas mantenham uma distância mínima de 2.5 (no eixo Z) umas das outras
+            int tries = 0;
             do
             {
                 newZ += PublicRandom.Next(1, 4);
                 foreach (Answer answer in answers)
                 {
-                    usableZ = (answer.Position.Z >= newZ + 2 || answer.Position.Z <= newZ - 2);
+                    usableZ = (answer.Position.Z >= newZ + 3 || answer.Position.Z <= newZ - 3);
                     if (!usableZ) break;
                 }
-            } while (!usableZ);
+                tries++;
+            } while (!usableZ && tries < 10);
 
             a.Position = new Vector3(a.Position.X, PublicRandom.Next(3, 5), newZ);
             a.Visible = false;

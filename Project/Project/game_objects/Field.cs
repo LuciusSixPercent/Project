@@ -69,7 +69,7 @@ namespace game_objects
             keepMoving = true;
             textures = new Texture2D[4];
             floorTiles = new Quad[rows * columns];
-            props = new Prop[80];
+            props = new Prop[256];
             cactus = new Texture2D[4];
             grass = new Texture2D[12];
             rock = new Texture2D[13];
@@ -81,10 +81,11 @@ namespace game_objects
         private void DefinePropsWeight()
         {
             propsWeight = new float[4];
-            propsWeight[0] = 0.4f;  //tree
-            propsWeight[1] = 0.5f;  //cactus
-            propsWeight[2] = 0.6f;  //grass
-            propsWeight[3] = 0.85f;  //rock
+            propsWeight[0] = 0.01f;  //tree
+            propsWeight[1] = 0.2f;  //cactus
+            propsWeight[2] = 0.65f;  //grass
+            propsWeight[3] = 0.95f;  //rock
+            
         }
 
         private void initQuads()
@@ -170,7 +171,7 @@ namespace game_objects
                     break;
                 case PropType.TREE:
                     tex = tree[PublicRandom.Next(tree.Length)];
-                    baseScale = (float)PublicRandom.NextDouble(0.75) * PublicRandom.Next(1, 3) + PublicRandom.Next(2);
+                    baseScale = (float)PublicRandom.NextDouble(0.5) + PublicRandom.Next(1, 3) + PublicRandom.Next(2);
                     break;
                 default:
                     tex = null;
