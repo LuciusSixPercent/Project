@@ -44,6 +44,21 @@ namespace game_objects
             set { keepMoving = value; }
         }
 
+        public override Vector3 Position
+        {
+            get
+            {
+                return base.Position;
+            }
+            set
+            {
+                base.Position = value;
+                initQuads();
+                foreach (Prop p in props)
+                    p.Position = GetRandomPropPosition();
+            }
+        }
+
         public Field(Renderer3D renderer, int rows, int columns)
             : base(renderer)
         {
@@ -52,7 +67,7 @@ namespace game_objects
             this.rows = rows;
             this.columns = columns;
             keepMoving = true;
-            textures = new Texture2D[2];
+            textures = new Texture2D[4];
             floorTiles = new Quad[rows * columns];
             props = new Prop[80];
             cactus = new Texture2D[4];
@@ -89,7 +104,7 @@ namespace game_objects
                 initialCoord.Z += scale;
                 initialCoord.X = leftColumnX;
             }
-            BoundingBox = new BoundingBox(floorTiles[0].Vertices[0].Position, floorTiles[floorTiles.Length - 1].Vertices[3].Position);
+            BoundingBox = new BoundingBox(floorTiles[0].LowerLeft, floorTiles[floorTiles.Length - 1].UpperRight);
             goal.Position = new Vector3(0, 0, boundingBox.Max.Z - fieldPadding - 0.5f);
             bleachers.Position = new Vector3(0, 0, boundingBox.Max.Z - fieldPadding + 1.5f);
         }
@@ -99,6 +114,8 @@ namespace game_objects
             string path = "Imagem" + Path.AltDirectorySeparatorChar + "Cenario" + Path.AltDirectorySeparatorChar + "Bate_Bola" + Path.AltDirectorySeparatorChar;
             textures[0] = cManager.Load<Texture2D>(path + "grass");
             textures[1] = cManager.Load<Texture2D>(path + "soil");
+            textures[2] = cManager.Load<Texture2D>(path + "grass_soil_transition");
+            textures[3] = Flip(textures[2]);
             goal.Load(cManager);
             bleachers.Load(cManager);
             path += "Props" + Path.AltDirectorySeparatorChar;
@@ -114,7 +131,7 @@ namespace game_objects
             for (int i = 0; i < props.Length; i++)
             {
                 float baseScale = 0f;
-                Texture2D tex = GetRandomPropTexture(out baseScale, 0.75);
+                Texture2D tex = GetRandomPropTexture(out baseScale, propsWeight[3]);
                 props[i] = new Prop((Renderer3D)Renderer, baseScale);
                 props[i].Texture = tex;
                 props[i].Position = GetRandomPropPosition();
@@ -141,19 +158,19 @@ namespace game_objects
             {
                 case PropType.CACTUS:
                     tex = cactus[PublicRandom.Next(cactus.Length)];
-                    baseScale = (float)PublicRandom.NextDouble(0.5, 0.8);
+                    baseScale = (float)PublicRandom.NextDouble(0.5);
                     break;
                 case PropType.GRASS:
                     tex = grass[PublicRandom.Next(grass.Length)];
-                    baseScale = (float)PublicRandom.NextDouble(0.2, 0.5);
+                    baseScale = (float)PublicRandom.NextDouble(0.1, 0.4);
                     break;
                 case PropType.ROCK:
                     tex = rock[PublicRandom.Next(rock.Length)];
-                    baseScale = (float)PublicRandom.NextDouble(0.1, 0.5);
+                    baseScale = (float)PublicRandom.NextDouble(0.1, 0.75);
                     break;
                 case PropType.TREE:
                     tex = tree[PublicRandom.Next(tree.Length)];
-                    baseScale = (float)PublicRandom.NextDouble(0.75) * PublicRandom.Next(3);
+                    baseScale = (float)PublicRandom.NextDouble(0.75) * PublicRandom.Next(1, 3) + PublicRandom.Next(2);
                     break;
                 default:
                     tex = null;
@@ -197,13 +214,26 @@ namespace game_objects
         public override void Draw(GameTime gameTime)
         {
             int textureIndex = 1;
+            int grassLeftBound = (int)Math.Round((float)columns / 2, MidpointRounding.ToEven) + 3;
+            int grassRightBound = (int)Math.Round((float)columns / 2, MidpointRounding.ToEven) - 3;
             for (int i = 0; i < floorTiles.Length; i++)
             {
-                if (i % columns == Math.Round((float)columns / 2, MidpointRounding.ToEven) + 3 || i / columns >= rows - fieldPadding)
+                int column = i % columns;
+                int row = i / columns;
+
+                if (column < grassRightBound || column > grassLeftBound || row >= rows - fieldPadding)
                 {
                     textureIndex = 1;
-                } else
-                if (i % columns == Math.Round((float)columns/2, MidpointRounding.AwayFromZero) - 3)
+                }
+                else if (column == grassLeftBound)
+                {
+                    textureIndex = 2;
+                }
+                else if (column == grassRightBound)
+                {
+                    textureIndex = 3;
+                }
+                else
                 {
                     textureIndex = 0;
                 }
@@ -283,22 +313,42 @@ namespace game_objects
             bleachers.Translate(amount);
         }
 
-        public override Vector3 Position
-        {
-            get
-            {
-                return base.Position;
-            }
-            set
-            {
-                base.Position = value;
-                initQuads();
-            }
-        }
-
         public override bool Collided(CollidableGameObject obj)
         {
             return obj.BoundingBox.Min.Y < position.Y;
+        }
+
+        public static Texture2D Flip(Texture2D source)
+        {
+            Texture2D flipped = new Texture2D(source.GraphicsDevice, source.Width, source.Height, true, SurfaceFormat.Color);
+            SpriteBatch sb = new SpriteBatch(source.GraphicsDevice);
+            float scale = 1f;
+            for (int i = 0; i < source.LevelCount; i++)
+            {
+                RenderTarget2D rt2d = new RenderTarget2D(source.GraphicsDevice, (int)(source.Width * scale), (int)(source.Height * scale));
+                rt2d.GraphicsDevice.SetRenderTarget(rt2d);
+                                
+                sb.Begin();
+                sb.Draw(source, Vector2.Zero, null, Color.White, 0, Vector2.Zero, scale, SpriteEffects.FlipHorizontally, 0);
+                sb.End();
+
+                rt2d.GraphicsDevice.SetRenderTarget(null);
+                
+                Color[] flippedData = new Color[rt2d.Width * rt2d.Height];
+                rt2d.GetData<Color>(flippedData);
+                flipped.SetData<Color>(i, null, flippedData, 0, flippedData.Length);
+                rt2d.Dispose();
+                scale /= 2;
+            }
+            
+            sb.Dispose();
+            return flipped;
+        }
+
+        internal void Reset()
+        {
+            KeepMoving = true;
+            Position = Vector3.Backward;
         }
     }
 }

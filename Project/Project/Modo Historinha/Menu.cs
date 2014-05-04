@@ -372,7 +372,8 @@ using Microsoft.Xna.Framework.Audio;
                                 engineSound.Stop(AudioStopOptions.AsAuthored);
                                 MediaPlayer.Stop();
                                 BateBola = false;
-                                parent.EnterState((int)StatesIdList.RUNNER);
+                                //parent.EnterState((int)StatesIdList.RUNNER);
+                                parent.EnterState((int)StatesIdList.CHAR_SELECTION);
                             }
                         #endregion
                     }

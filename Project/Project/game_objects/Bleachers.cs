@@ -90,12 +90,7 @@ namespace game_objects
         private void createQuad()
         {
             quad = new Quad(position + new Vector3(0, quadHeightScale / 2, 0), new Vector3(0, 0, -1), Vector3.Up, quadWidthScale, quadHeightScale);
-
-            Vector3 backUpperLeft = quad.Vertices[1].Position;
-
-            Vector3 frontBottomRight = quad.Vertices[2].Position;
-
-            BoundingBox = new BoundingBox(frontBottomRight, backUpperLeft);
+            BoundingBox = new BoundingBox(quad.LowerLeft, quad.UpperRight);
         }
     }
 }

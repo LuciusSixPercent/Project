@@ -69,8 +69,11 @@ namespace game_states
 
         void titleScreen_mouseClicked(Button btn)
         {
-            toTile = true;
-            ExitState();
+            if (parent.IsActive)
+            {
+                toTile = true;
+                ExitState();
+            }
         }
 
         void optionsMenu_mouseClicked(Button btn)
@@ -142,6 +145,10 @@ namespace game_states
             {
                 base.EnterState(freezeBelow);
                 LoadContent();
+                toTile = false;
+                resumeGame.Enable();
+                titleScreen.Enable();
+                configMenu.Enable();
             }
         }
 
@@ -156,6 +163,9 @@ namespace game_states
             {
                 if (!exit)
                 {
+                    resumeGame.Disable();
+                    titleScreen.Disable();
+                    configMenu.Disable();
                     base.ExitState();
                 }
                 else

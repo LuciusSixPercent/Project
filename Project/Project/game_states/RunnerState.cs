@@ -21,7 +21,7 @@ namespace game_states
         private QuestionSubject[] subjects;
 
         int columns = 33;
-        int rows = 34;
+        int rows = 31;
 
         private Camera cam;
         private Character player;
@@ -163,8 +163,6 @@ namespace game_states
 
                 QuestionsDatabase.LoadQuestions();
 
-                TextHelper.LoadDefaultFont(parent.Content);
-
                 player.Position = Vector3.Zero;
 
                 for (char c = 'A'; c <= 'Z'; c++)
@@ -187,8 +185,7 @@ namespace game_states
             cam.Position = new Vector3(0f, 3f, -4f);
             cam.lookAt(new Vector3(0f, 0.25f, 2f), true);
             goManager.R3D.updateEffect(cam.View, cam.Projection);
-            field.KeepMoving = true;
-            field.Position = Vector3.Backward;
+            field.Reset();
             score = 0;
             perfectSscoreMultiplier = 2;
             foreach (QuestionGameObject q in questions)
@@ -222,7 +219,6 @@ namespace game_states
                 parent.ExitState(ID);
                 Reset();
             }
-
         }
         #endregion
 

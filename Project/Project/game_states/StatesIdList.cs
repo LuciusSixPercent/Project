@@ -18,6 +18,7 @@ namespace game_states
         OPTIONS = 30,
         STORY = 40,
         RUNNER = 50,
-        PAUSE = 60
+        PAUSE = 60,
+        CHAR_SELECTION = 70
     }
 }

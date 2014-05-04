@@ -119,6 +119,7 @@
     <Compile Include="game_objects\Bleachers.cs" />
     <Compile Include="game_objects\Prop.cs" />
     <Compile Include="game_objects\PropType.cs" />
+    <Compile Include="game_objects\ui\AnimatedButton.cs" />
     <Compile Include="game_objects\ui\Button.cs" />
     <Compile Include="game_objects\Camera.cs" />
     <Compile Include="game_objects\CollidableGameObject.cs" />
@@ -136,6 +137,8 @@
     <Compile Include="game_objects\questions\QuestionSubject.cs" />
     <Compile Include="game_objects\questions\QuestionType.cs" />
     <Compile Include="game_objects\ui\ButtonStates.cs" />
+    <Compile Include="game_states\CharSelectionState.cs" />
+    <Compile Include="game_states\ConfigMenuState.cs" />
     <Compile Include="graphics\Renderer.cs" />
     <Compile Include="graphics\Renderer2D.cs" />
     <Compile Include="graphics\Renderer3D.cs" />

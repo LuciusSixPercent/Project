@@ -93,6 +93,7 @@ namespace game_states
         public virtual void EnterState(bool freezeBelow)
         {
             enteringState = true;
+            exit = false;
             this.freezeBelow = freezeBelow;
             alphaIncrement = (float)1 / (enterTransitionDuration == 0 ? 1 : enterTransitionDuration);
         }
@@ -163,6 +164,7 @@ namespace game_states
             contentLoaded = true;
             goManager.Load(parent.Content);
         }
+
         public virtual void Draw(GameTime gameTime)
         {
             goManager.Draw(gameTime);

@@ -10,7 +10,7 @@ namespace game_objects.ui
     /// </summary>
     public enum ButtonStates
     {
-        DEFAULT,
+        NORMAL,
         HOVERING,
         PRESSING
     }

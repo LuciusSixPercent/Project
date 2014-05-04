@@ -65,6 +65,9 @@ namespace Project
 
             PauseState ps = new PauseState((int)StatesIdList.PAUSE, this);
             states.Add(ps.ID, ps);
+
+            CharSelectionState css = new CharSelectionState((int)StatesIdList.CHAR_SELECTION, this);
+            states.Add(css.ID, css);
         }
 
         public bool EnterState(int id)
@@ -143,6 +146,7 @@ namespace Project
 
         protected override void LoadContent()
         {
+            TextHelper.LoadDefaultFont(this.Content);
         }
 
         protected override void UnloadContent()

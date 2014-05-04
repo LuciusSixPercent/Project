@@ -13,21 +13,55 @@ namespace game_objects.ui
 {
     public class Button : DrawableGameObject
     {
-        Rectangle bounds;
+        private Rectangle bounds;
 
-        Texture2D[] textures;
+        protected Texture2D[] textures;
 
         private ButtonStates state;
 
         private string text;
         private bool useText;
-        private Color color;
+        private Color btnColor;
+
+        private Vector2 textPosition;
+
+        private bool enabled;
 
         public delegate void MouseClicked(Button btn);
         public event MouseClicked mouseClicked;
 
         private string filePath;
         private string baseFileName;
+        private float colorModifier;
+
+        public float ColorModifier
+        {
+            get { return colorModifier; }
+            set { colorModifier = value; }
+        }
+        
+        public bool Enabled
+        {
+            get { return enabled; }
+        }
+
+        protected Color BtnColor
+        {
+            get { return btnColor; }
+            set { btnColor = value; }
+        }
+
+        public Vector2 TextPosition
+        {
+            get { return textPosition; }
+            set { textPosition = value; }
+        }
+
+        public Rectangle Bounds
+        {
+            get { return bounds; }
+            set { bounds = value; }
+        }
 
         /// <summary>
         /// O nome da textura que será utilizada nem nenhum sufixo (N, H, P).
@@ -75,15 +109,20 @@ namespace game_objects.ui
             cc.exit += new ClickComponent.Exit(cc_exit);
             cc.hover += new ClickComponent.Hover(cc_hover);
             addComponent(cc);
-            this.state = ButtonStates.DEFAULT;
-            this.color = Color.White;
+            this.state = ButtonStates.NORMAL;
+            this.btnColor = Color.White;
             this.bounds = bounds;
-            this.textures = new Texture2D[3];
+            this.textPosition = Vector2.Zero;
+            this.useText = true;
             this.Visible = true;
+            this.enabled = true;
+            this.colorModifier = 1f;
         }
 
-        void cc_hover(bool hovering)
+        protected void cc_hover(bool hovering)
         {
+            if (!enabled) return;
+
             if (hovering)
             {
                 if (state != ButtonStates.PRESSING)
@@ -91,34 +130,40 @@ namespace game_objects.ui
             }
             else if (state != ButtonStates.PRESSING)
             {
-                state = ButtonStates.DEFAULT;
+                state = ButtonStates.NORMAL;
             }
         }
 
-        void cc_release()
+        protected void cc_release()
         {
-            if(state != ButtonStates.HOVERING)
-                state = ButtonStates.DEFAULT;
+            if (state != ButtonStates.HOVERING)
+                state = ButtonStates.NORMAL;
         }
 
-        void cc_press()
+        protected void cc_press()
         {
-            state = ButtonStates.PRESSING;
+            if(enabled)
+                state = ButtonStates.PRESSING;
         }
 
-        void cc_exit()
+        protected void cc_exit()
         {
-            
+
         }
 
-        void cc_enter()
+        protected void cc_enter()
         {
         }
 
-        void cc_click()
+        protected virtual void cc_click()
         {
-            if (mouseClicked != null && Visible)
+            if (CanClick())
                 mouseClicked(this);
+        }
+
+        protected bool CanClick()
+        {
+            return mouseClicked != null && Visible && Enabled;
         }
 
         public override void Update(GameTime gameTime)
@@ -130,22 +175,19 @@ namespace game_objects.ui
         {
             if (Visible)
             {
-                ((Renderer2D)Renderer).Draw(textures[(int)state], bounds, color, BlendState.AlphaBlend);
-                if (!String.IsNullOrEmpty(text) && UseText)
-                {
-                    DrawText(gameTime);
-                }
+                int index = (int)state;
+
+                ((Renderer2D)Renderer).Draw(textures[index], bounds, btnColor*colorModifier, BlendState.AlphaBlend);
+                DrawText(gameTime);
             }
         }
 
-        private void DrawText(GameTime gameTime)
+        protected void DrawText(GameTime gameTime)
         {
-            Vector2 textSize = TextHelper.SpriteFont.MeasureString(text);
-            float scale = 1;
-            if (textSize.X > bounds.Width) //texto só mudará de escala caso seja maior que o botão
-                scale = (float)bounds.Width / textSize.X;
-            Vector2 position = new Vector2(bounds.X + (bounds.Width - textSize.X * scale) / 2, bounds.Y + (bounds.Height - textSize.Y * scale) / 2); //centraliza texto no botão
-            ((Renderer2D)Renderer).DrawString(text, position, color);
+            if (!String.IsNullOrEmpty(text) && UseText)
+            {                
+                ((Renderer2D)Renderer).DrawString(text, textPosition, btnColor * colorModifier);
+            }
         }
 
         public override void Load(ContentManager cManager)
@@ -156,10 +198,37 @@ namespace game_objects.ui
             }
             if (!string.IsNullOrEmpty(baseFileName))
             {
+                this.textures = new Texture2D[4];
                 textures[0] = cManager.Load<Texture2D>(filePath + baseFileName + "N");
                 textures[1] = cManager.Load<Texture2D>(filePath + baseFileName + "H");
                 textures[2] = cManager.Load<Texture2D>(filePath + baseFileName + "P");
+                textures[3] = textures[2];
             }
+            CenterText();
+        }
+
+        protected void CenterText()
+        {
+            if (!string.IsNullOrEmpty(text))
+            {
+                Vector2 textSize = TextHelper.SpriteFont.MeasureString(text);
+                float scale = 1;
+                if (textSize.X > bounds.Width) //texto só mudará de escala caso seja maior que o botão
+                    scale = (float)bounds.Width / textSize.X;
+                textPosition = new Vector2(bounds.X + (bounds.Width - textSize.X * scale) / 2, bounds.Y + (bounds.Height - textSize.Y * scale) / 2); //centraliza texto no botão
+            }
+        }
+
+        public void Disable()
+        {
+            enabled = false;
+            colorModifier = 0.5f;
+        }
+
+        public void Enable()
+        {
+            enabled = true;
+            colorModifier = 1f;
         }
     }
 }

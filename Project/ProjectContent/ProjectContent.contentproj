@@ -1383,11 +1383,107 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Cenario\Bate_Bola\soil.jpg">
+    <Compile Include="Imagem\Cenario\Bate_Bola\grass_soil_transition.png">
+      <Name>grass_soil_transition</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
+    </Compile>
+    <Compile Include="Imagem\Cenario\Bate_Bola\soil.png">
       <Name>soil</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\testBtnH1.png">
+      <Name>testBtnH1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\testBtnH2.png">
+      <Name>testBtnH2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\testBtnH3.png">
+      <Name>testBtnH3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\testBtnH4.png">
+      <Name>testBtnH4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\testBtnH5.png">
+      <Name>testBtnH5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\testBtnH6.png">
+      <Name>testBtnH6</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\testBtnN1.png">
+      <Name>testBtnN1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\testBtnC1.png">
+      <Name>testBtnC1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\testBtnP1.png">
+      <Name>testBtnP1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\testBtnC10.png">
+      <Name>testBtnC10</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\testBtnC2.png">
+      <Name>testBtnC2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\testBtnC3.png">
+      <Name>testBtnC3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\testBtnC4.png">
+      <Name>testBtnC4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\testBtnC5.png">
+      <Name>testBtnC5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\testBtnC6.png">
+      <Name>testBtnC6</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\testBtnC7.png">
+      <Name>testBtnC7</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\testBtnC8.png">
+      <Name>testBtnC8</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\testBtnC9.png">
+      <Name>testBtnC9</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
     <Content Include="questions.xml">
       <Name>questions</Name>

@@ -14,6 +14,9 @@ namespace game_objects
         private BoundingFrustum frustum;
         private Camera cam;
         private Quad[] singleQuad;
+        private SamplerState sampler;
+        public static readonly BoundingBox DEFAULT_BOX = new BoundingBox(Vector3.Zero, Vector3.Zero);
+        public static readonly BoundingSphere DEFAULT_SPHERE = new BoundingSphere(Vector3.Zero, 0);
 
         public Camera Cam
         {
@@ -45,6 +48,9 @@ namespace game_objects
         {
             initEffect();
             singleQuad = new Quad[1];
+            sampler = new SamplerState();
+            sampler.Filter = TextureFilter.Linear;
+            sampler.MipMapLevelOfDetailBias = -0.5f;
         }
 
         void cam_cam_moved()
@@ -73,19 +79,36 @@ namespace game_objects
             basicEffect.FogEnd = end;
         }
 
-        public void Draw(Texture2D texture, IEnumerable<Quad> quads, BlendState blendState, BoundingBox bbox)
+        public void Draw(Texture2D texture, IEnumerable<Quad> quads, BlendState blendState, BoundingBox bbox, SamplerState sampler = null)
         {
             if (!texture.IsDisposed)
             {
+                //necessário para que os objetos "3D" sejam desenhados na ordem correta
+                GDevice.DepthStencilState = DepthStencilState.Default;
                 GDevice.BlendState = blendState;
                 basicEffect.Texture = texture;
+                if (sampler != null)
+                {
+                    gDevice.SamplerStates[0] = sampler;
+                }
+                else
+                {
+                    gDevice.SamplerStates[0] = this.sampler;
+                }
 
                 foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes)
                 {
                     pass.Apply();
                     foreach (Quad quad in quads)
                     {
-                        drawQuad(quad, bbox);
+                        ContainmentType containment = ContainmentType.Intersects;
+                        if (!DEFAULT_BOX.Equals(bbox))
+                        {
+                            containment = frustum.Contains(bbox);
+                        }
+                        bool visibleToCamera = containment != ContainmentType.Disjoint;
+                        if(visibleToCamera)
+                            drawQuad(quad);
                     }
                 }
             }
@@ -97,20 +120,19 @@ namespace game_objects
             Draw(texture, singleQuad, blendState, bbox);
         }
 
-        private void drawQuad(Quad quad, BoundingBox bbox)
+        public void Draw(Texture2D texture, Quad quad, BlendState blendState, BoundingBox bbox, SamplerState ss = null)
         {
-            //necessário para que os objetos "3D" sejam desenhados na ordem correta
-            GDevice.DepthStencilState = DepthStencilState.Default;
-            ContainmentType containment = frustum.Contains(bbox);
-            bool visibleToCamera = containment != ContainmentType.Disjoint;
-            if (visibleToCamera)
-            {
-                GDevice.DrawUserIndexedPrimitives
+            singleQuad[0] = quad;
+            Draw(texture, singleQuad, blendState, bbox);
+        }
+
+        private void drawQuad(Quad quad)
+        {
+            GDevice.DrawUserIndexedPrimitives
                     <VertexPositionNormalTexture>(
                     PrimitiveType.TriangleList,
                     quad.Vertices, 0, 4,
                     Quad.Indexes, 0, 2);
-            }
         }
     }
 }
