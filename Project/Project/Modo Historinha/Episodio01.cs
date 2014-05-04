@@ -187,7 +187,6 @@ class Episodio01 : GameState
     string texto = "";
     int indice = 0;
     bool pauseFlag;
-    private bool contentLoaded;
     int CaixaTexto, Cy;
     int zerar = 0;
     Color cor;
@@ -1107,7 +1106,7 @@ class Episodio01 : GameState
         SpriteBatch.End();
     }
     int segurança = 0;
-    protected override void LoadContent()
+    public override void LoadContent()
     {
         if (!contentLoaded)
         {

@@ -12,7 +12,6 @@ namespace Project
     class CadernoDeAtividades:GameState 
     {
         Episodio01 questions;
-        bool contentLoaded = false;
         int Page = 0;
         SpriteFont arial;
         Texture2D livro;
@@ -352,7 +351,7 @@ namespace Project
             
             SpriteBatch.End();
         }
-        protected override void LoadContent()
+        public override void LoadContent()
         {
             if (!contentLoaded)
             {
@@ -367,8 +366,7 @@ namespace Project
             if (!exitingState)
             {
                 base.EnterState(freezeBelow);
-                LoadContent();
-                
+                LoadContent();                
 
 
             }

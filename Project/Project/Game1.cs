@@ -68,6 +68,9 @@ namespace Project
 
             CharSelectionState css = new CharSelectionState((int)StatesIdList.CHAR_SELECTION, this);
             states.Add(css.ID, css);
+
+            LoadingState ls = new LoadingState((int)StatesIdList.LOADING, this);
+            states.Add(ls.ID, ls);
         }
 
         public bool EnterState(int id)

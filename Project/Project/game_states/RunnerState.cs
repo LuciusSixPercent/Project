@@ -20,6 +20,9 @@ namespace game_states
         private RunnerLevel level;
         private QuestionSubject[] subjects;
 
+        private int currentLoadingStep;
+        private int totalLoadingSteps;
+
         int columns = 33;
         int rows = 31;
 
@@ -27,9 +30,9 @@ namespace game_states
         private Character player;
         private Ball ball;
         private List<QuestionGameObject> questions;
+        private Background bg;
         private Field field;
 
-        //private GameObjectsManager goManager;
         private int foundAnswer; //0 for no; 1 for correct; -1 for incorrect
 
         private int score;
@@ -92,10 +95,14 @@ namespace game_states
                 cam.createProjection(MathHelper.PiOver4, parent.GraphicsDevice.Viewport.AspectRatio);
                 goManager.R3D.Cam = cam;
 
+                bg = new Background(goManager.R2D);
                 field = new Field(goManager.R3D, rows, columns);
 
+                totalLoadingSteps = 5;
+                currentLoadingStep = 0;
+
                 goManager.AddObject(cam);
-                goManager.AddObject(new Background(goManager.R2D));
+                goManager.AddObject(bg);
                 goManager.AddObject(field);
                 goManager.AddObject(ball);
                 goManager.AddObject(player);
@@ -155,12 +162,43 @@ namespace game_states
             pmc.Lock();
         }
 
-        protected override void LoadContent()
+        public override void LoadContent()
         {
             if (!ContentLoaded)
             {
-                base.LoadContent();
+                //base.LoadContent();
+                if (currentLoadingStep <= totalLoadingSteps)
+                {
+                    switch (currentLoadingStep)
+                    {
+                        case 0:
+                            CacheLetters();
+                            break;
+                        case 1:
+                            QuestionsDatabase.LoadQuestions();
+                            break;
+                        case 2:
+                            bg.Load(parent.Content);
+                            break;
+                        case 3:
+                            player.Load(parent.Content);
+                            break;
+                        case 4:
+                            field.Load(parent.Content);
+                            break;
+                        case 5:
+                            LoadQuestions(1);
+                            break;
+                    }
+                    currentLoadingStep++;
+                }
+                else
+                {
+                    player.Position = Vector3.Zero;
+                    contentLoaded = true;
+                }
 
+                /*
                 QuestionsDatabase.LoadQuestions();
 
                 player.Position = Vector3.Zero;
@@ -171,6 +209,17 @@ namespace game_states
                 }
 
                 LoadQuestions(1);
+
+                contentLoaded = true;
+                */
+            }
+        }
+
+        private void CacheLetters()
+        {
+            for (char c = 'A'; c <= 'Z'; c++)
+            {
+                TextHelper.AddToCache(c.ToString());
             }
         }
 
@@ -199,7 +248,13 @@ namespace game_states
             if (!exitingState)
             {
                 base.EnterState(freezeBelow);
-                LoadContent();
+                if (!ContentLoaded)
+                {
+                    LoadingState ls = (LoadingState)parent.getState((int)StatesIdList.LOADING);
+                    ls.OverseeingState = this;
+                    parent.EnterState(ls.ID);
+                }
+                //LoadContent();
             }
         }
 
@@ -224,50 +279,48 @@ namespace game_states
 
         public override void Update(GameTime gameTime)
         {
-            base.Update(gameTime);
-            if (stateEntered)
+            if (ContentLoaded)
             {
-                if (!exitingState)
+                base.Update(gameTime);
+                if (stateEntered)
                 {
-                    if (!finished)
+                    if (!exitingState)
                     {
-                        //Wave
-                        if (engineSound == null)
+                        if (!finished)
                         {
-                            engineSound = soundBank3.GetCue("540428_quotSports-Fanaticq");
-                            //engineSound.Play();
-                        }
-                        if (engineSound.IsPaused)
-                        {
-                            //engineSound.Resume();
-                        }
-                        //
-                        CheckAnswer();
-                        if (answeredAll)
-                        {
-                            field.KeepMoving = false;
-                            if (field.Goal.Position.Z - player.Position.Z <= 8 && player.KeepMoving)
+                            //Wave
+                            if (engineSound == null)
                             {
-                                player.KickBall(perfectSscoreMultiplier == 2);
-                                cam.KeepMoving = false;
+                                engineSound = soundBank3.GetCue("540428_quotSports-Fanaticq");
+                                //engineSound.Play();
                             }
+                            if (engineSound.IsPaused)
+                            {
+                                //engineSound.Resume();
+                            }
+                            //
+                            CheckAnswer();
+                            if (answeredAll)
+                            {
+                                field.KeepMoving = false;
+                                if (field.Goal.Position.Z - player.Position.Z <= 8 && player.KeepMoving)
+                                {
+                                    player.KickBall(perfectSscoreMultiplier == 2);
+                                    cam.KeepMoving = false;
+                                }
+                            }
+
+                            handleInput();
                         }
 
-                        handleInput();
                     }
-                    
+
                 }
-                else
+                else if (exit)
                 {
                     engineSound.Stop(AudioStopOptions.AsAuthored);
                     ExitState();
                 }
-
-            }
-            else if (exit)
-            {
-                engineSound.Stop(AudioStopOptions.AsAuthored);
-                ExitState();
             }
         }
 
@@ -350,30 +403,32 @@ namespace game_states
         #region DRAWING
         public override void Draw(GameTime gameTime)
         {
-
-            base.Draw(gameTime);
-            string header = "";
-            int questionScore = 0;
-            int answerValue = 0;
-            if (questions.Count > 0)
+            if (ContentLoaded)
             {
-                header = questions[questions.Count - 1].Header;
-                questionScore = questions[questions.Count - 1].Score;
-                answerValue = questions[questions.Count - 1].CurrentAnswerValue;
-            }
+                base.Draw(gameTime);
+                string header = "";
+                int questionScore = 0;
+                int answerValue = 0;
+                if (questions.Count > 0)
+                {
+                    header = questions[questions.Count - 1].Header;
+                    questionScore = questions[questions.Count - 1].Score;
+                    answerValue = questions[questions.Count - 1].CurrentAnswerValue;
+                }
 
-            //*
-            goManager.R2D.DrawString(header, Vector2.Zero, Color.RosyBrown);
-            goManager.R2D.DrawString("Pontos acumulados na iteração: " + score + " x (" + perfectSscoreMultiplier + ")", new Vector2(0, 30), Color.RosyBrown);
-            goManager.R2D.DrawString("Pontos acumulados na questão: " + questionScore, new Vector2(0, 60), Color.RosyBrown);
-            goManager.R2D.DrawString("Valor da resposta atual: " + answerValue, new Vector2(0, 90), Color.RosyBrown);
-            goManager.R2D.DrawString("Questões restantes " + questions.Count, new Vector2(0, 120), Color.RosyBrown);
-            if (exitingState)
-            {
-                goManager.R2D.DrawString("Alpha " + Alpha, new Vector2(400, 150), Color.Black);
+                //*
+                goManager.R2D.DrawString(header, Vector2.Zero, Color.RosyBrown);
+                goManager.R2D.DrawString("Pontos acumulados na iteração: " + score + " x (" + perfectSscoreMultiplier + ")", new Vector2(0, 30), Color.RosyBrown);
+                goManager.R2D.DrawString("Pontos acumulados na questão: " + questionScore, new Vector2(0, 60), Color.RosyBrown);
+                goManager.R2D.DrawString("Valor da resposta atual: " + answerValue, new Vector2(0, 90), Color.RosyBrown);
+                goManager.R2D.DrawString("Questões restantes " + questions.Count, new Vector2(0, 120), Color.RosyBrown);
+                if (exitingState)
+                {
+                    goManager.R2D.DrawString("Alpha " + Alpha, new Vector2(400, 150), Color.Black);
+                }
+                goManager.R2D.End();
+                //*/
             }
-            goManager.R2D.End();
-            //*/
         }
 
         #endregion

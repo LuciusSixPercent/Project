@@ -87,7 +87,7 @@ namespace game_states
             }
         }
 
-        protected override void LoadContent()
+        public override void LoadContent()
         {
             if (!ContentLoaded)
             {

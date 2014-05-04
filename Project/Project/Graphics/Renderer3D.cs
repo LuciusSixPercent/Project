@@ -80,7 +80,7 @@ namespace game_objects
 
         public void Draw(Texture2D texture, IEnumerable<Quad> quads, BlendState blendState, BoundingBox bbox, SamplerState sampler = null)
         {
-            if (!texture.IsDisposed)
+            if (texture != null && !texture.IsDisposed)
             {
                 //necessário para que os objetos "3D" sejam desenhados na ordem correta
                 GDevice.DepthStencilState = DepthStencilState.Default;

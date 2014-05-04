@@ -40,6 +40,7 @@ namespace game_objects
 
         public void Draw(Texture2D texture, Vector2 position, Color color, BlendState blendState)
         {
+            if (texture == null) return;
             GDevice.BlendState = blendState;
             if (!beganSpriteBatch)
             {

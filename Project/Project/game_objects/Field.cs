@@ -141,11 +141,8 @@ namespace game_objects
 
         private Vector3 GetRandomPropPosition(int min = 0)
         {
-            float x;
-            do
-            {
-                x = (float)(PublicRandom.Next(columns * 100) - PublicRandom.Next(columns * 50)) / 100;
-            } while ((x >= -3 && x <= 3) || (x > 10 || x < -10));
+            float x = (float)(PublicRandom.Next(300, 800)) / 100;
+            x *= PublicRandom.Next(2) == 0 ? 1 : -1;
             float z = (float)PublicRandom.Next(min, rows * 100) / 100;
 
             return new Vector3(x, 0, z) + position;

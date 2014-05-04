@@ -22,7 +22,6 @@ using Microsoft.Xna.Framework.Audio;
         Rectangle rcSeta, rcmenu1, rcmenu2, rcmenu3, rcmenu4, rcmenu5, rcmenu6, rcfundo, rcOK, rcCancelar, rcbarra, rcMedidor, vVoltar;
         Vector2[] menus;
         bool pauseFlag;
-        private bool contentLoaded;
         int escolha = 0;
         bool repetir = true;
         Song Inicio,select;
@@ -449,7 +448,7 @@ using Microsoft.Xna.Framework.Audio;
             return false;
         }
         
-        protected override void LoadContent()
+        public override void LoadContent()
         {
             if (!contentLoaded)
             {

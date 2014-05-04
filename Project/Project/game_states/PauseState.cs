@@ -94,7 +94,7 @@ namespace game_states
             return btn;
         }
 
-        protected override void LoadContent()
+        public override void LoadContent()
         {
             if (!ContentLoaded)
             {

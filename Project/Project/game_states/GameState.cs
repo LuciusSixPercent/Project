@@ -36,7 +36,7 @@ namespace game_states
 
         protected GameObjectsManager goManager;
 
-        private bool contentLoaded;
+        protected bool contentLoaded;
 
         public bool ContentLoaded
         {
@@ -159,10 +159,10 @@ namespace game_states
             spriteBatch = new SpriteBatch(parent.GraphicsDevice);
             goManager = new GameObjectsManager(parent.GraphicsDevice);
         }
-        protected virtual void LoadContent()
+        public virtual void LoadContent()
         {
-            contentLoaded = true;
-            goManager.Load(parent.Content);
+            if(!ContentLoaded)
+                goManager.Load(parent.Content);
         }
 
         public virtual void Draw(GameTime gameTime)
