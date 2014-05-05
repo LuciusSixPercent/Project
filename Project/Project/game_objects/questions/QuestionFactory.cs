@@ -12,7 +12,6 @@ namespace game_objects.questions
         {
             //TODO: gerar questões de forma correta utilizando o QuestionLoader
             Question q = null;
-            bool[] usedIndexes;
             switch (subject)
             {
                 case (QuestionSubject.PT):

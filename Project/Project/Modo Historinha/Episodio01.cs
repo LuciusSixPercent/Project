@@ -310,7 +310,7 @@ class Episodio01 : GameState
             Exercicio09 = new ModoHistorinha(parent.Content, Pergunta9, alt90, alt91, alt92, arial, 3, audioEx09);
             Exercicio10 = new ModoHistorinha(parent.Content, Pergunta010, alt100, alt101, alt102, arial, 3, audioEx10);
             //Transições
-            enterTransitionDuration = 500;
+            enterTransitionDuration = 1000;
             exitTransitionDuration = 1000;
             //Narrações
             //Cena 01
@@ -502,7 +502,8 @@ class Episodio01 : GameState
                         else lastKey = ks[0];
 
                         //////////////////////////////////////Fim da Parte de Narração//////////////////////////////////////////////////////////////////
-                        
+                        if (stateEntered)
+                        {
 
 
 
@@ -520,7 +521,7 @@ class Episodio01 : GameState
                             {
                                 KeyboardHelper.UnlockKey(Keys.Escape);
                             }
-                        
+                        }
 
                     }
                     else if (!exitingState)
@@ -551,6 +552,10 @@ class Episodio01 : GameState
             {
                 parent.EnterState((int)StatesIdList.OPTIONS);
             }
+        }
+        else if (exit)
+        {
+            ExitState();
         }
     }
     string Tmusica, TpLAYER, NomeMusica;
@@ -593,7 +598,7 @@ class Episodio01 : GameState
         SpriteBatch.Draw(Maria, new Rectangle((int)vMaria.X, (int)vMaria.Y, Maria.Width, Maria.Height), null, MariaColor * Alpha, 0.0f, new Vector2(0, 0), EfeitoMaria, 0.0f);
         SpriteBatch.Draw(Apua, new Rectangle((int)vApua.X, (int)vApua.Y, Apua.Width, Apua.Height), null, ApuaColor * Alpha, 0.0f, new Vector2(0, 0), EfeitoApua, 0.0f);
         SpriteBatch.Draw(Serafina, new Rectangle((int)vSerafina.X, (int)vSerafina.Y, Serafina.Width, Serafina.Height), null, SerafinaColor * Alpha, 0.0f, new Vector2(0, 0), EfeitoSerafina, 0.0f);
-        SpriteBatch.Draw(Cachorro, vCachorro, CachorroColor);
+        SpriteBatch.Draw(Cachorro, vCachorro, CachorroColor*Alpha);
         if (CenarioIndice == 0)
         {
             SpriteBatch.Draw(CenarioTv, vTV, Color.White * Alpha);
@@ -635,7 +640,7 @@ class Episodio01 : GameState
                             MariaColor = Color.White;
                         }
 
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);//Imprimir texto
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White*Alpha);//Imprimir texto
 
                     }
 
@@ -1256,15 +1261,21 @@ class Episodio01 : GameState
     {
         if (!enteringState)
         {
-            base.ExitState();
-            if (!VoltarBool)
+            if (!exitingState)
             {
-                parent.ExitState(ID, (int)StatesIdList.RUNNER);
+                base.ExitState();
             }
-            else
+            else if (exit)
             {
+                if (!VoltarBool)
+                {
+                    parent.ExitState(ID, (int)StatesIdList.RUNNER);
+                }
+                else
+                {
 
-                parent.ExitState(ID);
+                    parent.ExitState(ID);
+                }
             }
 
         }

@@ -52,7 +52,8 @@ using Microsoft.Xna.Framework.Audio;
 
             if (!initialized)
             {
-
+                enterTransitionDuration = 200;
+                exitTransitionDuration = 1000;
                 base.Initialize();
                 LoadContent();
                 spriteBatch = new SpriteBatch(parent.GraphicsDevice);
