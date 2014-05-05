@@ -121,8 +121,10 @@ namespace game_objects
             framesBeingUsed = framesRunning;
             keepMoving = true;
             kickBall = kickingBall = false;
-            GetComponent<PlayerMovementComponent>().Unlock();
+            PlayerMovementComponent pmc = GetComponent<PlayerMovementComponent>();
+            pmc.Unlock();
             Position = Vector3.Zero;
+            pmc.Destiny = Position.X;
         }
 
         public void KickBall(bool makeGoal)

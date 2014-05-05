@@ -32,7 +32,11 @@ namespace game_states
         private float alphaIncrement;
         #endregion
 
-        private bool freezeBelow; //determina se os estados abaixo dele devem ser atualizados também
+        //private bool freezeBelow; //determina se os estados abaixo dele devem ser atualizados também
+
+        private bool freezeUpdatesBelow;
+
+        private bool freezeGraphicsBelow;
 
         protected GameObjectsManager goManager;
 
@@ -43,10 +47,24 @@ namespace game_states
             get { return contentLoaded; }
         }
 
+        /*
         public bool FreezeBelow
         {
             get { return freezeBelow; }
         }
+        */
+        public bool FreezeUpdatesBelow
+        {
+            get { return freezeUpdatesBelow; }
+            set { freezeUpdatesBelow = value; }
+        }
+
+        public bool FreezeGraphicsBelow
+        {
+            get { return freezeGraphicsBelow; }
+            set { freezeGraphicsBelow = value; }
+        }
+
         public int ID
         {
             get { return id; }
@@ -82,19 +100,21 @@ namespace game_states
             this.id = id;
             this.parent = parent;
             this.stateEntered = false;
-            freezeBelow = true;
+            freezeUpdatesBelow = true;
+            freezeGraphicsBelow = true;
         }
 
+        /*
         public virtual void EnterState()
         {
             EnterState(freezeBelow);
         }
-
-        public virtual void EnterState(bool freezeBelow)
+        */
+        public virtual void EnterState(/*bool freezeBelow*/)
         {
             enteringState = true;
             exit = false;
-            this.freezeBelow = freezeBelow;
+            //this.freezeBelow = freezeBelow;
             alphaIncrement = (float)1 / (enterTransitionDuration == 0 ? 1 : enterTransitionDuration);
         }
 

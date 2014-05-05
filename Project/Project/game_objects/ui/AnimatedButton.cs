@@ -17,6 +17,12 @@ namespace game_objects.ui
         private ButtonStates lastState;
         private int elapsed;
         private bool clicked;
+        private bool finishedAnimation;
+
+        public bool FinishedAnimation
+        {
+            get { return finishedAnimation; }
+        }
 
         public AnimatedButton(Renderer2D r2D, Rectangle bounds, int[] framesPerState, bool[] loopStates)
             : base(r2D, bounds)
@@ -32,12 +38,12 @@ namespace game_objects.ui
         {
             if (Enabled)
             {
-                base.cc_click();
                 if (!clicked)
                 {
                     clicked = true;
                     ResetCycleStart(framesPerState.Length - 1);
                 }
+                base.cc_click();                
             }
         }
 
@@ -63,13 +69,10 @@ namespace game_objects.ui
             }
             CenterText();
         }
+
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            if (currentFrame == textures.Length - 1)
-            {
-                clicked = false;
-            }
             UpdateFrames(gameTime);
         }
 
@@ -78,7 +81,7 @@ namespace game_objects.ui
             elapsed += gameTime.ElapsedGameTime.Milliseconds;
             if (elapsed >= 60)
             {
-                if (Enabled)
+                if (Enabled || !finishedAnimation)
                 {
                     elapsed = 0;
                     if (lastState.Equals(State) || clicked)
@@ -102,9 +105,11 @@ namespace game_objects.ui
         private void UpdateCurrentFrame()
         {
             currentFrame++;
+            finishedAnimation = false;
             int index = clicked? framesPerState.Length-1 : (int)State;
             if (currentFrame >= framesPerState[index] + animationCycleStart)
             {
+                finishedAnimation = true;
                 lastState = State;
                 if (loopStates[index])
                 {
@@ -112,7 +117,15 @@ namespace game_objects.ui
                 }
                 else
                 {
-                    currentFrame--;
+                    if (clicked)
+                    {
+                        clicked = false;
+                        ResetCycleStart((int)State);
+                    }
+                    else
+                    {
+                        currentFrame--;
+                    }
                 }
             }
         }
@@ -136,11 +149,11 @@ namespace game_objects.ui
             }
         }
 
-        private void ResetCycleStart(int p)
+        private void ResetCycleStart(int state)
         {
             animationCycleStart = 0;
 
-            for (int i = 0; i < p; i++)
+            for (int i = 0; i < state; i++)
             {
                 animationCycleStart += framesPerState[i];
             }

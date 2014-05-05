@@ -133,7 +133,7 @@ using Microsoft.Xna.Framework.Audio;
                 if (KeyboardHelper.IsKeyDown(Keys.Escape))
                 {
                     KeyboardHelper.LockKey(Keys.Escape);
-                    if (parent.EnterState((int)StatesIdList.PAUSE, false))
+                    if (parent.EnterState((int)StatesIdList.PAUSE))
                     {
                         Alpha = 0.5f;
                         pauseFlag = true;
@@ -503,21 +503,16 @@ using Microsoft.Xna.Framework.Audio;
 
         }
         #region Transitioning
-        public override void EnterState(bool freezeBelow)
+        public override void EnterState()
         {
             if (!exitingState)
             {
-                base.EnterState(freezeBelow);
+                base.EnterState();
                 LoadContent();
                 pauseFlag = false;
             }
         }
-        public override void EnterState()
-        {
-            base.EnterState();
-            
-            pauseFlag = false;
-        }
+
         public override void ExitState()
         {
             if (!enteringState)

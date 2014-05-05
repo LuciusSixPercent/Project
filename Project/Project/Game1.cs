@@ -17,7 +17,7 @@ namespace Project
     {
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
-        
+
         private Dictionary<int, GameState> states;
         private List<GameState> statesStack;
         private StatesIdList querriedState;
@@ -60,7 +60,7 @@ namespace Project
             rs = new RunnerState((int)StatesIdList.RUNNER, this);
             states.Add(rs.ID, rs);
 
-            cda = new CadernoDeAtividades((int)StatesIdList.OPTIONS, this,md);
+            cda = new CadernoDeAtividades((int)StatesIdList.OPTIONS, this, md);
             states.Add(cda.ID, cda);
 
             PauseState ps = new PauseState((int)StatesIdList.PAUSE, this);
@@ -75,15 +75,10 @@ namespace Project
 
         public bool EnterState(int id)
         {
-            return EnterState(id, true);
-        }
-
-        public bool EnterState(int id, bool freezeBelow)
-        {
             if (states.ContainsKey(id))
             {
                 statesStack.Add(states[id]);
-                states[id].EnterState(freezeBelow);
+                states[id].EnterState();
                 return true;
             }
             return false;
@@ -160,54 +155,62 @@ namespace Project
         //Dessa forma podemos ter multiplos estados ativos simultaneamente se assim for necessário
         protected override void Update(GameTime gameTime)
         {
-            UpdateOrDraw(gameTime, false);
+            //UpdateOrDraw(gameTime, false);
+            UpdateStates(gameTime);
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
-            UpdateOrDraw(gameTime, true);
+            DrawStates(gameTime);
             base.Draw(gameTime);
         }
 
         /// <summary>
-        /// Atualiza ou desenha o jogo.
+        /// Atualiza os estados na pilha, de cima para baixo.
         /// </summary>
-        /// <param name="gameTime">Tempo do jogo.</param>
-        /// <param name="methodFlag">Indica se o método deve desenhar (true) ou atualizar (false) os estados.</param>
-        private void UpdateOrDraw(GameTime gameTime, bool methodFlag)
+        /// <param name="gameTime">O tempo de jogo.</param>
+        private void UpdateStates(GameTime gameTime)
+        {
+            for (int stateIndex = statesStack.Count - 1; stateIndex >= 0; stateIndex--)
+            {
+                GameState state = statesStack[stateIndex];
+                if (querriedState != StatesIdList.EMPTY_STATE)
+                {
+                    if (state.ID == (int)querriedState)
+                    {
+                        querriedState = StatesIdList.EMPTY_STATE;
+                    }
+                    else if (!state.ExitingState)
+                    {
+                        state.ExitState();
+                    }
+                }
+                state.Update(gameTime);
+                if (state.FreezeUpdatesBelow)
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Desenha os estados na pilha, de baixo para cima.
+        /// </summary>
+        /// <param name="gameTime">O tempo de jogo.</param>
+        private void DrawStates(GameTime gameTime)
         {
             int stateIndex = statesStack.Count - 1;
             bool foundBottommostState = false;
             while (stateIndex < statesStack.Count)
             {
-                if (statesStack[stateIndex].FreezeBelow == true)
+                if (statesStack[stateIndex].FreezeGraphicsBelow)
                 {
                     foundBottommostState = true;
                 }
 
                 if (foundBottommostState)
                 {
-                    if (methodFlag)
-                    {
-                        statesStack[stateIndex].Draw(gameTime);
-                    }
-                    else
-                    {
-                        if (querriedState != StatesIdList.EMPTY_STATE)
-                        {
-                            if (statesStack[stateIndex].ID == (int)querriedState)
-                            {
-                                querriedState = StatesIdList.EMPTY_STATE;
-                            }
-                            else if (!statesStack[stateIndex].ExitingState)
-                            {
-                                statesStack[stateIndex].ExitState();
-                            }
-                        }
-                        statesStack[stateIndex].Update(gameTime);
-                    }
+                    statesStack[stateIndex].Draw(gameTime);
                     stateIndex++;
                 }
                 else

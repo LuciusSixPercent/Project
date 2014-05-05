@@ -29,18 +29,18 @@ namespace game_states
             base.Initialize();
             enterTransitionDuration = 500;
             exitTransitionDuration = 100;
-            goToState = StatesIdList.MAIN_MENU;
+            goToState = StatesIdList.EMPTY_STATE;
 
             Rectangle screen = parent.GraphicsDevice.Viewport.Bounds;
 
             Rectangle bounds = new Rectangle(screen.Width / 2 - 250, screen.Height / 2 - 25, 200, 50);
-            cosme = new AnimatedButton(goManager.R2D, bounds, new int[]{1,6,1,10}, new bool[]{false, true, false, false});
+            cosme = new AnimatedButton(goManager.R2D, bounds, new int[] { 1, 6, 1, 10 }, new bool[] { false, true, false, false });
             cosme.Text = "COSME";
             cosme.BaseFileName = "testBtn";
             cosme.FilePath = "Menu" + Path.AltDirectorySeparatorChar + "Char_Selection" + Path.AltDirectorySeparatorChar;
             cosme.mouseClicked += new Button.MouseClicked(cosme_mouseClicked);
-            
-            bounds = new Rectangle(screen.Width/2 + 50, screen.Height/2 - 25, 200, 50);
+
+            bounds = new Rectangle(screen.Width / 2 + 50, screen.Height / 2 - 25, 200, 50);
             maria = new AnimatedButton(goManager.R2D, bounds, new int[] { 1, 6, 1, 10 }, new bool[] { false, true, false, false });
             maria.Text = "MARIA";
             maria.BaseFileName = "testBtn";
@@ -54,7 +54,7 @@ namespace game_states
             titleScreen.FilePath = "Menu" + Path.AltDirectorySeparatorChar + "Pause" + Path.AltDirectorySeparatorChar;
             titleScreen.UseText = false;
             titleScreen.mouseClicked += new Button.MouseClicked(titleScreen_mouseClicked);
-            
+
             goManager.AddObject(cosme);
             goManager.AddObject(maria);
             goManager.AddObject(titleScreen);
@@ -65,7 +65,8 @@ namespace game_states
             if (parent.IsActive)
             {
                 goToState = StatesIdList.RUNNER;
-                ExitState();
+                DisableButtons();
+                //ExitState();
             }
         }
 
@@ -74,7 +75,6 @@ namespace game_states
             if (parent.IsActive)
             {
                 goToState = StatesIdList.RUNNER;
-                ExitState();
             }
         }
 
@@ -83,7 +83,6 @@ namespace game_states
             if (parent.IsActive)
             {
                 goToState = StatesIdList.MAIN_MENU;
-                ExitState();
             }
         }
 
@@ -100,12 +99,14 @@ namespace game_states
             base.Update(gameTime);
             if (stateEntered)
             {
-                if (!buttonsEnabled)
+                if (!buttonsEnabled && goToState == StatesIdList.EMPTY_STATE)
                 {
-                    buttonsEnabled = true;
-                    titleScreen.Enable();
-                    cosme.Enable();
-                    //maria.Enable();
+                    EnableButtons();
+                }
+                else if (goToState != StatesIdList.EMPTY_STATE)
+                {
+                    if (cosme.FinishedAnimation && maria.FinishedAnimation)
+                        ExitState();
                 }
             }
             if (exit)
@@ -119,11 +120,11 @@ namespace game_states
             base.Draw(gameTime);
         }
 
-        public override void EnterState(bool freezeBelow)
+        public override void EnterState()
         {
             if (!exitingState)
             {
-                base.EnterState(freezeBelow);
+                base.EnterState();
                 LoadContent();
             }
         }
@@ -133,15 +134,30 @@ namespace game_states
             if (!exit)
             {
                 base.ExitState();
-                titleScreen.Disable();
-                cosme.Disable();
-                maria.Disable();
-                buttonsEnabled = false;
+                DisableButtons();
             }
             else
             {
                 parent.ExitState(ID, (int)goToState);
+                goToState = StatesIdList.EMPTY_STATE;
+
             }
+        }
+
+        private void EnableButtons()
+        {
+            buttonsEnabled = true;
+            titleScreen.Enable();
+            cosme.Enable();
+            maria.Enable();
+        }
+
+        private void DisableButtons()
+        {
+            titleScreen.Disable();
+            cosme.Disable();
+            maria.Disable();
+            buttonsEnabled = false;
         }
     }
 }

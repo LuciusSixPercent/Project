@@ -33,6 +33,8 @@ namespace components
 
         private Rectangle bounds;
 
+        private bool pressedOutOfBounds;
+
         public ClickComponent(GameObject owner, Rectangle bounds)
             : base(owner)
         {
@@ -46,45 +48,87 @@ namespace components
             mouseHovering = mouseWithinBounds(state);
             if (mouseHovering)
             {
-                if (hover != null)
-                    hover(true);
-                if (!wasHovering && enter != null)
-                {
-                    enter();
-                }
-                if (state.LeftButton == ButtonState.Pressed)
+                HandleMouseEnter(wasHovering);
+                HandlePressWithinBounds(state);
+            }
+            else
+            {
+                HandleMouseExit(wasHovering);
+                HandlePressOutOfBounds(state);
+            }
+        }
+
+        private void HandleMouseEnter(bool wasHovering)
+        {
+            if (hover != null)
+                hover(true);
+
+            if (!wasHovering && enter != null)
+            {
+                enter();
+            }
+        }
+
+        private void HandleMouseExit(bool wasHovering)
+        {
+            if (hover != null)
+                hover(false);
+
+            if (wasHovering)
+            {
+                if (exit != null)
+                    exit();
+            }
+        }
+
+        private void HandlePressOutOfBounds(MouseState state)
+        {
+            if (state.LeftButton != ButtonState.Pressed)
+            {
+                HandleMouseRelease();
+            }
+            else if (!mousePressing)
+            {
+                pressedOutOfBounds = true;
+            }
+        }
+
+        /// <summary>
+        /// Lida com o mouse quando o mesmo é tem o botão esquerdo pressionado dentro da área do botão.
+        /// </summary>
+        /// <param name="state">O estado do mouse.</param>
+        private void HandlePressWithinBounds(MouseState state)
+        {
+            if (state.LeftButton == ButtonState.Pressed) //apenas reconheceremos o mouse como pressionado se o mesmo foi pressionado dentro dos limites estabelecidos
+            {
+                if (!pressedOutOfBounds)
                 {
                     if (press != null)
                         press();
                     mousePressing = true;
                 }
-                else
-                {
-                    if (mousePressing) //se o mouse deixou de ser pressionado, então houve um click
-                    {
-                        if (click != null)
-                            click();
-                    }
-                    mousePressing = false;
-                    if (release != null)
-                        release();
-                }
             }
             else
             {
-                if (hover != null)
-                    hover(false);
-                if (wasHovering && exit != null)
-                {
-                    exit();
-                }
-                else if (state.LeftButton != ButtonState.Pressed && mousePressing)
-                {
-                    mousePressing = false;
-                    if (release != null)
-                        release();
-                }
+                HandleMouseRelease();
             }
+        }
+
+        private void HandleMouseRelease()
+        {
+            if (mousePressing) //se o mouse deixou de ser pressionado, então houve um click
+            {
+                if (mouseHovering && !pressedOutOfBounds)
+                {
+                    if (click != null)
+                        click();
+                }
+                if (release != null)
+                    release();
+            }
+            pressedOutOfBounds = false;
+            mousePressing = false;
+            
         }
 
         private bool mouseWithinBounds(MouseState state)

@@ -72,14 +72,9 @@ namespace game_states
 
         public override void EnterState()
         {
-            EnterState(FreezeBelow);
-        }
-
-        public override void EnterState(bool freezeBelow)
-        {
             if (!exitingState)
             {
-                base.EnterState(freezeBelow);
+                base.EnterState();
                 LoadContent();
             }
         }

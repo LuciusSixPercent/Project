@@ -49,6 +49,8 @@ namespace game_states
             goManager.AddObject(resumeGame);
             goManager.AddObject(configMenu);
             goManager.AddObject(titleScreen);
+
+            FreezeGraphicsBelow = false;
         }
 
         private void InitButtons()
@@ -139,22 +141,17 @@ namespace game_states
             goManager.Draw(gameTime);
         }
 
-        public override void EnterState(bool freezeBelow)
+        public override void EnterState()
         {
             if (!exitingState)
             {
-                base.EnterState(freezeBelow);
+                base.EnterState();
                 LoadContent();
                 toTile = false;
                 resumeGame.Enable();
                 titleScreen.Enable();
                 configMenu.Enable();
             }
-        }
-
-        public override void EnterState()
-        {
-            EnterState(FreezeBelow);
         }
 
         public override void ExitState()

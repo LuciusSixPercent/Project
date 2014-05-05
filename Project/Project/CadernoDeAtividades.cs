@@ -361,21 +361,17 @@ namespace Project
             }
         }
         #region Transitioning
-        public override void EnterState(bool freezeBelow)
+        public override void EnterState()
         {
             if (!exitingState)
             {
-                base.EnterState(freezeBelow);
+                base.EnterState();
                 LoadContent();                
 
 
-            }
-            
+            }            
         }
-        public override void EnterState()
-        {
-            EnterState(FreezeBelow);
-        }
+
         public override void ExitState()
         {
             if (!enteringState)

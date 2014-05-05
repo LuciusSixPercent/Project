@@ -42,7 +42,7 @@ namespace Project
         {
             if (LockedKeys.ContainsKey(k))
             {
-                return LockedKeys[k] == true;
+                return LockedKeys[k];
             }
             else
             {

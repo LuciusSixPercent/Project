@@ -41,9 +41,10 @@ namespace game_states
         private bool answeredAll;
         private bool finished;
         //WAVE - Musica de fundo
-        AudioEngine audioEngine3;
-        WaveBank waveBank3;
-        SoundBank soundBank3;
+        AudioEngine audioEngine;
+        WaveBank waveBank;
+        SoundBank soundBank;
+        AudioCategory musicCategory;
         Cue engineSound = null;
         #endregion
 
@@ -71,9 +72,9 @@ namespace game_states
             {
                 base.Initialize();
                 //Wave
-                audioEngine3 = new AudioEngine("Content\\Audio\\MyGameAudio2.xgs");
-                waveBank3 = new WaveBank(audioEngine3, "Content\\Audio\\Wave Bank2.xwb");
-                soundBank3 = new SoundBank(audioEngine3, "Content\\Audio\\Sound Bank2.xsb");
+                audioEngine = new AudioEngine("Content\\Audio\\MyGameAudio2.xgs");
+                waveBank = new WaveBank(audioEngine, "Content\\Audio\\Wave Bank2.xwb");
+                soundBank = new SoundBank(audioEngine, "Content\\Audio\\Sound Bank2.xsb");
                 //
                 level = RunnerLevel.EASY;
                 subjects = new QuestionSubject[] { QuestionSubject.PT };
@@ -231,11 +232,11 @@ namespace game_states
         }
 
         #region Transitioning
-        public override void EnterState(bool freezeBelow)
+        public override void EnterState()
         {
             if (!exitingState)
             {
-                base.EnterState(freezeBelow);
+                base.EnterState();
                 if (!ContentLoaded)
                 {
                     LoadingState ls = (LoadingState)parent.getState((int)StatesIdList.LOADING);
@@ -243,11 +244,6 @@ namespace game_states
                     parent.EnterState(ls.ID);
                 }
             }
-        }
-
-        public override void EnterState()
-        {
-            EnterState(FreezeBelow);
         }
 
         public override void ExitState()
@@ -275,17 +271,7 @@ namespace game_states
                     {
                         if (!finished)
                         {
-                            //Wave
-                            if (engineSound == null)
-                            {
-                                engineSound = soundBank3.GetCue("540428_quotSports-Fanaticq");
-                                //engineSound.Play();
-                            }
-                            if (engineSound.IsPaused)
-                            {
-                                //engineSound.Resume();
-                            }
-                            //
+                            PlayBGM();
                             CheckAnswer();
                             if (answeredAll)
                             {
@@ -308,6 +294,23 @@ namespace game_states
                     engineSound.Stop(AudioStopOptions.AsAuthored);
                     ExitState();
                 }
+            }
+        }
+
+        private void PlayBGM()
+        {
+            if (engineSound == null || engineSound.IsStopped)
+            {
+                engineSound = soundBank.GetCue("540428_quotSports-Fanaticq");
+            }
+
+            if (!engineSound.IsPlaying)
+            {
+                engineSound.Play();
+            }
+            if (engineSound.IsPaused)
+            {
+                engineSound.Resume();
             }
         }
 
@@ -367,9 +370,10 @@ namespace game_states
                 KeyboardHelper.LockKey(Keys.Escape);
                 if (!answeredAll)
                 {
-                    if (parent.EnterState((int)StatesIdList.PAUSE, false))
+                    if (parent.EnterState((int)StatesIdList.PAUSE))
                     {
-                        //engineSound.Pause();
+                        if(!engineSound.IsStopped)
+                            engineSound.Pause();
                         Alpha = 0.5f;
                         goManager.R3D.Alpha = goManager.R2D.Alpha = Alpha;
                         stateEntered = false;

@@ -16,31 +16,35 @@ namespace game_objects.questions
             switch (subject)
             {
                 case (QuestionSubject.PT):
-                    usedIndexes = new bool[QuestionsDatabase.PT_Questions[(int)level].Length];
-                    int testingIndex = PublicRandom.Next(QuestionsDatabase.PT_Questions[(int)level].Length);
-                    while (testingIndex == 3)
-                    {
-                        testingIndex = PublicRandom.Next(QuestionsDatabase.PT_Questions[(int)level].Length);
-                    }
-                    usedIndexes[testingIndex] = true;
-
-                    q = QuestionsDatabase.PT_Questions[(int)level][testingIndex];
-                    for (int i = 0; i < existingQuestions.Count; i++)
-                    {
-                        if(q.Header.Equals(existingQuestions[i].Header))
-                        {
-                            i = 0;
-                            while(usedIndexes[testingIndex])
-                                testingIndex = PublicRandom.Next(QuestionsDatabase.PT_Questions[(int)level].Length);
-
-                            q = QuestionsDatabase.PT_Questions[(int)level][testingIndex];
-                        }
-                    }
-                    return new QuestionGameObject(renderer, collidableObjects, q);
+                    q = GenerateQuestion((int)level, existingQuestions, QuestionsDatabase.PT_Questions);
+                    break;
                 default:
-                    q = QuestionsDatabase.MAT_Questions[(int)level][PublicRandom.Next(QuestionsDatabase.MAT_Questions[(int)level].Length)];
-                    return new QuestionGameObject(renderer, collidableObjects, q);
+                    q = GenerateQuestion((int)level, existingQuestions, QuestionsDatabase.MAT_Questions);
+                    break;
             }
+            return new QuestionGameObject(renderer, collidableObjects, q);
+        }
+
+        private static Question GenerateQuestion(int level, List<QuestionGameObject> existingQuestions, Question[][] questions)
+        {
+            Question q;
+            bool[] usedIndexes = new bool[questions[level].Length];
+            int testingIndex = PublicRandom.Next(questions[level].Length);
+
+            q = questions[level][testingIndex];
+            for (int i = 0; i < existingQuestions.Count; i++)
+            {
+                if (q.Header.Equals(existingQuestions[i].Header))
+                {
+                    usedIndexes[testingIndex] = true;
+                    i = 0;
+                    while (usedIndexes[testingIndex])
+                        testingIndex = PublicRandom.Next(questions[level].Length);
+
+                    q = questions[level][testingIndex];
+                }
+            }
+            return q;
         }
     }
 }

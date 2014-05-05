@@ -505,7 +505,7 @@ class Episodio01 : GameState
                         if (KeyboardHelper.IsKeyDown(Keys.Escape))
                         {
                             KeyboardHelper.LockKey(Keys.Escape);
-                            if (parent.EnterState((int)StatesIdList.PAUSE, false))
+                            if (parent.EnterState((int)StatesIdList.PAUSE))
                             {
                                 Alpha = 0.5f;
                                 pauseFlag = true;
@@ -1215,11 +1215,11 @@ class Episodio01 : GameState
 
     }
     #region Transitioning
-    public override void EnterState(bool freezeBelow)
+    public override void EnterState()
     {
         if (!exitingState || VoltarBool)
         {
-            base.EnterState(freezeBelow);
+            base.EnterState();
             LoadContent();
             pauseFlag = false;
             VoltarBool = false;
@@ -1227,16 +1227,12 @@ class Episodio01 : GameState
         }
         if (FimDaHistoria)
         {
-            base.EnterState(freezeBelow);
+            base.EnterState();
 
             //LoadContent();
             pauseFlag = false;
             Resetar();
         }
-    }
-    public override void EnterState()
-    {
-        EnterState(FreezeBelow);
     }
     public override void ExitState()
     {
