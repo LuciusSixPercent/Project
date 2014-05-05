@@ -103,7 +103,7 @@ using Microsoft.Xna.Framework.Audio;
         Keys lastKey = Keys.A;
         public override void Update(GameTime tempo)
         {
-           
+            base.Update(tempo);
             MouseState mouse = Mouse.GetState();
             KeyboardState teclado = Keyboard.GetState();
             MediaPlayer.Volume = (rcMedidor.X / (rcbarra.X + rcbarra.Width));
@@ -114,7 +114,7 @@ using Microsoft.Xna.Framework.Audio;
             }
             if (!pauseFlag)
             {
-                base.Update(tempo);
+                
                 if (repetir)
                 {
                     

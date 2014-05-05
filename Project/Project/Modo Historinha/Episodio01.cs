@@ -255,7 +255,11 @@ class Episodio01 : GameState
     int FrameApua = 0;
     bool caderno = false;
     int tick = 125;
-    float pronfundidade = 0;
+    float AlphaMaria = 0;
+    float AlphaCosme = 0;
+    float AlphaApua = 0;
+    float AphaSerafina = 0;
+    float AlphaCachorro = 0;
     // Desça o código até Initialize
     public Episodio01(int id, Game1 parent)
         : base(id, parent)
@@ -348,7 +352,7 @@ class Episodio01 : GameState
             vApua = new Vector2(500, 400);
             vSerafina = new Vector2(600, 400);
             vCachorro = new Vector2(700, 400);
-            
+
             vCosmeObj = vCosme;
             vMariaObj = vMaria;
             vApuaObj = vApua;
@@ -502,42 +506,28 @@ class Episodio01 : GameState
                         else lastKey = ks[0];
 
                         //////////////////////////////////////Fim da Parte de Narração//////////////////////////////////////////////////////////////////
-                        if (stateEntered)
+
+
+
+
+                        if (KeyboardHelper.IsKeyDown(Keys.Escape))
                         {
-
-
-
-                            if (KeyboardHelper.IsKeyDown(Keys.Escape))
+                            KeyboardHelper.LockKey(Keys.Escape);
+                            if (parent.EnterState((int)StatesIdList.PAUSE))
                             {
-                                KeyboardHelper.LockKey(Keys.Escape);
-                                if (parent.EnterState((int)StatesIdList.PAUSE))
-                                {
-                                    Alpha = 0.5f;
-                                    pauseFlag = true;
-                                    stateEntered = false;
-                                }
-                            }
-                            else if (KeyboardHelper.KeyReleased(Keys.Escape))
-                            {
-                                KeyboardHelper.UnlockKey(Keys.Escape);
+                                Alpha = 0.5f;
+                                pauseFlag = true;
+                                stateEntered = false;
                             }
                         }
+                        else if (KeyboardHelper.KeyReleased(Keys.Escape))
+                        {
+                            KeyboardHelper.UnlockKey(Keys.Escape);
+                        }
+
 
                     }
-                    else if (!exitingState)
-                    {
-                        MediaPlayer.Stop();
-                        engineSound.Stop(AudioStopOptions.AsAuthored);
 
-                        ExitState();
-                    }
-                    if (VoltarBool)
-                    {
-                        MediaPlayer.Pause();
-                        engineSound.Stop(AudioStopOptions.AsAuthored);
-
-                        ExitState();
-                    }
 
                 }
                 else
@@ -548,15 +538,27 @@ class Episodio01 : GameState
 
                 }
             }
+
             else
             {
                 parent.EnterState((int)StatesIdList.OPTIONS);
             }
         }
-        else if (exit)
+        else if (!exitingState && exit)
         {
+            MediaPlayer.Stop();
+            engineSound.Stop(AudioStopOptions.Immediate);
+
             ExitState();
         }
+        if (VoltarBool)
+        {
+            MediaPlayer.Pause();
+            engineSound.Stop(AudioStopOptions.Immediate);
+
+            ExitState();
+        }
+
     }
     string Tmusica, TpLAYER, NomeMusica;
     int frames = 30;
@@ -571,34 +573,34 @@ class Episodio01 : GameState
         if ((int)gameTime.TotalGameTime.TotalMilliseconds % 5 == 0)
         {
             Frame = (Frame + 1) % 16;
-            
-            
+
+
             testeframa = (testeframa + 1) % 16;
         }
         if ((int)gameTime.TotalGameTime.TotalMilliseconds % 20 == 0)
         {
-            FrameApua = (FrameApua + 1) %8;
+            FrameApua = (FrameApua + 1) % 8;
         }
         if (!FimDaHistoria)
         {
-            SpriteBatch.Draw(Cenario[CenarioIndice], rcCenario, Color.White*Alpha);
+            SpriteBatch.Draw(Cenario[CenarioIndice], rcCenario, Color.White * Alpha);
 
             //Tmusica = MediaPlayer.PlayPosition.Minutes.ToString() + " : " + MediaPlayer.PlayPosition.Seconds;
             //TpLAYER = AlbumPrincipal[NoAlbum][selecionar].Duration.Minutes.ToString() + " : " + AlbumPrincipal[NoAlbum][selecionar].Duration.Seconds;
             //NomeMusica = AlbumPrincipal[NoAlbum][selecionar].Name;
-            SpriteBatch.DrawString(arial, "Pressione a tecla [z] para avançar o texto", new Vector2(200, 720), Color.White*Alpha);
-            SpriteBatch.DrawString(arial, Frame.ToString()+" "+tick.ToString(), new Vector2(200, 700), Color.White*Alpha);//Aqui eu vejo em quanto tempo está a narração
+            SpriteBatch.DrawString(arial, "Pressione a tecla [z] para avançar o texto", new Vector2(200, 720), Color.White * Alpha);
+            SpriteBatch.DrawString(arial, Frame.ToString() + " " + tick.ToString(), new Vector2(200, 700), Color.White * Alpha);//Aqui eu vejo em quanto tempo está a narração
             //Aqui em cima eu imprimo o tempo total da musica;
         }
         if (CenarioIndice == 0)
         {
-            SpriteBatch.Draw(CenarioBola, vBolaCenario, BolaColor*Alpha);
+            SpriteBatch.Draw(CenarioBola, vBolaCenario, BolaColor * Alpha);
         }
-        SpriteBatch.Draw(Cosme, new Rectangle((int)vCosme.X, (int)vCosme.Y, Cosme.Width, Cosme.Height), null, CosmeColor * Alpha, 0.0f, new Vector2(0, 0), EfeitoCosme, 0.0f);
-        SpriteBatch.Draw(Maria, new Rectangle((int)vMaria.X, (int)vMaria.Y, Maria.Width, Maria.Height), null, MariaColor * Alpha, 0.0f, new Vector2(0, 0), EfeitoMaria, 0.0f);
-        SpriteBatch.Draw(Apua, new Rectangle((int)vApua.X, (int)vApua.Y, Apua.Width, Apua.Height), null, ApuaColor * Alpha, 0.0f, new Vector2(0, 0), EfeitoApua, 0.0f);
-        SpriteBatch.Draw(Serafina, new Rectangle((int)vSerafina.X, (int)vSerafina.Y, Serafina.Width, Serafina.Height), null, SerafinaColor * Alpha, 0.0f, new Vector2(0, 0), EfeitoSerafina, 0.0f);
-        SpriteBatch.Draw(Cachorro, vCachorro, CachorroColor*Alpha);
+        SpriteBatch.Draw(Cosme, new Rectangle((int)vCosme.X, (int)vCosme.Y, Cosme.Width, Cosme.Height), null, ((CosmeColor * AlphaCosme) * Alpha), 0.0f, new Vector2(0, 0), EfeitoCosme, 0.0f);
+        SpriteBatch.Draw(Maria, new Rectangle((int)vMaria.X, (int)vMaria.Y, Maria.Width, Maria.Height), null, ((MariaColor * AlphaMaria) * Alpha), 0.0f, new Vector2(0, 0), EfeitoMaria, 0.0f);
+        SpriteBatch.Draw(Apua, new Rectangle((int)vApua.X, (int)vApua.Y, Apua.Width, Apua.Height), null, ((ApuaColor * AlphaApua) * Alpha), 0.0f, new Vector2(0, 0), EfeitoApua, 0.0f);
+        SpriteBatch.Draw(Serafina, new Rectangle((int)vSerafina.X, (int)vSerafina.Y, Serafina.Width, Serafina.Height), null, ((SerafinaColor * AphaSerafina) * Alpha), 0.0f, new Vector2(0, 0), EfeitoSerafina, 0.0f);
+        SpriteBatch.Draw(Cachorro, vCachorro, ((CachorroColor * AlphaCachorro) * Alpha));
         if (CenarioIndice == 0)
         {
             SpriteBatch.Draw(CenarioTv, vTV, Color.White * Alpha);
@@ -633,14 +635,16 @@ class Episodio01 : GameState
                         }
                         if (Incremento0 == 0)
                         {
+                            AlphaCosme = AlphaCosme < 1 ? AlphaCosme + 0.1f : 1;
                             CosmeColor = Color.White;
                         }
                         if (Incremento0 == 1)
                         {
+                            AlphaMaria = AlphaMaria < 1 ? AlphaMaria + 0.1f : 1;
                             MariaColor = Color.White;
                         }
 
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White*Alpha);//Imprimir texto
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White * Alpha);//Imprimir texto
 
                     }
 
@@ -677,16 +681,19 @@ class Episodio01 : GameState
                         indice = indice + (indice < dialogo02[Incremento0].Length ? 1 : 0);
                         if (Incremento0 == 3)
                         {
+                            AphaSerafina = AphaSerafina < 1 ? AphaSerafina + 0.1f : 1;
+                            AlphaCachorro = AlphaCachorro < 1 ? AlphaCachorro + 0.1f : 1;
                             SerafinaColor = Color.White;
                             rotSerafina = true;
                             CachorroColor = Color.White;
                             CachorroSentar = true;
-                            
+
                             //engineSound = null;
-                            
+
                         }
                         if (Incremento0 == 4)
                         {
+                            AlphaApua = AlphaApua < 1 ? AlphaApua + 0.1f : 1;
                             ApuaColor = Color.White;
                             rotApua = true;
                             if (rep == 0)
@@ -695,10 +702,10 @@ class Episodio01 : GameState
                                 musica = 1;
                                 rep = 1;
                             }
-                            
+
                         }
 
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White*Alpha);
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White * Alpha);
 
                     }
                     if (!exercicio2 && parte2)
@@ -732,7 +739,7 @@ class Episodio01 : GameState
                         if (indice < dialogo03[Incremento0].Length) { texto += dialogo03[Incremento0][indice]; }
                         indice = indice + (indice < dialogo03[Incremento0].Length ? 1 : 0);
 
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White*Alpha);
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White * Alpha);
                     }
                     if (parte3 && !exercicio3)
                     {
@@ -766,7 +773,7 @@ class Episodio01 : GameState
                         indice = indice + (indice < dialogo04[Incremento0].Length ? 1 : 0);
                         if (Incremento0 == 0)
                         {
-                            
+
                             vMariaObj.X = 700;
                             MariaAndar = true;
                             vSerafinaObj.X = 400;
@@ -774,7 +781,7 @@ class Episodio01 : GameState
                             rotMaria = true;
                         }
 
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White*Alpha);
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White * Alpha);
 
                     }
                     if (parte4 && !exercicio4)
@@ -840,7 +847,7 @@ class Episodio01 : GameState
                             vApuaObj.X = 300;
                             rotApua = false;
                             rotCosme = true;
-                            
+
                         }
                         if (Incremento0 == 1)
                         {
@@ -878,8 +885,8 @@ class Episodio01 : GameState
                         {
                             CosmeColor = Color.Transparent;
                         }
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White*Alpha);
-                   }
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White * Alpha);
+                    }
 
                 }
                 if (primeiro && segundo && terceiro && quarto && quinto && !sexto)
@@ -906,13 +913,13 @@ class Episodio01 : GameState
                         {
                             vMaria.X = 250;
                             vMaria.Y = 400;
-                            
+
                             vMariaObj = vMaria;
 
-                            
+
                         }
 
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White*Alpha);
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White * Alpha);
                     }
                     if (parte6 && !exercicio6)
                     {
@@ -945,7 +952,7 @@ class Episodio01 : GameState
                         if (indice < dialogo07[Incremento0].Length) { texto += dialogo07[Incremento0][indice]; }
                         indice = indice + (indice < dialogo07[Incremento0].Length ? 1 : 0);
 
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White*Alpha);
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White * Alpha);
                         if (Incremento0 == 0)
                         {
                             BolaColor = Color.Yellow;
@@ -953,7 +960,7 @@ class Episodio01 : GameState
                     }
                     if (parte7 && !exercicio7)
                     {
-                        
+
                         texto = "";
                         indice = 0;
                         Incremento0 = 0;
@@ -971,7 +978,7 @@ class Episodio01 : GameState
                 }
                 if (primeiro && segundo && terceiro && quarto && quinto && sexto && setimo && !oitavo)
                 {
-                    
+
                     if (Incremento0 == dialogo08.Length)
                     {
                         parte8 = true;
@@ -982,7 +989,7 @@ class Episodio01 : GameState
                         if (indice < dialogo08[Incremento0].Length) { texto += dialogo08[Incremento0][indice]; }
                         indice = indice + (indice < dialogo08[Incremento0].Length ? 1 : 0);
 
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White*Alpha);
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White * Alpha);
                     }
                     if (parte8 && !exercicio8)
                     {
@@ -1005,14 +1012,14 @@ class Episodio01 : GameState
 
                 if (primeiro && segundo && terceiro && quarto && quinto && sexto && setimo && oitavo && !nono)
                 {
-                    
+
                     if (Incremento0 < 1 && oitavo)
                     {
-                        
+
                         CenarioIndice = 1;
                         if (segurança == 0)
                         {
-                            
+
                             vMariaObj.X = 1020;
                             MariaAndeComBaldeComBola = true;
                             if (vMaria.X > 500)
@@ -1021,7 +1028,7 @@ class Episodio01 : GameState
                             }
                         }
                     }
-                    if (Incremento0 == 1 )
+                    if (Incremento0 == 1)
                     {
                         segurança = 1;
                         CenarioIndice = 2;
@@ -1030,11 +1037,11 @@ class Episodio01 : GameState
                         vMariaObj.Y = 500;
                         vMariaObj.X = 1020;
                         MariaAndeComBaldeComBola = true;
-                        
+
                     }
                     if (Incremento0 == 2)
                     {
-                       
+
                         vMaria.X = 200;
                         vMariaObj.X = 200;
                         vCosme.X = 400;
@@ -1064,7 +1071,7 @@ class Episodio01 : GameState
                         if (indice < dialogo09[Incremento0].Length) { texto += dialogo09[Incremento0][indice]; }
                         indice = indice + (indice < dialogo09[Incremento0].Length ? 1 : 0);
 
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White*Alpha);
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White * Alpha);
                     }
                     if (parte9 && !exercicio9)
                     {
@@ -1097,7 +1104,7 @@ class Episodio01 : GameState
                         if (indice < dialogo10[Incremento0].Length) { texto += dialogo10[Incremento0][indice]; }
                         indice = indice + (indice < dialogo10[Incremento0].Length ? 1 : 0);
 
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White*Alpha);
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White * Alpha);
                     }
                     if (parte10 && !exercicio10)
                     {
@@ -1265,18 +1272,21 @@ class Episodio01 : GameState
             {
                 base.ExitState();
             }
-            else if (exit)
+            else if(exit)
             {
-                if (!VoltarBool)
-                {
-                    parent.ExitState(ID, (int)StatesIdList.RUNNER);
-                }
-                else
-                {
-
-                    parent.ExitState(ID);
-                }
+                parent.ExitState(ID);
             }
+            else if (VoltarBool)
+            {
+                parent.ExitState(ID);
+                
+            }
+            else
+            {
+                parent.ExitState(ID, (int)StatesIdList.RUNNER);
+
+            }
+            
 
         }
     }
@@ -1341,7 +1351,7 @@ class Episodio01 : GameState
     }
     public void Resetar()
     {
-       
+
         #region Reset das Cores
         CosmeColor = Color.Black;
         MariaColor = Color.Black;
@@ -1383,7 +1393,7 @@ class Episodio01 : GameState
         rotCosme = false;
         rotMaria = false;
         rotSerafina = false;
-        
+
         #endregion
         #region Resete das Posições
         vMaria = new Vector2(400, 400);
