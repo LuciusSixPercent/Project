@@ -81,12 +81,12 @@ using Microsoft.Xna.Framework.Audio;
                 Voltar = new Texture2D[2] { VoltarNormal, VoltarOver };
                 #region Retangulos
                 rcfundo = new Rectangle(0, 0, 1024, 768);
-                rcmenu1 = new Rectangle(0, 600, menu1[mn1].Width , menu1[mn1].Height);
-                rcmenu2 = new Rectangle(150, 600, menu2[mn2].Width , menu2[mn2].Height);
-                rcmenu3 = new Rectangle(300, 600, menu3[mn3].Width, menu3[mn3].Height);
+                rcmenu1 = new Rectangle(0, mn1 == 1 ? 400 : 600, mn1 == 1 ? menu1[1].Width : menu1[0].Width, mn1 == 1 ? menu1[1].Height:menu1[0].Height);
+                rcmenu2 = new Rectangle(150,mn2 == 1 ? 400 : 600, menu2[mn2].Width, menu2[mn2].Height);
+                rcmenu3 = new Rectangle(300, mn3 == 1 ? 400 : 600, menu3[mn3].Width, menu3[mn3].Height);
                 //rcmenu4 = new Rectangle(450, 600, menu4[mn4].Width / 2, menu4[mn4].Height / 2);
-                rcmenu5 = new Rectangle(450, 600, menu5[mn5].Width, menu5[mn5].Height);
-                rcmenu6 = new Rectangle(600, 600, menu6[mn6].Width, menu6[mn6].Height);
+                rcmenu5 = new Rectangle(450, mn5 == 1 ? 400 : 600, menu5[mn5].Width, menu5[mn5].Height);
+                rcmenu6 = new Rectangle(600, mn6 == 1 ? 400 : 600, menu6[mn6].Width, menu6[mn6].Height);
                 rcOK = new Rectangle(300, 350, OK[OKin].Width / 2, OK[OKin].Height / 2);
                 rcCancelar = new Rectangle(550, 350, Cancelar[CancIN].Width / 2, Cancelar[CancIN].Height / 2);
                 rcbarra = new Rectangle(120, 350, Barra.Width, Barra.Height*2);
@@ -102,6 +102,7 @@ using Microsoft.Xna.Framework.Audio;
         Keys lastKey = Keys.A;
         public override void Update(GameTime tempo)
         {
+           
             MouseState mouse = Mouse.GetState();
             KeyboardState teclado = Keyboard.GetState();
             MediaPlayer.Volume = (rcMedidor.X / (rcbarra.X + rcbarra.Width));
