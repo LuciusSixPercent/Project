@@ -307,7 +307,7 @@ class Episodio01 : GameState
             Exercicio09 = new ModoHistorinha(parent.Content, Pergunta9, alt90, alt91, alt92, arial, 3, audioEx09);
             Exercicio10 = new ModoHistorinha(parent.Content, Pergunta010, alt100, alt101, alt102, arial, 3, audioEx10);
             //Transições
-            enterTransitionDuration = 500;
+            enterTransitionDuration = 1000;
             exitTransitionDuration = 1000;
             //Narrações
             //Cena 01
@@ -370,182 +370,190 @@ class Episodio01 : GameState
     int rep = 0;
     public override void Update(GameTime tempo)
     {
-        if (!caderno)
+        base.Update(tempo);
+        if (stateEntered)
         {
-            rcCosme = new Rectangle(300, 400, CosmeAndando[Frame].Width, CosmeAndando[Frame].Height);
-            MouseState mouse = Mouse.GetState();
-            if (!pauseFlag)
+            if (!caderno)
             {
-
-                base.Update(tempo);
-                if (pause)
+                rcCosme = new Rectangle(300, 400, CosmeAndando[Frame].Width, CosmeAndando[Frame].Height);
+                MouseState mouse = Mouse.GetState();
+                if (!pauseFlag)
                 {
-                    MediaPlayer.Resume();
-                    pause = false;
-                }
-                if (engineSound == null || engineSound.IsStopped)
-                {
-                    if (musica == 0)
-                    {
-                        engineSound = soundBank2.GetCue("385591_Night_sea_ln");
-                        
-                        
-                    }
-                    if (musica == 1)
-                    {
-                        
-                        engineSound = null;
-                        engineSound = soundBank2.GetCue("549944_Trickster");
-                    }
-                    if (musica == 2)
-                    {
-                        engineSound = null;
-                        engineSound = soundBank2.GetCue("558441_Raikoh---Hoppy");
-                    }
-                    engineSound.Play();
-
-                }
-                if (engineSound.IsPaused)
-                {
-                    engineSound.Resume();
-                }
-                if ((texto.Length % Limitedotexto == 0 && texto.Length != 0)) //Quando o texto atingir um limite da tela e tiver um espaço em branco ele pula uma linha;
-                {
-                    if (texto[indice - 1] == ' ' && texto[indice - 2] != ' ' && zerar < 1)
-                    {
-                        texto += "\n";
-                        zerar++;
-                        Limitedotexto = 80;
-
-                    }
-                    else
-                    {
-                        Limitedotexto++;
 
 
-                    }
-
-                }
-                if (!FimDaHistoria)
-                {
-                    AnimacaoDoEpisodio();
-                    if (ColisaoMouseOver(mouse, vVoltar))
+                    if (pause)
                     {
-                        VoltarIndice = 1;
+                        MediaPlayer.Resume();
+                        pause = false;
+                    }
+                    if (engineSound == null || engineSound.IsStopped)
+                    {
+                        if (musica == 0)
+                        {
+                            engineSound = soundBank2.GetCue("385591_Night_sea_ln");
+
+
+                        }
+                        if (musica == 1)
+                        {
+
+                            engineSound = null;
+                            engineSound = soundBank2.GetCue("549944_Trickster");
+                        }
+                        if (musica == 2)
+                        {
+                            engineSound = null;
+                            engineSound = soundBank2.GetCue("558441_Raikoh---Hoppy");
+                        }
+                        engineSound.Play();
 
                     }
-                    else { VoltarIndice = 0; }
-                    if (mouse.LeftButton == ButtonState.Pressed)
+                    if (engineSound.IsPaused)
                     {
+                        engineSound.Resume();
+                    }
+                    if ((texto.Length % Limitedotexto == 0 && texto.Length != 0)) //Quando o texto atingir um limite da tela e tiver um espaço em branco ele pula uma linha;
+                    {
+                        if (texto[indice - 1] == ' ' && texto[indice - 2] != ' ' && zerar < 1)
+                        {
+                            texto += "\n";
+                            zerar++;
+                            Limitedotexto = 80;
+
+                        }
+                        else
+                        {
+                            Limitedotexto++;
+
+
+                        }
+
+                    }
+                    if (!FimDaHistoria)
+                    {
+                        AnimacaoDoEpisodio();
                         if (ColisaoMouseOver(mouse, vVoltar))
                         {
+                            VoltarIndice = 1;
 
-                            //engineSound.Stop(AudioStopOptions.AsAuthored);
-                            //MediaPlayer.Stop();
-                            VoltarBool = true;
-                            //FimDaHistoria = true;
                         }
-                    }
-                    KeyboardState teclado = Keyboard.GetState();
-                    //MediaPlayer.IsRepeating = false;
-                    //////////////////////////////////////////////////////////////////Aqui é onde a narração vai acontecer////////////////////////////////////////////////
-
-                    if (repetir && selecionar < AlbumPrincipal[NoAlbum].Count && !ModoExercicios)//Aqui eu vou verificar se tem algum audio rodando, se não  tiver eu toco uma nova narração.
-                    {
-                        MediaPlayer.Play(AlbumPrincipal[NoAlbum][selecionar]);//Narração.
-                        repetir = false;//Repetir serve para não deixar a música tocar sem parar
-
-                    }
-                    if (ex)
-                    {
-                        if (teclado.IsKeyDown(Keys.Z) && lastKey != Keys.Z)//Se a narração chegou ao tempo final
+                        else { VoltarIndice = 0; }
+                        if (mouse.LeftButton == ButtonState.Pressed)
                         {
-
-                            if (AlbumPrincipal[NoAlbum].Count == selecionar + 1)//Se o Album que está tocando chegou a sua ultima música
+                            if (ColisaoMouseOver(mouse, vVoltar))
                             {
-                                NoAlbum += (NoAlbum < AlbumPrincipal.Count ? 1 : 0);//Trocar de album
-                                selecionar = 0;//eu zero o contador de musicas
-                                Incremento0++;// Incremento mais 1 na variavel que permite que o texto continue
-                                if (NoAlbum == 10)
+
+                                //engineSound.Stop(AudioStopOptions.AsAuthored);
+                                //MediaPlayer.Stop();
+                                VoltarBool = true;
+                                //FimDaHistoria = true;
+                            }
+                        }
+                        KeyboardState teclado = Keyboard.GetState();
+                        //MediaPlayer.IsRepeating = false;
+                        //////////////////////////////////////////////////////////////////Aqui é onde a narração vai acontecer////////////////////////////////////////////////
+
+                        if (repetir && selecionar < AlbumPrincipal[NoAlbum].Count && !ModoExercicios)//Aqui eu vou verificar se tem algum audio rodando, se não  tiver eu toco uma nova narração.
+                        {
+                            MediaPlayer.Play(AlbumPrincipal[NoAlbum][selecionar]);//Narração.
+                            repetir = false;//Repetir serve para não deixar a música tocar sem parar
+
+                        }
+                        if (ex)
+                        {
+                            if (teclado.IsKeyDown(Keys.Z) && lastKey != Keys.Z)//Se a narração chegou ao tempo final
+                            {
+
+                                if (AlbumPrincipal[NoAlbum].Count == selecionar + 1)//Se o Album que está tocando chegou a sua ultima música
                                 {
-                                    NoAlbum = 9;
+                                    NoAlbum += (NoAlbum < AlbumPrincipal.Count ? 1 : 0);//Trocar de album
+                                    selecionar = 0;//eu zero o contador de musicas
+                                    Incremento0++;// Incremento mais 1 na variavel que permite que o texto continue
+                                    if (NoAlbum == 10)
+                                    {
+                                        NoAlbum = 9;
+                                    }
+
+                                }
+                                else
+                                {
+                                    selecionar += selecionar < AlbumPrincipal[NoAlbum].Count ? 1 : 0;//Ele troca de música
+                                    Incremento0++;//Mudo o texto
+                                    indice = 0;//Falo que o numero de letras é zero;
+                                    zerar = 0;//Falo que agora ele poderar pular uma linha no texto, caso a condição seja feita.(Vá no Update para ver a condição)
+                                    texto = "";//O texto a ser impresso agora não possui nada;
+
+                                    Limitedotexto = 80;
                                 }
 
+                                repetir = true;
                             }
-                            else
-                            {
-                                selecionar += selecionar < AlbumPrincipal[NoAlbum].Count ? 1 : 0;//Ele troca de música
-                                Incremento0++;//Mudo o texto
-                                indice = 0;//Falo que o numero de letras é zero;
-                                zerar = 0;//Falo que agora ele poderar pular uma linha no texto, caso a condição seja feita.(Vá no Update para ver a condição)
-                                texto = "";//O texto a ser impresso agora não possui nada;
-
-                                Limitedotexto = 80;
-                            }
-
-                            repetir = true;
                         }
+                        if (teclado.IsKeyDown(Keys.C) && lastKey != Keys.C)
+                        {
+                            MediaPlayer.Pause();
+                            caderno = true;
+                        }
+                        Keys[] ks = teclado.GetPressedKeys();
+
+                        if (ks.Length == 0) lastKey = Keys.A;
+                        else lastKey = ks[0];
+
+                        //////////////////////////////////////Fim da Parte de Narração//////////////////////////////////////////////////////////////////
+                        if (stateEntered)
+                        {
+
+
+
+                            if (KeyboardHelper.IsKeyDown(Keys.Escape))
+                            {
+                                KeyboardHelper.LockKey(Keys.Escape);
+                                if (parent.EnterState((int)StatesIdList.PAUSE))
+                                {
+                                    Alpha = 0.5f;
+                                    pauseFlag = true;
+                                    stateEntered = false;
+                                }
+                            }
+                            else if (KeyboardHelper.KeyReleased(Keys.Escape))
+                            {
+                                KeyboardHelper.UnlockKey(Keys.Escape);
+                            }
+                        }
+
                     }
-                    if (teclado.IsKeyDown(Keys.C) && lastKey != Keys.C)
+                    else if (!exitingState)
+                    {
+                        MediaPlayer.Stop();
+                        engineSound.Stop(AudioStopOptions.AsAuthored);
+
+                        ExitState();
+                    }
+                    if (VoltarBool)
                     {
                         MediaPlayer.Pause();
-                        caderno = true;
-                    }
-                    Keys[] ks = teclado.GetPressedKeys();
+                        engineSound.Stop(AudioStopOptions.AsAuthored);
 
-                    if (ks.Length == 0) lastKey = Keys.A;
-                    else lastKey = ks[0];
-
-                    //////////////////////////////////////Fim da Parte de Narração//////////////////////////////////////////////////////////////////
-                    if (stateEntered)
-                    {
-
-
-
-                        if (KeyboardHelper.IsKeyDown(Keys.Escape))
-                        {
-                            KeyboardHelper.LockKey(Keys.Escape);
-                            if (parent.EnterState((int)StatesIdList.PAUSE))
-                            {
-                                Alpha = 0.5f;
-                                pauseFlag = true;
-                                stateEntered = false;
-                            }
-                        }
-                        else if (KeyboardHelper.KeyReleased(Keys.Escape))
-                        {
-                            KeyboardHelper.UnlockKey(Keys.Escape);
-                        }
+                        ExitState();
                     }
 
                 }
-                else if (!exitingState)
-                {
-                    MediaPlayer.Stop();
-                    engineSound.Stop(AudioStopOptions.AsAuthored);
-
-                    ExitState();
-                }
-                if (VoltarBool)
+                else
                 {
                     MediaPlayer.Pause();
-                    engineSound.Stop(AudioStopOptions.AsAuthored);
+                    pause = true;
+                    engineSound.Pause();
 
-                    ExitState();
                 }
-
             }
             else
             {
-                MediaPlayer.Pause();
-                pause = true;
-                engineSound.Pause();
-
+                parent.EnterState((int)StatesIdList.OPTIONS);
             }
         }
-        else
+        else if (exit)
         {
-            parent.EnterState((int)StatesIdList.OPTIONS);
+            ExitState();
         }
     }
     string Tmusica, TpLAYER, NomeMusica;
@@ -565,29 +573,29 @@ class Episodio01 : GameState
         }
         if (!FimDaHistoria)
         {
-            SpriteBatch.Draw(Cenario[CenarioIndice], rcCenario, Color.White);
+            SpriteBatch.Draw(Cenario[CenarioIndice], rcCenario, Color.White*Alpha);
 
             //Tmusica = MediaPlayer.PlayPosition.Minutes.ToString() + " : " + MediaPlayer.PlayPosition.Seconds;
             //TpLAYER = AlbumPrincipal[NoAlbum][selecionar].Duration.Minutes.ToString() + " : " + AlbumPrincipal[NoAlbum][selecionar].Duration.Seconds;
             //NomeMusica = AlbumPrincipal[NoAlbum][selecionar].Name;
-            SpriteBatch.DrawString(arial, "Pressione a tecla [z] para avançar o texto", new Vector2(200, 720), Color.White);
-            SpriteBatch.DrawString(arial, Frame.ToString(), new Vector2(200, 700), Color.White);//Aqui eu vejo em quanto tempo está a narração
+            SpriteBatch.DrawString(arial, "Pressione a tecla [z] para avançar o texto", new Vector2(200, 720), Color.White*Alpha);
+            SpriteBatch.DrawString(arial, Frame.ToString(), new Vector2(200, 700), Color.White*Alpha);//Aqui eu vejo em quanto tempo está a narração
             //Aqui em cima eu imprimo o tempo total da musica;
         }
         if (CenarioIndice == 0)
         {
-            SpriteBatch.Draw(CenarioBola, vBolaCenario, BolaColor);
+            SpriteBatch.Draw(CenarioBola, vBolaCenario, BolaColor*Alpha);
         }
-        SpriteBatch.Draw(Cosme, new Rectangle((int)vCosme.X, (int)vCosme.Y, Cosme.Width, Cosme.Height), null, CosmeColor, 0.0f, new Vector2(0, 0), EfeitoCosme, 0.0f);
-        SpriteBatch.Draw(Maria, new Rectangle((int)vMaria.X, (int)vMaria.Y, Maria.Width, Maria.Height), null, MariaColor, 0.0f, new Vector2(0, 0), EfeitoMaria, 0.0f);
-        SpriteBatch.Draw(Apua, new Rectangle((int)vApua.X, (int)vApua.Y, Apua.Width, Apua.Height), null, ApuaColor, 0.0f, new Vector2(0, 0), EfeitoApua, 0.0f);
-        SpriteBatch.Draw(Serafina, new Rectangle((int)vSerafina.X, (int)vSerafina.Y, Serafina.Width, Serafina.Height), null, SerafinaColor, 0.0f, new Vector2(0, 0), EfeitoSerafina, 0.0f);
-        SpriteBatch.Draw(Cachorro, vCachorro, CachorroColor);
+        SpriteBatch.Draw(Cosme, new Rectangle((int)vCosme.X, (int)vCosme.Y, Cosme.Width, Cosme.Height), null, CosmeColor*Alpha, 0.0f, new Vector2(0, 0), EfeitoCosme, 0.0f);
+        SpriteBatch.Draw(Maria, new Rectangle((int)vMaria.X, (int)vMaria.Y, Maria.Width, Maria.Height), null, MariaColor*Alpha, 0.0f, new Vector2(0, 0), EfeitoMaria, 0.0f);
+        SpriteBatch.Draw(Apua, new Rectangle((int)vApua.X, (int)vApua.Y, Apua.Width, Apua.Height), null, ApuaColor*Alpha, 0.0f, new Vector2(0, 0), EfeitoApua, 0.0f);
+        SpriteBatch.Draw(Serafina, new Rectangle((int)vSerafina.X, (int)vSerafina.Y, Serafina.Width, Serafina.Height), null, SerafinaColor*Alpha, 0.0f, new Vector2(0, 0), EfeitoSerafina, 0.0f);
+        SpriteBatch.Draw(Cachorro, vCachorro, CachorroColor*Alpha);
         if (CenarioIndice == 0)
         {
-            SpriteBatch.Draw(CenarioTv, vTV, Color.White);
+            SpriteBatch.Draw(CenarioTv, vTV, Color.White*Alpha);
         }
-        SpriteBatch.Draw(Voltar[VoltarIndice], vVoltar, Color.White);
+        SpriteBatch.Draw(Voltar[VoltarIndice], vVoltar, Color.White*Alpha);
         //*
         if (!caderno)
         {
@@ -624,7 +632,7 @@ class Episodio01 : GameState
                             MariaColor = Color.White;
                         }
 
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);//Imprimir texto
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White*Alpha);//Imprimir texto
 
                     }
 
@@ -680,7 +688,7 @@ class Episodio01 : GameState
                             
                         }
 
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White*Alpha);
 
                     }
                     if (!exercicio2 && parte2)
@@ -714,7 +722,7 @@ class Episodio01 : GameState
                         if (indice < dialogo03[Incremento0].Length) { texto += dialogo03[Incremento0][indice]; }
                         indice = indice + (indice < dialogo03[Incremento0].Length ? 1 : 0);
 
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White*Alpha);
                     }
                     if (parte3 && !exercicio3)
                     {
@@ -753,7 +761,7 @@ class Episodio01 : GameState
                             vSerafinaObj.X = 400;
                         }
 
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White*Alpha);
 
                     }
                     if (parte4 && !exercicio4)
@@ -855,7 +863,7 @@ class Episodio01 : GameState
                         {
                             CosmeColor = Color.Transparent;
                         }
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White*Alpha);
                    }
 
                 }
@@ -889,7 +897,7 @@ class Episodio01 : GameState
                             
                         }
 
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White*Alpha);
                     }
                     if (parte6 && !exercicio6)
                     {
@@ -922,7 +930,7 @@ class Episodio01 : GameState
                         if (indice < dialogo07[Incremento0].Length) { texto += dialogo07[Incremento0][indice]; }
                         indice = indice + (indice < dialogo07[Incremento0].Length ? 1 : 0);
 
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White*Alpha);
                         if (Incremento0 == 0)
                         {
                             BolaColor = Color.Yellow;
@@ -959,7 +967,7 @@ class Episodio01 : GameState
                         if (indice < dialogo08[Incremento0].Length) { texto += dialogo08[Incremento0][indice]; }
                         indice = indice + (indice < dialogo08[Incremento0].Length ? 1 : 0);
 
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White*Alpha);
                     }
                     if (parte8 && !exercicio8)
                     {
@@ -1041,7 +1049,7 @@ class Episodio01 : GameState
                         if (indice < dialogo09[Incremento0].Length) { texto += dialogo09[Incremento0][indice]; }
                         indice = indice + (indice < dialogo09[Incremento0].Length ? 1 : 0);
 
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White*Alpha);
                     }
                     if (parte9 && !exercicio9)
                     {
@@ -1074,7 +1082,7 @@ class Episodio01 : GameState
                         if (indice < dialogo10[Incremento0].Length) { texto += dialogo10[Incremento0][indice]; }
                         indice = indice + (indice < dialogo10[Incremento0].Length ? 1 : 0);
 
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White);
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White*Alpha);
                     }
                     if (parte10 && !exercicio10)
                     {
@@ -1238,15 +1246,21 @@ class Episodio01 : GameState
     {
         if (!enteringState)
         {
-            base.ExitState();
-            if (!VoltarBool)
+            if (!exitingState)
             {
-                parent.ExitState(ID, (int)StatesIdList.RUNNER);
+                base.ExitState();
             }
-            else
+            else if (exit)
             {
+                if (!VoltarBool)
+                {
+                    parent.ExitState(ID, (int)StatesIdList.RUNNER);
+                }
+                else
+                {
 
-                parent.ExitState(ID);
+                    parent.ExitState(ID);
+                }
             }
 
         }
