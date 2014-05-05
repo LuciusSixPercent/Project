@@ -73,7 +73,7 @@ using Microsoft.Xna.Framework.Audio;
                 menu1 = new Texture2D[2] {menu1Normal,menu1Over };
                 menu2 = new Texture2D[2] { menu2Normal, menu2Over };
                 menu3 = new Texture2D[2] { menu3Normal, menu3Over };
-                menu4 = new Texture2D[2] { menu4Normal, menu4Over };
+                //menu4 = new Texture2D[2] { menu4Normal, menu4Over };
                 menu5 = new Texture2D[2] { menu5Normal, menu5Over };
                 menu6 = new Texture2D[2] { menu6Normal, menu6Over };
                 OK = new Texture2D[2] { OKNormal, OKOver };
@@ -81,20 +81,20 @@ using Microsoft.Xna.Framework.Audio;
                 Voltar = new Texture2D[2] { VoltarNormal, VoltarOver };
                 #region Retangulos
                 rcfundo = new Rectangle(0, 0, 1024, 768);
-                rcmenu1 = new Rectangle(350, 300, menu1[mn1].Width / 2, menu1[mn1].Height / 2);
-                rcmenu2 = new Rectangle(350, 370, menu2[mn2].Width / 2, menu2[mn2].Height / 2);
-                rcmenu3 = new Rectangle(350, 430, menu3[mn3].Width / 2, menu3[mn3].Height / 2);
-                rcmenu4 = new Rectangle(350, 520, menu4[mn4].Width / 2, menu4[mn4].Height / 2);
-                rcmenu5 = new Rectangle(350, 590, menu5[mn5].Width / 2, menu5[mn5].Height / 2);
-                rcmenu6 = new Rectangle(350, 650, menu6[mn6].Width / 2, menu6[mn6].Height / 2);
+                rcmenu1 = new Rectangle(0, 600, menu1[mn1].Width , menu1[mn1].Height);
+                rcmenu2 = new Rectangle(150, 600, menu2[mn2].Width , menu2[mn2].Height);
+                rcmenu3 = new Rectangle(300, 600, menu3[mn3].Width, menu3[mn3].Height);
+                //rcmenu4 = new Rectangle(450, 600, menu4[mn4].Width / 2, menu4[mn4].Height / 2);
+                rcmenu5 = new Rectangle(450, 600, menu5[mn5].Width, menu5[mn5].Height);
+                rcmenu6 = new Rectangle(600, 600, menu6[mn6].Width, menu6[mn6].Height);
                 rcOK = new Rectangle(300, 350, OK[OKin].Width / 2, OK[OKin].Height / 2);
                 rcCancelar = new Rectangle(550, 350, Cancelar[CancIN].Width / 2, Cancelar[CancIN].Height / 2);
                 rcbarra = new Rectangle(120, 350, Barra.Width, Barra.Height*2);
                 vVoltar = new Rectangle(850, 700, Voltar[VoltarIndice].Width / 2, Voltar[VoltarIndice].Height / 2);
                 rcMedidor = new Rectangle(rcbarra.X + rcbarra.Width, rcbarra.Y - Medidor.Height/2, Medidor.Width*3, Medidor.Height);
-                menus = new Vector2[6] { new Vector2(rcmenu1.X-seta.Width, rcmenu1.Y), new Vector2(rcmenu2.X-seta.Width, rcmenu2.Y), new Vector2(rcmenu3.X-seta.Width, rcmenu3.Y), 
+                /*menus = new Vector2[6] { new Vector2(rcmenu1.X-seta.Width, rcmenu1.Y), new Vector2(rcmenu2.X-seta.Width, rcmenu2.Y), new Vector2(rcmenu3.X-seta.Width, rcmenu3.Y), 
                 new Vector2(rcmenu4.X-seta.Width, rcmenu4.Y), new Vector2(rcmenu5.X-seta.Width, rcmenu5.Y), new Vector2(rcmenu6.X-seta.Width, rcmenu6.Y) };
-                rcSeta = new Rectangle((int)menus[escolha].X, (int)menus[escolha].Y, seta.Width, seta.Height);
+                rcSeta = new Rectangle((int)menus[escolha].X, (int)menus[escolha].Y, seta.Width, seta.Height);*/
                 #endregion
                 //resto da inicialização
             }
@@ -152,7 +152,7 @@ using Microsoft.Xna.Framework.Audio;
                         engineSound = soundBank3.GetCue("Silly Fun");
                         engineSound.Play();
                     }
-                    rcSeta = new Rectangle((int)menus[escolha].X, (int)menus[escolha].Y, seta.Width, seta.Height);
+                    //rcSeta = new Rectangle((int)menus[escolha].X, (int)menus[escolha].Y, seta.Width, seta.Height);
                     
                     
                     if (Sair)
@@ -238,7 +238,9 @@ using Microsoft.Xna.Framework.Audio;
                     }
                     if (!Historinha && !BateBola && !Caderno && !Config && !Creditos && !Sair)
                     {
+                        
                         #region Comandos Teclado
+                        /*
                         if ((teclado.IsKeyDown(Keys.Space)) && (lastKey != Keys.Space))
                         {
                             MediaPlayer.Volume -= 0.1f;
@@ -281,6 +283,7 @@ using Microsoft.Xna.Framework.Audio;
 
                         if (ks.Length == 0) lastKey = Keys.A;
                         else lastKey = ks[0];
+                         * */
                         #endregion
                         #region Comandos Mouse
                         #region Over
@@ -302,12 +305,12 @@ using Microsoft.Xna.Framework.Audio;
                             mn3 = 1;
                         }
                         else { mn3 = 0; }
-                        if (ColisaoMouseOver(mouse, menu4[mn4], rcmenu4))
-                        {
-                            escolha = 3;
-                            mn4 = 1;
-                        }
-                        else { mn4 = 0; }
+                        //if (ColisaoMouseOver(mouse, menu4[mn4], rcmenu4))
+                        //{
+                        //    escolha = 3;
+                        //    mn4 = 1;
+                        //}
+                        //else { mn4 = 0; }
                         if (ColisaoMouseOver(mouse, menu5[mn5], rcmenu5))
                         {
                             escolha = 4;
@@ -338,10 +341,10 @@ using Microsoft.Xna.Framework.Audio;
                             {
                                 Caderno = true;
                             }
-                            if (ColisaoMouseOver(mouse, menu4[mn4], rcmenu4))
-                            {
-                                Config = true;
-                            }
+                            //if (ColisaoMouseOver(mouse, menu4[mn4], rcmenu4))
+                            //{
+                            //    Config = true;
+                            //}
                             if (ColisaoMouseOver(mouse, menu5[mn5], rcmenu5))
                             {
                                 Creditos = true;
@@ -397,7 +400,7 @@ using Microsoft.Xna.Framework.Audio;
                 spriteBatch.Draw(menu1[mn1], rcmenu1, Color.White * Alpha);
                 spriteBatch.Draw(menu2[mn2], rcmenu2, Color.White * Alpha);
                 spriteBatch.Draw(menu3[mn3], rcmenu3, Color.White * Alpha);
-                spriteBatch.Draw(menu4[mn4], rcmenu4, Color.White * Alpha);
+                //spriteBatch.Draw(menu4[mn4], rcmenu4, Color.White * Alpha);
                 spriteBatch.Draw(menu5[mn5], rcmenu5, Color.White * Alpha);
                 spriteBatch.Draw(menu6[mn6], rcmenu6, Color.White * Alpha);
             }
@@ -411,11 +414,11 @@ using Microsoft.Xna.Framework.Audio;
                 spriteBatch.Draw(OK[OKin], rcOK, Color.White);
                 spriteBatch.Draw(Cancelar[CancIN], rcCancelar, Color.White);
             }
-            if (Config)
-            {
-                spriteBatch.Draw(Barra, rcbarra, Color.White);
-                spriteBatch.Draw(Medidor, rcMedidor, Color.White);
-            }
+            //if (Config)
+            //{
+            //    spriteBatch.Draw(Barra, rcbarra, Color.White);
+            //    spriteBatch.Draw(Medidor, rcMedidor, Color.White);
+            //}
             spriteBatch.End();
         }
         public bool Sair { get; set; }

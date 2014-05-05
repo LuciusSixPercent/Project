@@ -96,11 +96,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Menu\BB.png">
-      <Name>BB</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Menu\cadernoH.png">
       <Name>cadernoH</Name>
       <Importer>TextureImporter</Importer>
@@ -118,11 +113,6 @@
     </Compile>
     <Compile Include="Menu\cancelarN.png">
       <Name>cancelarN</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Menu\CdA.png">
-      <Name>CdA</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -216,11 +206,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Menu\Config.png">
-      <Name>Config</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Menu\configuracoesH.png">
       <Name>configuracoesH</Name>
       <Importer>TextureImporter</Importer>
@@ -228,11 +213,6 @@
     </Compile>
     <Compile Include="Menu\configuracoesN.png">
       <Name>configuracoesN</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Menu\Cre.png">
-      <Name>Cre</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -268,11 +248,6 @@
     </Compile>
     <Compile Include="Menu\MedidorBarra.png">
       <Name>MedidorBarra</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Menu\MH.png">
-      <Name>MH</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -328,11 +303,6 @@
     </Compile>
     <Compile Include="Menu\Pause\voltar_ao_jogoP.png">
       <Name>voltar_ao_jogoP</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Menu\Sair.png">
-      <Name>Sair</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
