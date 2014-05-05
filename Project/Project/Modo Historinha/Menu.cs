@@ -81,12 +81,12 @@ using Microsoft.Xna.Framework.Audio;
                 Voltar = new Texture2D[2] { VoltarNormal, VoltarOver };
                 #region Retangulos
                 rcfundo = new Rectangle(0, 0, 1024, 768);
-                rcmenu1 = new Rectangle(0, mn1 == 1 ? 400 : 600, mn1 == 1 ? menu1[1].Width : menu1[0].Width, mn1 == 1 ? menu1[1].Height:menu1[0].Height);
-                rcmenu2 = new Rectangle(150,mn2 == 1 ? 400 : 600, menu2[mn2].Width, menu2[mn2].Height);
-                rcmenu3 = new Rectangle(300, mn3 == 1 ? 400 : 600, menu3[mn3].Width, menu3[mn3].Height);
+                rcmenu1 = new Rectangle(0, mn1 == 1 ? 560 : 600, mn1 == 1 ? 233 : menu1[0].Width, mn1 == 1 ? 156:menu1[0].Height);
+                rcmenu2 = new Rectangle(200,mn2 == 1 ? 560 : 600, menu2[mn2].Width, menu2[mn2].Height);
+                rcmenu3 = new Rectangle(400, mn3 == 1 ? 560 : 600, menu3[mn3].Width, menu3[mn3].Height);
                 //rcmenu4 = new Rectangle(450, 600, menu4[mn4].Width / 2, menu4[mn4].Height / 2);
-                rcmenu5 = new Rectangle(450, mn5 == 1 ? 400 : 600, menu5[mn5].Width, menu5[mn5].Height);
-                rcmenu6 = new Rectangle(600, mn6 == 1 ? 400 : 600, menu6[mn6].Width, menu6[mn6].Height);
+                rcmenu5 = new Rectangle(600, mn5 == 1 ? 560 : 600, menu5[mn5].Width, menu5[mn5].Height);
+                rcmenu6 = new Rectangle(800, mn6 == 1 ? 560 : 600, menu6[mn6].Width, menu6[mn6].Height);
                 rcOK = new Rectangle(300, 350, OK[OKin].Width / 2, OK[OKin].Height / 2);
                 rcCancelar = new Rectangle(550, 350, Cancelar[CancIN].Width / 2, Cancelar[CancIN].Height / 2);
                 rcbarra = new Rectangle(120, 350, Barra.Width, Barra.Height*2);
@@ -398,12 +398,12 @@ using Microsoft.Xna.Framework.Audio;
                 Fundo = Fnorm;
                 spriteBatch.Draw(Fundo, rcfundo, Color.White * Alpha);
                 spriteBatch.Draw(seta, rcSeta, Color.White * Alpha);
-                spriteBatch.Draw(menu1[mn1], rcmenu1, Color.White * Alpha);
-                spriteBatch.Draw(menu2[mn2], rcmenu2, Color.White * Alpha);
-                spriteBatch.Draw(menu3[mn3], rcmenu3, Color.White * Alpha);
+                spriteBatch.Draw(menu1[mn1], new Rectangle(0, mn1 == 1 ? 560 : 600, mn1 == 1 ? 233 : menu1[0].Width, mn1 == 1 ? 156:menu1[0].Height), Color.White * Alpha);
+                spriteBatch.Draw(menu2[mn2], new Rectangle(200, mn2 == 1 ? 560 : 600, menu2[mn2].Width, menu2[mn2].Height), Color.White * Alpha);
+                spriteBatch.Draw(menu3[mn3], new Rectangle(400, mn3 == 1 ? 560 : 600, menu3[mn3].Width, menu3[mn3].Height), Color.White * Alpha);
                 //spriteBatch.Draw(menu4[mn4], rcmenu4, Color.White * Alpha);
-                spriteBatch.Draw(menu5[mn5], rcmenu5, Color.White * Alpha);
-                spriteBatch.Draw(menu6[mn6], rcmenu6, Color.White * Alpha);
+                spriteBatch.Draw(menu5[mn5], new Rectangle(600, mn5 == 1 ? 560 : 600, menu5[mn5].Width, menu5[mn5].Height), Color.White * Alpha);
+                spriteBatch.Draw(menu6[mn6], new Rectangle(800, mn6 == 1 ? 560 : 600, menu6[mn6].Width, menu6[mn6].Height), Color.White * Alpha);
             }
             else
             {
