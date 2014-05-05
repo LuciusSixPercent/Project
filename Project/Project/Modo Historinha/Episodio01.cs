@@ -527,6 +527,7 @@ class Episodio01 : GameState
                         }
                         else if (!exitingState)
                         {
+                            
                             MediaPlayer.Stop();
                             engineSound.Stop(AudioStopOptions.AsAuthored);
 
@@ -557,6 +558,9 @@ class Episodio01 : GameState
         }
         else if (exit)
         {
+            FimDaHistoria = true;
+            MediaPlayer.Stop();
+            engineSound.Stop(AudioStopOptions.AsAuthored);
             ExitState();
         }
     }
@@ -1256,7 +1260,7 @@ class Episodio01 : GameState
             }
             else if (exit)
             {
-                if (!VoltarBool)
+                if (!VoltarBool && !exit)
                 {
                     parent.ExitState(ID, (int)StatesIdList.RUNNER);
                 }
