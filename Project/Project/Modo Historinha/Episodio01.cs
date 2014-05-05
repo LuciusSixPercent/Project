@@ -794,7 +794,7 @@ class Episodio01 : GameState
                         {
                             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
                             {
-                                Mouse.SetPosition(0, 0);
+                                Mouse.SetPosition(200, 300);
                             }
                         }
                     }

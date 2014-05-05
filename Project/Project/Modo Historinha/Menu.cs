@@ -23,7 +23,7 @@ using Microsoft.Xna.Framework.Audio;
         Vector2[] menus;
         bool pauseFlag;
         int escolha = 0;
-        bool repetir = false;
+        bool repetir = true;
         
         Song Inicio,select;
         bool bepe = false;
@@ -36,7 +36,7 @@ using Microsoft.Xna.Framework.Audio;
         int OKin = 0;
         int CancIN = 0;
         int VoltarIndice = 0;
-        bool tocar = true;
+        bool tocar = false;
         
         SpriteFont arial;
         AudioEngine audioEngine, audioEngine3;
@@ -110,13 +110,11 @@ using Microsoft.Xna.Framework.Audio;
             MouseState mouse = Mouse.GetState();
             KeyboardState teclado = Keyboard.GetState();
             MediaPlayer.Volume = (rcMedidor.X / (rcbarra.X + rcbarra.Width));
-            if (tocar)
+            if (MediaPlayer.State == MediaState.Stopped && tocar)
             {
-                Player1 = soundBank.GetCue("logo_music_36");
-                engineSound = soundBank3.GetCue("Silly Fun");
-                Player1.Play();
+                engineSound.Play();
                 tocar = false;
-                repetir = true;
+               
 
             }
 
@@ -124,11 +122,13 @@ using Microsoft.Xna.Framework.Audio;
             {
                 
                 
-                if (repetir && Player1.IsStopped)
+                if (repetir)
                 {
-                    
+                    Player1 = soundBank.GetCue("logo_music_36");
+                    engineSound = soundBank3.GetCue("Silly Fun");
+                    Player1.Play();
                     MediaPlayer.Play(Inicio);
-                    engineSound.Play();
+                    tocar = true;
                     repetir = false;
                 }
                 
