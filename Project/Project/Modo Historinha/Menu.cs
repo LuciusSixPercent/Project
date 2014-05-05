@@ -23,7 +23,8 @@ using Microsoft.Xna.Framework.Audio;
         Vector2[] menus;
         bool pauseFlag;
         int escolha = 0;
-        bool repetir = true;
+        bool repetir = false;
+        
         Song Inicio,select;
         bool bepe = false;
         int mn1 = 0;
@@ -35,12 +36,15 @@ using Microsoft.Xna.Framework.Audio;
         int OKin = 0;
         int CancIN = 0;
         int VoltarIndice = 0;
+        bool tocar = true;
+        
         SpriteFont arial;
         AudioEngine audioEngine, audioEngine3;
         WaveBank waveBank, waveBank3;
         SoundBank soundBank, soundBank3;
         Cue engineSound = null;
-       
+        Cue Player1 = null;
+        
         public Menu(int id, Game1 parent)
             : base(id, parent)
         {
@@ -106,18 +110,25 @@ using Microsoft.Xna.Framework.Audio;
             MouseState mouse = Mouse.GetState();
             KeyboardState teclado = Keyboard.GetState();
             MediaPlayer.Volume = (rcMedidor.X / (rcbarra.X + rcbarra.Width));
-            if (engineSound == null)
+            if (tocar)
             {
+                Player1 = soundBank.GetCue("logo_music_36");
                 engineSound = soundBank3.GetCue("Silly Fun");
-                engineSound.Play();
+                Player1.Play();
+                tocar = false;
+                repetir = true;
+
             }
+
             if (!pauseFlag)
             {
                 
-                if (repetir)
+                
+                if (repetir && Player1.IsStopped)
                 {
                     
                     MediaPlayer.Play(Inicio);
+                    engineSound.Play();
                     repetir = false;
                 }
                 
@@ -148,7 +159,7 @@ using Microsoft.Xna.Framework.Audio;
                 if (stateEntered)
                 {
 
-                    if (engineSound.IsStopped)
+                    if (engineSound.IsStopped && tocar == false)
                     {
                         engineSound = soundBank3.GetCue("Silly Fun");
                         engineSound.Play();

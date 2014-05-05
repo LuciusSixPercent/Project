@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
 
 
 class ModoHistorinha
@@ -34,11 +35,19 @@ class ModoHistorinha
     #endregion
     Vector2  Valt0, Valt1, Valt2, Valt3, Vpergunta;
     Rectangle VOpcoes1, VOpcoes2, VOpcoes3, VOpcoes4;
+    AudioEngine audioEngine2;
+    WaveBank waveBank2;
+    SoundBank soundBank2;
+    Cue PlayerModoHistoria = null;
     //teste
     bool venceu = false;
+    int erro = 0;
     public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, string alt2, string alt3, SpriteFont a, int n, Song narra)
         
     {
+        audioEngine2 = new AudioEngine("Content\\Audio\\MyGameAudio2.xgs");
+        waveBank2 = new WaveBank(audioEngine2, "Content\\Audio\\Wave Bank2.xwb");
+        soundBank2 = new SoundBank(audioEngine2, "Content\\Audio\\Sound Bank2.xsb");
         venceu = false;
         narrador = new List<Song>() { narra };
         NoDeRespostas = n;
@@ -57,6 +66,9 @@ class ModoHistorinha
     public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, SpriteFont a, int n, Song narra)
         
     {
+        audioEngine2 = new AudioEngine("Content\\Audio\\MyGameAudio2.xgs");
+        waveBank2 = new WaveBank(audioEngine2, "Content\\Audio\\Wave Bank2.xwb");
+        soundBank2 = new SoundBank(audioEngine2, "Content\\Audio\\Sound Bank2.xsb");
         venceu = false;
         narrador = new List<Song>() { narra };
         NoDeRespostas = n;
@@ -71,6 +83,9 @@ class ModoHistorinha
     public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, string alt2, SpriteFont a, int n, Song narra)
         
     {
+        audioEngine2 = new AudioEngine("Content\\Audio\\MyGameAudio2.xgs");
+        waveBank2 = new WaveBank(audioEngine2, "Content\\Audio\\Wave Bank2.xwb");
+        soundBank2 = new SoundBank(audioEngine2, "Content\\Audio\\Sound Bank2.xsb");
         venceu = false;
         narrador = new List<Song>() { narra };
         NoDeRespostas = n;
@@ -87,6 +102,9 @@ class ModoHistorinha
     public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, string alt2, string alt3, SpriteFont a, int n, Song narra, bool sequencia)
         
     {
+        audioEngine2 = new AudioEngine("Content\\Audio\\MyGameAudio2.xgs");
+        waveBank2 = new WaveBank(audioEngine2, "Content\\Audio\\Wave Bank2.xwb");
+        soundBank2 = new SoundBank(audioEngine2, "Content\\Audio\\Sound Bank2.xsb");
         venceu = false;
         narrador = new List<Song>() { narra };
         seq = sequencia;
@@ -106,6 +124,9 @@ class ModoHistorinha
     public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, string alt2, string alt3, SpriteFont a, int n, Song narra1, Song narrar2, bool sequencia)
         
     {
+        audioEngine2 = new AudioEngine("Content\\Audio\\MyGameAudio2.xgs");
+        waveBank2 = new WaveBank(audioEngine2, "Content\\Audio\\Wave Bank2.xwb");
+        soundBank2 = new SoundBank(audioEngine2, "Content\\Audio\\Sound Bank2.xsb");
         venceu = false;
         narrador = new List<Song>() { narra1, narrar2 };
         seq = sequencia;
@@ -171,6 +192,7 @@ class ModoHistorinha
             venceu = true;
         }
         Click(mouse);
+        
     }
     public void Click(MouseState mouse)
     {
@@ -187,11 +209,18 @@ class ModoHistorinha
                 {
                     if (primeiroclique && segundoclique)
                     {
+                        PlayerModoHistoria = null;
+                        PlayerModoHistoria = soundBank2.GetCue("decision7");
+                        PlayerModoHistoria.Play();
                         terceiroclique = true;
                         Calt0 = Color.Transparent;
                     }
                     else
                     {
+                        PlayerModoHistoria = null;
+                        PlayerModoHistoria = soundBank2.GetCue("warning1");
+                        PlayerModoHistoria.Play();
+                        erro++;
                         primeiroclique = false;
                         segundoclique = false;
                         terceiroclique = false;
@@ -206,10 +235,17 @@ class ModoHistorinha
                 
                 if (!seq)
                 {
+                    PlayerModoHistoria = null;
+                    PlayerModoHistoria = soundBank2.GetCue("warning1");
+                    PlayerModoHistoria.Play();
+                    erro++;
                     Calt1 = Color.Transparent;
                 }
                 else
                 {
+                    PlayerModoHistoria = null;
+                    PlayerModoHistoria = soundBank2.GetCue("decision7");
+                    PlayerModoHistoria.Play();
                     primeiroclique = true;
                     Calt1 = Color.Transparent;
                 }
@@ -219,6 +255,10 @@ class ModoHistorinha
                 
                 if (!seq)
                 {
+                    PlayerModoHistoria = null;
+                    PlayerModoHistoria = soundBank2.GetCue("warning1");
+                    PlayerModoHistoria.Play();
+                    erro++;
                     if (narrador.Count == 2)
                     {
                         selecionar = 1;
@@ -230,11 +270,18 @@ class ModoHistorinha
                 {
                     if (primeiroclique)
                     {
+                        PlayerModoHistoria = null;
+                        PlayerModoHistoria = soundBank2.GetCue("decision7");
+                        PlayerModoHistoria.Play();
                         segundoclique = true;
                         Calt2 = Color.Transparent;
                     }
                     else
                     {
+                        PlayerModoHistoria = null;
+                        PlayerModoHistoria = soundBank2.GetCue("warning1");
+                        PlayerModoHistoria.Play();
+                        erro++;
                         primeiroclique = false;
                         segundoclique = false;
                         
@@ -246,17 +293,28 @@ class ModoHistorinha
                 
                 if (!seq)
                 {
+                    PlayerModoHistoria = null;
+                    PlayerModoHistoria = soundBank2.GetCue("warning1");
+                    PlayerModoHistoria.Play();
+                    erro++;
                     Calt3 = Color.Transparent;
                 }
                 else
                 {
                     if (primeiroclique && segundoclique && terceiroclique)
                     {
+                        PlayerModoHistoria = null;
+                        PlayerModoHistoria = soundBank2.GetCue("decision7");
+                        PlayerModoHistoria.Play();
                         quartoclique = true;
                         Calt3 = Color.Transparent;
                     }
                     else
                     {
+                        PlayerModoHistoria = null;
+                        PlayerModoHistoria = soundBank2.GetCue("warning1");
+                        PlayerModoHistoria.Play();
+                        erro++;
                         primeiroclique = false;
                         segundoclique = false;
                         terceiroclique = false;
@@ -365,7 +423,12 @@ class ModoHistorinha
     }
     public bool Continuar()
     {
-
+        if (venceu)
+        {
+            PlayerModoHistoria = null;
+            PlayerModoHistoria = soundBank2.GetCue("decision5");
+            PlayerModoHistoria.Play();
+        }
         return venceu ;
 
     }

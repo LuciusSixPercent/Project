@@ -207,6 +207,7 @@ class Episodio01 : GameState
     WaveBank waveBank2;
     SoundBank soundBank2;
     Cue engineSound = null;
+    
     Texture2D VoltarOver, VoltarNormal, CenarioInterior, CenarioExterior, CenarioCampo, CenarioRio;
     Texture2D[] Voltar, Cenario;
     Rectangle vVoltar, rcCenario;
@@ -394,7 +395,7 @@ class Episodio01 : GameState
                             if (musica == 0)
                             {
                                 engineSound = soundBank2.GetCue("385591_Night_sea_ln");
-
+                                
 
                             }
                             if (musica == 1)
@@ -409,6 +410,7 @@ class Episodio01 : GameState
                                 engineSound = soundBank2.GetCue("558441_Raikoh---Hoppy");
                             }
                             engineSound.Play();
+                            
 
                         }
                         if (engineSound.IsPaused)
