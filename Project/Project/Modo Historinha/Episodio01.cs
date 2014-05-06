@@ -602,7 +602,7 @@ class Episodio01 : GameState
         SpriteBatch.Begin();
         cor = Color.White * Alpha;
 
-        if ((int)gameTime.TotalGameTime.TotalMilliseconds % 5 == 0)
+        if (((int)gameTime.TotalGameTime.TotalMilliseconds % 5 == 0)&&(CosmeAndar ||MariaAndar||MariaAndeComBaldeComBola||MariaAndeComBaldeSemBola||ApuaAndar||SerafinaAnde||CachorroAndar||CachorroSentar) )
         {
             Frame = (Frame + 1) % 16;
         }
@@ -651,6 +651,7 @@ class Episodio01 : GameState
 
                     if (!parte1)//S e a parte um não terminou
                     {
+                        CosmeEstaFeliz = true;
                         if (indice < dialogo01[Incremento0].Length) { texto += dialogo01[Incremento0][indice]; }//Verifica se o texto impresso tem menos letras que o dialogo, se verdadeiro coloca mais uma letra;
                         indice = indice + (indice < dialogo01[Incremento0].Length ? 1 : 0);//Aumento o indice para que sempre vá para próxima letra na hora de imprimir.
                         if (TextoAtt != dialogo01[Incremento0])
@@ -668,6 +669,7 @@ class Episodio01 : GameState
                         {
                             TransparenciaCosme = TransparenciaCosme<1?TransparenciaCosme+0.01f:1;
                             CosmeColor = Color.White;
+                            
                         }
                         if (Incremento0 == 1)
                         {
@@ -683,6 +685,7 @@ class Episodio01 : GameState
 
                     if (parte1 && !exercicio1)//Caso a primeira parte tenha chegado ao fim, mas o exercicio não foi feito.
                     {
+                        CosmeEstaFeliz = false;
                         MariaEstaFeliz = false;
                         TransparenciaMaria = 1;
                         texto = "";//Reseto tudo, como foi feito acima
@@ -717,9 +720,15 @@ class Episodio01 : GameState
                         {
                             TextoAtt = dialogo02[Incremento0];
                         }
-                       
+                        if (Incremento0 == 2)
+                        {
+                            CosmeEstaIrritado = true;
+                            MariaEstaIrritada = true;
+                        }
                         if (Incremento0 == 3)
                         {
+                            CosmeEstaIrritado = false;
+                            MariaEstaIrritada = false;
                             rotSerafina = true;
                             TransparenciaSerafina = TransparenciaSerafina < 1 ? TransparenciaSerafina + 0.01f : 1;
                             TransparenciaCachorro = TransparenciaCachorro < 1 ? TransparenciaCachorro + 0.01f : 1;
@@ -731,6 +740,7 @@ class Episodio01 : GameState
                             //engineSound = null;
 
                         }
+                        
                         if (Incremento0 == 4)
                         {
                             TransparenciaSerafina = 1;
