@@ -131,16 +131,18 @@ using Microsoft.Xna.Framework.Audio;
                     tocar = true;
                     repetir = false;
                 }
-                
-                if (bepe)
+                if (parent.IsActive)
                 {
-                    
+                    if (bepe)
+                    {
+
                         //engineSound = soundBank.GetCue("magic-chime-07");
                         //engineSound.Play();
                         soundBank.PlayCue("magic-chime-07");
-                        
+
                         bepe = false;
-                   
+
+                    }
                 }
                 if (KeyboardHelper.IsKeyDown(Keys.Escape))
                 {
