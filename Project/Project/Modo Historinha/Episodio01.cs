@@ -374,8 +374,8 @@ class Episodio01 : GameState
             vMariaObj = vMaria;
             vApuaObj = vApua;
             vSerafinaObj = vSerafina;
-            vBolaCenario = new Vector2(449, 326);
-            vTV = new Vector2(872, 457);
+            vBolaCenario = new Vector2(449, 325);
+            vTV = new Vector2(871, 457);
             BolaColor = Color.White;
             //rcApua = new Rectangle(300, 200, Papua.Width / 2, Papua.Height / 2);
             //rcSerafina = new Rectangle(400, 200, Pserafina.Width / 2, Pserafina.Height / 2);
@@ -383,7 +383,6 @@ class Episodio01 : GameState
         }
     }
     Keys lastKey = Keys.A;
-    int incrementoTexto = 0;
     SpriteEffects EfeitoSerafina, EfeitoCosme, EfeitoMaria, EfeitoApua, EfeitoCachorro;
     bool rotCosme = false;
     bool rotMaria = false;
@@ -624,10 +623,10 @@ class Episodio01 : GameState
         {
             SpriteBatch.Draw(CenarioBola, vBolaCenario, BolaColor * Alpha);
         }
-        SpriteBatch.Draw(Cosme, new Rectangle((int)vCosme.X, (int)vCosme.Y, !cosmeTamanho ? Cosme.Width : 58, !cosmeTamanho ? Cosme.Height : 176), null, (CosmeColor * TransparenciaCosme) * Alpha, 0.0f, Vector2.Zero, EfeitoCosme, 0.0f);
         SpriteBatch.Draw(Maria, new Rectangle((int)vMaria.X, (int)vMaria.Y, !MariaTamnho ? Maria.Width : 58, !MariaTamnho ? Maria.Height : 176), null, (MariaColor * TransparenciaMaria) * Alpha, 0.0f, Vector2.Zero, EfeitoMaria, 0.0f);
         SpriteBatch.Draw(Apua, new Rectangle((int)vApua.X, (int)vApua.Y, Apua.Width, Apua.Height), null, (ApuaColor * TransparenciaApua) * Alpha, 0.0f, Vector2.Zero, EfeitoApua, 0.0f);
         SpriteBatch.Draw(Serafina, new Rectangle((int)vSerafina.X, (int)vSerafina.Y, !SerafinaTamanho ? Serafina.Width : 53, !SerafinaTamanho ? Serafina.Height : 171), null, (SerafinaColor * TransparenciaSerafina) * Alpha, 0.0f, Vector2.Zero, EfeitoSerafina, 0.0f);
+        SpriteBatch.Draw(Cosme, new Rectangle((int)vCosme.X, (int)vCosme.Y, !cosmeTamanho ? Cosme.Width : 58, !cosmeTamanho ? Cosme.Height : 176), null, (CosmeColor * TransparenciaCosme) * Alpha, 0.0f, Vector2.Zero, EfeitoCosme, 0.0f);
         SpriteBatch.Draw(Cachorro,new Rectangle((int)vCachorro.X,(int)vCachorro.Y,Cachorro.Width,Cachorro.Height),null, (CachorroColor*TransparenciaCachorro) * Alpha,0.0f, Vector2.Zero,EfeitoCachorro,0.0f);
         if (CenarioIndice == 0)
         {
@@ -828,6 +827,16 @@ class Episodio01 : GameState
                             vSerafinaObj.X = 400;
                             rotSerafina = false;
                             rotMaria = true;
+                            if (vSerafina.X > 430 && vSerafina.X < 550)
+                            {
+                                vSerafinaObj.Y = 430;
+                            }
+                            else { vSerafinaObj.Y = 400; }
+                            if (vMaria.X > 430 && vMaria.X < 550)
+                            {
+                                vMariaObj.Y = 380;
+                            }
+                            else { vMariaObj.Y = 400; }
                         }
 
                         SpriteBatch.DrawString(arial, texto, posicaoText, Color.White * Alpha);
@@ -898,7 +907,16 @@ class Episodio01 : GameState
                         {
                             vCosmeObj.X = 600;
                             vApuaObj.X = 300;
-
+                            if (vCosme.X > 330 && vCosme.X < 450)
+                            {
+                                vCosmeObj.Y = 430;
+                            }
+                            else { vCosmeObj.Y = 400; }
+                            if (vApua.X > 330 && vApua.X < 450)
+                            {
+                                vApuaObj.Y = 380;
+                            }
+                            else { vApuaObj.Y = 400; }
                         }
                         if (Incremento0 == 1)
                         {
@@ -915,6 +933,22 @@ class Episodio01 : GameState
                             vApuaObj.X = 850;
                             vSerafinaObj.X = 850;
                             vCosmeObj.X = 850;
+                            if (vApua.X > 600 && vApua.X < 750)
+                            {
+                                vApuaObj.Y = 430;
+                            }
+                            else { vApuaObj.Y = 400; }
+                            if (vSerafina.X > 600 && vSerafina.X < 750)
+                            {
+                                vSerafinaObj.Y = 430;
+                            }
+                            else { vSerafinaObj.Y = 400; }
+                            if (vCosme.X > 600 && vCosme.X < 750)
+                            {
+                                vCosmeObj.Y = 430;
+                            }
+                            else { vCosmeObj.Y = 400; }
+
                             rep = 0;
                         }
                         if (Incremento0 == 3)
