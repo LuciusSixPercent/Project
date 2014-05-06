@@ -26,27 +26,53 @@ namespace game_objects.questions
         public static void LoadQuestions()
         {
             XDocument xDoc = XDocument.Load("Content/questions.xml");
-            foreach (XElement xmlSubject in xDoc.Elements("subject"))
+            foreach (XElement xmlSubjects in xDoc.Elements("subjects"))
             {
-                QuestionSubject subject;
-                if (QuestionSubject.TryParse(xmlSubject.FirstAttribute.Value.ToString(), out subject))
+                foreach (XElement xmlSubject in xmlSubjects.Elements("subject"))
                 {
-                    foreach (XElement xmlDifficulty in xmlSubject.Elements("difficulty"))
+                    QuestionSubject subject;
+                    if (QuestionSubject.TryParse(xmlSubject.FirstAttribute.Value.ToString(), out subject))
                     {
-                        int difficulty;
-                        if (Int32.TryParse(xmlDifficulty.FirstAttribute.Value.ToString(), out difficulty))
+                        foreach (XElement xmlDifficulty in xmlSubject.Elements("difficulty"))
                         {
-                            CreatePositions(subject, difficulty, xmlDifficulty.Nodes().Count());
-                            int indexCount = 0;
-                            foreach (XElement xmlQuestion in xmlDifficulty.Elements("question"))
+                            int difficulty;
+                            if (Int32.TryParse(xmlDifficulty.FirstAttribute.Value.ToString(), out difficulty))
                             {
-                                List<string> answers = new List<string>();
-                                foreach (XElement xmlAnswer in xmlQuestion.Elements("answer"))
-                                    answers.Add(xmlAnswer.Value);
+                                CreatePositions(subject, difficulty, xmlDifficulty.Nodes().Count());
+                                int indexCount = 0;
+                                foreach (XElement xmlQuestion in xmlDifficulty.Elements("question"))
+                                {
+                                    List<string> answers = new List<string>();
+                                    foreach (XElement xmlAnswer in xmlQuestion.Elements("answer"))
+                                    {
+                                        int repeat = 1;
+                                        XAttribute xmlRepeat = xmlAnswer.Attribute("repeat");
+                                        if (xmlRepeat != null)
+                                        {
+                                            Int32.TryParse(xmlRepeat.Value, out repeat);
+                                        }
 
-                                createQuestion(subject, xmlQuestion.Element("header").Value, (string[])answers.ToArray(), difficulty, indexCount);
+                                        string modifier = "";
+                                        if (subject == QuestionSubject.MAT && difficulty == 1)
+                                        {
+                                            int a = 0;
+                                        }
+                                        XAttribute xmlModifier = xmlAnswer.Attribute("modifier");
+                                        if (xmlModifier != null)
+                                        {
+                                            modifier = "|modifier=" + xmlModifier.Value + "|";
+                                        }
 
-                                indexCount++;
+                                        for (int i = 0; i < repeat; i++)
+                                        {
+                                            answers.Add(modifier + xmlAnswer.Value);
+                                        }
+                                    }
+
+                                    createQuestion(subject, xmlQuestion.Element("header").Value, (string[])answers.ToArray(), difficulty, indexCount);
+
+                                    indexCount++;
+                                }
                             }
                         }
                     }
@@ -79,4 +105,5 @@ namespace game_objects.questions
             }
         }
     }
+
 }

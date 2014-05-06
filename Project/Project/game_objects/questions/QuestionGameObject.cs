@@ -30,6 +30,35 @@ namespace game_objects.questions
         private bool correctAnswerSpawned;
         private Answer collidedAnswer;
 
+        private string correctAnswer;
+        private string currentAcceptedAnswer;
+        private string currentModifier;
+        private string CorrectAnswer
+        {
+            get
+            {
+                string s;
+                if (string.IsNullOrEmpty(currentAcceptedAnswer))
+                {
+                    int min = 0;
+                    int max = 100;
+                    if (currentModifier.Equals("<"))
+                    {
+                        max = Int32.Parse(correctAnswer);
+                    }
+                    else
+                    {
+                        min = Int32.Parse(correctAnswer) + 1;
+                    }
+                    s = PublicRandom.Next(min, max).ToString();
+                }
+                else
+                {
+                    s = currentAcceptedAnswer;
+                }
+                return s;
+            }
+        }
 
         /// <summary>
         /// A resposta com a qual o jogador colidiu mais recentemente
@@ -77,7 +106,8 @@ namespace game_objects.questions
             : base(renderer, collidableObjects)
         {
             this.question = question;
-            currentAnswerIndex = 0;
+            this.currentAnswerIndex = 0;
+            UpdateAnswer();
             CreateAnswers(renderer);
         }
 
@@ -148,10 +178,11 @@ namespace game_objects.questions
             chanceToSpawnCorrectAnswer = 0.1;
             this.answers = new Answer[3];
             correctAnswerSpawned = false;
-            
+
             for (int i = 0; i < 3; i++)
             {
-                string s = question.Answers[currentAnswerIndex];
+                string s = CorrectAnswer;                
+                
                 if (PublicRandom.NextDouble() > chanceToSpawnCorrectAnswer || correctAnswerSpawned)
                 {
                     s = GenerateFalseAnswer();
@@ -169,27 +200,52 @@ namespace game_objects.questions
             pityPoint = false;
         }
 
-        
+
         /// <summary>
         /// Gera uma resposta falsa que seja diferente de qualquer outra que exista no momento.
         /// </summary>
         /// <returns>Uma string contendo uma resposta incorreta</returns>
         private string GenerateFalseAnswer()
         {
+            
+            string s;
             string usedChars = GetUsedChars();
-            string s = null;
-            do
-            {
-                if (question.Subject == QuestionSubject.PT)
+            if (string.IsNullOrEmpty(currentModifier))
+            {                
+                do
                 {
-                    s = ((char)PublicRandom.Next((int)'A', (int)'Z')).ToString();
+                    s = GetValidAnswer(usedChars);
+                } while (usedChars.Contains(s));
+            }
+            else
+            {
+                int min = 0;
+                int max = 100;
+                if (currentModifier.Equals(">"))
+                {
+                    max = Int32.Parse(correctAnswer);
                 }
                 else
                 {
-                    s = PublicRandom.Next(100).ToString();
+                    min = Int32.Parse(correctAnswer)+1;
                 }
-            } while (usedChars.Contains(s));
+                do
+                {
+                    s = GetValidAnswer(usedChars, min, max);
+                } while (usedChars.Contains(s));
+            }
+
             return s;
+        }
+
+        private string GetValidAnswer(string usedChars, int min = 0, int max=100)
+        {
+            if (question.Subject == QuestionSubject.PT)
+                return ((char)PublicRandom.Next((int)'A', (int)'Z')).ToString();
+            else
+            {
+                return PublicRandom.Next(min, max).ToString();
+            }
         }
 
         /// <summary>
@@ -228,12 +284,12 @@ namespace game_objects.questions
         /// <param name="a">A resposta que terá seu texto alterado.</param>
         private void ChangeAnswer(Answer a)
         {
-            string text = question.Answers[currentAnswerIndex];
+            string text = CorrectAnswer;
             if (correctAnswerSpawned || PublicRandom.NextDouble() > chanceToSpawnCorrectAnswer)
-            {                
+            {
                 text = GenerateFalseAnswer();
                 chanceToSpawnCorrectAnswer *= 2; //dobra a chance de "spawnar" a resposta correta na próxima vez
-                if (a.Text == question.Answers[currentAnswerIndex])
+                if (a.Text.Equals(CorrectAnswer) || ValidMathAnswer(a.Text))
                 {
                     correctAnswerSpawned = false;
                 }
@@ -241,6 +297,10 @@ namespace game_objects.questions
             else
             {
                 correctAnswerSpawned = true;
+            }
+            if (text == null)
+            {
+                int i = 0;
             }
             a.Text = text;
         }
@@ -252,11 +312,14 @@ namespace game_objects.questions
         private string GetUsedChars()
         {
             string usedChars = "";
-            foreach (string answer in question.Answers)
-                usedChars += answer;
+            for (int i = 0; i < question.AnswerCount; i++)
+            {
+                usedChars += question.GetAnswer(i);
+            }
+
             foreach (Answer answer in answers)
             {
-                if(answer != null)
+                if (answer != null)
                     usedChars += answer.Text;
             }
             return usedChars;
@@ -283,12 +346,22 @@ namespace game_objects.questions
         /// <returns>true se ainda houverem respostas a serem adivinhadas; false do contrário.</returns>
         public bool Next()
         {
-            bool hasNext = ++currentAnswerIndex < question.Answers.Length;
+            bool hasNext = ++currentAnswerIndex < question.AnswerCount;
             if (hasNext)
             {
+                UpdateAnswer();
+
                 CreateAnswers((Renderer3D)Renderer);
             }
             return hasNext;
+        }
+
+        private void UpdateAnswer()
+        {
+            correctAnswer = question.GetAnswer(currentAnswerIndex);
+            currentModifier = question.GetModifier(currentAnswerIndex);
+            if (string.IsNullOrEmpty(currentModifier))
+                currentAcceptedAnswer = correctAnswer;
         }
 
         /// <summary>
@@ -324,7 +397,8 @@ namespace game_objects.questions
         /// <returns>true se a questão for correta; false do contrário.</returns>
         public bool CheckAnswer(Answer a, bool passingBy)
         {
-            bool correct = a.Text.Equals(question.Answers[currentAnswerIndex]);
+            //bool correct = a.Text.Equals(currentAnswer);
+            bool correct = verifyAnswer(a);
             if (correct)
             {
                 if (passingBy) //se a resposta é correta e o jogador passou por ela, ele cometeu um erro e perderá pontos
@@ -332,11 +406,45 @@ namespace game_objects.questions
                 else
                     questionScore += currentAnswerValue;
             }
-            else if(!passingBy) //se a resposta é incorreta, porém o jogador apenas passou por ela, não faz sentido fazê-lo perder pontos
+            else if (!passingBy) //se a resposta é incorreta, porém o jogador apenas passou por ela, não faz sentido fazê-lo perder pontos
             {
                 ReducePoints();
             }
             return correct;
+        }
+
+        private bool verifyAnswer(Answer a)
+        {
+            bool correct = false;
+            if (question.Subject == QuestionSubject.PT || string.IsNullOrEmpty(currentModifier))
+            {
+                correct = a.Text.Equals(currentAcceptedAnswer);
+            }
+            else if (question.Subject == QuestionSubject.MAT)
+            {
+                correct = ValidMathAnswer(a.Text);
+
+            }
+
+            return correct;
+        }
+
+        private bool ValidMathAnswer(string s)
+        {
+            bool valid = false;
+            if (!string.IsNullOrEmpty(currentModifier))
+            {
+                switch (currentModifier)
+                {
+                    case ">":
+                        valid = Int32.Parse(s) > Int32.Parse(correctAnswer);
+                        break;
+                    case "<":
+                        valid = Int32.Parse(s) < Int32.Parse(correctAnswer);
+                        break;
+                }
+            }
+            return valid;
         }
 
         /// <summary>

@@ -1,40 +1,260 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
-<subject name="PT">
+<subjects>
+  <subject name="PT">
 
-  <difficulty level="0">
+    <difficulty level="0">
 
-    <question>
-      <header>Soletre a palavra SOL</header>
-      <answer>S</answer>
-      <answer>O</answer>
-      <answer>L</answer>
-    </question>
+      <question>
+        <header>Soletre a palavra SOL</header>
+        <answer>S</answer>
+        <answer>O</answer>
+        <answer>L</answer>
+      </question>
 
-    <question>
-      <header>Soletre a palavra RUA</header>
-      <answer>R</answer>
-      <answer>U</answer>
-      <answer>A</answer>
-    </question>
+      <question>
+        <header>Soletre a palavra RUA</header>
+        <answer>R</answer>
+        <answer>U</answer>
+        <answer>A</answer>
+      </question>
 
-    <question>
-      <header>Soletre a palavra CASA</header>
-      <answer>C</answer>
-      <answer>A</answer>
-      <answer>S</answer>
-      <answer>A</answer>
-    </question>
+      <question>
+        <header>Soletre a palavra CASA</header>
+        <answer>C</answer>
+        <answer>A</answer>
+        <answer>S</answer>
+        <answer>A</answer>
+      </question>
 
-    <question>
-      <header>Soletre a palavra TERRA</header>
-      <answer>T</answer>
-      <answer>E</answer>
-      <answer>R</answer>
-      <answer>R</answer>
-      <answer>A</answer>
-    </question>
+      <question>
+        <header>Soletre a palavra COR</header>
+        <answer>C</answer>
+        <answer>O</answer>
+        <answer>R</answer>
+      </question>
 
-  </difficulty>
+      <question>
+        <header>Soletre a palavra BOM</header>
+        <answer>B</answer>
+        <answer>O</answer>
+        <answer>M</answer>
+      </question>
 
-</subject>
+      <question>
+        <header>Soletre a palavra BOM</header>
+        <answer>B</answer>
+        <answer>O</answer>
+        <answer>M</answer>
+      </question>
+
+      <question>
+        <header>Quais são as sílabas de MAÇÃ?</header>
+        <answer>MA</answer>
+        <answer>ÇÃ</answer>
+      </question>
+
+      <question>
+        <header>Quais são as sílabas de AMOR?</header>
+        <answer>A</answer>
+        <answer>MOR</answer>
+      </question>
+
+      <question>
+        <header>Quais são as sílabas de GATO?</header>
+        <answer>GA</answer>
+        <answer>TO</answer>
+      </question>
+    </difficulty>
+
+    <difficulty level="1">
+      <question>
+        <header>Soletre a palavra TERRA</header>
+        <answer>T</answer>
+        <answer>E</answer>
+        <answer>R</answer>
+        <answer>R</answer>
+        <answer>A</answer>
+      </question>
+
+      <question>
+        <header>Soletre a palavra COLA</header>
+        <answer>C</answer>
+        <answer>O</answer>
+        <answer>L</answer>
+        <answer>A</answer>
+      </question>
+
+      <question>
+        <header>Soletre a palavra CARRO</header>
+        <answer>C</answer>
+        <answer>A</answer>
+        <answer>R</answer>
+        <answer>R</answer>
+        <answer>O</answer>
+      </question>
+
+      <question>
+        <header>Soletre a palavra PENA</header>
+        <answer>P</answer>
+        <answer>E</answer>
+        <answer>N</answer>
+        <answer>A</answer>
+      </question>
+
+      <question>
+        <header>Quais são as sílabas de BANANA?</header>
+        <answer>BA</answer>
+        <answer>NA</answer>
+        <answer>NA</answer>
+      </question>
+
+      <question>
+        <header>Quais são as sílabas de MENINA?</header>
+        <answer>ME</answer>
+        <answer>NI</answer>
+        <answer>NA</answer>
+      </question>
+
+      <question>
+        <header>Quais são as sílabas de OVELHA?</header>
+        <answer>O</answer>
+        <answer>VE</answer>
+        <answer>LHA</answer>
+      </question>
+
+      <question>
+        <header>Quais são as sílabas de LAGARTA?</header>
+        <answer>LA</answer>
+        <answer>GAR</answer>
+        <answer>TA</answer>
+      </question>
+
+    </difficulty>
+
+    <difficulty level="2">
+
+      <question>
+        <header>Soletre a palavra ESCOLA</header>
+        <answer>E</answer>
+        <answer>S</answer>
+        <answer>C</answer>
+        <answer>O</answer>
+        <answer>L</answer>
+        <answer>A</answer>
+      </question>
+
+      <question>
+        <header>Soletre a palavra CORDEL</header>
+        <answer>C</answer>
+        <answer>O</answer>
+        <answer>R</answer>
+        <answer>D</answer>
+        <answer>E</answer>
+        <answer>L</answer>
+      </question>
+
+      <question>
+        <header>Soletre a palavra VALOR</header>
+        <answer>V</answer>
+        <answer>A</answer>
+        <answer>L</answer>
+        <answer>O</answer>
+        <answer>R</answer>
+      </question>
+
+      <question>
+        <header>Soletre a palavra LETRA</header>
+        <answer>L</answer>
+        <answer>E</answer>
+        <answer>T</answer>
+        <answer>R</answer>
+        <answer>A</answer>
+      </question>
+
+      <question>
+        <header>Soletre a palavra PARQUE</header>
+        <answer>P</answer>
+        <answer>A</answer>
+        <answer>R</answer>
+        <answer>Q</answer>
+        <answer>U</answer>
+        <answer>E</answer>
+      </question>
+
+      <question>
+        <header>Quais são as sílabas de QUEIJO?</header>
+        <answer>QUEI</answer>
+        <answer>JO</answer>
+      </question>
+
+      <question>
+        <header>Quais são as sílabas de CACHORRO?</header>
+        <answer>CA</answer>
+        <answer>CHOR</answer>
+        <answer>RO</answer>
+      </question>
+
+      <question>
+        <header>Quais são as sílabas de CARREGAR?</header>
+        <answer>CAR</answer>
+        <answer>RE</answer>
+        <answer>GAR</answer>
+      </question>
+
+      <question>
+        <header>Quais são as sílabas de ENORME?</header>
+        <answer>E</answer>
+        <answer>NOR</answer>
+        <answer>ME</answer>
+      </question>
+
+    </difficulty>
+  </subject>
+
+  <subject name="MAT">
+
+    <difficulty level="0">
+      <question>
+        <header>Escolha os números em ordem de 0 a 5</header>
+        <answer>0</answer>
+        <answer>1</answer>
+        <answer>2</answer>
+        <answer>3</answer>
+        <answer>4</answer>
+        <answer>5</answer>
+      </question>
+
+      <question>
+        <header>Escolha os números em ordem de 2 a 7</header>
+        <answer>2</answer>
+        <answer>3</answer>
+        <answer>4</answer>
+        <answer>5</answer>
+        <answer>6</answer>
+        <answer>7</answer>
+      </question>
+
+      <question>
+        <header>Escolha os números em ordem de 4 a 9</header>
+        <answer>4</answer>
+        <answer>5</answer>
+        <answer>6</answer>
+        <answer>7</answer>
+        <answer>8</answer>
+        <answer>9</answer>
+      </question>
+
+      <question>
+        <header>Escolha apenas o número SETE!</header>
+        <answer repeat="6">7</answer>
+      </question>
+    </difficulty>
+    <difficulty level="1">
+      <question>
+        <header>Escolha os números maiores que 5</header>
+        <answer modifier=">" repeat="3">5</answer>
+      </question>
+    </difficulty>
+  </subject>
+</subjects>

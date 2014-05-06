@@ -6,6 +6,7 @@ using Project;
 using Microsoft.Xna.Framework;
 using game_objects.ui;
 using System.IO;
+using game_objects.questions;
 
 namespace game_states
 {
@@ -66,7 +67,6 @@ namespace game_states
             {
                 goToState = StatesIdList.RUNNER;
                 DisableButtons();
-                //ExitState();
             }
         }
 
@@ -83,6 +83,7 @@ namespace game_states
             if (parent.IsActive)
             {
                 goToState = StatesIdList.MAIN_MENU;
+                AudioManager.GetCue("cancel2").Play();
             }
         }
 
@@ -138,6 +139,12 @@ namespace game_states
             }
             else
             {
+                if (goToState == StatesIdList.RUNNER)
+                {
+                    RunnerState rs = (RunnerState)parent.getState((int)goToState);
+                    rs.Level = RunnerLevel.MEDIUM;
+                    rs.Subjects = new QuestionSubject[] { QuestionSubject.MAT };
+                }
                 parent.ExitState(ID, (int)goToState);
                 goToState = StatesIdList.EMPTY_STATE;
 

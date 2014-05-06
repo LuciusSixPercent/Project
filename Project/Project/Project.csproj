@@ -107,6 +107,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AudioManager.cs" />
     <Compile Include="CadernoDeAtividades.cs" />
     <Compile Include="components\ClickComponent.cs" />
     <Compile Include="components\Component.cs" />

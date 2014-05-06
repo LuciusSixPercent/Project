@@ -112,6 +112,7 @@ using Microsoft.Xna.Framework.Audio;
             MediaPlayer.Volume = (rcMedidor.X / (rcbarra.X + rcbarra.Width));
             if (MediaPlayer.State == MediaState.Stopped && tocar)
             {
+                engineSound = soundBank3.GetCue("Silly Fun");
                 engineSound.Play();
                 tocar = false;
                

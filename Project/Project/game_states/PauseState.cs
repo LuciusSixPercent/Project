@@ -73,6 +73,7 @@ namespace game_states
         {
             if (parent.IsActive)
             {
+                AudioManager.GetCue("cancel2").Play();
                 toTile = true;
                 ExitState();
             }
@@ -84,7 +85,10 @@ namespace game_states
 
         private void resumeGame_mouseClicked(Button btn)
         {
-            ExitState();
+            if (parent.IsActive)
+            {
+                ExitState();
+            }
         }
 
         private Button CreateButton(Rectangle bounds, string baseFileName)

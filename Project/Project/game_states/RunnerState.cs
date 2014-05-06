@@ -35,18 +35,22 @@ namespace game_states
 
         private int foundAnswer; //0 for no; 1 for correct; -1 for incorrect
 
+        private int numberOfQuestions;
+
         private int score;
         private int perfectSscoreMultiplier;
 
         private bool answeredAll;
         private bool finished;
         //WAVE - Musica de fundo
-        AudioEngine audioEngine;
-        WaveBank waveBank;
-        SoundBank soundBank;
-        AudioCategory musicCategory;
         Cue engineSound = null;
         #endregion
+
+        public int NumberOfQuestions
+        {
+            get { return numberOfQuestions; }
+            set { numberOfQuestions = value; }
+        }
 
         public RunnerLevel Level
         {
@@ -71,11 +75,6 @@ namespace game_states
             if (!initialized)
             {
                 base.Initialize();
-                //Wave
-                audioEngine = new AudioEngine("Content\\Audio\\MyGameAudio2.xgs");
-                waveBank = new WaveBank(audioEngine, "Content\\Audio\\Wave Bank2.xwb");
-                soundBank = new SoundBank(audioEngine, "Content\\Audio\\Sound Bank2.xsb");
-                //
                 level = RunnerLevel.EASY;
                 subjects = new QuestionSubject[] { QuestionSubject.PT };
                 score = 0;
@@ -85,6 +84,8 @@ namespace game_states
                 exitTransitionDuration = 1000;
 
                 questions = new List<QuestionGameObject>();
+
+                numberOfQuestions = 1;
 
                 ball = new Ball(goManager.R3D, goManager.CollidableGameObjects);
 
@@ -99,7 +100,7 @@ namespace game_states
                 bg = new Background(goManager.R2D);
                 field = new Field(goManager.R3D, rows, columns);
 
-                totalLoadingSteps = 6;
+                totalLoadingSteps = 7;
                 currentLoadingStep = 0;
 
                 goManager.AddObject(cam);
@@ -122,7 +123,7 @@ namespace game_states
             }
         }
 
-        public void LoadQuestions(int numberOfQuestions)
+        private void LoadQuestions()
         {
             questions.Clear();
             for (int i = 0; i < numberOfQuestions; i++)
@@ -167,7 +168,6 @@ namespace game_states
         {
             if (!ContentLoaded)
             {
-                //base.LoadContent();
                 if (currentLoadingStep <= totalLoadingSteps)
                 {
                     switch (currentLoadingStep)
@@ -176,22 +176,25 @@ namespace game_states
                             CacheLetters();
                             break;
                         case 1:
-                            QuestionsDatabase.LoadQuestions();
+                            CacheNumbers();
                             break;
                         case 2:
-                            bg.Load(parent.Content);
+                            QuestionsDatabase.LoadQuestions();
                             break;
                         case 3:
-                            player.Load(parent.Content);
+                            bg.Load(parent.Content);
                             break;
                         case 4:
-                            ball.Load(parent.Content);
+                            player.Load(parent.Content);
                             break;
                         case 5:
-                            field.Load(parent.Content);
+                            ball.Load(parent.Content);
                             break;
                         case 6:
-                            LoadQuestions(1);
+                            field.Load(parent.Content);
+                            break;
+                        case 7:
+                            LoadQuestions();
                             break;
                     }
                     currentLoadingStep++;
@@ -212,6 +215,14 @@ namespace game_states
             }
         }
 
+        private void CacheNumbers()
+        {
+            for (int i = 0; i < 100; i++)
+            {
+                TextHelper.AddToCache(i.ToString());
+            }
+        }
+
         public void Reset()
         {
             exit = false;
@@ -228,7 +239,7 @@ namespace game_states
             perfectSscoreMultiplier = 2;
             foreach (QuestionGameObject q in questions)
                 goManager.removeObject(q);
-            LoadQuestions(1);
+            LoadQuestions();
         }
 
         #region Transitioning
@@ -301,7 +312,7 @@ namespace game_states
         {
             if (engineSound == null || engineSound.IsStopped)
             {
-                engineSound = soundBank.GetCue("540428_quotSports-Fanaticq");
+                engineSound = AudioManager.GetCue("540428_quotSports-Fanaticq");
             }
 
             if (!engineSound.IsPlaying)

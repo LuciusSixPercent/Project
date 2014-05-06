@@ -43,16 +43,18 @@ namespace Project
 
         public static bool StringToTexture(string text, out Texture2D texture)
         {
-            if (spriteBatch != null)
+            if (spriteBatch != null && !string.IsNullOrEmpty(text))
             {
+                
                 if (!CachedTextures.ContainsKey(text))
                 {
                     AddToCache(text);
                 }
                 texture = CachedTextures[text];
                 return true;
+                
             }
-            texture = new Texture2D(spriteBatch.GraphicsDevice, 0, 0);
+            texture = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);
             return false;
         }
 
