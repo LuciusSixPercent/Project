@@ -60,6 +60,9 @@ namespace Project
             rs = new RunnerState((int)StatesIdList.RUNNER, this);
             states.Add(rs.ID, rs);
 
+            RunnerWaitState rws = new RunnerWaitState((int)StatesIdList.RUNNER_WAIT, this);
+            states.Add(rws.ID, rws);
+
             cda = new CadernoDeAtividades((int)StatesIdList.OPTIONS, this, md);
             states.Add(cda.ID, cda);
 

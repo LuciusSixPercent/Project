@@ -48,11 +48,13 @@ namespace game_states
 
         private bool answeredAll;
         private bool finished;
+
+        private bool shouldWait;
         //WAVE - Musica de fundo
         Cue engineSound = null;
         #endregion
 
-        public string CharName 
+        public string CharName
         {
             set
             {
@@ -100,6 +102,8 @@ namespace game_states
 
                 enterTransitionDuration = 500;
                 exitTransitionDuration = 1000;
+
+                shouldWait = true;
 
                 questions = new List<QuestionGameObject>();
 
@@ -218,9 +222,9 @@ namespace game_states
 
         public void Reset()
         {
-            exit = false;
             finished = false;
             answeredAll = false;
+            shouldWait = true;
 
             player.Reset();
             cam.KeepMoving = true;
@@ -244,7 +248,7 @@ namespace game_states
                 numberOfAnswers += q.AnswerCount;
             }
             maxAllowedMistakes = numberOfAnswers / ((int)Level + 1);
-            
+
         }
 
         #region Transitioning
@@ -252,6 +256,10 @@ namespace game_states
         {
             if (!exitingState)
             {
+                if (exit && ContentLoaded)
+                {
+                    Reset();
+                }
                 base.EnterState();
                 if (!ContentLoaded)
                 {
@@ -280,34 +288,41 @@ namespace game_states
             if (ContentLoaded)
             {
                 base.Update(gameTime);
-                if (stateEntered)
+                if (shouldWait && Alpha >= 0.5f)
                 {
-                    if (!exitingState)
-                    {
-                        if (!finished)
-                        {
-                            PlayBGM();
-                            CheckAnswer();
-                            if (answeredAll)
-                            {
-                                field.KeepMoving = false;
-                                if (field.Goal.Position.Z - player.Position.Z <= 8 && player.KeepMoving)
-                                {
-                                    player.KickBall(perfectSscoreMultiplier == 2);
-                                    cam.KeepMoving = false;
-                                }
-                            }
-
-                            handleInput();
-                        }
-
-                    }
-
+                    shouldWait = false;
+                    parent.EnterState((int)StatesIdList.RUNNER_WAIT);
                 }
-                else if (exit)
+                else
                 {
-                    engineSound.Stop(AudioStopOptions.AsAuthored);
-                    ExitState();
+                    if (stateEntered)
+                    {
+                        if (!exitingState)
+                        {
+
+                            if (!finished)
+                            {
+                                PlayBGM();
+                                CheckAnswer();
+                                if (answeredAll)
+                                {
+                                    field.KeepMoving = false;
+                                    if (field.Goal.Position.Z - player.Position.Z <= 8 && player.KeepMoving)
+                                    {
+                                        player.KickBall(perfectSscoreMultiplier == 2);
+                                        cam.KeepMoving = false;
+                                    }
+                                }
+
+                                handleInput();
+                            }
+                        }
+                    }
+                    else if (exit)
+                    {
+                        engineSound.Stop(AudioStopOptions.AsAuthored);
+                        ExitState();
+                    }
                 }
             }
         }
@@ -356,7 +371,7 @@ namespace game_states
                     }
                 }
             }
-            else if(!answeredAll)
+            else if (!answeredAll)
             {
                 answeredAll = true;
                 centerPlayer();
@@ -408,14 +423,14 @@ namespace game_states
                 {
                     if (parent.EnterState((int)StatesIdList.PAUSE))
                     {
-                        if(!engineSound.IsStopped)
+                        if (!engineSound.IsStopped)
                             engineSound.Pause();
                         Alpha = 0.5f;
                         goManager.R3D.Alpha = goManager.R2D.Alpha = Alpha;
                         stateEntered = false;
                     }
                 }
-                else if(!ball.Rolling)
+                else if (!ball.Rolling)
                 {
                     finished = true;
                     ExitState();

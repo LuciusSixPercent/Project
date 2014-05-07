@@ -16,9 +16,10 @@ namespace game_states
         LOADING = 10,
         MAIN_MENU = 20,
         OPTIONS = 30,
+        CHAR_SELECTION = 35,
         STORY = 40,
         RUNNER = 50,
-        PAUSE = 60,
-        CHAR_SELECTION = 70
+        RUNNER_WAIT = 55,
+        PAUSE = 60
     }
 }

@@ -104,17 +104,10 @@ namespace game_states
             freezeGraphicsBelow = true;
         }
 
-        /*
         public virtual void EnterState()
-        {
-            EnterState(freezeBelow);
-        }
-        */
-        public virtual void EnterState(/*bool freezeBelow*/)
         {
             enteringState = true;
             exit = false;
-            //this.freezeBelow = freezeBelow;
             alphaIncrement = (float)1 / (enterTransitionDuration == 0 ? 1 : enterTransitionDuration);
         }
 

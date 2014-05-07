@@ -156,8 +156,6 @@ namespace game_states
                     rs.CharName = chosenChar;
                     rs.Level = (RunnerLevel)chosenLevel;
                     rs.Subjects = chosenSubjects;
-                    if (rs.ContentLoaded)
-                        rs.Reset();
                 }
                 parent.ExitState(ID, (int)goToState);
                 goToState = StatesIdList.EMPTY_STATE;

@@ -143,6 +143,7 @@
     <Compile Include="game_states\CharSelectionState.cs" />
     <Compile Include="game_states\ConfigMenuState.cs" />
     <Compile Include="game_states\LoadingState.cs" />
+    <Compile Include="game_states\RunnerWaitState.cs" />
     <Compile Include="graphics\Renderer.cs" />
     <Compile Include="graphics\Renderer2D.cs" />
     <Compile Include="graphics\Renderer3D.cs" />

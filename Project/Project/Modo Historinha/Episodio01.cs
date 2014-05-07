@@ -1436,6 +1436,7 @@ class Episodio01 : GameState
             }
             if (FimDaHistoria)
             {
+                ((RunnerState)parent.getState((int)StatesIdList.RUNNER)).CharName = "maria";
                 parent.ExitState(ID, (int)StatesIdList.RUNNER);
             }
             else if (exit || VoltarBool)
