@@ -18,31 +18,24 @@ namespace game_objects.questions
         private Quad quad;
         private Texture2D texture;
 
+        private bool textureLoaded;
+
         public string Text
         {
             get { return text; }
             set { 
                 text = value;
-                CreateQuad();
+                textureLoaded = false;
             }
         }
-
-        public Texture2D Texture
-        {
-            get { 
-                if(!textureLoaded)
-                    textureLoaded = TextHelper.StringToTexture(Text, out texture);
-                return texture; 
-            }
-        }
-
-        private bool textureLoaded;
 
         private Quad Quad
         {
             get {
                 if (quad == null)
+                {
                     CreateQuad();
+                }
                 return quad;
             }
         }
@@ -83,6 +76,10 @@ namespace game_objects.questions
         public override void ImediateTranslate(Vector3 amount)
         {
             base.ImediateTranslate(amount);
+            if (amount.X != 0)
+            {
+                int a = 0;
+            }
             boundingBox.Max += amount;
             boundingBox.Min += amount;
             Vector3 upAmount = Vector3.Zero;
@@ -106,7 +103,7 @@ namespace game_objects.questions
                     break;
                 }
             }
-            Quad.Translate(amount);            
+            if(Quad != null) Quad.Translate(amount);            
         }
 
 
@@ -119,7 +116,6 @@ namespace game_objects.questions
         {
             if (Visible)
             {
-                TextHelper.StringToTexture(Text, out texture);
                 if (textureLoaded)
                     ((Renderer3D)Renderer).Draw(texture, Quad, BlendState.AlphaBlend, BoundingBox);
             }
@@ -130,6 +126,11 @@ namespace game_objects.questions
             if (Visible)
             {
                 base.Update(gameTime);
+                if (!textureLoaded)
+                {
+                    textureLoaded = TextHelper.StringToTexture(text, out texture);
+                    CreateQuad();
+                }
             }
         }
         public override bool Collided(CollidableGameObject obj)
@@ -139,15 +140,14 @@ namespace game_objects.questions
 
         private void CreateQuad()
         {
-            Vector3 nrm = new Vector3(0, 0, -1);
-            float proportion = (float)Texture.Width / Texture.Height;
-            quad = new Quad(position, nrm, Vector3.Up, scale * proportion, scale);
-
-            Vector3 backUpperLeft = Quad.Vertices[1].Position;
-
-            Vector3 frontBottomRight = Quad.Vertices[2].Position;
-
-            BoundingBox = new BoundingBox(frontBottomRight, backUpperLeft);
+            if (textureLoaded)
+            {
+                Vector3 nrm = new Vector3(0, 0, -1);
+                float proportion = (float)texture.Width / texture.Height;
+                quad = new Quad(position, nrm, Vector3.Up, scale * proportion, scale);
+                
+                BoundingBox = new BoundingBox(quad.LowerRight, quad.UpperLeft);
+            }
         }
 
     }

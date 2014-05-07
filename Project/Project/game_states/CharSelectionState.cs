@@ -19,6 +19,10 @@ namespace game_states
         private bool buttonsEnabled;
         private int elapsed;
 
+        private QuestionSubject[] chosenSubjects;
+        private int chosenLevel;
+        private string chosenChar;
+
         public CharSelectionState(int id, Game1 parent)
             : base(id, parent)
         {
@@ -47,7 +51,6 @@ namespace game_states
             maria.BaseFileName = "testBtn";
             maria.FilePath = "Menu" + Path.AltDirectorySeparatorChar + "Char_Selection" + Path.AltDirectorySeparatorChar;
             maria.mouseClicked += new Button.MouseClicked(maria_mouseClicked);
-            maria.Disable();
 
             bounds = new Rectangle(screen.Width - 250, screen.Height - 100, 200, 50);
             titleScreen = new Button(goManager.R2D, bounds);
@@ -59,6 +62,10 @@ namespace game_states
             goManager.AddObject(cosme);
             goManager.AddObject(maria);
             goManager.AddObject(titleScreen);
+
+            chosenChar = "cosme";
+            chosenLevel = 0;
+            chosenSubjects = new QuestionSubject[] { QuestionSubject.PT };
         }
 
         void maria_mouseClicked(Button btn)
@@ -66,6 +73,7 @@ namespace game_states
             if (parent.IsActive)
             {
                 goToState = StatesIdList.RUNNER;
+                chosenChar = "maria";
                 DisableButtons();
             }
         }
@@ -75,6 +83,8 @@ namespace game_states
             if (parent.IsActive)
             {
                 goToState = StatesIdList.RUNNER;
+                chosenChar = "cosme";
+                DisableButtons();
             }
         }
 
@@ -142,8 +152,12 @@ namespace game_states
                 if (goToState == StatesIdList.RUNNER)
                 {
                     RunnerState rs = (RunnerState)parent.getState((int)goToState);
-                    rs.Level = RunnerLevel.MEDIUM;
-                    rs.Subjects = new QuestionSubject[] { QuestionSubject.MAT };
+                    rs.NumberOfQuestions = 2;
+                    rs.CharName = chosenChar;
+                    rs.Level = (RunnerLevel)chosenLevel;
+                    rs.Subjects = chosenSubjects;
+                    if (rs.ContentLoaded)
+                        rs.Reset();
                 }
                 parent.ExitState(ID, (int)goToState);
                 goToState = StatesIdList.EMPTY_STATE;

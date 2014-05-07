@@ -163,6 +163,7 @@ namespace Project
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
+            TextHelper.CacheQueued();
             DrawStates(gameTime);
             base.Draw(gameTime);
         }

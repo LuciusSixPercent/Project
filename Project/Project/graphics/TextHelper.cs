@@ -16,6 +16,19 @@ namespace Project
         private static SpriteBatch spriteBatch;
         private static SpriteFont defaultSpriteFont;
         private static SpriteFont spriteFont;
+        private static Queue<string> queuedStrings;
+
+        private static Queue<string> QueuedStrings
+        {
+            get
+            {
+                if (TextHelper.queuedStrings == null)
+                {
+                    TextHelper.queuedStrings = new Queue<string>();
+                }
+                return TextHelper.queuedStrings;
+            }
+        }
 
         public static SpriteFont SpriteFont
         {
@@ -26,17 +39,19 @@ namespace Project
         public static SpriteBatch SpriteBatch
         {
             get { return TextHelper.spriteBatch; }
-            set { 
+            set
+            {
                 TextHelper.spriteBatch = value;
             }
         }
 
-        public static Dictionary<string, Texture2D> CachedTextures
+        private static Dictionary<string, Texture2D> CachedTextures
         {
-            get {
+            get
+            {
                 if (cachedTextures == null)
                     cachedTextures = new Dictionary<string, Texture2D>(10);
-                return TextHelper.cachedTextures; 
+                return TextHelper.cachedTextures;
             }
         }
 
@@ -45,14 +60,17 @@ namespace Project
         {
             if (spriteBatch != null && !string.IsNullOrEmpty(text))
             {
-                
+
                 if (!CachedTextures.ContainsKey(text))
                 {
-                    AddToCache(text);
+                    QueuedStrings.Enqueue(text);
                 }
-                texture = CachedTextures[text];
-                return true;
-                
+                else
+                {
+                    texture = CachedTextures[text];
+                    return true;
+                }
+
             }
             texture = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);
             return false;
@@ -100,6 +118,19 @@ namespace Project
                 texture.SetData<Color>(colorData);
                 tmp.Dispose();
                 CachedTextures.Add(text, texture);
+            }
+        }
+        public static void CacheQueued()
+        {
+            int counter = 0; //evitar que o jogo se prenda tentando criar muitas texturas de uma só vez
+            while (QueuedStrings.Count > 0 && counter < 5)
+            {
+                AddToCache(QueuedStrings.Dequeue());
+                counter++;
+            }
+            if (counter == 5)
+            {
+                counter = 0;
             }
         }
 

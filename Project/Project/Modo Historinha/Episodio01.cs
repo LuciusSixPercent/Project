@@ -1294,8 +1294,8 @@ class Episodio01 : GameState
             CenarioExterior = parent.Content.Load<Texture2D>("Imagem/Cenario/Casa_Ext");
             CenarioRio = parent.Content.Load<Texture2D>("Imagem/Cenario/CenarioRio");
             CenarioCampo = parent.Content.Load<Texture2D>("Imagem/Cenario/Campinho");
-            Pmaria = parent.Content.Load<Texture2D>("Imagem/Personagem/Maria/Maria_Andando/0");
-            Pcosme = parent.Content.Load<Texture2D>("Imagem/Personagem/Cosme/Cosme_Andando/0");
+            Pmaria = parent.Content.Load<Texture2D>("Imagem/Personagem/maria/maria_andando/0");
+            Pcosme = parent.Content.Load<Texture2D>("Imagem/Personagem/cosme/cosme_andando/0");
             Papua = parent.Content.Load<Texture2D>("Imagem/Personagem/Apua/Apua_Andando/0");
             Pserafina = parent.Content.Load<Texture2D>("Imagem/Personagem/Serafina/Serafina_Andando/0");
             CenarioTv = parent.Content.Load<Texture2D>("Imagem/Cenario/Televisao_SOLTA");
@@ -1309,51 +1309,51 @@ class Episodio01 : GameState
             MariaIrritada = parent.Content.Load<Texture2D>("Imagem/Personagem/Emoti/Maria_irritada");
             MariaPensativa = parent.Content.Load<Texture2D>("Imagem/Personagem/Emoti/Maria_pensativa");
             SerafinaFeliz = parent.Content.Load<Texture2D>("Imagem/Personagem/Emoti/Serafina_sorrindo");
-            MariaParadaCbalde = parent.Content.Load<Texture2D>("Imagem/Personagem/Maria/Maria_balde");
+            MariaParadaCbalde = parent.Content.Load<Texture2D>("Imagem/Personagem/maria/Maria_balde");
             #endregion
             #region Cosme Andando
-            CosmeA01 = parent.Content.Load<Texture2D>("Imagem/Personagem/Cosme/Cosme_Andando/1");
-            CosmeA02 = parent.Content.Load<Texture2D>("Imagem/Personagem/Cosme/Cosme_Andando/2");
-            CosmeA03 = parent.Content.Load<Texture2D>("Imagem/Personagem/Cosme/Cosme_Andando/3");
-            CosmeA04 = parent.Content.Load<Texture2D>("Imagem/Personagem/Cosme/Cosme_Andando/4");
-            CosmeA05 = parent.Content.Load<Texture2D>("Imagem/Personagem/Cosme/Cosme_Andando/5");
-            CosmeA06 = parent.Content.Load<Texture2D>("Imagem/Personagem/Cosme/Cosme_Andando/6");
-            CosmeA07 = parent.Content.Load<Texture2D>("Imagem/Personagem/Cosme/Cosme_Andando/7");
-            CosmeA08 = parent.Content.Load<Texture2D>("Imagem/Personagem/Cosme/Cosme_Andando/8");
+            CosmeA01 = parent.Content.Load<Texture2D>("Imagem/Personagem/cosme/cosme_andando/1");
+            CosmeA02 = parent.Content.Load<Texture2D>("Imagem/Personagem/cosme/cosme_andando/2");
+            CosmeA03 = parent.Content.Load<Texture2D>("Imagem/Personagem/cosme/cosme_andando/3");
+            CosmeA04 = parent.Content.Load<Texture2D>("Imagem/Personagem/cosme/cosme_andando/4");
+            CosmeA05 = parent.Content.Load<Texture2D>("Imagem/Personagem/cosme/cosme_andando/5");
+            CosmeA06 = parent.Content.Load<Texture2D>("Imagem/Personagem/cosme/cosme_andando/6");
+            CosmeA07 = parent.Content.Load<Texture2D>("Imagem/Personagem/cosme/cosme_andando/7");
+            CosmeA08 = parent.Content.Load<Texture2D>("Imagem/Personagem/cosme/cosme_andando/8");
             #endregion
             #region MariaImpaciente
-            MariaIn01 = parent.Content.Load<Texture2D>("Imagem/Personagem/Maria/Maria_Ansiosa/1");
-            MariaIn02 = parent.Content.Load<Texture2D>("Imagem/Personagem/Maria/Maria_Ansiosa/2");
+            MariaIn01 = parent.Content.Load<Texture2D>("Imagem/Personagem/maria/maria_ansiosa/1");
+            MariaIn02 = parent.Content.Load<Texture2D>("Imagem/Personagem/maria/maria_ansiosa/2");
             #endregion
             #region Maria Andando
-            MariaA01 = parent.Content.Load<Texture2D>("Imagem/Personagem/Maria/Maria_Andando/1");
-            MariaA02 = parent.Content.Load<Texture2D>("Imagem/Personagem/Maria/Maria_Andando/2");
-            MariaA03 = parent.Content.Load<Texture2D>("Imagem/Personagem/Maria/Maria_Andando/3");
-            MariaA04 = parent.Content.Load<Texture2D>("Imagem/Personagem/Maria/Maria_Andando/4");
-            MariaA05 = parent.Content.Load<Texture2D>("Imagem/Personagem/Maria/Maria_Andando/5");
-            MariaA06 = parent.Content.Load<Texture2D>("Imagem/Personagem/Maria/Maria_Andando/6");
-            MariaA07 = parent.Content.Load<Texture2D>("Imagem/Personagem/Maria/Maria_Andando/7");
-            MariaA08 = parent.Content.Load<Texture2D>("Imagem/Personagem/Maria/Maria_Andando/8");
+            MariaA01 = parent.Content.Load<Texture2D>("Imagem/Personagem/maria/maria_andando/1");
+            MariaA02 = parent.Content.Load<Texture2D>("Imagem/Personagem/maria/maria_andando/2");
+            MariaA03 = parent.Content.Load<Texture2D>("Imagem/Personagem/maria/maria_andando/3");
+            MariaA04 = parent.Content.Load<Texture2D>("Imagem/Personagem/maria/maria_andando/4");
+            MariaA05 = parent.Content.Load<Texture2D>("Imagem/Personagem/maria/maria_andando/5");
+            MariaA06 = parent.Content.Load<Texture2D>("Imagem/Personagem/maria/maria_andando/6");
+            MariaA07 = parent.Content.Load<Texture2D>("Imagem/Personagem/maria/maria_andando/7");
+            MariaA08 = parent.Content.Load<Texture2D>("Imagem/Personagem/maria/maria_andando/8");
             #endregion
             #region Maria Andando Com Balde - Bola
-            MariaACBola01 = parent.Content.Load<Texture2D>("Imagem/Personagem/Maria/Maria_Balde_bola/1");
-            MariaACBola02 = parent.Content.Load<Texture2D>("Imagem/Personagem/Maria/Maria_Balde_bola/2");
-            MariaACBola03 = parent.Content.Load<Texture2D>("Imagem/Personagem/Maria/Maria_Balde_bola/3");
-            MariaACBola04 = parent.Content.Load<Texture2D>("Imagem/Personagem/Maria/Maria_Balde_bola/4");
-            MariaACBola05 = parent.Content.Load<Texture2D>("Imagem/Personagem/Maria/Maria_Balde_bola/5");
-            MariaACBola06 = parent.Content.Load<Texture2D>("Imagem/Personagem/Maria/Maria_Balde_bola/6");
-            MariaACBola07 = parent.Content.Load<Texture2D>("Imagem/Personagem/Maria/Maria_Balde_bola/7");
-            MariaACBola08 = parent.Content.Load<Texture2D>("Imagem/Personagem/Maria/Maria_Balde_bola/8");
+            MariaACBola01 = parent.Content.Load<Texture2D>("Imagem/Personagem/maria/maria_balde_bola/1");
+            MariaACBola02 = parent.Content.Load<Texture2D>("Imagem/Personagem/maria/maria_balde_bola/2");
+            MariaACBola03 = parent.Content.Load<Texture2D>("Imagem/Personagem/maria/maria_balde_bola/3");
+            MariaACBola04 = parent.Content.Load<Texture2D>("Imagem/Personagem/maria/maria_balde_bola/4");
+            MariaACBola05 = parent.Content.Load<Texture2D>("Imagem/Personagem/maria/maria_balde_bola/5");
+            MariaACBola06 = parent.Content.Load<Texture2D>("Imagem/Personagem/maria/maria_balde_bola/6");
+            MariaACBola07 = parent.Content.Load<Texture2D>("Imagem/Personagem/maria/maria_balde_bola/7");
+            MariaACBola08 = parent.Content.Load<Texture2D>("Imagem/Personagem/maria/maria_balde_bola/8");
             #endregion
             #region Maria Andando Com Balde
-            MariaASBola01 = parent.Content.Load<Texture2D>("Imagem/Personagem/Maria/Maria_Balde/1");
-            MariaASBola02 = parent.Content.Load<Texture2D>("Imagem/Personagem/Maria/Maria_Balde/2");
-            MariaASBola03 = parent.Content.Load<Texture2D>("Imagem/Personagem/Maria/Maria_Balde/3");
-            MariaASBola04 = parent.Content.Load<Texture2D>("Imagem/Personagem/Maria/Maria_Balde/4");
-            MariaASBola05 = parent.Content.Load<Texture2D>("Imagem/Personagem/Maria/Maria_Balde/5");
-            MariaASBola06 = parent.Content.Load<Texture2D>("Imagem/Personagem/Maria/Maria_Balde/6");
-            MariaASBola07 = parent.Content.Load<Texture2D>("Imagem/Personagem/Maria/Maria_Balde/7");
-            MariaASBola08 = parent.Content.Load<Texture2D>("Imagem/Personagem/Maria/Maria_Balde/8");
+            MariaASBola01 = parent.Content.Load<Texture2D>("Imagem/Personagem/maria/maria_balde/1");
+            MariaASBola02 = parent.Content.Load<Texture2D>("Imagem/Personagem/maria/maria_balde/2");
+            MariaASBola03 = parent.Content.Load<Texture2D>("Imagem/Personagem/maria/maria_balde/3");
+            MariaASBola04 = parent.Content.Load<Texture2D>("Imagem/Personagem/maria/maria_balde/4");
+            MariaASBola05 = parent.Content.Load<Texture2D>("Imagem/Personagem/maria/maria_balde/5");
+            MariaASBola06 = parent.Content.Load<Texture2D>("Imagem/Personagem/maria/maria_balde/6");
+            MariaASBola07 = parent.Content.Load<Texture2D>("Imagem/Personagem/maria/maria_balde/7");
+            MariaASBola08 = parent.Content.Load<Texture2D>("Imagem/Personagem/maria/maria_balde/8");
             #endregion
             #region Serafina Andando
             SerafinaAndando01 = parent.Content.Load<Texture2D>("Imagem/Personagem/Serafina/Serafina_Andando/1");

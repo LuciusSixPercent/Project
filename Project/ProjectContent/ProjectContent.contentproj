@@ -528,175 +528,175 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Imagem\Personagem\cosme_correndo\1.png">
+    <Compile Include="Imagem\Personagem\cosme\cosme_correndo\1.png">
       <Name>1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_ColorKeyEnabled>False</ProcessorParameters_ColorKeyEnabled>
       <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
     </Compile>
-    <Compile Include="Imagem\Personagem\cosme_correndo\2.png">
+    <Compile Include="Imagem\Personagem\cosme\cosme_correndo\2.png">
       <Name>2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_ColorKeyEnabled>False</ProcessorParameters_ColorKeyEnabled>
       <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
     </Compile>
-    <Compile Include="Imagem\Personagem\cosme_correndo\3.png">
+    <Compile Include="Imagem\Personagem\cosme\cosme_correndo\3.png">
       <Name>3</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_ColorKeyEnabled>False</ProcessorParameters_ColorKeyEnabled>
       <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
     </Compile>
-    <Compile Include="Imagem\Personagem\cosme_correndo\4.png">
+    <Compile Include="Imagem\Personagem\cosme\cosme_correndo\4.png">
       <Name>4</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_ColorKeyEnabled>False</ProcessorParameters_ColorKeyEnabled>
       <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
     </Compile>
-    <Compile Include="Imagem\Personagem\cosme_correndo\5.png">
+    <Compile Include="Imagem\Personagem\cosme\cosme_correndo\5.png">
       <Name>5</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_ColorKeyEnabled>False</ProcessorParameters_ColorKeyEnabled>
       <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
     </Compile>
-    <Compile Include="Imagem\Personagem\cosme_correndo\6.png">
+    <Compile Include="Imagem\Personagem\cosme\cosme_correndo\6.png">
       <Name>6</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_ColorKeyEnabled>False</ProcessorParameters_ColorKeyEnabled>
       <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
     </Compile>
-    <Compile Include="Imagem\Personagem\cosme_correndo\7.png">
+    <Compile Include="Imagem\Personagem\cosme\cosme_correndo\7.png">
       <Name>7</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_ColorKeyEnabled>False</ProcessorParameters_ColorKeyEnabled>
       <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
     </Compile>
-    <Compile Include="Imagem\Personagem\cosme_correndo\8.png">
+    <Compile Include="Imagem\Personagem\cosme\cosme_correndo\8.png">
       <Name>8</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_ColorKeyEnabled>False</ProcessorParameters_ColorKeyEnabled>
       <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
     </Compile>
-    <Compile Include="Imagem\Personagem\cosme_correndo\9.png">
+    <Compile Include="Imagem\Personagem\cosme\cosme_correndo\9.png">
       <Name>9</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_ColorKeyEnabled>False</ProcessorParameters_ColorKeyEnabled>
       <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
     </Compile>
-    <Compile Include="Imagem\Personagem\maria_correndo\1.png">
+    <Compile Include="Imagem\Personagem\maria\maria_correndo\1.png">
       <Name>1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_ColorKeyEnabled>False</ProcessorParameters_ColorKeyEnabled>
       <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
     </Compile>
-    <Compile Include="Imagem\Personagem\maria_correndo\10.png">
+    <Compile Include="Imagem\Personagem\maria\maria_correndo\10.png">
       <Name>10</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_ColorKeyEnabled>False</ProcessorParameters_ColorKeyEnabled>
       <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
     </Compile>
-    <Compile Include="Imagem\Personagem\maria_correndo\11.png">
+    <Compile Include="Imagem\Personagem\maria\maria_correndo\11.png">
       <Name>11</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_ColorKeyEnabled>False</ProcessorParameters_ColorKeyEnabled>
       <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
     </Compile>
-    <Compile Include="Imagem\Personagem\maria_correndo\12.png">
+    <Compile Include="Imagem\Personagem\maria\maria_correndo\12.png">
       <Name>12</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_ColorKeyEnabled>False</ProcessorParameters_ColorKeyEnabled>
       <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
     </Compile>
-    <Compile Include="Imagem\Personagem\maria_correndo\2.png">
+    <Compile Include="Imagem\Personagem\maria\maria_correndo\2.png">
       <Name>2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_ColorKeyEnabled>False</ProcessorParameters_ColorKeyEnabled>
       <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
     </Compile>
-    <Compile Include="Imagem\Personagem\maria_correndo\3.png">
+    <Compile Include="Imagem\Personagem\maria\maria_correndo\3.png">
       <Name>3</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_ColorKeyEnabled>False</ProcessorParameters_ColorKeyEnabled>
       <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
     </Compile>
-    <Compile Include="Imagem\Personagem\maria_correndo\4.png">
+    <Compile Include="Imagem\Personagem\maria\maria_correndo\4.png">
       <Name>4</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_ColorKeyEnabled>False</ProcessorParameters_ColorKeyEnabled>
       <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
     </Compile>
-    <Compile Include="Imagem\Personagem\maria_correndo\5.png">
+    <Compile Include="Imagem\Personagem\maria\maria_correndo\5.png">
       <Name>5</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_ColorKeyEnabled>False</ProcessorParameters_ColorKeyEnabled>
       <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
     </Compile>
-    <Compile Include="Imagem\Personagem\maria_correndo\6.png">
+    <Compile Include="Imagem\Personagem\maria\maria_correndo\6.png">
       <Name>6</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_ColorKeyEnabled>False</ProcessorParameters_ColorKeyEnabled>
       <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
     </Compile>
-    <Compile Include="Imagem\Personagem\maria_correndo\7.png">
+    <Compile Include="Imagem\Personagem\maria\maria_correndo\7.png">
       <Name>7</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_ColorKeyEnabled>False</ProcessorParameters_ColorKeyEnabled>
       <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
     </Compile>
-    <Compile Include="Imagem\Personagem\maria_correndo\8.png">
+    <Compile Include="Imagem\Personagem\maria\maria_correndo\8.png">
       <Name>8</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_ColorKeyEnabled>False</ProcessorParameters_ColorKeyEnabled>
       <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
     </Compile>
-    <Compile Include="Imagem\Personagem\maria_correndo\9.png">
+    <Compile Include="Imagem\Personagem\maria\maria_correndo\9.png">
       <Name>9</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_ColorKeyEnabled>False</ProcessorParameters_ColorKeyEnabled>
       <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
     </Compile>
-    <Compile Include="Imagem\Personagem\cosme_chutando\1.png">
+    <Compile Include="Imagem\Personagem\cosme\cosme_chutando\1.png">
       <Name>1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
       <ProcessorParameters_ColorKeyEnabled>False</ProcessorParameters_ColorKeyEnabled>
     </Compile>
-    <Compile Include="Imagem\Personagem\cosme_chutando\2.png">
+    <Compile Include="Imagem\Personagem\cosme\cosme_chutando\2.png">
       <Name>2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
       <ProcessorParameters_ColorKeyEnabled>False</ProcessorParameters_ColorKeyEnabled>
     </Compile>
-    <Compile Include="Imagem\Personagem\cosme_chutando\3.png">
+    <Compile Include="Imagem\Personagem\cosme\cosme_chutando\3.png">
       <Name>3</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
       <ProcessorParameters_ColorKeyEnabled>False</ProcessorParameters_ColorKeyEnabled>
     </Compile>
-    <Compile Include="Imagem\Personagem\cosme_chutando\4.png">
+    <Compile Include="Imagem\Personagem\cosme\cosme_chutando\4.png">
       <Name>4</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
@@ -796,19 +796,19 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\cosme_chutando\5.png">
+    <Compile Include="Imagem\Personagem\cosme\cosme_chutando\5.png">
       <Name>5</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
     </Compile>
-    <Compile Include="Imagem\Personagem\cosme_chutando\6.png">
+    <Compile Include="Imagem\Personagem\cosme\cosme_chutando\6.png">
       <Name>6</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
     </Compile>
-    <Compile Include="Imagem\Personagem\cosme_chutando\7.png">
+    <Compile Include="Imagem\Personagem\cosme\cosme_chutando\7.png">
       <Name>7</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
@@ -959,172 +959,172 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Cosme\Cosme_Andando\0.png">
+    <Compile Include="Imagem\Personagem\cosme\cosme_andando\0.png">
       <Name>0</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Cosme\Cosme_Andando\1.png">
+    <Compile Include="Imagem\Personagem\cosme\cosme_andando\1.png">
       <Name>1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Cosme\Cosme_Andando\2.png">
+    <Compile Include="Imagem\Personagem\cosme\cosme_andando\2.png">
       <Name>2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Cosme\Cosme_Andando\3.png">
+    <Compile Include="Imagem\Personagem\cosme\cosme_andando\3.png">
       <Name>3</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Cosme\Cosme_Andando\4.png">
+    <Compile Include="Imagem\Personagem\cosme\cosme_andando\4.png">
       <Name>4</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Cosme\Cosme_Andando\5.png">
+    <Compile Include="Imagem\Personagem\cosme\cosme_andando\5.png">
       <Name>5</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Cosme\Cosme_Andando\6.png">
+    <Compile Include="Imagem\Personagem\cosme\cosme_andando\6.png">
       <Name>6</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Cosme\Cosme_Andando\7.png">
+    <Compile Include="Imagem\Personagem\cosme\cosme_andando\7.png">
       <Name>7</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Cosme\Cosme_Andando\8.png">
+    <Compile Include="Imagem\Personagem\cosme\cosme_andando\8.png">
       <Name>8</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Maria\Maria_Andando\0.png">
+    <Compile Include="Imagem\Personagem\maria\maria_andando\0.png">
       <Name>0</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Maria\Maria_Andando\1.png">
+    <Compile Include="Imagem\Personagem\maria\maria_andando\1.png">
       <Name>1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Maria\Maria_Andando\2.png">
+    <Compile Include="Imagem\Personagem\maria\maria_andando\2.png">
       <Name>2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Maria\Maria_Andando\3.png">
+    <Compile Include="Imagem\Personagem\maria\maria_andando\3.png">
       <Name>3</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Maria\Maria_Andando\4.png">
+    <Compile Include="Imagem\Personagem\maria\maria_andando\4.png">
       <Name>4</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Maria\Maria_Andando\5.png">
+    <Compile Include="Imagem\Personagem\maria\maria_andando\5.png">
       <Name>5</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Maria\Maria_Andando\6.png">
+    <Compile Include="Imagem\Personagem\maria\maria_andando\6.png">
       <Name>6</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Maria\Maria_Andando\7.png">
+    <Compile Include="Imagem\Personagem\maria\maria_andando\7.png">
       <Name>7</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Maria\Maria_Andando\8.png">
+    <Compile Include="Imagem\Personagem\maria\maria_andando\8.png">
       <Name>8</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Maria\Maria_Balde\1.png">
+    <Compile Include="Imagem\Personagem\maria\maria_balde\1.png">
       <Name>1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Maria\Maria_Balde\2.png">
+    <Compile Include="Imagem\Personagem\maria\maria_balde\2.png">
       <Name>2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Maria\Maria_Balde\3.png">
+    <Compile Include="Imagem\Personagem\maria\maria_balde\3.png">
       <Name>3</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Maria\Maria_Balde\4.png">
+    <Compile Include="Imagem\Personagem\maria\maria_balde\4.png">
       <Name>4</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Maria\Maria_Balde\5.png">
+    <Compile Include="Imagem\Personagem\maria\maria_balde\5.png">
       <Name>5</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Maria\Maria_Balde\6.png">
+    <Compile Include="Imagem\Personagem\maria\maria_balde\6.png">
       <Name>6</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Maria\Maria_Balde\7.png">
+    <Compile Include="Imagem\Personagem\maria\maria_balde\7.png">
       <Name>7</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Maria\Maria_Balde\8.png">
+    <Compile Include="Imagem\Personagem\maria\maria_balde\8.png">
       <Name>8</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Maria\Maria_Balde_bola\1.png">
+    <Compile Include="Imagem\Personagem\maria\maria_balde_bola\1.png">
       <Name>1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Maria\Maria_Balde_bola\2.png">
+    <Compile Include="Imagem\Personagem\maria\maria_balde_bola\2.png">
       <Name>2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Maria\Maria_Balde_bola\3.png">
+    <Compile Include="Imagem\Personagem\maria\maria_balde_bola\3.png">
       <Name>3</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Maria\Maria_Balde_bola\4.png">
+    <Compile Include="Imagem\Personagem\maria\maria_balde_bola\4.png">
       <Name>4</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Maria\Maria_Balde_bola\5.png">
+    <Compile Include="Imagem\Personagem\maria\maria_balde_bola\5.png">
       <Name>5</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Maria\Maria_Balde_bola\6.png">
+    <Compile Include="Imagem\Personagem\maria\maria_balde_bola\6.png">
       <Name>6</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Maria\Maria_Balde_bola\7.png">
+    <Compile Include="Imagem\Personagem\maria\maria_balde_bola\7.png">
       <Name>7</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Maria\Maria_Balde_bola\8.png">
+    <Compile Include="Imagem\Personagem\maria\maria_balde_bola\8.png">
       <Name>8</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
@@ -1528,17 +1528,17 @@
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Maria\Maria_Ansiosa\1.png">
+    <Compile Include="Imagem\Personagem\maria\maria_ansiosa\1.png">
       <Name>1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Maria\Maria_Ansiosa\2.png">
+    <Compile Include="Imagem\Personagem\maria\maria_ansiosa\2.png">
       <Name>2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Personagem\Maria\Maria_balde.png">
+    <Compile Include="Imagem\Personagem\maria\Maria_balde.png">
       <Name>Maria_balde</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
@@ -1582,6 +1582,119 @@
       <Name>Serafina_sorrindo</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\BateBola\BB003.wav">
+      <Name>BB003</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\BateBola\BB004.wav">
+      <Name>BB004</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\BateBola\BB005.wav">
+      <Name>BB005</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\BateBola\BB006.wav">
+      <Name>BB006</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\BateBola\BB007.wav">
+      <Name>BB007</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\BateBola\BB008.wav">
+      <Name>BB008</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\BateBola\BB009.wav">
+      <Name>BB009</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\BateBola\decision17.wav">
+      <Name>decision17</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\BateBola\decision8.wav">
+      <Name>decision8</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\BateBola\decision9.wav">
+      <Name>decision9</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\BateBola\wrong_answer_1.wav">
+      <Name>wrong_answer_1</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Imagem\Personagem\maria\maria_chutando\1.png">
+      <Name>1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
+    </Compile>
+    <Compile Include="Imagem\Personagem\maria\maria_chutando\2.png">
+      <Name>2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
+    </Compile>
+    <Compile Include="Imagem\Personagem\maria\maria_chutando\3.png">
+      <Name>3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
+    </Compile>
+    <Compile Include="Imagem\Personagem\maria\maria_chutando\4.png">
+      <Name>4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
+    </Compile>
+    <Compile Include="Imagem\Personagem\maria\maria_chutando\5.png">
+      <Name>5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
+    </Compile>
+    <Compile Include="Imagem\Personagem\maria\maria_chutando\6.png">
+      <Name>6</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
+    </Compile>
+    <Compile Include="Imagem\Personagem\maria\maria_chutando\7.png">
+      <Name>7</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
+    </Compile>
+    <Compile Include="Imagem\Personagem\maria\maria_chutando\8.png">
+      <Name>8</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
+    </Compile>
+    <Compile Include="Audio\BateBola\miss_answer_1.wav">
+      <Name>miss_answer_1</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\BateBola\miss_answer_2.wav">
+      <Name>miss_answer_2</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
     </Compile>
     <Content Include="questions.xml">
       <Name>questions</Name>

@@ -14,10 +14,18 @@ namespace game_objects
     public class Ball : CollidableGameObject
     {
         private Quad quad;
-        private float scale = 0.125f;
+        private float scale = 0.2f;
         private Texture2D[] frames;
         private int currentFrame;
         private float maxArcHeight;
+        private Vector3 lastPos;
+        public bool Rolling
+        {
+            get
+            {
+                return Position != lastPos;
+            }
+        }
 
         public override Vector3 Position
         {
@@ -55,6 +63,7 @@ namespace game_objects
 
         public override void Update(GameTime gameTime)
         {
+            lastPos = position;
             base.Update(gameTime);
         }
 

@@ -33,9 +33,15 @@ namespace game_states
         private Background bg;
         private Field field;
 
+        private string charName;
+
         private int foundAnswer; //0 for no; 1 for correct; -1 for incorrect
 
         private int numberOfQuestions;
+        private int numberOfAnswers;
+        private int answersGot;
+        private int maxAllowedMistakes;
+        private int mistakesMade;
 
         private int score;
         private int perfectSscoreMultiplier;
@@ -45,6 +51,18 @@ namespace game_states
         //WAVE - Musica de fundo
         Cue engineSound = null;
         #endregion
+
+        public string CharName 
+        {
+            set
+            {
+                if (player != null && !player.Name.Equals(value))
+                {
+                    player.Name = value;
+                    player.Load(parent.Content);
+                }
+            }
+        }
 
         public int NumberOfQuestions
         {
@@ -90,7 +108,7 @@ namespace game_states
                 ball = new Ball(goManager.R3D, goManager.CollidableGameObjects);
 
                 player = new Character(goManager.R3D, goManager.CollidableGameObjects, "cosme", ball);
-                player.collidedWithAnswer += new Character.CollidedWithAnswer(player_collidedWithQuestion);
+                player.collidedWithAnswer += new Character.CollidedWithAnswer(player_collidedWithAnswer);
 
                 cam = new Camera(new Vector3(0f, 3f, -4f), Vector3.Up, new Vector2(0.25f, 20f));
                 cam.lookAt(new Vector3(0f, 0.25f, 2f), true);
@@ -100,7 +118,7 @@ namespace game_states
                 bg = new Background(goManager.R2D);
                 field = new Field(goManager.R3D, rows, columns);
 
-                totalLoadingSteps = 7;
+                totalLoadingSteps = 5;
                 currentLoadingStep = 0;
 
                 goManager.AddObject(cam);
@@ -111,7 +129,7 @@ namespace game_states
             }
         }
 
-        private void player_collidedWithQuestion(Vector3 position, Answer answer)
+        private void player_collidedWithAnswer(Vector3 position, Answer answer)
         {
             if (questions[questions.Count - 1].CheckAnswer(answer, false))
             {
@@ -132,7 +150,7 @@ namespace game_states
             }
             goManager.AddObject(questions[questions.Count - 1]);
             questions[questions.Count - 1].Player = player;
-            questions[questions.Count - 1].Position = new Vector3(0, 0.25f, player.Position.Z + 5);
+            questions[questions.Count - 1].Position = new Vector3(0, 0.25f, 5);
 
         }
 
@@ -173,53 +191,28 @@ namespace game_states
                     switch (currentLoadingStep)
                     {
                         case 0:
-                            CacheLetters();
-                            break;
-                        case 1:
-                            CacheNumbers();
-                            break;
-                        case 2:
                             QuestionsDatabase.LoadQuestions();
                             break;
-                        case 3:
+                        case 1:
                             bg.Load(parent.Content);
                             break;
-                        case 4:
+                        case 2:
                             player.Load(parent.Content);
                             break;
-                        case 5:
+                        case 3:
                             ball.Load(parent.Content);
                             break;
-                        case 6:
+                        case 4:
                             field.Load(parent.Content);
-                            break;
-                        case 7:
-                            LoadQuestions();
                             break;
                     }
                     currentLoadingStep++;
                 }
                 else
                 {
-                    player.Position = Vector3.Zero;
+                    Reset();
                     contentLoaded = true;
                 }
-            }
-        }
-
-        private void CacheLetters()
-        {
-            for (char c = 'A'; c <= 'Z'; c++)
-            {
-                TextHelper.AddToCache(c.ToString());
-            }
-        }
-
-        private void CacheNumbers()
-        {
-            for (int i = 0; i < 100; i++)
-            {
-                TextHelper.AddToCache(i.ToString());
             }
         }
 
@@ -239,7 +232,19 @@ namespace game_states
             perfectSscoreMultiplier = 2;
             foreach (QuestionGameObject q in questions)
                 goManager.removeObject(q);
+
             LoadQuestions();
+
+            mistakesMade = 0;
+            numberOfAnswers = 0;
+            mistakesMade = 0;
+            answersGot = 0;
+            foreach (QuestionGameObject q in questions)
+            {
+                numberOfAnswers += q.AnswerCount;
+            }
+            maxAllowedMistakes = numberOfAnswers / ((int)Level + 1);
+            
         }
 
         #region Transitioning
@@ -266,7 +271,6 @@ namespace game_states
             else
             {
                 parent.ExitState(ID);
-                Reset();
             }
         }
         #endregion
@@ -330,19 +334,35 @@ namespace game_states
         /// </summary>
         private void CheckAnswer()
         {
-            if (foundAnswer != 0)
+            if (mistakesMade < maxAllowedMistakes)
             {
-                UpdateScoreAndQuestion();
-            }
-            else if (!answeredAll)
-            {
-                QuestionGameObject question = questions[questions.Count - 1];
-                Answer a = question.GetClosestAnswer();
-                if (a.Position.Z <= player.Position.Z - 2)
+                if (foundAnswer != 0)
                 {
-                    if (question.CheckAnswer(a, true))
-                        perfectSscoreMultiplier = 1;    //a partir do momento que o jogador errou uma questão, não ganha mais o dobro de pontos
-                    question.MoveAnswer(a);
+                    UpdateScoreAndQuestion();
+                }
+                else if (!answeredAll)
+                {
+                    QuestionGameObject question = questions[questions.Count - 1];
+                    Answer a = question.GetClosestAnswer();
+                    if (a.Position.Z <= player.Position.Z - 2)
+                    {
+                        if (question.CheckAnswer(a, true))
+                        {
+                            perfectSscoreMultiplier = 1;    //a partir do momento que o jogador errou uma questão, não ganha mais o dobro de pontos
+                            mistakesMade++;
+                            AudioManager.GetCue("miss_answer_" + (PublicRandom.Next(2) + 1)).Play();
+                        }
+                        question.MoveAnswer(a);
+                    }
+                }
+            }
+            else if(!answeredAll)
+            {
+                answeredAll = true;
+                centerPlayer();
+                foreach (QuestionGameObject q in questions)
+                {
+                    goManager.removeObject(q);
                 }
             }
         }
@@ -354,19 +374,24 @@ namespace game_states
         {
             if (foundAnswer == 1)
             {
+                answersGot++;
                 if (!questions[questions.Count - 1].Next())
                 {
                     ChangeCurrentQuestion();
+                    AudioManager.GetCue("BB00" + PublicRandom.Next(6, 8)).Play();
                 }
                 else
                 {
                     questions[questions.Count - 1].Position = (new Vector3(0, 0, player.Position.Z + 5));
+                    AudioManager.GetCue("BB00" + PublicRandom.Next(3, 6)).Play();
                 }
             }
             else
             {
                 perfectSscoreMultiplier = 1;    //a partir do momento que o jogador errou uma questão, não ganha mais o dobro de pontos
+                mistakesMade++;
                 questions[questions.Count - 1].MoveAnswer(questions[questions.Count - 1].GetClosestAnswer());
+                AudioManager.GetCue("wrong_answer_1").Play();
             }
             foundAnswer = 0;
         }
@@ -390,7 +415,7 @@ namespace game_states
                         stateEntered = false;
                     }
                 }
-                else
+                else if(!ball.Rolling)
                 {
                     finished = true;
                     ExitState();
@@ -418,15 +443,26 @@ namespace game_states
                     answerValue = questions[questions.Count - 1].CurrentAnswerValue;
                 }
 
-                //*
-                goManager.R2D.DrawString(header, Vector2.Zero, Color.RosyBrown);
-                goManager.R2D.DrawString("Pontos acumulados na iteração: " + score + " x (" + perfectSscoreMultiplier + ")", new Vector2(0, 30), Color.RosyBrown);
-                goManager.R2D.DrawString("Pontos acumulados na questão: " + questionScore, new Vector2(0, 60), Color.RosyBrown);
-                goManager.R2D.DrawString("Valor da resposta atual: " + answerValue, new Vector2(0, 90), Color.RosyBrown);
-                goManager.R2D.DrawString("Questões restantes " + questions.Count, new Vector2(0, 120), Color.RosyBrown);
+                //* DEBUG
+                Color c = new Color(20, 20, 100);
+                goManager.R2D.DrawString(header, Vector2.Zero, c);
+                c *= 0.95f;
+                goManager.R2D.DrawString("Pontos acumulados na iteração: " + score + " x (" + perfectSscoreMultiplier + ")", new Vector2(0, 30), c);
+                c *= 0.95f;
+                goManager.R2D.DrawString("Pontos acumulados na questão: " + questionScore, new Vector2(0, 60), c);
+                c *= 0.95f;
+                goManager.R2D.DrawString("Valor da resposta atual: " + answerValue, new Vector2(0, 90), c);
+                c *= 0.95f;
+                goManager.R2D.DrawString("Questões restantes " + questions.Count, new Vector2(0, 120), c);
+                c *= 0.95f;
+                goManager.R2D.DrawString("Erros: " + mistakesMade, new Vector2(0, 150), c);
+                c *= 0.95f;
+                goManager.R2D.DrawString("Acertos: " + answersGot, new Vector2(0, 180), c);
+                c *= 0.95f;
+                goManager.R2D.DrawString("MAX. Erros: " + maxAllowedMistakes, new Vector2(0, 210), c);
                 if (exitingState)
                 {
-                    goManager.R2D.DrawString("Alpha " + Alpha, new Vector2(400, 150), Color.Black);
+                    goManager.R2D.DrawString("Alpha " + Alpha, new Vector2(400, 150), Color.Silver);
                 }
                 goManager.R2D.End();
                 //*/
@@ -434,5 +470,6 @@ namespace game_states
         }
 
         #endregion
+
     }
 }

@@ -16,13 +16,22 @@ namespace game_objects
     {
         private const float MAX_X = 1f;
         private const float MIN_X = -1f;
-        
+
         private string name;
+
+        public string Name
+        {
+            get { return name; }
+            set
+            {
+                name = value;
+            }
+        }
 
         private Quad quad;
 
-        private float quadWidthScale = 0.75f;
-        private float quadHeightScale = 0.75f;
+        private float quadWidthScale = 1.1f;
+        private float quadHeightScale = 1.1f;
 
         private Texture2D[] framesRunning;
         private Texture2D[] framesKicking;
@@ -136,12 +145,10 @@ namespace game_objects
         private void createQuad()
         {
             quad = new Quad(position + new Vector3(0, quadHeightScale / 2, 0), new Vector3(0, 0, -1), Vector3.Up, quadWidthScale, quadHeightScale);
-            Vector3 backUpperLeft = quad.Vertices[1].Position;
+            Vector3 backUpperLeft = quad.UpperLeft;
             backUpperLeft.Z += 0.1f;
 
-            Vector3 frontBottomRight = quad.Vertices[2].Position;
-
-            BoundingBox = new BoundingBox(frontBottomRight, backUpperLeft);
+            BoundingBox = new BoundingBox(quad.LowerRight, backUpperLeft);
         }
 
         public override void Load(ContentManager cManager)
@@ -159,19 +166,24 @@ namespace game_objects
 
         private Texture2D[] LoadFrames(ContentManager cManager, int lenght, string folderSuffix)
         {
+            
             Texture2D[] frames = new Texture2D[lenght];
             for (int i = 0; i < frames.Length; i++)
                 frames[i] =
                     cManager.Load<Texture2D>(
                     "Imagem" + Path.AltDirectorySeparatorChar +
                     "Personagem" + Path.AltDirectorySeparatorChar +
-                    name + folderSuffix + Path.AltDirectorySeparatorChar + (i + 1));
+                    Name + Path.AltDirectorySeparatorChar + 
+                    Name + folderSuffix + Path.AltDirectorySeparatorChar + (i + 1));
             return frames;
         }
 
         public override void Draw(GameTime gameTime)
         {
-            ((Renderer3D)Renderer).Draw(framesBeingUsed[currentFrame], quad, BlendState.AlphaBlend, BoundingBox);
+            if (framesBeingUsed != null)
+            {
+                ((Renderer3D)Renderer).Draw(framesBeingUsed[currentFrame], quad, BlendState.AlphaBlend, BoundingBox);
+            }
         }
 
         public override void Update(GameTime gameTime)
