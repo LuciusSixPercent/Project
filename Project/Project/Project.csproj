@@ -117,6 +117,7 @@
     <Compile Include="components\VariableMovementComponent.cs" />
     <Compile Include="game_objects\Background.cs" />
     <Compile Include="game_objects\Ball.cs" />
+    <Compile Include="game_objects\BarOrientation.cs" />
     <Compile Include="game_objects\Bleachers.cs" />
     <Compile Include="game_objects\Prop.cs" />
     <Compile Include="game_objects\PropType.cs" />
@@ -140,6 +141,7 @@
     <Compile Include="game_objects\questions\QuestionSubject.cs" />
     <Compile Include="game_objects\questions\QuestionType.cs" />
     <Compile Include="game_objects\ui\ButtonStates.cs" />
+    <Compile Include="game_objects\ui\ProgressBar.cs" />
     <Compile Include="game_states\CharSelectionState.cs" />
     <Compile Include="game_states\ConfigMenuState.cs" />
     <Compile Include="game_states\LoadingState.cs" />

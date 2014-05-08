@@ -13,6 +13,13 @@ namespace game_objects
 
         protected Vector3 acumulatedMovement;
         protected Vector3 position;
+        protected Vector3 dimensions;
+
+        public virtual Vector3 Dimensions
+        {
+            get { return dimensions; }
+            set { dimensions = value; }
+        }
 
         public virtual Vector3 Position
         {
@@ -36,6 +43,7 @@ namespace game_objects
         {
             this.components = new List<Component>();
             this.position = Vector3.Zero;
+            this.dimensions = Vector3.Zero;
             this.acumulatedMovement = Vector3.Zero;
         }
 

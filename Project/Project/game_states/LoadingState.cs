@@ -46,7 +46,7 @@ namespace game_states
             {
                 if (!exitingState)
                 {
-                    if (elapsed >= 400)
+                    if (elapsed >= 200)
                     {
                         elapsed = 0;
                         if (overseeingState == null || overseeingState.ContentLoaded)

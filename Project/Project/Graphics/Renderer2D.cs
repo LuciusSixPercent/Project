@@ -52,6 +52,20 @@ namespace game_objects
             }
         }
 
+        public void Draw(Texture2D texture, Vector2 position, Rectangle source, Color color, BlendState blendState)
+        {
+            if (texture == null) return;
+            GDevice.BlendState = blendState;
+            if (!beganSpriteBatch)
+            {
+                Begin();
+            }
+            if (beganSpriteBatch)
+            {
+                spriteBatch.Draw(texture, position, source, color * Alpha);
+            }
+        }
+
         public void Draw(Texture2D texture, Rectangle bounds, Color color, BlendState blendState)
         {
             if (texture == null)

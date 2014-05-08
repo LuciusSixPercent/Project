@@ -60,7 +60,7 @@ namespace game_objects.questions
                     {
                         answer += ((char)PublicRandom.Next((int)'A', (int)'Z')).ToString();
                         chance = (int)(chance * 1.5);
-                    } while (answer.Length < correctAnswer.Length && PublicRandom.Next(100) < chance);
+                    } while (answer.Length < correctAnswer.Length && PublicRandom.Next(100) > chance);
 
                     alreadyInUse = SearchAnswer(answer, otherAnswers);
 

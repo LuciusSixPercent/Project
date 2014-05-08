@@ -11,6 +11,7 @@ using game_objects.questions;
 using System.IO;
 using components;
 using Microsoft.Xna.Framework.Audio;
+using game_objects.ui;
 
 namespace game_states
 {
@@ -32,14 +33,13 @@ namespace game_states
         private List<QuestionGameObject> questions;
         private Background bg;
         private Field field;
+        private ProgressBar progress;
 
         private string charName;
 
         private int foundAnswer; //0 for no; 1 for correct; -1 for incorrect
 
         private int numberOfQuestions;
-        private int numberOfAnswers;
-        private int answersGot;
         private int maxAllowedMistakes;
         private int mistakesMade;
 
@@ -54,15 +54,28 @@ namespace game_states
         Cue engineSound = null;
         #endregion
 
+        private int NumberOfAnswers
+        {
+            get { return progress.Total; }
+            set { progress.Total = value; }
+        }
+
+        private int AnswersGot
+        {
+            get { return progress.Loaded; }
+            set { progress.AddProgress(1); }
+        }
+
         public string CharName
         {
             set
             {
-                if (player != null && !player.Name.Equals(value))
-                {
-                    player.Name = value;
-                    player.Load(parent.Content);
-                }
+                player.Name = value;
+                player.Load(parent.Content);
+
+                progress.MeterFileName = "meter_" + value;
+                progress.LoadMeter(parent.Content);
+
             }
         }
 
@@ -122,7 +135,13 @@ namespace game_states
                 bg = new Background(goManager.R2D);
                 field = new Field(goManager.R3D, rows, columns);
 
-                totalLoadingSteps = 5;
+                progress = new ProgressBar(goManager.R2D);
+                progress.Orientation = BarOrientation.VERTICAL;
+                char separator = Path.AltDirectorySeparatorChar;
+                progress.FilePath = "Imagem" + separator + "ui" + separator + "progress_bar";
+                progress.FillOpacity = 0.75f;
+
+                totalLoadingSteps = 6;
                 currentLoadingStep = 0;
 
                 goManager.AddObject(cam);
@@ -130,6 +149,7 @@ namespace game_states
                 goManager.AddObject(field);
                 goManager.AddObject(ball);
                 goManager.AddObject(player);
+                goManager.AddObject(progress);
             }
         }
 
@@ -209,6 +229,9 @@ namespace game_states
                         case 4:
                             field.Load(parent.Content);
                             break;
+                        case 5:
+                            LoadUI();
+                            break;
                     }
                     currentLoadingStep++;
                 }
@@ -220,13 +243,27 @@ namespace game_states
             }
         }
 
+        private void LoadUI()
+        {
+            progress.Load(parent.Content);
+        }
+
         public void Reset()
         {
             finished = false;
             answeredAll = false;
             shouldWait = true;
-
+            
             player.Reset();
+            progress.Reset();
+            progress.Visible = false;
+            if (progress.Position.Equals(Vector3.Zero))
+            {
+                Viewport viewport = parent.GraphicsDevice.Viewport;
+                progress.Position = new Vector3(viewport.Width - progress.Dimensions.X, viewport.Height / 2 - progress.Dimensions.Y / 2, 0);
+            }
+
+            
             cam.KeepMoving = true;
             cam.Position = new Vector3(0f, 3f, -4f);
             cam.lookAt(new Vector3(0f, 0.25f, 2f), true);
@@ -240,14 +277,13 @@ namespace game_states
             LoadQuestions();
 
             mistakesMade = 0;
-            numberOfAnswers = 0;
+            NumberOfAnswers = 0;
             mistakesMade = 0;
-            answersGot = 0;
             foreach (QuestionGameObject q in questions)
             {
-                numberOfAnswers += q.AnswerCount;
+                NumberOfAnswers += q.AnswerCount;
             }
-            maxAllowedMistakes = numberOfAnswers / ((int)Level + 1);
+            maxAllowedMistakes = NumberOfAnswers / ((int)Level + 1);
 
         }
 
@@ -287,7 +323,6 @@ namespace game_states
         {
             if (ContentLoaded)
             {
-                base.Update(gameTime);
                 if (shouldWait && Alpha >= 0.5f)
                 {
                     shouldWait = false;
@@ -302,6 +337,11 @@ namespace game_states
 
                             if (!finished)
                             {
+                                if (!progress.Visible)
+                                {
+                                    progress.Visible = true;
+                                }
+
                                 PlayBGM();
                                 CheckAnswer();
                                 if (answeredAll)
@@ -309,7 +349,7 @@ namespace game_states
                                     field.KeepMoving = false;
                                     if (field.Goal.Position.Z - player.Position.Z <= 8 && player.KeepMoving)
                                     {
-                                        player.KickBall(perfectSscoreMultiplier == 2);
+                                        player.KickBall(mistakesMade < maxAllowedMistakes, field.Goal.Position);
                                         cam.KeepMoving = false;
                                     }
                                 }
@@ -324,6 +364,8 @@ namespace game_states
                         ExitState();
                     }
                 }
+
+                base.Update(gameTime);
             }
         }
 
@@ -389,7 +431,7 @@ namespace game_states
         {
             if (foundAnswer == 1)
             {
-                answersGot++;
+                AnswersGot++;
                 if (!questions[questions.Count - 1].Next())
                 {
                     ChangeCurrentQuestion();
@@ -430,10 +472,14 @@ namespace game_states
                         stateEntered = false;
                     }
                 }
-                else if (!ball.Rolling)
+                else if (player.FinishedJumping)
                 {
                     finished = true;
                     ExitState();
+                }
+                else if (!player.Jumping)
+                {
+                    player.Jump();
                 }
             }
             else if (KeyboardHelper.KeyReleased(Keys.Escape))
@@ -472,7 +518,7 @@ namespace game_states
                 c *= 0.95f;
                 goManager.R2D.DrawString("Erros: " + mistakesMade, new Vector2(0, 150), c);
                 c *= 0.95f;
-                goManager.R2D.DrawString("Acertos: " + answersGot, new Vector2(0, 180), c);
+                goManager.R2D.DrawString("Acertos: " + AnswersGot, new Vector2(0, 180), c);
                 c *= 0.95f;
                 goManager.R2D.DrawString("MAX. Erros: " + maxAllowedMistakes, new Vector2(0, 210), c);
                 if (exitingState)

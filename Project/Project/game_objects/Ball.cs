@@ -19,13 +19,7 @@ namespace game_objects
         private int currentFrame;
         private float maxArcHeight;
         private Vector3 lastPos;
-        public bool Rolling
-        {
-            get
-            {
-                return Position != lastPos;
-            }
-        }
+        private VariableMovementComponent vmc;
 
         public override Vector3 Position
         {
@@ -43,7 +37,8 @@ namespace game_objects
         public Ball(Renderer3D renderer, IEnumerable<CollidableGameObject> collidableObjects)
             : base(renderer, collidableObjects)
         {
-            addComponent(new VariableMovementComponent(this, 30, Vector3.Zero, Vector3.Zero));
+            vmc = new VariableMovementComponent(this, 30, Vector3.Zero, Vector3.Zero);
+            addComponent(vmc);
             frames = new Texture2D[1];
         }
 
@@ -105,12 +100,11 @@ namespace game_objects
 
         private void Bounce()
         {
-            VariableMovementComponent vmc = GetComponent<VariableMovementComponent>();
-            if (vmc.CurrentVelocity.Z > 0 || maxArcHeight >= 0.05f)
+            if (vmc.CurrentVelocity.Z > 0 || maxArcHeight >= 0.2f)
             {
-                vmc.Acceleration = vmc.InitialAcceleration * -1f;
                 float xFactor = 0.5f / (vmc.InitialVelocity.X == 0 ? 1 : vmc.InitialVelocity.X);
-                vmc.CurrentVelocity *= vmc.InitialVelocity * new Vector3(xFactor, -0.75f, 5);
+                vmc.InitialVelocity /= 1.75f;
+                vmc.CurrentVelocity = vmc.InitialVelocity;
             }
             else
             {
@@ -132,7 +126,6 @@ namespace game_objects
 
         public void Kick(Vector3 velocity, Vector3 acceleration, Vector3 decelerationFactor)
         {
-            VariableMovementComponent vmc = GetComponent<VariableMovementComponent>();
             if (boundingBox.Min.Y > 0)
             {
                 velocity.Y /= 5;
@@ -142,6 +135,16 @@ namespace game_objects
             vmc.Acceleration = acceleration;
             vmc.InitialAcceleration = acceleration;
             vmc.AccelerationVariation = acceleration * -decelerationFactor;
+            vmc.LowerVelocityThreshold = new Vector3(0, -1, 0);
+        }
+
+        public void Kick2(Vector3 velocity, Vector3 acceleration, Vector3 accelerationVariation)
+        {
+            vmc.InitialVelocity = velocity;
+            vmc.CurrentVelocity = velocity;
+            vmc.Acceleration = acceleration;
+            vmc.InitialAcceleration = acceleration;
+            vmc.AccelerationVariation = accelerationVariation;
             vmc.LowerVelocityThreshold = new Vector3(0, -1, 0);
         }
 

@@ -68,6 +68,7 @@ namespace game_states
             else if (exit)
             {
                 ExitState();
+                AudioManager.GetCue("whistle").Play();
             }
         }
 
