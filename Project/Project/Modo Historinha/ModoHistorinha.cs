@@ -39,6 +39,8 @@ class ModoHistorinha
     WaveBank waveBank2;
     SoundBank soundBank2;
     Cue PlayerModoHistoria = null;
+    int[] PosicoesDasRespostas;
+    Random NumeroRandomico;
     //teste
     bool venceu = false;
     int erro = 0;
@@ -61,7 +63,8 @@ class ModoHistorinha
         Calt1 = Color.White;
         Calt2 = Color.White;
         Calt3 = Color.White;
-        Ini(c);
+        NumeroRandomico = new Random();
+        Ini(c, NumeroRandomico, n);
     }
     public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, SpriteFont a, int n, Song narra)
         
@@ -78,7 +81,8 @@ class ModoHistorinha
         res2 = alt1;
         Calt0 = Color.White;
         Calt1 = Color.White;
-        Ini(c);
+        NumeroRandomico = new Random();
+        Ini(c, NumeroRandomico, n);
     }
     public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, string alt2, SpriteFont a, int n, Song narra)
         
@@ -97,7 +101,8 @@ class ModoHistorinha
         Calt0 = Color.White;
         Calt1 = Color.White;
         Calt2 = Color.White;
-        Ini(c);
+        NumeroRandomico = new Random();
+        Ini(c, NumeroRandomico, n);
     }
     public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, string alt2, string alt3, SpriteFont a, int n, Song narra, bool sequencia)
         
@@ -119,7 +124,8 @@ class ModoHistorinha
         Calt1 = Color.White;
         Calt2 = Color.White;
         Calt3 = Color.White;
-        Ini(c);
+        NumeroRandomico = new Random();
+        Ini(c, NumeroRandomico, n);
     }
     public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, string alt2, string alt3, SpriteFont a, int n, Song narra1, Song narrar2, bool sequencia)
         
@@ -141,7 +147,8 @@ class ModoHistorinha
         Calt1 = Color.White;
         Calt2 = Color.White;
         Calt3 = Color.White;
-        Ini(c);
+        NumeroRandomico = new Random();
+        Ini(c, NumeroRandomico, n);
     }
     int incrementoTexto = 0;
     public void Atualizar()
@@ -432,15 +439,61 @@ class ModoHistorinha
         return venceu ;
 
     }
-    public void Ini(ContentManager Content)
+    int sorte = 0;
+    int[] numerosPegos;
+    public void Ini(ContentManager Content, Random aleatorio, int quantidade)
     {
+        numerosPegos = new int[4];
         OpcoeSprite = Content.Load<Texture2D>("Imagem/Sprites/op");
+        PosicoesDasRespostas = new int[4] { 230, 350, 470, 590 };
+        for (int j = 0; j < quantidade; j++)
+        {
+            if (j != 0)
+            {
+                if (numerosPegos[j - 1] == sorte)
+                {
+                    while (numerosPegos[j - 1] == sorte)
+                    {
+                        sorte = aleatorio.Next(0, quantidade);
+                        numerosPegos[j] = sorte;
+                    }
+                }
 
-        VOpcoes1 = new Rectangle(230, 200,100,200);
-        VOpcoes2 = new Rectangle(VOpcoes1.X + VOpcoes1.Width +20, VOpcoes1.Y, VOpcoes1.Width, VOpcoes1.Height);
-        VOpcoes3 = new Rectangle(VOpcoes2.X + VOpcoes1.Width+20, VOpcoes2.Y, VOpcoes1.Width, VOpcoes1.Height);
-        VOpcoes4 = new Rectangle(VOpcoes3.X + VOpcoes1.Width+20, VOpcoes3.Y, VOpcoes1.Width, VOpcoes1.Height);
+                if (j > 1)
+                {
+                    if (numerosPegos[j - 2] == sorte || numerosPegos[j - 1] == sorte)
+                    {
+                        while (numerosPegos[j - 2] == sorte || numerosPegos[j - 1] == sorte)
+                        {
+                            sorte = aleatorio.Next(0, quantidade);
+                            numerosPegos[j] = sorte;
+                        }
+                    }
+                }
+                if (j == 3)
+                {
+                    if (numerosPegos[j - 2] == sorte || numerosPegos[j - 1] == sorte || numerosPegos[j - 3] == sorte)
+                    {
+                        while (numerosPegos[j - 2] == sorte || numerosPegos[j - 1] == sorte || numerosPegos[j - 3] == sorte)
+                        {
+                            sorte = aleatorio.Next(0, quantidade);
+                            numerosPegos[j] = sorte;
+                        }
+                    }
+                }
+            }
+            if (j == 0)
+            {
+                sorte = aleatorio.Next(0, quantidade);
+                numerosPegos[j] = sorte;
+            }
 
+        }
+
+        VOpcoes1 = new Rectangle(PosicoesDasRespostas[numerosPegos[0]], 200, 100, 200);
+        VOpcoes2 = new Rectangle(PosicoesDasRespostas[numerosPegos[1]], 200, VOpcoes1.Width, VOpcoes1.Height);
+        VOpcoes3 = new Rectangle(PosicoesDasRespostas[numerosPegos[2]], 200, VOpcoes1.Width, VOpcoes1.Height);
+        VOpcoes4 = new Rectangle(PosicoesDasRespostas[numerosPegos[3]], 200, VOpcoes1.Width, VOpcoes1.Height);
         Valt0 = new Vector2(VOpcoes1.X, VOpcoes1.Y + 20);
         Valt1 = new Vector2(VOpcoes2.X, VOpcoes2.Y + 20);
         Valt2 = new Vector2(VOpcoes3.X, VOpcoes3.Y + 20);

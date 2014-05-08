@@ -232,7 +232,7 @@ class Episodio01 : GameState
     Texture2D CachorroParado01, CachorroParado02, CachorroParado03, CachorroParado04, CachorroParado05, CachorroParado06, CachorroParado07, CachorroParado08;
     Texture2D CosmeBola, CosmeIrritado, CosmeFeliz, MariaFeliz, MariaPensativa, MariaAssustada, MariaIrritada, MariaParadaCbalde, SerafinaFeliz;
     Texture2D[] CosmeAndando, MariaAndando, MariaAndandoComBola, MariaAndandoSemBola, MariaIpaciente, ApuaPose, ApuaAndando, SerafinaAndando, CachorroSentado, CachorroAndando;
-    Color CosmeColor, MariaColor, ApuaColor, SerafinaColor, CachorroColor, BolaColor;
+    Color CosmeColor, MariaColor, ApuaColor, SerafinaColor, CachorroColor, BolaColor,ButtonColor;
     Vector2 vCosme, vMaria, vApua, vSerafina, vCachorro, vCosmeObj, vMariaObj, vApuaObj, vSerafinaObj, vCachorroObj;
     Texture2D Cosme, Maria, Apua, Serafina, Cachorro;
     float TransparenciaCosme = 0;
@@ -297,6 +297,7 @@ class Episodio01 : GameState
             ApuaColor = Color.Transparent;
             SerafinaColor = Color.Transparent;
             CachorroColor = Color.Transparent;
+            ButtonColor = Color.White;
             VoltarBool = false;
             Voltar = new Texture2D[2] { VoltarNormal, VoltarOver };
             vVoltar = new Rectangle(850, 700, Voltar[VoltarIndice].Width / 2, Voltar[VoltarIndice].Height / 2);
@@ -620,6 +621,8 @@ class Episodio01 : GameState
     bool primeiraTransicao = false;
     bool segundaTransicao = false;
     bool terceiraTransicao = false;
+    int milesimos = 0;
+    
     public override void Draw(GameTime gameTime)
     {
 
@@ -627,15 +630,24 @@ class Episodio01 : GameState
         SpriteBatch.Begin();
         cor = Color.White * Alpha;
 
-        if (((int)gameTime.TotalGameTime.TotalMilliseconds % 5 == 0) && (CosmeAndar || MariaAndar || MariaAndeComBaldeComBola || MariaAndeComBaldeSemBola || ApuaAndar || SerafinaAnde || CachorroAndar || CachorroSentar))
+        milesimos += (int)gameTime.ElapsedGameTime.Ticks;
+        if ((CosmeAndar || MariaAndar || MariaAndeComBaldeComBola || MariaAndeComBaldeSemBola || ApuaAndar || SerafinaAnde || CachorroAndar || CachorroSentar))
         {
-            Frame = (Frame + 1) % 16;
+
+            if ((milesimos % 4 == 0))
+            {
+                Frame = (Frame + 1) % 16;
+            }
         }
-        if ((int)gameTime.TotalGameTime.TotalMilliseconds % 10 == 0)
+        else
+        {
+            Frame = 0;
+        }
+        if (milesimos % 4 == 0)
         {
             FrameApua = (FrameApua + 1) % 8;
         }
-        if ((int)gameTime.TotalGameTime.TotalMilliseconds % 20 == 0)
+        if (milesimos % 4 == 0)
         {
             FrameMaria = (FrameMaria + 1) % 4;
         }
@@ -657,7 +669,7 @@ class Episodio01 : GameState
         {
             SpriteBatch.Draw(CenarioTv, vTV, Color.White * Alpha);
         }
-        SpriteBatch.Draw(BtAvancar[indiceDoAvancar], vBtAvancar, Color.White*Alpha);
+        SpriteBatch.Draw(BtAvancar[indiceDoAvancar], vBtAvancar, ButtonColor*Alpha);
         SpriteBatch.Draw(Voltar[VoltarIndice], vVoltar, Color.White * Alpha);
         //*
 
@@ -712,6 +724,7 @@ class Episodio01 : GameState
 
                     if (parte1 && !exercicio1)//Caso a primeira parte tenha chegado ao fim, mas o exercicio não foi feito.
                     {
+                        ButtonColor = Color.Transparent;
                         CosmeEstaFeliz = false;
                         MariaEstaFeliz = false;
                         TransparenciaMaria = 1;
@@ -732,6 +745,7 @@ class Episodio01 : GameState
 
                 if (primeiro && !segundo)
                 {
+
                     if (Incremento0 == dialogo02.Length)
                     {
                         parte2 = true;
@@ -740,7 +754,7 @@ class Episodio01 : GameState
                     if (!parte2)
                     {
 
-
+                        ButtonColor = Color.White;
                         if (indice < dialogo02[Incremento0].Length) { texto += dialogo02[Incremento0][indice]; }
                         indice = indice + (indice < dialogo02[Incremento0].Length ? 1 : 0);
                         if (TextoAtt != dialogo02[Incremento0])
@@ -771,6 +785,7 @@ class Episodio01 : GameState
                         if (Incremento0 == 4)
                         {
                             TransparenciaSerafina = 1;
+                            TransparenciaCachorro = 1;
                             TransparenciaApua = TransparenciaApua < 1 ? TransparenciaApua + 0.01f : 1;
                             SerafinaEstaFeliz = false;
                             rotApua = true;
@@ -789,6 +804,7 @@ class Episodio01 : GameState
                     }
                     if (!exercicio2 && parte2)
                     {
+                        ButtonColor = Color.Transparent;
                         CachorroColor = Color.Transparent;
                         TransparenciaApua = 1;
                         texto = "";
@@ -815,6 +831,7 @@ class Episodio01 : GameState
                     }
                     if (!parte3)
                     {
+                        ButtonColor = Color.White;
                         if (indice < dialogo03[Incremento0].Length) { texto += dialogo03[Incremento0][indice]; }
                         indice = indice + (indice < dialogo03[Incremento0].Length ? 1 : 0);
                         if (TextoAtt != dialogo03[Incremento0])
@@ -825,6 +842,7 @@ class Episodio01 : GameState
                     }
                     if (parte3 && !exercicio3)
                     {
+                        ButtonColor = Color.Transparent;
                         texto = "";
                         indice = 0;
                         Incremento0 = 0;
@@ -850,7 +868,7 @@ class Episodio01 : GameState
                     if (!parte4)
                     {
                         ModoExercicios = false;
-
+                        ButtonColor = Color.White;
                         if (indice < dialogo04[Incremento0].Length) { texto += dialogo04[Incremento0][indice]; }
                         indice = indice + (indice < dialogo04[Incremento0].Length ? 1 : 0);
                         if (TextoAtt != dialogo04[Incremento0])
@@ -881,6 +899,7 @@ class Episodio01 : GameState
                     }
                     if (parte4 && !exercicio4)
                     {
+                        ButtonColor = Color.Transparent;
                         vSerafina.Y = 400;
                         vSerafinaObj.Y = vSerafina.Y;
                         vMaria.Y = 400;
@@ -915,7 +934,7 @@ class Episodio01 : GameState
 
                     if (!exercicio5)
                     {
-
+                        ButtonColor = Color.Transparent;
                         mile = 0;
                         Exercicio05.Atualizar();
                         Exercicio05.Desenhar(SpriteBatch);
@@ -938,6 +957,7 @@ class Episodio01 : GameState
                     }
                     if (!parte5 && exercicio5)
                     {
+                        ButtonColor = Color.White;
                         if (indice < dialogo05[Incremento0].Length) { texto += dialogo05[Incremento0][indice]; }
                         indice = indice + (indice < dialogo05[Incremento0].Length ? 1 : 0);
                         if (TextoAtt != dialogo05[Incremento0])
@@ -975,9 +995,9 @@ class Episodio01 : GameState
                         if (Incremento0 == 2)
                         {
                             ApuaPoseEstranha = false;
-                            vApuaObj.X = 850;
-                            vSerafinaObj.X = 850;
-                            vCosmeObj.X = 850;
+                            vApuaObj.X = 950;
+                            vSerafinaObj.X = 950;
+                            vCosmeObj.X = 950;
                             if (vApua.X > 600 && vApua.X < 750)
                             {
                                 vApuaObj.Y = 430;
@@ -1078,6 +1098,7 @@ class Episodio01 : GameState
                         }
                         if (!parte6)
                         {
+                            ButtonColor = Color.White;
                             if (indice < dialogo06[Incremento0].Length) { texto += dialogo06[Incremento0][indice]; }
                             indice = indice + (indice < dialogo06[Incremento0].Length ? 1 : 0);
                             if (TextoAtt != dialogo06[Incremento0])
@@ -1099,6 +1120,7 @@ class Episodio01 : GameState
                         }
                         if (parte6 && !exercicio6)
                         {
+                            ButtonColor = Color.Transparent;
                             vMaria = vMariaObj;
                             texto = "";
                             indice = 0;
@@ -1128,6 +1150,7 @@ class Episodio01 : GameState
                     }
                     if (!parte7)
                     {
+                        ButtonColor = Color.White;
                         if (indice < dialogo07[Incremento0].Length) { texto += dialogo07[Incremento0][indice]; }
                         indice = indice + (indice < dialogo07[Incremento0].Length ? 1 : 0);
                         if (TextoAtt != dialogo07[Incremento0])
@@ -1143,7 +1166,7 @@ class Episodio01 : GameState
                     }
                     if (parte7 && !exercicio7)
                     {
-
+                        ButtonColor = Color.Transparent;
                         texto = "";
                         indice = 0;
                         Incremento0 = 0;
@@ -1169,6 +1192,7 @@ class Episodio01 : GameState
                     }
                     if (!parte8)
                     {
+                        ButtonColor = Color.White;
                         if (indice < dialogo08[Incremento0].Length) { texto += dialogo08[Incremento0][indice]; }
                         indice = indice + (indice < dialogo08[Incremento0].Length ? 1 : 0);
                         if (TextoAtt != dialogo08[Incremento0])
@@ -1179,6 +1203,7 @@ class Episodio01 : GameState
                     }
                     if (parte8 && !exercicio8)
                     {
+                        ButtonColor = Color.Transparent;
                         BolaColor = oitavo ? Color.White : Color.Yellow;
                         texto = "";
                         indice = 0;
@@ -1243,6 +1268,7 @@ class Episodio01 : GameState
                     }
                     if (Incremento0 == 3)
                     {
+                        rotCosme = false;
                         CosmeComBola = true;
                     }
 
@@ -1253,6 +1279,7 @@ class Episodio01 : GameState
                     }
                     if (!parte9)
                     {
+                        ButtonColor = Color.White;
                         if (indice < dialogo09[Incremento0].Length) { texto += dialogo09[Incremento0][indice]; }
                         indice = indice + (indice < dialogo09[Incremento0].Length ? 1 : 0);
                         if (TextoAtt != dialogo09[Incremento0])
@@ -1263,6 +1290,7 @@ class Episodio01 : GameState
                     }
                     if (parte9 && !exercicio9)
                     {
+                        ButtonColor = Color.Transparent;
                         CenarioIndice = 2;
                         texto = "";
                         indice = 0;
@@ -1281,6 +1309,7 @@ class Episodio01 : GameState
                 }
                 if (primeiro && segundo && terceiro && quarto && quinto && sexto && setimo && oitavo && nono && !decimo)
                 {
+                    MariaEstaParadaComOBalde = false;
                     rotCosme = false;
                     CosmeComBola = false;
                     CenarioIndice = 3;
@@ -1291,10 +1320,10 @@ class Episodio01 : GameState
                     TransparenciaSerafina = TransparenciaSerafina < 1 ? TransparenciaSerafina + 0.01f : 1;
                     TransparenciaApua = TransparenciaApua < 1 ? TransparenciaApua + 0.01f : 1;
                     vCosme.X = 300;
-                    vCosme.Y = 250;
+                    vCosme.Y = 400;
                     vCosmeObj = vCosme;
                     vMaria.X = 300;
-                    vMaria.Y = 400;
+                    vMaria.Y = 250;
                     vMariaObj = vMaria;
                     vApua.X = 600;
                     vApua.Y = 250;
@@ -1308,6 +1337,7 @@ class Episodio01 : GameState
                     }
                     if (!parte10)
                     {
+                        ButtonColor = Color.White;
                         if (indice < dialogo10[Incremento0].Length) { texto += dialogo10[Incremento0][indice]; }
                         indice = indice + (indice < dialogo10[Incremento0].Length ? 1 : 0);
                         if (TextoAtt != dialogo10[Incremento0])
@@ -1318,6 +1348,7 @@ class Episodio01 : GameState
                     }
                     if (parte10 && !exercicio10)
                     {
+                        ButtonColor = Color.Transparent;
                         texto = "";
                         indice = 0;
                         Incremento0 = 0;
