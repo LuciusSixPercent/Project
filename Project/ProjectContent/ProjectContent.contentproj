@@ -1700,6 +1700,7 @@
       <Name>whistle</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
+    </Compile>
     <Compile Include="Imagem\Botao_Avancar.png">
       <Name>Botao_Avancar</Name>
       <Importer>TextureImporter</Importer>
@@ -1707,6 +1708,7 @@
     </Compile>
     <Compile Include="Imagem\ui\progress_bar\bar.png">
       <Name>bar</Name>
+    </Compile>
     <Compile Include="Imagem\Botao_Avancar_Sel.png">
       <Name>Botao_Avancar_Sel</Name>
       <Importer>TextureImporter</Importer>
