@@ -37,6 +37,7 @@ namespace game_objects
         private Texture2D[] framesKicking;
         private Texture2D[] framesBeingUsed;
         private Texture2D[] framesJumping;
+        private Texture2D[] framesSad;
 
         private int currentFrame;
         private int elapsedTime;
@@ -52,20 +53,26 @@ namespace game_objects
         private bool makeGoal;
 
         private bool touchingGround;
-        private bool jumping;
+        private bool happyEnding;
 
         private int jumpCount;
-        private bool finishedJumping;
+        private bool finishedEnding;
+        private bool sadEnding;
 
-        public bool FinishedJumping
+        public bool FinishedEnding
         {
-            get { return finishedJumping; }
+            get { return finishedEnding; }
         }
 
         public bool KeepMoving
         {
             get { return keepMoving; }
             set { keepMoving = value; }
+        }
+
+        public bool KickingBall
+        {
+            get { return kickingBall; }
         }
 
         public Quad Sprite
@@ -92,6 +99,8 @@ namespace game_objects
             }
         }
 
+        public bool PlayingEnding { get { return happyEnding || sadEnding; } }
+
         public Character(Renderer3D renderer, IEnumerable<CollidableGameObject> collidableObjects, string name, Ball ball)
             : base(renderer, collidableObjects)
         {
@@ -116,8 +125,13 @@ namespace game_objects
 
         public override void ImediateTranslate(Vector3 amount)
         {
-            if (keepMoving)
+            if (keepMoving || happyEnding)
             {
+                if (happyEnding)
+                {
+                    amount *= (Vector3.UnitY);
+                }
+
                 float newX = Position.X + amount.X;
                 if (newX > MAX_X)
                     amount.X -= newX - MAX_X;
@@ -126,9 +140,13 @@ namespace game_objects
 
                 if (amount.Z > 0)
                 {
-                    currentFrame++;
-                    if (currentFrame >= framesRunning.Length)
-                        currentFrame = 0;
+                    if (keepMoving)
+                    {
+                        currentFrame++;
+                        if (currentFrame >= framesRunning.Length)
+                            currentFrame = 0;
+                    }
+
                 }
                 if (amount.Y < 0)
                     amount += GetUpAmount(amount);
@@ -174,7 +192,7 @@ namespace game_objects
             jumpCount = 0;
             touchingGround = true;
             keepMoving = true;
-            kickBall = kickingBall = finishedJumping = false;
+            kickBall = kickingBall = finishedEnding = happyEnding = sadEnding = false;
             PlayerMovementComponent pmc = GetComponent<PlayerMovementComponent>();
             pmc.Unlock();
             Position = Vector3.Zero;
@@ -207,6 +225,9 @@ namespace game_objects
             framesKicking = LoadFrames(cManager, framesKicking.Length, "_chutando");
 
             framesJumping = LoadFrames(cManager, framesJumping.Length, "_pulando");
+
+            //framesSad = LoadFrames(cManager, framesJumping.Length, "_triste");
+            framesSad = LoadFrames(cManager, framesJumping.Length, "_chutando");
 
             Reset();
         }
@@ -243,9 +264,13 @@ namespace game_objects
                 framesBeingUsed = framesKicking;
                 kickingBall = true;
             }
-            else if (jumping)
+            else if (happyEnding)
             {
                 UpdateJump(gameTime);
+            }
+            else if (sadEnding)
+            {
+                UpdateSadEnding(gameTime);
             }
             CheckCollisions();
             UpdateBallKick(gameTime);
@@ -275,7 +300,7 @@ namespace game_objects
         private void UpdateJump(GameTime gameTime)
         {
             elapsedTime += gameTime.ElapsedGameTime.Milliseconds;
-            if (elapsedTime >= (currentFrame == 5? 400 : 80))
+            if (elapsedTime >= (currentFrame == 5 ? 200 : 100))
             {
                 if (jumpCount < 3)
                 {
@@ -288,20 +313,37 @@ namespace game_objects
                         if (currentFrame == 6)
                         {
                             VariableMovementComponent vmc = GetComponent<VariableMovementComponent>();
-                            vmc.CurrentVelocity = Vector3.Up/5;
+                            vmc.CurrentVelocity = Vector3.Up / 5;
                             vmc.Acceleration = Vector3.Down / 20;
                             touchingGround = false;
-                            jumpCount++;
                         }
                     }
                 }
-                else if (currentFrame > 4)
+                else if (currentFrame > 3)
                 {
                     currentFrame--;
+                    elapsedTime = 0;
                 }
                 else
                 {
-                    finishedJumping = true;
+                    finishedEnding = true;
+                }
+            }
+        }
+
+        private void UpdateSadEnding(GameTime gameTime)
+        {
+            elapsedTime += gameTime.ElapsedGameTime.Milliseconds;
+            if (elapsedTime >= 100)
+            {
+                elapsedTime = 0;
+                if (currentFrame < framesSad.Length - 1)
+                {
+                    currentFrame++;
+                }
+                else
+                {
+                    finishedEnding = true;
                 }
             }
         }
@@ -341,11 +383,19 @@ namespace game_objects
             ball.Kick2(new Vector3(0, 0.4f, 0.3f) + kickDeviation, new Vector3(0, -0.05f, -0.0005f), Vector3.Zero);
         }
 
-        public void Jump()
+        public void PlayEnding()
         {
-            jumping = true;
+            happyEnding = makeGoal;
+            sadEnding = !makeGoal;
+            if (sadEnding)
+                framesBeingUsed = framesSad;
         }
 
-        public bool Jumping { get { return jumping; } }
+        public void LockMovement()
+        {
+            PlayerMovementComponent pmc = GetComponent<PlayerMovementComponent>();
+            pmc.Destiny = 0;
+            pmc.Lock();
+        }
     }
 }

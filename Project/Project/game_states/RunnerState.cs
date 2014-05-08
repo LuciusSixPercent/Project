@@ -201,9 +201,7 @@ namespace game_states
 
         private void centerPlayer()
         {
-            PlayerMovementComponent pmc = player.GetComponent<PlayerMovementComponent>();
-            pmc.Destiny = 0;
-            pmc.Lock();
+            player.LockMovement();
         }
 
         public override void LoadContent()
@@ -253,17 +251,18 @@ namespace game_states
             finished = false;
             answeredAll = false;
             shouldWait = true;
-            
+
             player.Reset();
             progress.Reset();
             progress.Visible = false;
+
             if (progress.Position.Equals(Vector3.Zero))
             {
                 Viewport viewport = parent.GraphicsDevice.Viewport;
-                progress.Position = new Vector3(viewport.Width - progress.Dimensions.X, viewport.Height / 2 - progress.Dimensions.Y / 2, 0);
+                progress.Position = new Vector3(0, viewport.Height / 2 - progress.Dimensions.Y / 2, 0);
             }
 
-            
+
             cam.KeepMoving = true;
             cam.Position = new Vector3(0f, 3f, -4f);
             cam.lookAt(new Vector3(0f, 0.25f, 2f), true);
@@ -347,10 +346,25 @@ namespace game_states
                                 if (answeredAll)
                                 {
                                     field.KeepMoving = false;
-                                    if (field.Goal.Position.Z - player.Position.Z <= 8 && player.KeepMoving)
+                                    if (player.KeepMoving)
                                     {
-                                        player.KickBall(mistakesMade < maxAllowedMistakes, field.Goal.Position);
-                                        cam.KeepMoving = false;
+                                        if (field.Goal.Position.Z - player.Position.Z <= 8)
+                                        {
+                                            player.KickBall(mistakesMade < maxAllowedMistakes, field.Goal.Position);
+                                            cam.KeepMoving = false;
+                                        }
+                                    }
+                                    else if (!player.PlayingEnding)
+                                    {
+                                        if (!ball.Bouncing && !player.KickingBall)
+                                        {
+                                            player.PlayEnding();
+                                        }
+                                    }
+                                    else if (player.FinishedEnding)
+                                    {
+                                        finished = true;
+                                        ExitState();
                                     }
                                 }
 
@@ -471,15 +485,6 @@ namespace game_states
                         goManager.R3D.Alpha = goManager.R2D.Alpha = Alpha;
                         stateEntered = false;
                     }
-                }
-                else if (player.FinishedJumping)
-                {
-                    finished = true;
-                    ExitState();
-                }
-                else if (!player.Jumping)
-                {
-                    player.Jump();
                 }
             }
             else if (KeyboardHelper.KeyReleased(Keys.Escape))

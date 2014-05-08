@@ -282,6 +282,7 @@ namespace game_objects.ui
         {
             loaded = 0;
             load = 0;
+            UpdateFill();
         }
     }
 }

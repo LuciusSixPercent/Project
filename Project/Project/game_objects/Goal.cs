@@ -14,8 +14,8 @@ namespace game_objects
     {
         private Quad quad;
         Texture2D texture;
-        private float quadWidthScale = 1.5f;
-        private float quadHeightScale = 1.5f;
+        private float quadWidthScale = 2f;
+        private float quadHeightScale = 2f;
 
         public Goal(Renderer3D renderer)
             : base(renderer)

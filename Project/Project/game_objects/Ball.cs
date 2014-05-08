@@ -34,6 +34,11 @@ namespace game_objects
             }
         }
 
+        public bool Bouncing
+        {
+            get { return maxArcHeight > 0 || position.Y > 0 || vmc.CurrentVelocity.Y > 0; }
+        }
+
         public Ball(Renderer3D renderer, IEnumerable<CollidableGameObject> collidableObjects)
             : base(renderer, collidableObjects)
         {
@@ -71,8 +76,10 @@ namespace game_objects
             amount += GetUpAmount();
 
             quad.Translate(amount);
-            if (position.Y > maxArcHeight)
+            if (position.Y > maxArcHeight || vmc.CurrentVelocity.Y > 0)
+            {
                 maxArcHeight = position.Y;
+            }
         }
 
         private Vector3 GetUpAmount()
@@ -90,7 +97,6 @@ namespace game_objects
                         boundingBox.Max += upAmount;
                         boundingBox.Min += upAmount;
                         Bounce();
-                        maxArcHeight = 0;
                     }
                     break;
                 }
@@ -100,7 +106,7 @@ namespace game_objects
 
         private void Bounce()
         {
-            if (vmc.CurrentVelocity.Z > 0 || maxArcHeight >= 0.2f)
+            if (vmc.CurrentVelocity.Z > 0 || maxArcHeight >= 0.1f)
             {
                 float xFactor = 0.5f / (vmc.InitialVelocity.X == 0 ? 1 : vmc.InitialVelocity.X);
                 vmc.InitialVelocity /= 1.75f;
