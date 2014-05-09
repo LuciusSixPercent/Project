@@ -17,6 +17,49 @@ namespace Project
         private static SpriteFont defaultSpriteFont;
         private static SpriteFont spriteFont;
         private static Queue<string> queuedStrings;
+        private static Color primaryColor;
+        private static int fontSize;
+
+        public static int FontSize
+        {
+            get {
+                if (fontSize == 0) fontSize = GetSize();
+                return fontSize;
+            }
+        }
+
+        private static int GetSize()
+        {
+            int size = 0;
+            for (char c = 'A'; c <= 'Z'; c++)
+            {
+                Vector2 letterSize = SpriteFont.MeasureString(c.ToString());
+                if (letterSize.Y > size)
+                    size = (int)letterSize.Y;
+            }
+            return size;
+        }
+
+        public static Color PrimaryColor
+        {
+            get {
+                if (TextHelper.primaryColor == Color.Transparent)
+                    TextHelper.primaryColor = Color.White;
+
+                return TextHelper.primaryColor; }
+            set { TextHelper.primaryColor = value; }
+        }
+        private static Color secondaryColor;
+
+        public static Color SecondaryColor
+        {
+            get {
+                if (TextHelper.secondaryColor == Color.Transparent)
+                    TextHelper.secondaryColor = Color.Black;
+                return TextHelper.secondaryColor; 
+            }
+            set { TextHelper.secondaryColor = value; }
+        }
 
         private static Queue<string> QueuedStrings
         {
@@ -80,7 +123,7 @@ namespace Project
         {
             Vector2 txtSize = spriteFont.MeasureString(text);
 
-            RenderTarget2D rt2D = new RenderTarget2D(spriteBatch.GraphicsDevice, (int)txtSize.X, (int)txtSize.Y);
+            RenderTarget2D rt2D = new RenderTarget2D(spriteBatch.GraphicsDevice, (int)txtSize.X+1, (int)txtSize.Y+1);
 
             spriteBatch.GraphicsDevice.SetRenderTarget(rt2D);
             spriteBatch.GraphicsDevice.Clear(Color.Transparent);
@@ -89,7 +132,8 @@ namespace Project
             spriteBatch.GraphicsDevice.BlendState = BlendState.AlphaBlend;
 
             spriteBatch.Begin();
-            spriteBatch.DrawString(spriteFont, text, Vector2.Zero, Color.White);
+            spriteBatch.DrawString(spriteFont, text, Vector2.Zero, SecondaryColor);
+            spriteBatch.DrawString(spriteFont, text, Vector2.One, PrimaryColor);
             spriteBatch.End();
 
             spriteBatch.GraphicsDevice.SetRenderTarget(null);
