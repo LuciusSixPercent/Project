@@ -352,10 +352,6 @@ namespace game_objects.questions
         public bool CheckAnswer(Answer a, bool passingBy)
         {
             bool correct = correctAnswerSpawned && a.Equals(correctAnswer);
-            if (!correct && !passingBy)
-            {
-                int i = 0;
-            }
             if (correct)
             {
                 if (passingBy) //se a resposta é correta e o jogador passou por ela, ele cometeu um erro e perderá pontos

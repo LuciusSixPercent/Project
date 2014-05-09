@@ -20,6 +20,7 @@ namespace game_states
         STORY = 40,
         RUNNER = 50,
         RUNNER_WAIT = 55,
+        RUNNER_END = 57,
         PAUSE = 60
     }
 }

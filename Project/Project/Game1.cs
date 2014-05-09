@@ -21,10 +21,6 @@ namespace Project
         private Dictionary<int, GameState> states;
         private List<GameState> statesStack;
         private StatesIdList querriedState;
-        Menu menu;
-        Episodio01 md;
-        RunnerState rs;
-        CadernoDeAtividades cda;
 
         public Game1()
         {
@@ -50,20 +46,22 @@ namespace Project
 
             statesStack = new List<GameState>();
 
-            menu = new Menu((int)StatesIdList.MAIN_MENU, this);
+            Menu menu = new Menu((int)StatesIdList.MAIN_MENU, this);
             states.Add(menu.ID, menu);
-            EnterState(menu.ID);
 
-            md = new Episodio01((int)StatesIdList.STORY, this);
+            Episodio01 md = new Episodio01((int)StatesIdList.STORY, this);
             states.Add(md.ID, md);
 
-            rs = new RunnerState((int)StatesIdList.RUNNER, this);
+            RunnerState rs = new RunnerState((int)StatesIdList.RUNNER, this);
             states.Add(rs.ID, rs);
 
             RunnerWaitState rws = new RunnerWaitState((int)StatesIdList.RUNNER_WAIT, this);
             states.Add(rws.ID, rws);
 
-            cda = new CadernoDeAtividades((int)StatesIdList.OPTIONS, this, md);
+            RunnerEndState res = new RunnerEndState((int)StatesIdList.RUNNER_END, this);
+            states.Add(res.ID, res);
+
+            CadernoDeAtividades cda = new CadernoDeAtividades((int)StatesIdList.OPTIONS, this, md);
             states.Add(cda.ID, cda);
 
             PauseState ps = new PauseState((int)StatesIdList.PAUSE, this);
@@ -74,6 +72,9 @@ namespace Project
 
             LoadingState ls = new LoadingState((int)StatesIdList.LOADING, this);
             states.Add(ls.ID, ls);
+
+
+            EnterState(menu.ID);
         }
 
         public bool EnterState(int id)
@@ -207,7 +208,7 @@ namespace Project
             bool foundBottommostState = false;
             while (stateIndex < statesStack.Count)
             {
-                if (statesStack[stateIndex].FreezeGraphicsBelow)
+                if (statesStack[stateIndex].FreezeGraphicsBelow || stateIndex == 0)
                 {
                     foundBottommostState = true;
                 }

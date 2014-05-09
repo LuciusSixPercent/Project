@@ -16,12 +16,25 @@ namespace game_objects.ui
         private bool[] loopStates;
         private ButtonStates lastState;
         private int elapsed;
-        private bool clicked;
+
         private bool finishedAnimation;
 
         public bool FinishedAnimation
         {
             get { return finishedAnimation; }
+        }
+
+        public override ButtonStates State
+        {
+            get
+            {
+                return base.State;
+            }
+            set
+            {
+                base.State = value;
+                ResetCycleStart((int)State);
+            }
         }
 
         public AnimatedButton(Renderer2D r2D, Rectangle bounds, int[] framesPerState, bool[] loopStates)
@@ -36,11 +49,11 @@ namespace game_objects.ui
 
         protected override void cc_click()
         {
-            if (Enabled)
+            if (CanClick())
             {
-                if (!clicked)
+                if (Clicked)
                 {
-                    clicked = true;
+                    Clicked = true;
                     ResetCycleStart(framesPerState.Length - 1);
                 }
                 base.cc_click();                
@@ -84,11 +97,11 @@ namespace game_objects.ui
                 if (Enabled || !finishedAnimation)
                 {
                     elapsed = 0;
-                    if (lastState.Equals(State) || clicked)
+                    if (lastState.Equals(State) || Clicked)
                     {
                         UpdateCurrentFrame();
                     }
-                    else
+                    else if(!Clicked)
                     {
                         lastState = State;
                         ResetCycleStart((int)State);
@@ -106,7 +119,8 @@ namespace game_objects.ui
         {
             currentFrame++;
             finishedAnimation = false;
-            int index = clicked? framesPerState.Length-1 : (int)State;
+            int index = Clicked? framesPerState.Length-1 : (int)State;
+
             if (currentFrame >= framesPerState[index] + animationCycleStart)
             {
                 finishedAnimation = true;
@@ -117,10 +131,16 @@ namespace game_objects.ui
                 }
                 else
                 {
-                    if (clicked)
+                    if (Clicked)
                     {
-                        clicked = false;
-                        ResetCycleStart((int)State);
+                        
+                        int i = 3;
+                        if (!LockOnClick)
+                        {
+                            i = (int)State;
+                            Clicked = false;
+                        }
+                        ResetCycleStart(i);
                     }
                     else
                     {
@@ -165,7 +185,7 @@ namespace game_objects.ui
         {
             if (Visible)
             {
-                ((Renderer2D)Renderer).Draw(textures[currentFrame], Bounds, BtnColor * ColorModifier, BlendState.Opaque);
+                ((Renderer2D)Renderer).Draw(textures[currentFrame], Bounds, DefaultColor * ColorModifier, BlendState.Opaque);
                 base.DrawText(gameTime);
             }
         }
