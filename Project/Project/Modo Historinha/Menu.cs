@@ -16,10 +16,10 @@ using Microsoft.Xna.Framework.Audio;
     class Menu : GameState
     {
         private SpriteBatch spriteBatch;
-        Texture2D seta, menu1Normal, menu1Over, menu2Normal, menu2Over, menu3Normal,menu3Over, menu4Normal,menu4Over, menu5Normal,menu5Over, menu6Normal,menu6Over, Fundo,OKOver,OKNormal,CancelarOver,CancelarNormal,Barra,Medidor,VoltarOver, VoltarNormal;
-        Texture2D[] menu1, menu2, menu3, menu4, menu5, menu6, OK, Cancelar, Voltar;
-        Texture2D Fconf, Fnorm, Fcre, Fsair;
-        Rectangle rcSeta, rcmenu1, rcmenu2, rcmenu3, rcmenu4, rcmenu5, rcmenu6, rcfundo, rcOK, rcCancelar, rcbarra, rcMedidor, vVoltar;
+        Texture2D seta, menu1Normal, menu1Over, menu2Normal, menu2Over, menu3Normal, menu3Over, menu4Normal, menu4Over, menu5Normal, menu5Over, menu6Normal, menu6Over, Fundo, OKOver, OKNormal, CancelarOver, CancelarNormal, Barra, Medidor, VoltarOver, VoltarNormal, BTAvancarO, BTAvancarN,BTVoltarO,BTVoltarN;
+        Texture2D[] menu1, menu2, menu3, menu4, menu5, menu6, OK, Cancelar, Voltar,BTAvancar,BTVoltar;
+        Texture2D Fconf, Fnorm, Fcre, Fsair,SelecaoEpisodio1,Varal;
+        Rectangle rcSeta, rcmenu1, rcmenu2, rcmenu3, rcmenu4, rcmenu5, rcmenu6, rcfundo, rcOK, rcCancelar, rcbarra, rcMedidor, vVoltar, vBTAvancar, vBTVoltar, vSelecaoEpisodio1, vVaral, vVaral2;
         Vector2[] menus;
         bool pauseFlag;
         int escolha = 0;
@@ -36,8 +36,12 @@ using Microsoft.Xna.Framework.Audio;
         int OKin = 0;
         int CancIN = 0;
         int VoltarIndice = 0;
+        int indiceBTavancar = 0;
+        int indiceBTvoltar = 0;
         bool tocar = false;
-        
+        bool clique = false;
+        bool avancar = false;
+        bool voltar = false;
         SpriteFont arial;
         AudioEngine audioEngine, audioEngine3;
         WaveBank waveBank, waveBank3;
@@ -84,6 +88,8 @@ using Microsoft.Xna.Framework.Audio;
                 OK = new Texture2D[2] { OKNormal, OKOver };
                 Cancelar = new Texture2D[2] { CancelarNormal, CancelarOver };
                 Voltar = new Texture2D[2] { VoltarNormal, VoltarOver };
+                BTAvancar = new Texture2D[2] { BTAvancarN, BTAvancarO };
+                BTVoltar = new Texture2D[2] { BTVoltarN, BTVoltarO };
                 #region Retangulos
                 rcfundo = new Rectangle(0, 0, 1024, 768);
                 rcmenu1 = new Rectangle(0, 600, menu1[mn1].Width, menu1[mn1].Height);
@@ -99,6 +105,11 @@ using Microsoft.Xna.Framework.Audio;
                 rcMedidor = new Rectangle(rcbarra.X + rcbarra.Width, rcbarra.Y - Medidor.Height/2, Medidor.Width*3, Medidor.Height);
                 menus = new Vector2[5] { new Vector2(rcmenu1.X-50, rcmenu1.Y-50), new Vector2(rcmenu2.X-50, rcmenu2.Y-50), new Vector2(rcmenu3.X-50, rcmenu3.Y-50), new Vector2(rcmenu5.X-50, rcmenu5.Y-50), new Vector2(rcmenu6.X-50, rcmenu6.Y-50) };
                 rcSeta = new Rectangle((int)menus[escolha].X, (int)menus[escolha].Y, seta.Width, seta.Height);
+                vBTAvancar = new Rectangle(800, 500, BTAvancar[indiceBTavancar].Width / 6, BTAvancar[indiceBTavancar].Height / 6);
+                vBTVoltar = new Rectangle(150, 500, BTVoltar[indiceBTvoltar].Width / 6, BTVoltar[indiceBTvoltar].Height / 6);
+                vVaral = new Rectangle(0, 0, 1024, Varal.Height);
+                vVaral2 = new Rectangle(1024, 0, 1024, Varal.Height);
+                vSelecaoEpisodio1 = new Rectangle(300, 130, SelecaoEpisodio1.Width, SelecaoEpisodio1.Height);
                 #endregion
                 //resto da inicialização
             }
@@ -201,7 +212,7 @@ using Microsoft.Xna.Framework.Audio;
                     if (Historinha)
                     {
 
-
+                        SelecaoDeEpisodio();
                     }
                     if (Creditos)
                     {
@@ -366,10 +377,7 @@ using Microsoft.Xna.Framework.Audio;
                         }
                         if (Historinha)
                         {
-                            MediaPlayer.Stop();
-                            engineSound.Stop(AudioStopOptions.AsAuthored);
-                            Historinha = false;
-                            parent.EnterState((int)StatesIdList.STORY);
+                            
                         }
                         else
                             if (BateBola)
@@ -395,7 +403,7 @@ using Microsoft.Xna.Framework.Audio;
                 Fundo = Fnorm;
             }
             spriteBatch.Draw(Fundo, rcfundo, Color.White * Alpha);
-            if (!Config && !Creditos)
+            if (!Config && !Creditos && !Historinha)
             {
                 Fundo = Fnorm;
                 spriteBatch.Draw(Fundo, rcfundo, Color.White * Alpha);
@@ -418,11 +426,15 @@ using Microsoft.Xna.Framework.Audio;
                 spriteBatch.Draw(OK[OKin], rcOK, Color.White);
                 spriteBatch.Draw(Cancelar[CancIN], rcCancelar, Color.White);
             }
-            //if (Config)
-            //{
-            //    spriteBatch.Draw(Barra, rcbarra, Color.White);
-            //    spriteBatch.Draw(Medidor, rcMedidor, Color.White);
-            //}
+            if (Historinha)
+            {
+                spriteBatch.Draw(BTAvancar[indiceBTavancar], vBTAvancar, Color.White);
+                spriteBatch.Draw(BTVoltar[indiceBTvoltar], vBTVoltar, Color.White);
+                spriteBatch.Draw(SelecaoEpisodio1, vSelecaoEpisodio1, Color.White);
+                spriteBatch.Draw(Varal, vVaral, Color.White);
+                spriteBatch.Draw(Varal, vVaral2, Color.White);
+                
+            }
             spriteBatch.End();
         }
         public bool Sair { get; set; }
@@ -486,6 +498,12 @@ using Microsoft.Xna.Framework.Audio;
                 Barra = parent.Content.Load<Texture2D>("Menu/BarraBalanco");
                 VoltarNormal = parent.Content.Load<Texture2D>("Menu/voltarN");
                 VoltarOver = parent.Content.Load<Texture2D>("Menu/voltarH");
+                BTAvancarN = parent.Content.Load<Texture2D>("Imagem/Botao_Avancar");
+                BTAvancarO = parent.Content.Load<Texture2D>("Imagem/Botao_Avancar_Sel");
+                BTVoltarN = parent.Content.Load<Texture2D>("Imagem/Botao_Voltar");
+                BTVoltarO = parent.Content.Load<Texture2D>("Imagem/Botao_Voltar_Sel");
+                Varal = parent.Content.Load<Texture2D>("Menu/SelecaoEpiso/varal");
+                SelecaoEpisodio1 = parent.Content.Load<Texture2D>("Menu/SelecaoEpiso/cordel");
                 #endregion
 
                 #endregion
@@ -508,6 +526,164 @@ using Microsoft.Xna.Framework.Audio;
         public void SairMENU()
         {
 
+        }
+        void SelecaoDeEpisodio()
+        {
+            MouseState mouse = Mouse.GetState();
+            if (ColisaoMouseOver(mouse, BTAvancar[indiceBTavancar], vBTAvancar))
+            {
+                indiceBTavancar = 1;
+            }
+            else { indiceBTavancar = 0; }
+             if (ColisaoMouseOver(mouse, BTVoltar[indiceBTvoltar], vBTVoltar))
+             {
+                 indiceBTvoltar =1;
+             }
+             else{indiceBTvoltar=0;}
+            if (mouse.LeftButton == ButtonState.Pressed && !clique)
+            {
+                clique = true;
+                if (ColisaoMouseOver(mouse, BTAvancar[indiceBTavancar], vBTAvancar) && !avancar)
+                {
+                    if (vVaral2.X == 1024)
+                    {
+                        vVaral2.X = -1024;
+                    }
+                    if (vVaral.X == 1024)
+                    {
+                        vVaral.X = -1024;
+                    }
+                    avancar = true;
+                }
+                if (ColisaoMouseOver(mouse, BTVoltar[indiceBTvoltar], vBTVoltar) && !voltar)
+                {
+                    if (vVaral2.X == -1024)
+                    {
+                        vVaral2.X = 1024;
+                    }
+                    if (vVaral.X == -1024)
+                    {
+                        vVaral.X = 1024;
+                    }
+                    voltar = true;
+                }
+                if (ColisaoMouseOver(mouse, SelecaoEpisodio1, vSelecaoEpisodio1))
+                {
+                    MediaPlayer.Stop();
+                    engineSound.Stop(AudioStopOptions.AsAuthored);
+                    Historinha = false;
+                    parent.EnterState((int)StatesIdList.STORY);
+                }
+            }
+            if (mouse.LeftButton == ButtonState.Released)
+            {
+                clique = false;
+            }
+            if (avancar && !voltar)
+            {
+                if (vVaral2.X >= 0)
+                {
+                    vVaral2.X += vVaral2.X < 1025 ? 4 : 0;
+                    vSelecaoEpisodio1.X = vVaral2.X + 300;
+                    if (vVaral.X + 300 < 0)
+                    {
+                        vSelecaoEpisodio1.X = vVaral2.X + 300;
+                    }
+                    if (vVaral2.X == 1024)
+                    {
+                        avancar = false;
+                    }
+                }
+                else if (vVaral2.X >= -1024 && vVaral2.X < 1)
+                {
+                    vVaral2.X += vVaral2.X < 1 ? 4 : 0;
+                    if (vVaral2.X + 300 > 0)
+                    {
+                        vSelecaoEpisodio1.X = vVaral2.X+300;
+                    }
+                    if (vVaral2.X == 0)
+                    {
+                        avancar = false;
+                    }
+                }
+                if (vVaral.X >= 0)
+                {
+                    vVaral.X += vVaral.X < 1025 ? 4 : 0;
+                    if (vVaral2.X + 300 < 0)
+                    {
+                        vSelecaoEpisodio1.X = vVaral.X + 300;
+                    }
+                    if (vVaral.X == 1024)
+                    {
+                        avancar = false;
+                    }
+                }
+                else if (vVaral.X >= -1024 && vVaral.X < 1)
+                {
+                    vVaral.X += vVaral.X < 1 ? 4 : 0;
+                    if (vVaral.X + 300 > 0)
+                    {
+                        vSelecaoEpisodio1.X = vVaral.X + 300;
+                    }
+                    if (vVaral.X == 0)
+                    {
+                        avancar = false;
+                    }
+                }
+                
+            }
+            if (voltar && !avancar)
+            {
+                if (vVaral2.X <= 0)
+                {
+                    vVaral2.X -= vVaral2.X > -1025 ? 4 : 0;
+                    if (vVaral2.X + 300 > 0)
+                    {
+                        vSelecaoEpisodio1.X = vVaral2.X + 300;
+                    }
+                    if (vVaral2.X == -1024)
+                    {
+                        voltar = false;
+                    }
+                }
+                else if (vVaral2.X < 1025 && vVaral2.X >-1)
+                {
+                    vVaral2.X -= vVaral2.X > -1 ? 4 : 0;
+                    if (vVaral.X + 300 < 0)
+                    {
+                        vSelecaoEpisodio1.X = vVaral2.X+300;
+                    }
+                    if (vVaral2.X == 0)
+                    {
+                        voltar = false;
+                    }
+                }
+                if (vVaral.X <= 0)
+                {
+                    vVaral.X -= vVaral.X > -1025 ? 4 : 0;
+                    if (vVaral.X + 300 > 0)
+                    {
+                        vSelecaoEpisodio1.X = vVaral.X+300;
+                    }
+                    if (vVaral.X == -1024)
+                    {
+                        voltar = false;
+                    }
+                }
+                else if (vVaral.X <= 1024 && vVaral.X > -1)
+                {
+                    vVaral.X -= vVaral.X > -1 ? 4 : 0;
+                    if (vVaral2.X + 300 < 0)
+                    {
+                        vSelecaoEpisodio1.X = vVaral.X + 300;
+                    }
+                    if (vVaral.X == 0)
+                    {
+                        voltar = false;
+                    }
+                }
+               
+            }
         }
         #region Transitioning
         public override void EnterState()
