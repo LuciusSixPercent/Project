@@ -331,45 +331,43 @@ namespace game_states
                 {
                     if (stateEntered)
                     {
-                        if (!exitingState)
+                        if (!exitingState && !finished)
                         {
 
-                            if (!finished)
+                            if (!progress.Visible)
                             {
-                                if (!progress.Visible)
-                                {
-                                    progress.Visible = true;
-                                }
-
-                                PlayBGM();
-                                CheckAnswer();
-                                if (answeredAll)
-                                {
-                                    field.KeepMoving = false;
-                                    if (player.KeepMoving)
-                                    {
-                                        if (field.Goal.Position.Z - player.Position.Z <= 8)
-                                        {
-                                            player.KickBall(mistakesMade < maxAllowedMistakes, field.Goal.Position);
-                                            cam.KeepMoving = false;
-                                        }
-                                    }
-                                    else if (!player.PlayingEnding)
-                                    {
-                                        if (!ball.Bouncing && !player.KickingBall)
-                                        {
-                                            player.PlayEnding();
-                                        }
-                                    }
-                                    else if (player.FinishedEnding)
-                                    {
-                                        finished = true;
-                                        ExitState();
-                                    }
-                                }
-
-                                handleInput();
+                                progress.Visible = true;
                             }
+
+                            PlayBGM();
+                            CheckAnswer();
+                            if (answeredAll)
+                            {
+                                field.KeepMoving = false;
+                                if (player.KeepMoving)
+                                {
+                                    if (field.Goal.Position.Z - player.Position.Z <= 8)
+                                    {
+                                        player.KickBall(mistakesMade < maxAllowedMistakes, field.Goal.Position);
+                                        cam.KeepMoving = false;
+                                    }
+                                }
+                                else if (!player.PlayingEnding)
+                                {
+                                    if (!ball.Bouncing && !player.KickingBall)
+                                    {
+                                        player.PlayEnding();
+                                    }
+                                }
+                                else if (player.FinishedEnding)
+                                {
+                                    finished = true;
+                                    //ExitState();
+                                    parent.EnterState((int)StatesIdList.RUNNER_END);
+                                }
+                            }
+
+                            handleInput();
                         }
                     }
                     else if (exit)
@@ -499,40 +497,95 @@ namespace game_states
             if (ContentLoaded)
             {
                 base.Draw(gameTime);
-                string header = "";
-                int questionScore = 0;
-                int answerValue = 0;
-                if (questions.Count > 0)
-                {
-                    header = questions[questions.Count - 1].Header;
-                    questionScore = questions[questions.Count - 1].Score;
-                    answerValue = questions[questions.Count - 1].CurrentAnswerValue;
-                }
-
-                //* DEBUG
-                Color c = new Color(20, 20, 100);
-                goManager.R2D.DrawString(header, Vector2.Zero, c);
-                c *= 0.95f;
-                goManager.R2D.DrawString("Pontos acumulados na iteração: " + score + " x (" + perfectSscoreMultiplier + ")", new Vector2(0, 30), c);
-                c *= 0.95f;
-                goManager.R2D.DrawString("Pontos acumulados na questão: " + questionScore, new Vector2(0, 60), c);
-                c *= 0.95f;
-                goManager.R2D.DrawString("Valor da resposta atual: " + answerValue, new Vector2(0, 90), c);
-                c *= 0.95f;
-                goManager.R2D.DrawString("Questões restantes " + questions.Count, new Vector2(0, 120), c);
-                c *= 0.95f;
-                goManager.R2D.DrawString("Erros: " + mistakesMade, new Vector2(0, 150), c);
-                c *= 0.95f;
-                goManager.R2D.DrawString("Acertos: " + AnswersGot, new Vector2(0, 180), c);
-                c *= 0.95f;
-                goManager.R2D.DrawString("MAX. Erros: " + maxAllowedMistakes, new Vector2(0, 210), c);
-                if (exitingState)
-                {
-                    goManager.R2D.DrawString("Alpha " + Alpha, new Vector2(400, 150), Color.Silver);
-                }
-                goManager.R2D.End();
-                //*/
+                drawDebugData();
             }
+        }
+
+        private void drawDebugData()
+        {
+
+            //* DEBUG
+
+            string header = "";
+            int questionScore = 0;
+            int answerValue = 0;
+            if (questions.Count > 0)
+            {
+                header = questions[questions.Count - 1].Header;
+                questionScore = questions[questions.Count - 1].Score;
+                answerValue = questions[questions.Count - 1].CurrentAnswerValue;
+            }
+            Viewport screen = parent.GraphicsDevice.Viewport;
+            Color c = new Color(120, 20, 60);
+
+            float scale = 0.5f;
+            goManager.R2D.DrawString(header, new Vector2(screen.Width - TextHelper.SpriteFont.MeasureString(header).X*scale, 0), c, 0, Vector2.Zero, scale);
+            c *= 0.95f;
+            string s = "Pontos acumulados na iteração: " + score + " x (" + perfectSscoreMultiplier + ")";
+
+            goManager.R2D.DrawString(s, new Vector2(screen.Width - TextHelper.SpriteFont.MeasureString(s).X * scale, 30), c, 0, Vector2.Zero, scale);
+
+            s = "Pontos acumulados na questão: " + questionScore;
+            c *= 0.9f;
+            goManager.R2D.DrawString(s, new Vector2(screen.Width - TextHelper.SpriteFont.MeasureString(s).X * scale, 60), c, 0, Vector2.Zero, scale);
+
+            s = "Valor da resposta atual: " + answerValue;
+            c *= 0.9f;
+            goManager.R2D.DrawString(s, new Vector2(screen.Width - TextHelper.SpriteFont.MeasureString(s).X * scale, 90), c, 0, Vector2.Zero, scale);
+
+            s = "Questões restantes " + questions.Count;
+            c *= 0.9f;
+            goManager.R2D.DrawString(s, new Vector2(screen.Width - TextHelper.SpriteFont.MeasureString(s).X * scale, 120), c, 0, Vector2.Zero, scale);
+
+            s = "Erros: " + mistakesMade;
+            c *= 0.9f;
+            goManager.R2D.DrawString(s, new Vector2(screen.Width - TextHelper.SpriteFont.MeasureString(s).X * scale, 150), c, 0, Vector2.Zero, scale);
+
+            s = "Acertos: " + AnswersGot;
+            c *= 0.9f;
+            goManager.R2D.DrawString(s, new Vector2(screen.Width - TextHelper.SpriteFont.MeasureString(s).X * scale, 180), c, 0, Vector2.Zero, scale);
+
+            s = "MAX. Erros: " + maxAllowedMistakes;
+            c *= 0.9f;
+            goManager.R2D.DrawString(s, new Vector2(screen.Width - TextHelper.SpriteFont.MeasureString(s).X * scale, 210), c, 0, Vector2.Zero, scale);
+
+            c = new Color(20, 10, 30);
+
+            goManager.R2D.DrawString(header, new Vector2(screen.Width - TextHelper.SpriteFont.MeasureString(header).X * scale - 1, 1), c, 0, Vector2.Zero, scale);
+            c *= 0.95f;
+            s = "Pontos acumulados na iteração: " + score + " x (" + perfectSscoreMultiplier + ")";
+            goManager.R2D.DrawString(s, new Vector2(screen.Width - TextHelper.SpriteFont.MeasureString(s).X * scale -1, 31), c, 0, Vector2.Zero, scale);
+
+            s = "Pontos acumulados na questão: " + questionScore;
+            c *= 0.9f;
+            goManager.R2D.DrawString(s, new Vector2(screen.Width - TextHelper.SpriteFont.MeasureString(s).X * scale - 1, 61), c, 0, Vector2.Zero, scale);
+
+            s = "Valor da resposta atual: " + answerValue;
+            c *= 0.9f;
+            goManager.R2D.DrawString(s, new Vector2(screen.Width - TextHelper.SpriteFont.MeasureString(s).X * scale - 1, 91), c, 0, Vector2.Zero, scale);
+
+            s = "Questões restantes " + questions.Count;
+            c *= 0.9f;
+            goManager.R2D.DrawString(s, new Vector2(screen.Width - TextHelper.SpriteFont.MeasureString(s).X * scale - 1, 121), c, 0, Vector2.Zero, scale);
+
+            s = "Erros: " + mistakesMade;
+            c *= 0.9f;
+            goManager.R2D.DrawString(s, new Vector2(screen.Width - TextHelper.SpriteFont.MeasureString(s).X * scale - 1, 151), c, 0, Vector2.Zero, scale);
+
+            s = "Acertos: " + AnswersGot;
+            c *= 0.9f;
+            goManager.R2D.DrawString(s, new Vector2(screen.Width - TextHelper.SpriteFont.MeasureString(s).X * scale - 1, 181), c, 0, Vector2.Zero, scale);
+
+            s = "MAX. Erros: " + maxAllowedMistakes;
+            c *= 0.9f;
+            goManager.R2D.DrawString(s, new Vector2(screen.Width - TextHelper.SpriteFont.MeasureString(s).X * scale - 1, 211), c, 0, Vector2.Zero, scale);
+
+            if (exitingState)
+            {
+                goManager.R2D.DrawString("Alpha " + Alpha, new Vector2(400, 150), Color.Silver);
+            }
+            goManager.R2D.End();
+            //*/
         }
 
         #endregion

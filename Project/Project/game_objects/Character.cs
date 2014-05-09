@@ -130,26 +130,28 @@ namespace game_objects
                 if (happyEnding)
                 {
                     amount *= (Vector3.UnitY);
+                    if(amount.Y < 0 && !touchingGround)
+                        amount += GetUpAmount(amount);
                 }
-
-                float newX = Position.X + amount.X;
-                if (newX > MAX_X)
-                    amount.X -= newX - MAX_X;
-                else if (newX < MIN_X)
-                    amount.X += MIN_X - newX;
-
-                if (amount.Z > 0)
+                else
                 {
-                    if (keepMoving)
-                    {
-                        currentFrame++;
-                        if (currentFrame >= framesRunning.Length)
-                            currentFrame = 0;
-                    }
+                    float newX = Position.X + amount.X;
+                    if (newX > MAX_X)
+                        amount.X -= newX - MAX_X;
+                    else if (newX < MIN_X)
+                        amount.X += MIN_X - newX;
 
+                    if (amount.Z > 0)
+                    {
+                        if (keepMoving)
+                        {
+                            currentFrame++;
+                            if (currentFrame >= framesRunning.Length)
+                                currentFrame = 0;
+                        }
+
+                    }
                 }
-                if (amount.Y < 0)
-                    amount += GetUpAmount(amount);
 
                 base.ImediateTranslate(amount);
                 quad.Translate(amount);
@@ -374,11 +376,18 @@ namespace game_objects
         private void KickBall()
         {
             Vector3 kickDeviation = Vector3.Zero;
+
             if (!makeGoal)
             {
-                kickDeviation.Y = (float)PublicRandom.NextDouble(0, 0.05);
-                kickDeviation.Z = -(float)PublicRandom.NextDouble(0, 0.1);
+                kickDeviation.Y = (float)PublicRandom.NextDouble(0, 0.2);
+                if (PublicRandom.NextDouble() > 0.5) kickDeviation.Y *= -1;
+
+                kickDeviation.Z = -(float)PublicRandom.NextDouble(0.15, 0.25);
+
+                kickDeviation.X = (float)PublicRandom.NextDouble(0, 0.1);
+                if (PublicRandom.NextDouble() > 0.5) kickDeviation.X *= -1;
             }
+
             ball.Position = ball.Position * (Vector3.UnitX + Vector3.UnitZ);
             ball.Kick2(new Vector3(0, 0.4f, 0.3f) + kickDeviation, new Vector3(0, -0.05f, -0.0005f), Vector3.Zero);
         }

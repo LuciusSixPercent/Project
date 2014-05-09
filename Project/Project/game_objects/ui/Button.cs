@@ -11,17 +11,17 @@ using System.IO;
 
 namespace game_objects.ui
 {
-    public class Button : DrawableGameObject
+    public class Button : Simple2DGameObject
     {
-        private Rectangle bounds;
-
         protected Texture2D[] textures;
 
         private ButtonStates state;
 
         private string text;
         private bool useText;
-        private Color btnColor;
+        private Color defaultColor;
+        private Color hoverColor;
+        private Color pressColor;
 
         private Vector2 textPosition;
 
@@ -32,12 +32,20 @@ namespace game_objects.ui
 
         private string filePath;
         private string baseFileName;
-        private float colorModifier;
+        private bool forcingClick;
+        private bool clicked;
+        private bool lockOnClick;
 
-        public float ColorModifier
+        public bool Clicked
         {
-            get { return colorModifier; }
-            set { colorModifier = value; }
+            get { return clicked; }
+            set { clicked = value; }
+        }
+
+        public bool LockOnClick
+        {
+            get { return lockOnClick; }
+            set { lockOnClick = value; }
         }
         
         public bool Enabled
@@ -45,22 +53,28 @@ namespace game_objects.ui
             get { return enabled; }
         }
 
-        protected Color BtnColor
+        protected Color DefaultColor
         {
-            get { return btnColor; }
-            set { btnColor = value; }
+            get { return defaultColor; }
+            set { defaultColor = value; }
+        }
+
+        public Color HoverColor
+        {
+            get { return hoverColor; }
+            set { hoverColor = value; }
+        }
+
+        public Color PressColor
+        {
+            get { return pressColor; }
+            set { pressColor = value; }
         }
 
         public Vector2 TextPosition
         {
             get { return textPosition; }
             set { textPosition = value; }
-        }
-
-        public Rectangle Bounds
-        {
-            get { return bounds; }
-            set { bounds = value; }
         }
 
         /// <summary>
@@ -92,7 +106,7 @@ namespace game_objects.ui
             set { useText = value; }
         }
 
-        public ButtonStates State
+        public virtual ButtonStates State
         {
             get { return state; }
             set { state = value; }
@@ -109,41 +123,53 @@ namespace game_objects.ui
             cc.exit += new ClickComponent.Exit(cc_exit);
             cc.hover += new ClickComponent.Hover(cc_hover);
             addComponent(cc);
+
             this.state = ButtonStates.NORMAL;
-            this.btnColor = Color.White;
-            this.bounds = bounds;
+            this.Color = this.defaultColor = this.hoverColor = this.pressColor = Color.White;
+            Bounds = bounds;
+            this.position = new Vector3(Bounds.X, Bounds.Y, 0);
+            this.dimensions = new Vector3(Bounds.Width, Bounds.Height, 0);
             this.textPosition = Vector2.Zero;
             this.useText = true;
             this.Visible = true;
             this.enabled = true;
-            this.colorModifier = 1f;
+            ColorModifier = 1f;
         }
 
         protected void cc_hover(bool hovering)
         {
             if (!enabled) return;
-
             if (hovering)
             {
                 if (state != ButtonStates.PRESSING)
+                {
                     state = ButtonStates.HOVERING;
+                    Color = hoverColor;
+                }
             }
             else if (state != ButtonStates.PRESSING)
             {
                 state = ButtonStates.NORMAL;
+                Color = defaultColor;
             }
         }
 
         protected void cc_release()
         {
             if (state != ButtonStates.HOVERING)
+            {
                 state = ButtonStates.NORMAL;
+                Color = defaultColor;
+            }
         }
 
         protected void cc_press()
         {
-            if(enabled)
+            if (enabled)
+            {
                 state = ButtonStates.PRESSING;
+                Color = pressColor;
+            }
         }
 
         protected void cc_exit()
@@ -158,26 +184,33 @@ namespace game_objects.ui
         protected virtual void cc_click()
         {
             if (CanClick())
+            {
+                Clicked = true;
                 mouseClicked(this);
+            }
         }
 
         protected bool CanClick()
         {
-            return mouseClicked != null && Visible && Enabled;
+            return mouseClicked != null && (forcingClick || (Visible && Enabled));
         }
 
         public override void Update(GameTime gameTime)
         {
+            if (!lockOnClick && Clicked)
+                Clicked = false;
+
             base.Update(gameTime);
+
+            texture = textures[(int)state];
         }
 
         public override void Draw(GameTime gameTime)
         {
             if (Visible)
             {
-                int index = (int)state;
-
-                ((Renderer2D)Renderer).Draw(textures[index], bounds, btnColor*colorModifier, BlendState.AlphaBlend);
+                base.Draw(gameTime);
+                //((Renderer2D)Renderer).Draw(textures[(int)state], Bounds, Color * ColorModifier, BlendState.AlphaBlend);
                 DrawText(gameTime);
             }
         }
@@ -186,7 +219,7 @@ namespace game_objects.ui
         {
             if (!String.IsNullOrEmpty(text) && UseText)
             {                
-                ((Renderer2D)Renderer).DrawString(text, textPosition, btnColor * colorModifier);
+                ((Renderer2D)Renderer).DrawString(text, textPosition, Color * ColorModifier);
             }
         }
 
@@ -196,9 +229,9 @@ namespace game_objects.ui
             {
                 filePath = "Menu" + Path.AltDirectorySeparatorChar;
             }
+            this.textures = new Texture2D[4];
             if (!string.IsNullOrEmpty(baseFileName))
             {
-                this.textures = new Texture2D[4];
                 textures[0] = cManager.Load<Texture2D>(filePath + baseFileName + "N");
                 textures[1] = cManager.Load<Texture2D>(filePath + baseFileName + "H");
                 textures[2] = cManager.Load<Texture2D>(filePath + baseFileName + "P");
@@ -207,28 +240,38 @@ namespace game_objects.ui
             CenterText();
         }
 
+        /// <summary>
+        /// Centraliza o texto no botão.
+        /// </summary>
         protected void CenterText()
         {
             if (!string.IsNullOrEmpty(text))
             {
                 Vector2 textSize = TextHelper.SpriteFont.MeasureString(text);
                 float scale = 1;
-                if (textSize.X > bounds.Width) //texto só mudará de escala caso seja maior que o botão
-                    scale = (float)bounds.Width / textSize.X;
-                textPosition = new Vector2(bounds.X + (bounds.Width - textSize.X * scale) / 2, bounds.Y + (bounds.Height - textSize.Y * scale) / 2); //centraliza texto no botão
+                if (textSize.X > Bounds.Width) //texto só mudará de escala caso seja maior que o botão
+                    scale = (float)Bounds.Width / textSize.X;
+                textPosition = new Vector2(Bounds.X + (Bounds.Width - textSize.X * scale) / 2, Bounds.Y + (Bounds.Height - textSize.Y * scale) / 2);
             }
         }
 
         public void Disable()
         {
             enabled = false;
-            colorModifier = 0.5f;
+            ColorModifier = 0.5f;
         }
 
         public void Enable()
         {
             enabled = true;
-            colorModifier = 1f;
+            ColorModifier = 1f;
+        }
+
+        public void ForceClick()
+        {
+            forcingClick = true;
+            if (mouseClicked != null)
+                cc_click();
         }
     }
 }

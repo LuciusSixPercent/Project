@@ -12,9 +12,7 @@ using System.IO;
 namespace game_states
 {
     public class PauseState : GameState
-    {
-        GameObjectsManager goManager;
-        
+    {        
         Button resumeGame;
         Button configMenu;
         Button titleScreen;
@@ -42,7 +40,6 @@ namespace game_states
             base.Initialize();
             enterTransitionDuration = 100;
             exitTransitionDuration = 200;
-            goManager = new GameObjectsManager(parent.GraphicsDevice);
 
             InitButtons();
 
@@ -142,7 +139,7 @@ namespace game_states
 
         public override void Draw(GameTime gameTime)
         {
-            goManager.Draw(gameTime);
+            base.Draw(gameTime);
         }
 
         public override void EnterState()

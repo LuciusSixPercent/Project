@@ -76,10 +76,6 @@ namespace game_objects.questions
         public override void ImediateTranslate(Vector3 amount)
         {
             base.ImediateTranslate(amount);
-            if (amount.X != 0)
-            {
-                int a = 0;
-            }
             boundingBox.Max += amount;
             boundingBox.Min += amount;
             Vector3 upAmount = Vector3.Zero;

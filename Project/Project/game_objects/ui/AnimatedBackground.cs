@@ -17,11 +17,6 @@ namespace game_objects.ui
         private int currentFrame;
         private string framesPath;
         private string basicFrameName;
-        private Renderer2D renderer2D;
-        private string p;
-        private string p_2;
-        private int p_3;
-        private int p_4;
 
         /// <summary>
         /// Cria um objeto com um número qualquer de frames que vão alternando de acordo com o tempo especificado.

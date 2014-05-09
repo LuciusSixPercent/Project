@@ -10,18 +10,26 @@ using game_objects.questions;
 
 namespace game_states
 {
+
+    enum SelectedCharacter
+    {
+        COSME,
+        MARIA
+    }
+
     public class CharSelectionState : GameState
     {
         private StatesIdList goToState;
         private AnimatedButton cosme;
         private AnimatedButton maria;
         private Button titleScreen;
+        private Button play;
         private bool buttonsEnabled;
-        private int elapsed;
 
         private QuestionSubject[] chosenSubjects;
         private int chosenLevel;
-        private string chosenChar;
+
+        private SelectedCharacter selected;
 
         public CharSelectionState(int id, Game1 parent)
             : base(id, parent)
@@ -38,43 +46,65 @@ namespace game_states
 
             Rectangle screen = parent.GraphicsDevice.Viewport.Bounds;
 
-            Rectangle bounds = new Rectangle(screen.Width / 2 - 250, screen.Height / 2 - 25, 200, 50);
-            cosme = new AnimatedButton(goManager.R2D, bounds, new int[] { 1, 6, 1, 10 }, new bool[] { false, true, false, false });
-            cosme.Text = "COSME";
-            cosme.BaseFileName = "testBtn";
+            Rectangle bounds = new Rectangle(screen.Width / 2 - 250, screen.Height / 2 - 25, 200, 250);
+            cosme = new AnimatedButton(goManager.R2D, bounds, new int[] { 1, 1, 1, 1 }, new bool[] { false, false, false, false });
+            cosme.UseText = false;
+            cosme.BaseFileName = "cosmeBtn";
             cosme.FilePath = "Menu" + Path.AltDirectorySeparatorChar + "Char_Selection" + Path.AltDirectorySeparatorChar;
             cosme.mouseClicked += new Button.MouseClicked(cosme_mouseClicked);
+            cosme.LockOnClick = true;
 
-            bounds = new Rectangle(screen.Width / 2 + 50, screen.Height / 2 - 25, 200, 50);
-            maria = new AnimatedButton(goManager.R2D, bounds, new int[] { 1, 6, 1, 10 }, new bool[] { false, true, false, false });
-            maria.Text = "MARIA";
-            maria.BaseFileName = "testBtn";
+            bounds = new Rectangle(screen.Width / 2 + 50, screen.Height / 2 - 25, 200, 250);
+            maria = new AnimatedButton(goManager.R2D, bounds, new int[] { 1, 1, 1, 1 }, new bool[] { false, false, false, false });
+            maria.UseText = false;
+            maria.BaseFileName = "mariaBtn";
             maria.FilePath = "Menu" + Path.AltDirectorySeparatorChar + "Char_Selection" + Path.AltDirectorySeparatorChar;
             maria.mouseClicked += new Button.MouseClicked(maria_mouseClicked);
+            maria.LockOnClick = true;
 
-            bounds = new Rectangle(screen.Width - 250, screen.Height - 100, 200, 50);
+            bounds = new Rectangle(10, 10, 200, 50);
             titleScreen = new Button(goManager.R2D, bounds);
             titleScreen.BaseFileName = "menu_inicial";
             titleScreen.FilePath = "Menu" + Path.AltDirectorySeparatorChar + "Pause" + Path.AltDirectorySeparatorChar;
             titleScreen.UseText = false;
             titleScreen.mouseClicked += new Button.MouseClicked(titleScreen_mouseClicked);
 
+            bounds = new Rectangle(screen.Width - 210, screen.Height-60, 200, 50);
+            play = new Button(goManager.R2D, bounds);
+            play.Text = "JOGAR";
+            play.HoverColor = Color.Orange;
+            play.PressColor = Color.DarkRed;
+            //play.BaseFileName = "menu_inicial";
+            //play.FilePath = "Menu" + Path.AltDirectorySeparatorChar + "Pause" + Path.AltDirectorySeparatorChar;
+            play.UseText = true;
+            play.mouseClicked += new Button.MouseClicked(play_mouseClicked);
+
             goManager.AddObject(cosme);
             goManager.AddObject(maria);
             goManager.AddObject(titleScreen);
+            goManager.AddObject(play);
 
-            chosenChar = "cosme";
             chosenLevel = 0;
             chosenSubjects = new QuestionSubject[] { QuestionSubject.PT };
+
+            DisableButtons();
+        }
+
+        void play_mouseClicked(Button btn)
+        {
+            if (parent.IsActive)
+            {
+                goToState = StatesIdList.RUNNER;
+            }
         }
 
         void maria_mouseClicked(Button btn)
         {
             if (parent.IsActive)
             {
-                goToState = StatesIdList.RUNNER;
-                chosenChar = "maria";
-                DisableButtons();
+                selected = SelectedCharacter.MARIA;
+                cosme.State = ButtonStates.NORMAL;
+                cosme.Clicked = false;
             }
         }
 
@@ -82,9 +112,9 @@ namespace game_states
         {
             if (parent.IsActive)
             {
-                goToState = StatesIdList.RUNNER;
-                chosenChar = "cosme";
-                DisableButtons();
+                selected = SelectedCharacter.COSME;
+                maria.State = ButtonStates.NORMAL;
+                maria.Clicked = false;
             }
         }
 
@@ -136,6 +166,9 @@ namespace game_states
             if (!exitingState)
             {
                 base.EnterState();
+
+                cosme.ForceClick();
+
                 LoadContent();
             }
         }
@@ -153,7 +186,7 @@ namespace game_states
                 {
                     RunnerState rs = (RunnerState)parent.getState((int)goToState);
                     rs.NumberOfQuestions = 1;
-                    rs.CharName = chosenChar;
+                    rs.CharName = selected.ToString().ToLower();
                     rs.Level = (RunnerLevel)chosenLevel;
                     rs.Subjects = chosenSubjects;
                 }
@@ -167,6 +200,7 @@ namespace game_states
         {
             buttonsEnabled = true;
             titleScreen.Enable();
+            play.Enable();
             cosme.Enable();
             maria.Enable();
         }
@@ -174,6 +208,7 @@ namespace game_states
         private void DisableButtons()
         {
             titleScreen.Disable();
+            play.Disable();
             cosme.Disable();
             maria.Disable();
             buttonsEnabled = false;

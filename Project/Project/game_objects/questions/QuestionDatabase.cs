@@ -53,10 +53,6 @@ namespace game_objects.questions
                                         }
 
                                         string modifier = "";
-                                        if (subject == QuestionSubject.MAT && difficulty == 1)
-                                        {
-                                            int a = 0;
-                                        }
                                         XAttribute xmlModifier = xmlAnswer.Attribute("modifier");
                                         if (xmlModifier != null)
                                         {

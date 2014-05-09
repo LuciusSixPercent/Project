@@ -63,14 +63,6 @@ namespace game_objects
             }
         }
 
-        public void AddDrawableObject(DrawableGameObject obj, DrawableGameObject reference)
-        {
-            gameObjects.Add(obj);
-            drawableGameObjects.Insert(drawableGameObjects.IndexOf(reference), (DrawableGameObject)obj);
-            if (obj is CollidableGameObject)
-                collidableGameObjects.Add((CollidableGameObject)obj);
-        }
-
         public void removeObject(GameObject obj)
         {
             toRemove.Add(obj);
