@@ -41,6 +41,8 @@ class ModoHistorinha
     Cue PlayerModoHistoria = null;
     int[] PosicoesDasRespostas;
     Random NumeroRandomico;
+    Texture2D CaixadeTexto;
+    Rectangle vCaixa;
     //teste
     bool venceu = false;
     int erro = 0;
@@ -143,10 +145,10 @@ class ModoHistorinha
         res2 = alt1;
         res3 = alt2;
         res4 = alt3;
-        Calt0 = Color.White;
-        Calt1 = Color.White;
-        Calt2 = Color.White;
-        Calt3 = Color.White;
+        Calt0 = Color.Black;
+        Calt1 = Color.Black;
+        Calt2 = Color.Black;
+        Calt3 = Color.Black;
         NumeroRandomico = new Random();
         Ini(c, NumeroRandomico, n);
     }
@@ -400,7 +402,8 @@ class ModoHistorinha
         //spriteBatch.Draw(PersonagemEmCena, VPersonagens, Color.White);
         if (indice < pergunta.Length) { texto += pergunta[indice]; }
         indice = indice + (indice < pergunta.Length ? 1 : 0);
-        spriteBatch.DrawString(arial, texto, Vpergunta, Color.Red);
+        spriteBatch.Draw(CaixadeTexto, vCaixa, Color.White);
+        spriteBatch.DrawString(arial, texto, Vpergunta, Color.White);
         for (int respotas = 0; respotas < NoDeRespostas; respotas++)
         {
             spriteBatch.Draw(OpcoeSprite, respotas == 3 ? VOpcoes4 : respotas == 2 ? VOpcoes3 : respotas == 1 ? VOpcoes2 : VOpcoes1, respotas == 3 ? Calt3 : respotas == 2 ? Calt2 : respotas == 1 ? Calt1 : Calt0);
@@ -409,8 +412,8 @@ class ModoHistorinha
         switch (NoDeRespostas)
         {
             case 2:
-                spriteBatch.DrawString(arial, res1, Valt0, Calt0);
-                spriteBatch.DrawString(arial, res2, Valt1, Calt1);
+                spriteBatch.DrawString(arial, res1, Valt0, Color.Black);
+                spriteBatch.DrawString(arial, res2, Valt1, Color.Black);
                 break;
             case 3:
                 spriteBatch.DrawString(arial, res1, Valt0, Calt0);
@@ -445,7 +448,8 @@ class ModoHistorinha
     {
         numerosPegos = new int[4];
         OpcoeSprite = Content.Load<Texture2D>("Imagem/Sprites/op");
-        PosicoesDasRespostas = new int[4] { 230, 350, 470, 590 };
+        CaixadeTexto = Content.Load<Texture2D>("Imagem/Caixa_texto");
+        PosicoesDasRespostas = new int[4] { 230, 400, 570, 740 };
         for (int j = 0; j < quantidade; j++)
         {
             if (j != 0)
@@ -489,16 +493,17 @@ class ModoHistorinha
             }
 
         }
-
-        VOpcoes1 = new Rectangle(PosicoesDasRespostas[numerosPegos[0]], 200, 100, 200);
+        
+        VOpcoes1 = new Rectangle(PosicoesDasRespostas[numerosPegos[0]], 200, OpcoeSprite.Width/4, OpcoeSprite.Height/4);
         VOpcoes2 = new Rectangle(PosicoesDasRespostas[numerosPegos[1]], 200, VOpcoes1.Width, VOpcoes1.Height);
         VOpcoes3 = new Rectangle(PosicoesDasRespostas[numerosPegos[2]], 200, VOpcoes1.Width, VOpcoes1.Height);
         VOpcoes4 = new Rectangle(PosicoesDasRespostas[numerosPegos[3]], 200, VOpcoes1.Width, VOpcoes1.Height);
-        Valt0 = new Vector2(VOpcoes1.X, VOpcoes1.Y + 20);
+        Valt0 = new Vector2(VOpcoes1.Left, VOpcoes1.Location.Y);
         Valt1 = new Vector2(VOpcoes2.X, VOpcoes2.Y + 20);
         Valt2 = new Vector2(VOpcoes3.X, VOpcoes3.Y + 20);
         Valt3 = new Vector2(VOpcoes4.X, VOpcoes4.Y + 20);
-        Vpergunta = new Vector2(10, 100);
+        Vpergunta = new Vector2(20, 20);
+        vCaixa = new Rectangle(0, 0, CaixadeTexto.Width, CaixadeTexto.Height);
     }
 }
 

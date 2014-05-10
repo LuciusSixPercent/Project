@@ -105,11 +105,11 @@ using Microsoft.Xna.Framework.Audio;
                 rcMedidor = new Rectangle(rcbarra.X + rcbarra.Width, rcbarra.Y - Medidor.Height/2, Medidor.Width*3, Medidor.Height);
                 menus = new Vector2[5] { new Vector2(rcmenu1.X-50, rcmenu1.Y-50), new Vector2(rcmenu2.X-50, rcmenu2.Y-50), new Vector2(rcmenu3.X-50, rcmenu3.Y-50), new Vector2(rcmenu5.X-50, rcmenu5.Y-50), new Vector2(rcmenu6.X-50, rcmenu6.Y-50) };
                 rcSeta = new Rectangle((int)menus[escolha].X, (int)menus[escolha].Y, seta.Width, seta.Height);
-                vBTAvancar = new Rectangle(800, 500, BTAvancar[indiceBTavancar].Width / 6, BTAvancar[indiceBTavancar].Height / 6);
-                vBTVoltar = new Rectangle(150, 500, BTVoltar[indiceBTvoltar].Width / 6, BTVoltar[indiceBTvoltar].Height / 6);
+                vBTAvancar = new Rectangle(800, 500, BTAvancar[indiceBTavancar].Width / 3, BTAvancar[indiceBTavancar].Height / 3);
+                vBTVoltar = new Rectangle(150, 500, BTVoltar[indiceBTvoltar].Width / 3, BTVoltar[indiceBTvoltar].Height / 3);
                 vVaral = new Rectangle(0, 0, 1024, Varal.Height);
                 vVaral2 = new Rectangle(1024, 0, 1024, Varal.Height);
-                vSelecaoEpisodio1 = new Rectangle(300, 130, SelecaoEpisodio1.Width, SelecaoEpisodio1.Height);
+                vSelecaoEpisodio1 = new Rectangle(300, 60, SelecaoEpisodio1.Width, SelecaoEpisodio1.Height);
                 #endregion
                 //resto da inicialização
             }

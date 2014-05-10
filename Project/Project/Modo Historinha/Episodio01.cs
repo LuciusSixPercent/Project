@@ -302,12 +302,12 @@ class Episodio01 : GameState
             ButtonColor = Color.White;
             VoltarBool = false;
             Voltar = new Texture2D[2] { VoltarNormal, VoltarOver };
-            vVoltar = new Rectangle(0, 700, Voltar[VoltarIndice].Width / 7, Voltar[VoltarIndice].Height / 7);
+            vVoltar = new Rectangle(0, 700, Voltar[VoltarIndice].Width/3, Voltar[VoltarIndice].Height/3);
             audioEngine2 = new AudioEngine("Content\\Audio\\MyGameAudio2.xgs");
             waveBank2 = new WaveBank(audioEngine2, "Content\\Audio\\Wave Bank2.xwb");
             soundBank2 = new SoundBank(audioEngine2, "Content\\Audio\\Sound Bank2.xsb");
             // Vetores
-            vCaixa = new Rectangle(20, 600, CaixadeTexto.Width + 100, CaixadeTexto.Height + 50);
+            vCaixa = new Rectangle(20, 600, CaixadeTexto.Width, CaixadeTexto.Height);
             posicaoText = new Vector2(vCaixa.X+20, vCaixa.Y+20);
 
             //Dialogos
@@ -371,7 +371,7 @@ class Episodio01 : GameState
             Cachorro = CachorroSentado[Frame];
             Cenario = new Texture2D[4] { CenarioInterior, CenarioExterior, CenarioRio, CenarioCampo };
             BtAvancar = new Texture2D[2] { BtAvancarN, BtAvancarH };
-            vBtAvancar = new Rectangle(950, 700, BtAvancar[indiceDoAvancar].Width / 6, BtAvancar[indiceDoAvancar].Height / 6);
+            vBtAvancar = new Rectangle(950, 700, BtAvancar[indiceDoAvancar].Width/3, BtAvancar[indiceDoAvancar].Height/3);
             rcCenario = new Rectangle(0, 0, 1024, 768);
             vMaria = new Vector2(400, 400);
             vCosme = new Vector2(300, 400);
