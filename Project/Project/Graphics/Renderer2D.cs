@@ -93,7 +93,7 @@ namespace game_objects
             }
         }
 
-        internal void DrawString(string text, Vector2 position, Color color, int rotation, Vector2 vector2, float scale)
+        internal void DrawString(string text, Vector2 position, Color color, int rotation, Vector2 origin, float scale)
         {
             if (!beganSpriteBatch)
             {
@@ -101,7 +101,7 @@ namespace game_objects
             }
             if (beganSpriteBatch)
             {
-                spriteBatch.DrawString(TextHelper.SpriteFont, text, position, color * Alpha, rotation, Vector2.Zero, scale, SpriteEffects.None, 0f);
+                spriteBatch.DrawString(TextHelper.SpriteFont, text, position, color * Alpha, rotation, origin, scale, SpriteEffects.None, 0f);
             }
         }
     }

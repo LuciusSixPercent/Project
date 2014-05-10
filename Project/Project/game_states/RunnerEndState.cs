@@ -156,7 +156,7 @@ namespace game_states
                 txt = "Hmmm, dessa vez não deu. Que tal tentar de novo?";
             }
 
-
+            txt += "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur aliquam lorem et libero lobortis accumsan. Aenean sodales imperdiet libero in malesuada.";
             results.Text = txt;
         }
 

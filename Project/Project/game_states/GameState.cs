@@ -42,6 +42,8 @@ namespace game_states
 
         protected bool contentLoaded;
 
+        private bool justEnteredState;
+
         public bool ContentLoaded
         {
             get { return contentLoaded; }
@@ -107,6 +109,7 @@ namespace game_states
         public virtual void EnterState()
         {
             enteringState = true;
+            justEnteredState = true;
             exit = false;
             alphaIncrement = (float)1 / (enterTransitionDuration == 0 ? 1 : enterTransitionDuration);
         }
@@ -160,8 +163,9 @@ namespace game_states
                 if (Alpha < 0) Alpha = 0;
                 else if (Alpha > 1) Alpha = 1;
             }
-            if (stateEntered)
+            if (stateEntered || justEnteredState)
             {
+                justEnteredState = false;
                 goManager.Update(gameTime);
             }
         }

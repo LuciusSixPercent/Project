@@ -1818,63 +1818,123 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Menu\Char_Selection\easyBtnC.png">
+    <Compile Include="Menu\Char_Selection\difficulty\easyBtnC.png">
       <Name>easyBtnC</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Menu\Char_Selection\easyBtnH.png">
+    <Compile Include="Menu\Char_Selection\difficulty\easyBtnH.png">
       <Name>easyBtnH</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Menu\Char_Selection\easyBtnN.png">
+    <Compile Include="Menu\Char_Selection\difficulty\easyBtnN.png">
       <Name>easyBtnN</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Menu\Char_Selection\easyBtnP.png">
+    <Compile Include="Menu\Char_Selection\difficulty\easyBtnP.png">
       <Name>easyBtnP</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Menu\Char_Selection\mediumBtnH.png">
+    <Compile Include="Menu\Char_Selection\difficulty\mediumBtnH.png">
       <Name>mediumBtnH</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Menu\Char_Selection\mediumBtnN.png">
+    <Compile Include="Menu\Char_Selection\difficulty\mediumBtnN.png">
       <Name>mediumBtnN</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Menu\Char_Selection\mediumBtnP.png">
+    <Compile Include="Menu\Char_Selection\difficulty\mediumBtnP.png">
       <Name>mediumBtnP</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Menu\Char_Selection\mediumBtnC.png">
+    <Compile Include="Menu\Char_Selection\difficulty\mediumBtnC.png">
       <Name>mediumBtnC</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Menu\Char_Selection\hardBtnH.png">
+    <Compile Include="Menu\Char_Selection\difficulty\hardBtnH.png">
       <Name>hardBtnH</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Menu\Char_Selection\hardBtnN.png">
+    <Compile Include="Menu\Char_Selection\difficulty\hardBtnN.png">
       <Name>hardBtnN</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Menu\Char_Selection\hardBtnP.png">
+    <Compile Include="Menu\Char_Selection\difficulty\hardBtnP.png">
       <Name>hardBtnP</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Menu\Char_Selection\hardBtnC.png">
+    <Compile Include="Menu\Char_Selection\difficulty\hardBtnC.png">
       <Name>hardBtnC</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\subjects\mathBtnC.png">
+      <Name>mathBtnC</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\subjects\mathBtnH.png">
+      <Name>mathBtnH</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\subjects\mathBtnN.png">
+      <Name>mathBtnN</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\subjects\mathBtnP.png">
+      <Name>mathBtnP</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\subjects\ptBtnC.png">
+      <Name>ptBtnC</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\subjects\ptBtnH.png">
+      <Name>ptBtnH</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\subjects\ptBtnN.png">
+      <Name>ptBtnN</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\subjects\ptBtnP.png">
+      <Name>ptBtnP</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\subjects\ptMathBtnC.png">
+      <Name>ptMathBtnC</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\subjects\ptMathBtnH.png">
+      <Name>ptMathBtnH</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\subjects\ptMathBtnN.png">
+      <Name>ptMathBtnN</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\subjects\ptMathBtnP.png">
+      <Name>ptMathBtnP</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
