@@ -11,18 +11,21 @@ using System.IO;
 
 namespace game_objects.ui
 {
-    public class Button : Simple2DGameObject
+    public class Button : Scalable2DGameObject
     {
         protected Texture2D[] textures;
+        private string[] texturesFileName;
 
         private ButtonStates state;
 
         private string text;
         private bool useText;
+        private int fontSize;
+        private float fontScale;
+
         private Color defaultColor;
         private Color hoverColor;
         private Color pressColor;
-
         private Vector2 textPosition;
 
         private bool enabled;
@@ -33,21 +36,7 @@ namespace game_objects.ui
         private string filePath;
         private string baseFileName;
         private bool forcingClick;
-        private bool clicked;
-        private bool lockOnClick;
 
-        public bool Clicked
-        {
-            get { return clicked; }
-            set { clicked = value; }
-        }
-
-        public bool LockOnClick
-        {
-            get { return lockOnClick; }
-            set { lockOnClick = value; }
-        }
-        
         public bool Enabled
         {
             get { return enabled; }
@@ -75,6 +64,16 @@ namespace game_objects.ui
         {
             get { return textPosition; }
             set { textPosition = value; }
+        }
+
+        public int FontSize
+        {
+            get { return fontSize; }
+            set
+            {
+                fontSize = value;
+                this.fontScale = ((float)fontSize / TextHelper.FontSize);
+            }
         }
 
         /// <summary>
@@ -133,10 +132,12 @@ namespace game_objects.ui
             this.useText = true;
             this.Visible = true;
             this.enabled = true;
+            this.FontSize = 20;
+            this.textures = new Texture2D[3];
             ColorModifier = 1f;
         }
 
-        protected void cc_hover(bool hovering)
+        protected virtual void cc_hover(bool hovering)
         {
             if (!enabled) return;
             if (hovering)
@@ -154,7 +155,7 @@ namespace game_objects.ui
             }
         }
 
-        protected void cc_release()
+        protected virtual void cc_release()
         {
             if (state != ButtonStates.HOVERING)
             {
@@ -163,7 +164,7 @@ namespace game_objects.ui
             }
         }
 
-        protected void cc_press()
+        protected virtual void cc_press()
         {
             if (enabled)
             {
@@ -172,12 +173,12 @@ namespace game_objects.ui
             }
         }
 
-        protected void cc_exit()
+        protected virtual void cc_exit()
         {
 
         }
 
-        protected void cc_enter()
+        protected virtual void cc_enter()
         {
         }
 
@@ -185,7 +186,6 @@ namespace game_objects.ui
         {
             if (CanClick())
             {
-                Clicked = true;
                 mouseClicked(this);
             }
         }
@@ -197,9 +197,6 @@ namespace game_objects.ui
 
         public override void Update(GameTime gameTime)
         {
-            if (!lockOnClick && Clicked)
-                Clicked = false;
-
             base.Update(gameTime);
 
             texture = textures[(int)state];
@@ -210,7 +207,6 @@ namespace game_objects.ui
             if (Visible)
             {
                 base.Draw(gameTime);
-                //((Renderer2D)Renderer).Draw(textures[(int)state], Bounds, Color * ColorModifier, BlendState.AlphaBlend);
                 DrawText(gameTime);
             }
         }
@@ -219,7 +215,7 @@ namespace game_objects.ui
         {
             if (!String.IsNullOrEmpty(text) && UseText)
             {                
-                ((Renderer2D)Renderer).DrawString(text, textPosition, Color * ColorModifier);
+                ((Renderer2D)Renderer).DrawString(text, textPosition, Color * ColorModifier, 0, Vector2.Zero, fontScale);
             }
         }
 
@@ -229,15 +225,30 @@ namespace game_objects.ui
             {
                 filePath = "Menu" + Path.AltDirectorySeparatorChar;
             }
-            this.textures = new Texture2D[4];
             if (!string.IsNullOrEmpty(baseFileName))
             {
-                textures[0] = cManager.Load<Texture2D>(filePath + baseFileName + "N");
-                textures[1] = cManager.Load<Texture2D>(filePath + baseFileName + "H");
-                textures[2] = cManager.Load<Texture2D>(filePath + baseFileName + "P");
-                textures[3] = textures[2];
+                textures[0] = GetTexture(filePath + baseFileName + "N", cManager);
+                textures[1] = GetTexture(filePath + baseFileName + "H", cManager);
+                textures[2] = GetTexture(filePath + baseFileName + "P", cManager);
+
+                texture = textures[0];
             }
             CenterText();
+        }
+
+        protected Texture2D GetTexture(string fullPath, ContentManager cManager)
+        {
+            Texture2D tex = null;
+
+            try
+            {
+                tex = cManager.Load<Texture2D>(fullPath);
+            }
+            catch (FileNotFoundException ex)
+            {
+            }
+
+            return tex;
         }
 
         /// <summary>
@@ -249,9 +260,12 @@ namespace game_objects.ui
             {
                 Vector2 textSize = TextHelper.SpriteFont.MeasureString(text);
                 float scale = 1;
-                if (textSize.X > Bounds.Width) //texto só mudará de escala caso seja maior que o botão
-                    scale = (float)Bounds.Width / textSize.X;
-                textPosition = new Vector2(Bounds.X + (Bounds.Width - textSize.X * scale) / 2, Bounds.Y + (Bounds.Height - textSize.Y * scale) / 2);
+                if (textSize.X * fontScale > Width) //texto só mudará de escala caso seja maior que o botão
+                {
+                    scale = Width / (textSize.X * fontScale);
+                    fontScale = scale;
+                }
+                textPosition = new Vector2(X + (Width - textSize.X * fontScale) / 2, Y + (Height - textSize.Y * fontScale) / 2);
             }
         }
 

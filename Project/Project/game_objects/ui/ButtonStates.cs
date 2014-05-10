@@ -12,6 +12,7 @@ namespace game_objects.ui
     {
         NORMAL,
         HOVERING,
-        PRESSING
+        PRESSING,
+        TOGGLED
     }
 }

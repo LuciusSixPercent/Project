@@ -112,7 +112,7 @@ namespace game_objects
 
             this.name = name;
 
-            framesRunning = new Texture2D[9];
+            framesRunning = new Texture2D[10];
 
             framesKicking = new Texture2D[7];
 
@@ -228,8 +228,7 @@ namespace game_objects
 
             framesJumping = LoadFrames(cManager, framesJumping.Length, "_pulando");
 
-            //framesSad = LoadFrames(cManager, framesJumping.Length, "_triste");
-            framesSad = LoadFrames(cManager, framesJumping.Length, "_chutando");
+            framesSad = LoadFrames(cManager, framesJumping.Length, "_triste");
 
             Reset();
         }
@@ -389,7 +388,7 @@ namespace game_objects
             }
 
             ball.Position = ball.Position * (Vector3.UnitX + Vector3.UnitZ);
-            ball.Kick2(new Vector3(0, 0.4f, 0.3f) + kickDeviation, new Vector3(0, -0.05f, -0.0005f), Vector3.Zero);
+            ball.Kick2(new Vector3(0, 0.4f, 0.3f) + kickDeviation, new Vector3(-kickDeviation.X/100, -0.05f, -0.0005f), Vector3.Zero);
         }
 
         public void PlayEnding()

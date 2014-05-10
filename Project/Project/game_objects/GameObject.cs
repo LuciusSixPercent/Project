@@ -21,16 +21,52 @@ namespace game_objects
             set { dimensions = value; }
         }
 
+        public virtual float Width
+        {
+            get { return dimensions.X; }
+            set { dimensions.X = value; }
+        }
+
+        public virtual float Height
+        {
+            get { return dimensions.Y; }
+            set { dimensions.Y = value; }
+        }
+
+        public virtual float Depth
+        {
+            get { return dimensions.Z; }
+            set { dimensions.Z = value; }
+        }
+
         public virtual Vector3 Position
         {
             get { return position; }
             set { position = value; }
         }
 
+        public virtual float X
+        {
+            get { return position.X; }
+            set { position.X = value; }
+        }
+
+        public virtual float Y
+        {
+            get { return position.Y; }
+            set { position.Y = value; }
+        }
+
+        public virtual float Z
+        {
+            get { return position.Z; }
+            set { position.Z = value; }
+        }
+
         public T GetComponent<T>()
         {
             Component comp = null;
-            foreach(Component c in components)
+            foreach (Component c in components)
                 if (c is T)
                 {
                     comp = c;

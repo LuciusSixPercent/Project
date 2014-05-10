@@ -180,7 +180,8 @@ namespace game_states
 
         public virtual void Draw(GameTime gameTime)
         {
-            goManager.Draw(gameTime);
+            if(ContentLoaded)
+                goManager.Draw(gameTime);
         }
     }
 }

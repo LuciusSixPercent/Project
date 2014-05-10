@@ -15,7 +15,7 @@ using game_objects.ui;
 
 namespace game_states
 {
-    class RunnerState : GameState
+    public class RunnerState : GameState
     {
         #region Variables Declaration
         private RunnerLevel level;
@@ -52,18 +52,46 @@ namespace game_states
         private bool shouldWait;
         //WAVE - Musica de fundo
         Cue engineSound = null;
+
+        private bool shouldReset;
         #endregion
 
-        private int NumberOfAnswers
+        public bool ShouldReset
+        {
+            get { return shouldReset; }
+            set { shouldReset = value; }
+        }
+
+        public int Score
+        {
+            get { return score; }
+        }
+
+        public int PerfectSscoreMultiplier
+        {
+            get { return perfectSscoreMultiplier; }
+        }
+
+        public int NumberOfAnswers
         {
             get { return progress.Total; }
             set { progress.Total = value; }
         }
 
-        private int AnswersGot
+        public int AnswersGot
         {
             get { return progress.Loaded; }
             set { progress.AddProgress(1); }
+        }
+
+        public int MistakesMade
+        {
+            get { return mistakesMade; }
+        }
+
+        public int AllowedMistakes
+        {
+            get { return maxAllowedMistakes; }
         }
 
         public string CharName
@@ -235,7 +263,7 @@ namespace game_states
                 }
                 else
                 {
-                    Reset();
+                    shouldReset = true;
                     contentLoaded = true;
                 }
             }
@@ -251,6 +279,7 @@ namespace game_states
             finished = false;
             answeredAll = false;
             shouldWait = true;
+            shouldReset = false;
 
             player.Reset();
             progress.Reset();
@@ -291,10 +320,6 @@ namespace game_states
         {
             if (!exitingState)
             {
-                if (exit && ContentLoaded)
-                {
-                    Reset();
-                }
                 base.EnterState();
                 if (!ContentLoaded)
                 {
@@ -314,6 +339,7 @@ namespace game_states
             else
             {
                 parent.ExitState(ID);
+                shouldReset = true;
             }
         }
         #endregion
@@ -322,62 +348,68 @@ namespace game_states
         {
             if (ContentLoaded)
             {
-                if (shouldWait && Alpha >= 0.5f)
+                if (shouldReset)
                 {
-                    shouldWait = false;
-                    parent.EnterState((int)StatesIdList.RUNNER_WAIT);
+                    Reset();
                 }
                 else
                 {
-                    if (stateEntered)
+                    base.Update(gameTime);
+                    if (shouldWait && Alpha >= 0.5f)
                     {
-                        if (!exitingState && !finished)
+                        shouldWait = false;
+                        parent.EnterState((int)StatesIdList.RUNNER_WAIT);
+                    }
+                    else
+                    {
+                        if (stateEntered)
                         {
-
-                            if (!progress.Visible)
+                            if (!exitingState && !finished)
                             {
-                                progress.Visible = true;
-                            }
 
-                            PlayBGM();
-                            CheckAnswer();
-                            if (answeredAll)
-                            {
-                                field.KeepMoving = false;
-                                if (player.KeepMoving)
+                                if (!progress.Visible)
                                 {
-                                    if (field.Goal.Position.Z - player.Position.Z <= 8)
+                                    progress.Visible = true;
+                                }
+
+                                PlayBGM();
+                                CheckAnswer();
+                                if (answeredAll)
+                                {
+                                    field.KeepMoving = false;
+                                    if (player.KeepMoving)
                                     {
-                                        player.KickBall(mistakesMade < maxAllowedMistakes, field.Goal.Position);
-                                        cam.KeepMoving = false;
+                                        if (field.Goal.Position.Z - player.Position.Z <= 8)
+                                        {
+                                            player.KickBall(MistakesMade < maxAllowedMistakes, field.Goal.Position);
+                                            cam.KeepMoving = false;
+                                        }
+                                    }
+                                    else if (!player.PlayingEnding)
+                                    {
+                                        if (!ball.Bouncing && !player.KickingBall)
+                                        {
+                                            player.PlayEnding();
+                                        }
+                                    }
+                                    else if (player.FinishedEnding)
+                                    {
+                                        finished = true;
+                                        Alpha = 0.5f;
+                                        parent.EnterState((int)StatesIdList.RUNNER_END);
                                     }
                                 }
-                                else if (!player.PlayingEnding)
-                                {
-                                    if (!ball.Bouncing && !player.KickingBall)
-                                    {
-                                        player.PlayEnding();
-                                    }
-                                }
-                                else if (player.FinishedEnding)
-                                {
-                                    finished = true;
-                                    //ExitState();
-                                    parent.EnterState((int)StatesIdList.RUNNER_END);
-                                }
-                            }
 
-                            handleInput();
+                                handleInput();
+                            }
+                        }
+                        else if (exit)
+                        {
+                            engineSound.Stop(AudioStopOptions.AsAuthored);
+                            ExitState();
                         }
                     }
-                    else if (exit)
-                    {
-                        engineSound.Stop(AudioStopOptions.AsAuthored);
-                        ExitState();
-                    }
                 }
-
-                base.Update(gameTime);
             }
         }
 
@@ -403,7 +435,7 @@ namespace game_states
         /// </summary>
         private void CheckAnswer()
         {
-            if (mistakesMade < maxAllowedMistakes)
+            if (MistakesMade < maxAllowedMistakes)
             {
                 if (foundAnswer != 0)
                 {
@@ -537,7 +569,7 @@ namespace game_states
             c *= 0.9f;
             goManager.R2D.DrawString(s, new Vector2(screen.Width - TextHelper.SpriteFont.MeasureString(s).X * scale, 120), c, 0, Vector2.Zero, scale);
 
-            s = "Erros: " + mistakesMade;
+            s = "Erros: " + MistakesMade;
             c *= 0.9f;
             goManager.R2D.DrawString(s, new Vector2(screen.Width - TextHelper.SpriteFont.MeasureString(s).X * scale, 150), c, 0, Vector2.Zero, scale);
 
@@ -568,7 +600,7 @@ namespace game_states
             c *= 0.9f;
             goManager.R2D.DrawString(s, new Vector2(screen.Width - TextHelper.SpriteFont.MeasureString(s).X * scale - 1, 121), c, 0, Vector2.Zero, scale);
 
-            s = "Erros: " + mistakesMade;
+            s = "Erros: " + MistakesMade;
             c *= 0.9f;
             goManager.R2D.DrawString(s, new Vector2(screen.Width - TextHelper.SpriteFont.MeasureString(s).X * scale - 1, 151), c, 0, Vector2.Zero, scale);
 

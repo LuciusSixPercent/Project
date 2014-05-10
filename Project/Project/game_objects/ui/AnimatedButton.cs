@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace game_objects.ui
 {
-    public class AnimatedButton : Button
+    public class AnimatedButton : ToggleButton
     {
         private int animationCycleStart;
         private int currentFrame;
@@ -44,30 +44,28 @@ namespace game_objects.ui
                 throw new ArgumentException("framesPerState necessita ter o mesmo número de elementos que loopStates");
             this.framesPerState = framesPerState;
             this.loopStates = loopStates;
-            lastState = State;
-        }
 
-        protected override void cc_click()
-        {
-            if (CanClick())
-            {
-                if (Clicked)
-                {
-                    Clicked = true;
-                    ResetCycleStart(framesPerState.Length - 1);
-                }
-                base.cc_click();                
-            }
-        }
-
-        public override void Load(ContentManager cManager)
-        {
             int totalFrames = 0;
             foreach (int frames in framesPerState)
             {
                 totalFrames += frames;
             }
             textures = new Texture2D[totalFrames];
+
+            lastState = State;
+        }
+
+        protected override void cc_click()
+        {
+            if (CanClick() && State != ButtonStates.TOGGLED)
+            {
+                ResetCycleStart(framesPerState.Length - 1);
+                base.cc_click();                
+            }
+        }
+
+        public override void Load(ContentManager cManager)
+        {
             string[] suffixes = new string[] { "N", "H", "P", "C" };
             int suffixIndex = 0;
             int frameIndex = 0;
@@ -75,7 +73,9 @@ namespace game_objects.ui
             {
                 for (int i = 0; i < frames; i++)
                 {
-                    textures[frameIndex] = cManager.Load<Texture2D>(FilePath + BaseFileName + suffixes[suffixIndex] + (i + 1));
+                    string fullPath = FilePath + BaseFileName + suffixes[suffixIndex];
+                    if (i > 0) fullPath += i;
+                    textures[frameIndex] = cManager.Load<Texture2D>(fullPath);
                     frameIndex++;
                 }
                 suffixIndex++;
@@ -97,11 +97,11 @@ namespace game_objects.ui
                 if (Enabled || !finishedAnimation)
                 {
                     elapsed = 0;
-                    if (lastState.Equals(State) || Clicked)
+                    if (lastState.Equals(State))
                     {
                         UpdateCurrentFrame();
                     }
-                    else if(!Clicked)
+                    else
                     {
                         lastState = State;
                         ResetCycleStart((int)State);
@@ -119,7 +119,7 @@ namespace game_objects.ui
         {
             currentFrame++;
             finishedAnimation = false;
-            int index = Clicked? framesPerState.Length-1 : (int)State;
+            int index = (int)State;
 
             if (currentFrame >= framesPerState[index] + animationCycleStart)
             {
@@ -131,14 +131,14 @@ namespace game_objects.ui
                 }
                 else
                 {
-                    if (Clicked)
+                    if (State == ButtonStates.TOGGLED)
                     {
                         
                         int i = 3;
-                        if (!LockOnClick)
+                        if (!LockToggleState)
                         {
+                            State = ButtonStates.NORMAL;
                             i = (int)State;
-                            Clicked = false;
                         }
                         ResetCycleStart(i);
                     }

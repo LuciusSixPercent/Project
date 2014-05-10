@@ -122,7 +122,7 @@
     <Compile Include="game_objects\Prop.cs" />
     <Compile Include="game_objects\PropType.cs" />
     <Compile Include="game_objects\questions\AnswerFactory.cs" />
-    <Compile Include="game_objects\Simple2DGameObject.cs" />
+    <Compile Include="game_objects\Scalable2DGameObject.cs" />
     <Compile Include="game_objects\ui\AnimatedBackground.cs" />
     <Compile Include="game_objects\ui\AnimatedButton.cs" />
     <Compile Include="game_objects\ui\Button.cs" />
@@ -144,6 +144,7 @@
     <Compile Include="game_objects\ui\ButtonStates.cs" />
     <Compile Include="game_objects\ui\ProgressBar.cs" />
     <Compile Include="game_objects\ui\TextBox.cs" />
+    <Compile Include="game_objects\ui\ToggleButton.cs" />
     <Compile Include="game_states\CharSelectionState.cs" />
     <Compile Include="game_states\ConfigMenuState.cs" />
     <Compile Include="game_states\LoadingState.cs" />

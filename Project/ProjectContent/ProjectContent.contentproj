@@ -671,13 +671,6 @@
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
     </Compile>
-    <Compile Include="Imagem\Sprites\4.png">
-      <Name>4</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <ProcessorParameters_ColorKeyEnabled>False</ProcessorParameters_ColorKeyEnabled>
-      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
-    </Compile>
     <Compile Include="Imagem\Cenario\Campinho.png">
       <Name>Campinho</Name>
       <Importer>TextureImporter</Importer>
@@ -1615,6 +1608,8 @@
     </Compile>
     <Compile Include="Imagem\ui\progress_bar\bar.png">
       <Name>bar</Name>
+      <Processor>TextureProcessor</Processor>
+      <Importer>TextureImporter</Importer>
     </Compile>
     <Compile Include="Imagem\Botao_Avancar_Sel.png">
       <Name>Botao_Avancar_Sel</Name>
@@ -1713,43 +1708,43 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Menu\Char_Selection\cosmeBtnC1.png">
-      <Name>cosmeBtnC1</Name>
+    <Compile Include="Menu\Char_Selection\cosmeBtnC.png">
+      <Name>cosmeBtnC</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Menu\Char_Selection\cosmeBtnH1.png">
-      <Name>cosmeBtnH1</Name>
+    <Compile Include="Menu\Char_Selection\cosmeBtnH.png">
+      <Name>cosmeBtnH</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Menu\Char_Selection\cosmeBtnN1.png">
-      <Name>cosmeBtnN1</Name>
+    <Compile Include="Menu\Char_Selection\cosmeBtnN.png">
+      <Name>cosmeBtnN</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Menu\Char_Selection\cosmeBtnP1.png">
-      <Name>cosmeBtnP1</Name>
+    <Compile Include="Menu\Char_Selection\cosmeBtnP.png">
+      <Name>cosmeBtnP</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Menu\Char_Selection\mariaBtnC1.png">
-      <Name>mariaBtnC1</Name>
+    <Compile Include="Menu\Char_Selection\mariaBtnC.png">
+      <Name>mariaBtnC</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Menu\Char_Selection\mariaBtnH1.png">
-      <Name>mariaBtnH1</Name>
+    <Compile Include="Menu\Char_Selection\mariaBtnH.png">
+      <Name>mariaBtnH</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Menu\Char_Selection\mariaBtnN1.png">
-      <Name>mariaBtnN1</Name>
+    <Compile Include="Menu\Char_Selection\mariaBtnN.png">
+      <Name>mariaBtnN</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Menu\Char_Selection\mariaBtnP1.png">
-      <Name>mariaBtnP1</Name>
+    <Compile Include="Menu\Char_Selection\mariaBtnP.png">
+      <Name>mariaBtnP</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -1775,6 +1770,113 @@
     </Compile>
     <Compile Include="Menu\SelecaoEpiso\varal.png">
       <Name>varal</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Imagem\Personagem\cosme\cosme_triste\1.png">
+      <Name>1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
+    </Compile>
+    <Compile Include="Imagem\Personagem\cosme\cosme_triste\2.png">
+      <Name>2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
+    </Compile>
+    <Compile Include="Imagem\Personagem\cosme\cosme_triste\3.png">
+      <Name>3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
+    </Compile>
+    <Compile Include="Imagem\Personagem\cosme\cosme_triste\4.png">
+      <Name>4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
+    </Compile>
+    <Compile Include="Imagem\Personagem\cosme\cosme_triste\5.png">
+      <Name>5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
+    </Compile>
+    <Compile Include="Imagem\Personagem\cosme\cosme_triste\6.png">
+      <Name>6</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
+    </Compile>
+    <Compile Include="Imagem\Personagem\cosme\cosme_triste\7.png">
+      <Name>7</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
+    </Compile>
+    <Compile Include="Imagem\Personagem\cosme\cosme_correndo\10.png">
+      <Name>10</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\easyBtnC.png">
+      <Name>easyBtnC</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\easyBtnH.png">
+      <Name>easyBtnH</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\easyBtnN.png">
+      <Name>easyBtnN</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\easyBtnP.png">
+      <Name>easyBtnP</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\mediumBtnH.png">
+      <Name>mediumBtnH</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\mediumBtnN.png">
+      <Name>mediumBtnN</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\mediumBtnP.png">
+      <Name>mediumBtnP</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\mediumBtnC.png">
+      <Name>mediumBtnC</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\hardBtnH.png">
+      <Name>hardBtnH</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\hardBtnN.png">
+      <Name>hardBtnN</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\hardBtnP.png">
+      <Name>hardBtnP</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\hardBtnC.png">
+      <Name>hardBtnC</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

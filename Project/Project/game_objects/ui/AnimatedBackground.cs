@@ -9,14 +9,12 @@ using System.IO;
 
 namespace game_objects.ui
 {
-    public class AnimatedBackground : DrawableGameObject
+    public class AnimatedBackground : Scalable2DGameObject
     {
         private Texture2D[] frames;
         private int frameDelay = 500;
         private int elapsed;
         private int currentFrame;
-        private string framesPath;
-        private string basicFrameName;
 
         /// <summary>
         /// Cria um objeto com um número qualquer de frames que vão alternando de acordo com o tempo especificado.
@@ -29,9 +27,9 @@ namespace game_objects.ui
         public AnimatedBackground(Renderer2D renderer, string framesPath, string basicFrameName, int frameCount, int frameDelay)
             : base(renderer)
         {
-            this.framesPath = framesPath;
+            TextureFilePath = framesPath;
+            TextureFileName = basicFrameName;
             this.frameDelay = frameDelay;
-            this.basicFrameName = basicFrameName;
             this.frames = new Texture2D[frameCount];
             this.currentFrame = 0;
         }
@@ -40,19 +38,18 @@ namespace game_objects.ui
         {
             for (int i = 0; i < frames.Length; i++)
             {
-                frames[i] = cManager.Load<Texture2D>(framesPath + Path.AltDirectorySeparatorChar + basicFrameName + (i + 1));
+                frames[i] = cManager.Load<Texture2D>(TextureFilePath + Path.AltDirectorySeparatorChar + TextureFileName + (i + 1));
             }
+            texture = frames[0];
+
+            Width = frames[0].Width;
+            Height = frames[0].Height;
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
             UpdateFrame(gameTime);
-        }
-
-        public override void Draw(GameTime gameTime)
-        {
-            ((Renderer2D)Renderer).Draw(frames[currentFrame], Vector2.Zero, Color.White, BlendState.Opaque);
         }
 
         private void UpdateFrame(GameTime gameTime)
@@ -62,6 +59,9 @@ namespace game_objects.ui
                 elapsed = 0;
                 if(++currentFrame >= frames.Length)
                     currentFrame = 0;
+                Width = frames[currentFrame].Width;
+                Height = frames[currentFrame].Height;
+                texture = frames[currentFrame];
             }
             else
             {

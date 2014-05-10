@@ -6,6 +6,7 @@ using Project;
 using game_objects.ui;
 using Microsoft.Xna.Framework;
 using System.IO;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace game_states
 {
@@ -13,12 +14,16 @@ namespace game_states
     {
 
         private Button titleScreen;
+        private Button _continue;
+        private Button tryAgain;
         private TextBox results;
         private StatesIdList gotoState;
+        private RunnerState monitoredState;
 
-        public RunnerEndState(int id, Game1 parent)
+        public RunnerEndState(int id, Game1 parent, RunnerState monitoredState)
             : base(id, parent)
         {
+            this.monitoredState = monitoredState;
             Initialize();
         }
 
@@ -30,17 +35,45 @@ namespace game_states
             enterTransitionDuration = 100;
             exitTransitionDuration = 300;
 
-            titleScreen = new Button(goManager.R2D, new Rectangle(10, 10, 200, 50));
+            Viewport screen = parent.GraphicsDevice.Viewport;
+
+            titleScreen = new Button(goManager.R2D, new Rectangle(screen.Width / 2 + 25, (int)(screen.Height * 0.75), 200, 50));
             titleScreen.FilePath = "Menu" + Path.AltDirectorySeparatorChar + "Pause" + Path.AltDirectorySeparatorChar;
             titleScreen.BaseFileName = "menu_inicial";
             titleScreen.mouseClicked += new Button.MouseClicked(titleScreen_mouseClicked);
 
-            results = new TextBox(goManager.R2D, new Vector3(400, 300, 0));
+            tryAgain = new Button(goManager.R2D, new Rectangle(screen.Width / 2 - 225, (int)titleScreen.Position.Y, 200, 50));
+            tryAgain.Text = "TENTAR NOVAMENTE";
+            tryAgain.FilePath = "Menu" + Path.AltDirectorySeparatorChar + "Pause" + Path.AltDirectorySeparatorChar;
+            tryAgain.BaseFileName = "menu_inicial";
+            tryAgain.mouseClicked += new Button.MouseClicked(playAgain_mouseClicked);
+
+            _continue = new Button(goManager.R2D, new Rectangle((int)tryAgain.Position.X, (int)tryAgain.Position.Y, (int)tryAgain.Dimensions.X, (int)tryAgain.Dimensions.Y));
+            _continue.Text = "CONTINUAR";
+            _continue.FilePath = "Menu" + Path.AltDirectorySeparatorChar + "Pause" + Path.AltDirectorySeparatorChar;
+            _continue.BaseFileName = "menu_inicial";
+            _continue.mouseClicked += new Button.MouseClicked(_continue_mouseClicked);
+
+            results = new TextBox(goManager.R2D);
+            results.Width = 400;
+            results.Height = 300;
             results.Position = new Vector3(300, 300, 0);
-            results.Text = "testando\nquebra de linhas predefinidas\n\na partir de agora estarei testando a quebra de linhas automática, ou seja, desde que esta frase começou, nenhum caractere especial para quebra de linha foi adicionado a essa string, então, com sorte, esta linha estará quebrada e legível sem trabalho manual por minha parte.";
+            results.Display = DisplayType.LINE_BY_LINE;
 
             goManager.AddObject(titleScreen);
             goManager.AddObject(results);
+        }
+
+        void _continue_mouseClicked(Button btn)
+        {
+
+        }
+
+        void playAgain_mouseClicked(Button btn)
+        {
+            monitoredState.ShouldReset = true;
+            gotoState = StatesIdList.RUNNER;
+            DisableButtons();
         }
 
         public override void LoadContent()
@@ -52,7 +85,7 @@ namespace game_states
         void titleScreen_mouseClicked(Button btn)
         {
             gotoState = StatesIdList.MAIN_MENU;
-            titleScreen.Disable();
+            DisableButtons();
         }
 
         public override void Update(GameTime gameTime)
@@ -88,10 +121,59 @@ namespace game_states
         public override void EnterState()
         {
             base.EnterState();
-            titleScreen.Enable();
-            gotoState = StatesIdList.EMPTY_STATE;
+            Reset();
             if (!ContentLoaded)
                 LoadContent();
+        }
+
+        private void Reset()
+        {
+            if (monitoredState.MistakesMade < monitoredState.AllowedMistakes)
+            {
+                goManager.AddObject(_continue);
+                goManager.removeObject(tryAgain);
+            }
+            else
+            {
+                goManager.AddObject(tryAgain);
+                goManager.removeObject(_continue);
+            }
+            EnableButtons();
+            gotoState = StatesIdList.EMPTY_STATE;
+            string txt = "";
+
+            if (monitoredState.AnswersGot == monitoredState.NumberOfAnswers)
+            {
+                txt = "PERFEITO! (Você acertou tudo de primeira, parabens!)\n" + txt;
+                txt += "Pontuação total: " + monitoredState.Score + " x " + monitoredState.PerfectSscoreMultiplier + " = " + monitoredState.Score * monitoredState.PerfectSscoreMultiplier;
+
+                txt += "\n";
+
+                txt += "Erros: " + monitoredState.MistakesMade;
+            }
+            else
+            {
+                txt = "Hmmm, dessa vez não deu. Que tal tentar de novo?";
+            }
+
+
+            results.Text = txt;
+        }
+
+        private void DisableButtons()
+        {
+
+            tryAgain.Disable();
+            _continue.Disable();
+            titleScreen.Disable();
+        }
+
+        private void EnableButtons()
+        {
+
+            tryAgain.Enable();
+            _continue.Enable();
+            titleScreen.Enable();
         }
 
     }
