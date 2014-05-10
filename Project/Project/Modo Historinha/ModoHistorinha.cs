@@ -46,6 +46,10 @@ class ModoHistorinha
     //teste
     bool venceu = false;
     int erro = 0;
+    int altura1 = 150;
+    int altura2 = 150;
+    int altura3 = 150;
+    int altura4 = 150;
     public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, string alt2, string alt3, SpriteFont a, int n, Song narra)
         
     {
@@ -145,10 +149,10 @@ class ModoHistorinha
         res2 = alt1;
         res3 = alt2;
         res4 = alt3;
-        Calt0 = Color.Black;
-        Calt1 = Color.Black;
-        Calt2 = Color.Black;
-        Calt3 = Color.Black;
+        Calt0 = Color.White;
+        Calt1 = Color.White;
+        Calt2 = Color.White;
+        Calt3 = Color.White;
         NumeroRandomico = new Random();
         Ini(c, NumeroRandomico, n);
     }
@@ -337,7 +341,7 @@ class ModoHistorinha
         if ((mouse.X > VOpcoes1.X && mouse.X < VOpcoes1.X + VOpcoes1.Width) && (mouse.Y >= VOpcoes1.Y && mouse.Y <= VOpcoes1.Y + VOpcoes1.Height))
         {
 
-            if (VOpcoes1.Y > 190)
+            if (VOpcoes1.Y > altura1-10)
             {
                 VOpcoes1.Y -= 1;
 
@@ -345,21 +349,21 @@ class ModoHistorinha
         }
         if ((mouse.X > VOpcoes2.X && mouse.X < VOpcoes2.X + VOpcoes2.Width) && (mouse.Y >= VOpcoes2.Y && mouse.Y <= VOpcoes2.Y + VOpcoes2.Height))
         {
-            if (VOpcoes2.Y > 190)
+            if (VOpcoes2.Y > altura2 - 10)
             {
                 VOpcoes2.Y -= 1;
             }
         }
         if ((mouse.X > VOpcoes3.X && mouse.X < VOpcoes3.X + VOpcoes3.Width) && (mouse.Y >= VOpcoes3.Y && mouse.Y <= VOpcoes3.Y + VOpcoes3.Height))
         {
-            if (VOpcoes3.Y > 190)
+            if (VOpcoes3.Y > altura3 - 10)
             {
                 VOpcoes3.Y -= 1;
             }
         }
         if ((mouse.X > VOpcoes4.X && mouse.X < VOpcoes4.X + VOpcoes4.Width) && (mouse.Y >= VOpcoes4.Y && mouse.Y <= VOpcoes4.Y + VOpcoes4.Height))
         {
-            if (VOpcoes4.Y > 190)
+            if (VOpcoes4.Y > altura4 - 10)
             {
                 VOpcoes4.Y -= 1;
             }
@@ -368,28 +372,28 @@ class ModoHistorinha
         #region Mouse fora do objeto
         if ((mouse.X < VOpcoes1.X || mouse.X > VOpcoes1.X + VOpcoes1.Width) || (mouse.Y < VOpcoes1.Y || mouse.Y > VOpcoes1.Y + VOpcoes1.Height))
         {
-            if (VOpcoes1.Y < 200)
+            if (VOpcoes1.Y < altura1)
             {
                 VOpcoes1.Y += 1;
             }
         }
         if ((mouse.X < VOpcoes2.X || mouse.X > VOpcoes2.X + VOpcoes2.Width) || (mouse.Y < VOpcoes2.Y || mouse.Y > VOpcoes2.Y + VOpcoes2.Height))
         {
-            if (VOpcoes2.Y < 200)
+            if (VOpcoes2.Y < altura2)
             {
                 VOpcoes2.Y += 1;
             }
         }
         if ((mouse.X < VOpcoes3.X || mouse.X > VOpcoes3.X + VOpcoes3.Width) || (mouse.Y < VOpcoes3.Y || mouse.Y > VOpcoes3.Y + VOpcoes3.Height))
         {
-            if (VOpcoes3.Y < 200)
+            if (VOpcoes3.Y < altura3)
             {
                 VOpcoes3.Y += 1;
             }
         }
         if ((mouse.X < VOpcoes4.X || mouse.X > VOpcoes4.X + VOpcoes4.Width) || (mouse.Y < VOpcoes4.Y || mouse.Y > VOpcoes4.Y + VOpcoes4.Height))
         {
-            if (VOpcoes4.Y < 200)
+            if (VOpcoes4.Y < altura4)
             {
                 VOpcoes4.Y += 1;
             }
@@ -427,8 +431,8 @@ class ModoHistorinha
                 spriteBatch.DrawString(arial, res4, Valt3, Calt3);
                 break;
         }
-
-
+        if(NoDeRespostas ==4)
+            spriteBatch.DrawString(arial, justified4.ToString() + "---" + arial.MeasureString(res4).X.ToString(), new Vector2(700, 600), Color.Red);
 
     }
     public bool Continuar()
@@ -444,6 +448,7 @@ class ModoHistorinha
     }
     int sorte = 0;
     int[] numerosPegos;
+    int justified1, justified2, justified3, justified4;
     public void Ini(ContentManager Content, Random aleatorio, int quantidade)
     {
         numerosPegos = new int[4];
@@ -493,15 +498,59 @@ class ModoHistorinha
             }
 
         }
+        if (arial.MeasureString(res1).X < 20)
+        {
+            justified1 = 60 - (int)arial.MeasureString(res1).X;
+        }
+        else if (arial.MeasureString(res1).X >= 60)
+        {
+            justified1 = 90 - (int)arial.MeasureString(res1).X;
+        }
+        if (arial.MeasureString(res2).X < 20)
+        {
+            justified2 = 60 - (int)arial.MeasureString(res2).X;
+        }
+        else if (arial.MeasureString(res2).X >= 60)
+        {
+            justified2 = 90 - (int)arial.MeasureString(res2).X;
+        }
+        if (quantidade >= 3)
+        {
+            if (arial.MeasureString(res3).X < 20)
+            {
+                justified3 = 60 - (int)arial.MeasureString(res3).X;
+            }
+            else if (arial.MeasureString(res3).X >= 60)
+            {
+                justified3 = 90 - (int)arial.MeasureString(res3).X;
+            }
+        }
+        if (quantidade == 4)
+        {
+            if (arial.MeasureString(res4).X < 20)
+            {
+                justified4 = 60 - (int)arial.MeasureString(res4).X;
+            }
+            else if (arial.MeasureString(res4).X >= 60 && arial.MeasureString(res4).X < 110)
+            {
+                justified4 = 90 - (int)arial.MeasureString(res4).X;
+            }
+            else if (arial.MeasureString(res4).X > 110)
+            {
+                justified4 = 115 - (int)arial.MeasureString(res4).X;
+            }
+        }
+        VOpcoes1 = new Rectangle(PosicoesDasRespostas[numerosPegos[0]], altura1, OpcoeSprite.Width/4, OpcoeSprite.Height/4);
+        VOpcoes2 = new Rectangle(PosicoesDasRespostas[numerosPegos[1]], altura2, VOpcoes1.Width, VOpcoes1.Height);
+        VOpcoes3 = new Rectangle(PosicoesDasRespostas[numerosPegos[2]], altura3, VOpcoes1.Width, VOpcoes1.Height);
+        VOpcoes4 = new Rectangle(PosicoesDasRespostas[numerosPegos[3]], altura4, VOpcoes1.Width, VOpcoes1.Height);
         
-        VOpcoes1 = new Rectangle(PosicoesDasRespostas[numerosPegos[0]], 200, OpcoeSprite.Width/4, OpcoeSprite.Height/4);
-        VOpcoes2 = new Rectangle(PosicoesDasRespostas[numerosPegos[1]], 200, VOpcoes1.Width, VOpcoes1.Height);
-        VOpcoes3 = new Rectangle(PosicoesDasRespostas[numerosPegos[2]], 200, VOpcoes1.Width, VOpcoes1.Height);
-        VOpcoes4 = new Rectangle(PosicoesDasRespostas[numerosPegos[3]], 200, VOpcoes1.Width, VOpcoes1.Height);
-        Valt0 = new Vector2(VOpcoes1.Left, VOpcoes1.Location.Y);
-        Valt1 = new Vector2(VOpcoes2.X, VOpcoes2.Y + 20);
-        Valt2 = new Vector2(VOpcoes3.X, VOpcoes3.Y + 20);
-        Valt3 = new Vector2(VOpcoes4.X, VOpcoes4.Y + 20);
+        Valt0 = new Vector2((VOpcoes1.X + 120)- arial.MeasureString(res1).X - justified1, VOpcoes1.Y +60);
+        Valt1 = new Vector2((VOpcoes2.X + 120) - arial.MeasureString(res2).X - justified2, VOpcoes2.Y + 60);
+        if (quantidade >=3)
+            Valt2 = new Vector2((VOpcoes3.X + 120) - arial.MeasureString(res3).X - justified3, VOpcoes3.Y + 60);
+        if (quantidade >= 4)
+            Valt3 = new Vector2((VOpcoes4.X + 120) - arial.MeasureString(res4).X - justified4, VOpcoes4.Y + 60);
         Vpergunta = new Vector2(20, 20);
         vCaixa = new Rectangle(0, 0, CaixadeTexto.Width, CaixadeTexto.Height);
     }

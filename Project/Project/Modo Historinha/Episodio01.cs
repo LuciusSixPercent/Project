@@ -231,12 +231,13 @@ class Episodio01 : GameState
     Texture2D CachorroAndando01, CachorroAndando02, CachorroAndando03, CachorroAndando04, CachorroAndando05, CachorroAndando06, CachorroAndando07, CachorroAndando08;
     Texture2D CachorroParado01, CachorroParado02, CachorroParado03, CachorroParado04, CachorroParado05, CachorroParado06, CachorroParado07, CachorroParado08;
     Texture2D CosmeBola, CosmeIrritado, CosmeFeliz, MariaFeliz, MariaPensativa, MariaAssustada, MariaIrritada, MariaParadaCbalde, SerafinaFeliz;
-    Texture2D[] CosmeAndando, MariaAndando, MariaAndandoComBola, MariaAndandoSemBola, MariaIpaciente, ApuaPose, ApuaAndando, SerafinaAndando, CachorroSentado, CachorroAndando;
+    Texture2D[] CosmeAndando, MariaAndando, MariaAndandoComBola, MariaAndandoSemBola, MariaIpaciente, ApuaPose, ApuaAndando, SerafinaAndando, CachorroSentado, CachorroAndando,Setas;
     Color CosmeColor, MariaColor, ApuaColor, SerafinaColor, CachorroColor, BolaColor, ButtonColor;
     Vector2 vCosme, vMaria, vApua, vSerafina, vCachorro, vCosmeObj, vMariaObj, vApuaObj, vSerafinaObj, vCachorroObj;
     Texture2D Cosme, Maria, Apua, Serafina, Cachorro;
-    Texture2D CaixadeTexto;
-    Rectangle vCaixa;
+    Texture2D CaixadeTexto,SetaAmarela,SetaVermelha;
+    Rectangle vCaixa,recSetas;
+    int indiceSetas = 0;
     float TransparenciaCosme = 0;
     float TransparenciaMaria = 0;
     float TransparenciaApua = 0;
@@ -385,7 +386,8 @@ class Episodio01 : GameState
             vSerafinaObj = vSerafina;
             vBolaCenario = new Vector2(449, 325);
             vTV = new Vector2(871, 457);
-            
+            Setas = new Texture2D[2] { SetaVermelha, SetaAmarela };
+            recSetas = new Rectangle(490, 395, Setas[indiceSetas].Width / 4, Setas[indiceSetas].Height / 4);
             BolaColor = Color.White;
 
 
@@ -658,6 +660,7 @@ class Episodio01 : GameState
         }
         if (milesimos % 4 == 0)
         {
+            indiceSetas = (indiceSetas + 1) % 2;
             FrameMaria = (FrameMaria + 1) % 4;
         }
         if (!FimDaHistoria)
@@ -678,7 +681,10 @@ class Episodio01 : GameState
         {
             SpriteBatch.Draw(CenarioTv, vTV, Color.White * Alpha);
         }
-        
+        if (parte7 && !exercicio7)
+        {
+            SpriteBatch.Draw(Setas[indiceSetas], recSetas, null, Color.White, 180.0f, Vector2.Zero, SpriteEffects.FlipVertically, 0.0f);
+        }
         //*
 
         if (!caderno)
@@ -1099,9 +1105,10 @@ class Episodio01 : GameState
                         if (Alpha == 1)
                         {
                             transicaoDeCenario = false;
-
+                            
                         }
-
+                        MariaAndeComBaldeSemBola = true;
+                        vMariaObj.X = 600;
                         if (rep == 0)
                         {
                             engineSound.Stop(AudioStopOptions.Immediate);
@@ -1115,12 +1122,12 @@ class Episodio01 : GameState
                         CenarioIndice = 1;
                         rotMaria = false;
 
-                        MariaAndeComBaldeSemBola = true;
+                       // MariaAndeComBaldeSemBola = true;
                     }
 
                     if (Alpha == 1)
                     {
-                        vMariaObj.X = 600;
+                        //vMariaObj.X = 600;
                         if (Incremento0 == dialogo06.Length)
                         {
                             parte6 = true;
@@ -1142,6 +1149,7 @@ class Episodio01 : GameState
                             }
                             if (Incremento0 == 1)
                             {
+                                vMaria.X = 600;
                                 MariaEstaAnsiosa = false;
                                 MariaEstaAssustada = true;
                             }
@@ -1434,6 +1442,8 @@ class Episodio01 : GameState
             BtAvancarN = parent.Content.Load<Texture2D>("Imagem/Botao_Avancar");
             BtAvancarH = parent.Content.Load<Texture2D>("Imagem/Botao_Avancar_Sel");
             CaixadeTexto = parent.Content.Load<Texture2D>("Imagem/Caixa_texto");
+            SetaAmarela = parent.Content.Load<Texture2D>("Imagem/ui/historinha/seta1");
+            SetaVermelha = parent.Content.Load<Texture2D>("Imagem/ui/historinha/seta2");
             #region Emotes
             CosmeFeliz = parent.Content.Load<Texture2D>("Imagem/Personagem/Emoti/Cosme");
             CosmeIrritado = parent.Content.Load<Texture2D>("Imagem/Personagem/Emoti/Cosme_irritado");
