@@ -39,6 +39,12 @@ namespace game_states
             exitTransitionDuration = 100;
         }
 
+        public override void LoadContent()
+        {
+            base.LoadContent();
+            contentLoaded = true;
+        }
+
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);

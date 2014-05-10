@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace game_objects
 {
-    public class Simple2DGameObject : DrawableGameObject
+    public class Scalable2DGameObject : DrawableGameObject
     {
         private Rectangle bounds;
 
@@ -43,6 +43,32 @@ namespace game_objects
         {
             get { return colorModifier; }
             set { colorModifier = value; }
+        }
+
+        public override float Width
+        {
+            get
+            {
+                return base.Width;
+            }
+            set
+            {
+                base.Width = value;
+                bounds.Width = (int)value;
+            }
+        }
+
+        public override float Height
+        {
+            get
+            {
+                return base.Height;
+            }
+            set
+            {
+                base.Height = value;
+                bounds.Height = (int)value;
+            }
         }
 
         public override Vector3 Dimensions
@@ -80,10 +106,12 @@ namespace game_objects
         }
 
 
-        public Simple2DGameObject(Renderer2D r2d)
+        public Scalable2DGameObject(Renderer2D r2d)
             : base(r2d)
         {
             this.bounds = Rectangle.Empty;
+            color = Color.White;
+            colorModifier = 1;
         }
 
         public override void Load(ContentManager cManager)

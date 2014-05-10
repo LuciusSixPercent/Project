@@ -26,6 +26,12 @@ namespace game_states
             FreezeGraphicsBelow = false;
         }
 
+        public override void LoadContent()
+        {
+            base.LoadContent();
+            contentLoaded = true;
+        }
+
         public override void EnterState()
         {
             base.EnterState();

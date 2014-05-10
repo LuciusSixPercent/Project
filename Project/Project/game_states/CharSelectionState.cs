@@ -20,14 +20,20 @@ namespace game_states
     public class CharSelectionState : GameState
     {
         private StatesIdList goToState;
-        private AnimatedButton cosme;
-        private AnimatedButton maria;
+        private ToggleButton cosme;
+        private ToggleButton maria;
         private Button titleScreen;
         private Button play;
+
+        private TextBox difficultyLbl;
+        private ToggleButton easy;
+        private ToggleButton medium;
+        private ToggleButton hard;
+
         private bool buttonsEnabled;
 
+        private RunnerLevel chosenLevel;
         private QuestionSubject[] chosenSubjects;
-        private int chosenLevel;
 
         private SelectedCharacter selected;
 
@@ -46,30 +52,64 @@ namespace game_states
 
             Rectangle screen = parent.GraphicsDevice.Viewport.Bounds;
 
-            Rectangle bounds = new Rectangle(screen.Width / 2 - 250, screen.Height / 2 - 25, 200, 250);
+            difficultyLbl = new TextBox(goManager.R2D);
+            difficultyLbl.Width = 200;
+            difficultyLbl.Height = 30;
+            difficultyLbl.FontSize = 30;
+            difficultyLbl.Text = "DIFICULDADE:";
+            difficultyLbl.X = 5;
+            difficultyLbl.Y = 5;
+
+            Rectangle bounds = new Rectangle(50, (int)(difficultyLbl.Y + difficultyLbl.Height), 163, 76);
+            easy = new ToggleButton(goManager.R2D, bounds);
+            easy.UseText = false;
+            easy.BaseFileName = "easyBtn";
+            easy.FilePath = "Menu" + Path.AltDirectorySeparatorChar + "Char_Selection" + Path.AltDirectorySeparatorChar;
+            easy.mouseClicked += new Button.MouseClicked(difficultyBtn_mouseClicked);
+            easy.LockToggleState = true;
+
+            bounds.X += bounds.Width + 20;
+            medium = new ToggleButton(goManager.R2D, bounds);
+            medium.UseText = false;
+            medium.BaseFileName = "mediumBtn";
+            medium.FilePath = "Menu" + Path.AltDirectorySeparatorChar + "Char_Selection" + Path.AltDirectorySeparatorChar;
+            medium.mouseClicked += new Button.MouseClicked(difficultyBtn_mouseClicked);
+            medium.LockToggleState = true;
+
+            bounds.X += bounds.Width + 20;
+            hard = new ToggleButton(goManager.R2D, bounds);
+            hard.UseText = false;
+            hard.BaseFileName = "hardBtn";
+            hard.FilePath = "Menu" + Path.AltDirectorySeparatorChar + "Char_Selection" + Path.AltDirectorySeparatorChar;
+            hard.mouseClicked += new Button.MouseClicked(difficultyBtn_mouseClicked);
+            hard.LockToggleState = true;
+
+            bounds = new Rectangle(screen.Width / 2 - 250, screen.Height / 2 - 25, 200, 250);
             cosme = new AnimatedButton(goManager.R2D, bounds, new int[] { 1, 1, 1, 1 }, new bool[] { false, false, false, false });
+            //cosme = new ToggleButton(goManager.R2D, bounds);
             cosme.UseText = false;
             cosme.BaseFileName = "cosmeBtn";
             cosme.FilePath = "Menu" + Path.AltDirectorySeparatorChar + "Char_Selection" + Path.AltDirectorySeparatorChar;
             cosme.mouseClicked += new Button.MouseClicked(cosme_mouseClicked);
-            cosme.LockOnClick = true;
+            cosme.LockToggleState = true;
 
             bounds = new Rectangle(screen.Width / 2 + 50, screen.Height / 2 - 25, 200, 250);
             maria = new AnimatedButton(goManager.R2D, bounds, new int[] { 1, 1, 1, 1 }, new bool[] { false, false, false, false });
+            //maria = new ToggleButton(goManager.R2D, bounds);
             maria.UseText = false;
             maria.BaseFileName = "mariaBtn";
             maria.FilePath = "Menu" + Path.AltDirectorySeparatorChar + "Char_Selection" + Path.AltDirectorySeparatorChar;
             maria.mouseClicked += new Button.MouseClicked(maria_mouseClicked);
-            maria.LockOnClick = true;
+            maria.LockToggleState = true;
 
-            bounds = new Rectangle(10, 10, 200, 50);
+            bounds = new Rectangle(screen.Width / 2 - 225, (int)maria.Bounds.Y + (int)maria.Bounds.Height + 50, 200, 50);
             titleScreen = new Button(goManager.R2D, bounds);
             titleScreen.BaseFileName = "menu_inicial";
             titleScreen.FilePath = "Menu" + Path.AltDirectorySeparatorChar + "Pause" + Path.AltDirectorySeparatorChar;
             titleScreen.UseText = false;
             titleScreen.mouseClicked += new Button.MouseClicked(titleScreen_mouseClicked);
 
-            bounds = new Rectangle(screen.Width - 210, screen.Height-60, 200, 50);
+            bounds = new Rectangle(screen.Width/2 + 25, (int)titleScreen.Bounds.Y, 200, 50);
             play = new Button(goManager.R2D, bounds);
             play.Text = "JOGAR";
             play.HoverColor = Color.Orange;
@@ -79,6 +119,10 @@ namespace game_states
             play.UseText = true;
             play.mouseClicked += new Button.MouseClicked(play_mouseClicked);
 
+            goManager.AddObject(difficultyLbl);
+            goManager.AddObject(easy);
+            goManager.AddObject(medium);
+            goManager.AddObject(hard);
             goManager.AddObject(cosme);
             goManager.AddObject(maria);
             goManager.AddObject(titleScreen);
@@ -88,6 +132,22 @@ namespace game_states
             chosenSubjects = new QuestionSubject[] { QuestionSubject.PT };
 
             DisableButtons();
+        }
+
+        void difficultyBtn_mouseClicked(Button btn)
+        {
+            if (btn != easy)
+                easy.State = ButtonStates.NORMAL;
+            else
+                chosenLevel = RunnerLevel.EASY;
+            if (btn != medium)
+                medium.State = ButtonStates.NORMAL;
+            else 
+                chosenLevel = RunnerLevel.MEDIUM;
+            if (btn != hard)
+                hard.State = ButtonStates.NORMAL;
+            else 
+                chosenLevel = RunnerLevel.HARD;
         }
 
         void play_mouseClicked(Button btn)
@@ -104,7 +164,6 @@ namespace game_states
             {
                 selected = SelectedCharacter.MARIA;
                 cosme.State = ButtonStates.NORMAL;
-                cosme.Clicked = false;
             }
         }
 
@@ -114,7 +173,6 @@ namespace game_states
             {
                 selected = SelectedCharacter.COSME;
                 maria.State = ButtonStates.NORMAL;
-                maria.Clicked = false;
             }
         }
 
@@ -132,6 +190,7 @@ namespace game_states
             if (!ContentLoaded)
             {
                 base.LoadContent();
+                contentLoaded = true;
             }
         }
 
@@ -146,7 +205,7 @@ namespace game_states
                 }
                 else if (goToState != StatesIdList.EMPTY_STATE)
                 {
-                    if (cosme.FinishedAnimation && maria.FinishedAnimation)
+                    if (cosme.State == ButtonStates.TOGGLED || maria.State == ButtonStates.TOGGLED)
                         ExitState();
                 }
             }
@@ -187,7 +246,7 @@ namespace game_states
                     RunnerState rs = (RunnerState)parent.getState((int)goToState);
                     rs.NumberOfQuestions = 1;
                     rs.CharName = selected.ToString().ToLower();
-                    rs.Level = (RunnerLevel)chosenLevel;
+                    rs.Level = chosenLevel;
                     rs.Subjects = chosenSubjects;
                 }
                 parent.ExitState(ID, (int)goToState);

@@ -8,23 +8,48 @@ using Project;
 
 namespace game_objects.ui
 {
+    public enum DisplayType
+    {
+        ALL,
+        WORD_BY_WORD,
+        LETTER_BY_LETTER,
+        LINE_BY_LINE
+    }
+
     public class TextBox : DrawableGameObject
     {
 
         private List<string> lines;
         private string text;
+        private DisplayType display;
+        private int displayDelay;
+        private int elapsed;
 
         private Vector2 padding;
         private float lineSpacing;
-        private int size;
+        private int fontSize;
         private float fontScale;
 
-        public int Size
+        private int lastVisibleCharIndex;
+        private int lastVisibleLine;
+        private int charCount;
+
+        private bool lineWrappingPerformed;
+        private bool basicLineSplitPerformed;
+
+        public DisplayType Display
         {
-            get { return size; }
-            set { 
-                size = value;
-                this.fontScale = ((float)size / TextHelper.FontSize);
+            get { return display; }
+            set { display = value; }
+        }
+
+        public int FontSize
+        {
+            get { return fontSize; }
+            set
+            {
+                fontSize = value;
+                this.fontScale = ((float)fontSize / TextHelper.FontSize);
             }
         }
 
@@ -50,7 +75,7 @@ namespace game_objects.ui
             set
             {
                 text = value;
-                SplitLines();
+                basicLineSplitPerformed = false;
             }
         }
 
@@ -64,15 +89,25 @@ namespace game_objects.ui
             {
                 Vector3 oldDimensions = dimensions;
                 base.Dimensions = value;
-                if (oldDimensions.X < dimensions.X)
+                if (oldDimensions.X != dimensions.X)
                 {
-                    UpdateLines();
-                }
-                else if (oldDimensions.X > dimensions.X)
-                {
-                    SplitLines();
+                    basicLineSplitPerformed = false;
                 }
             }
+        }
+        public TextBox(Renderer2D r2d)
+            : base(r2d)
+        {
+            this.lines = new List<string>();
+            this.FontSize = 20;
+            this.lineSpacing = TextHelper.SpriteFont.LineSpacing;
+            this.display = DisplayType.ALL;
+            this.displayDelay = 500;
+        }
+
+        public override void Load(ContentManager cManager)
+        {
+
         }
 
         /// <summary>
@@ -81,13 +116,18 @@ namespace game_objects.ui
         private void SplitLines()
         {
             lines.Clear();
+            lastVisibleCharIndex = 0;
+            lastVisibleLine = 0;
+
             Renderer2D r2d = (Renderer2D)Renderer;
             string[] predefinedLines = text.Split(new string[] { "\n", "\r\n" }, StringSplitOptions.None);
             foreach (string predefinedLine in predefinedLines)
             {
                 lines.Add(predefinedLine);
+                charCount += predefinedLine.Length;
             }
-            UpdateLines();
+            basicLineSplitPerformed = true;
+            lineWrappingPerformed = false;
         }
 
 
@@ -98,7 +138,7 @@ namespace game_objects.ui
         {
             for (int i = lines.Count - 1; i >= 0; i--)
             {
-                if (TextHelper.SpriteFont.MeasureString(lines[i]).X * fontScale > dimensions.X - 2 * padding.X)
+                if (TextHelper.SpriteFont.MeasureString(lines[i]).X * fontScale > Width - 2 * padding.X)
                 {
 
                     List<string> subLines = new List<string>();
@@ -107,10 +147,12 @@ namespace game_objects.ui
 
                     for (int index = 0; index < subLines.Count; index++)
                     {
-                        while (TextHelper.SpriteFont.MeasureString(subLines[index]).X * fontScale > dimensions.X - 2 * padding.X)
+                        while (TextHelper.SpriteFont.MeasureString(subLines[index]).X * fontScale > Width - 2 * padding.X)
                         {
-                            int wordStartIndex = subLines[index].LastIndexOf(' ') + 1;
-                            if (wordStartIndex < 0 || wordStartIndex >= subLines[index].Length) wordStartIndex = subLines[index].Length - 1;
+                            int wordStartIndex = subLines[index].LastIndexOf(' ');
+
+                            if (wordStartIndex < 0 || wordStartIndex >= subLines[index].Length) 
+                                wordStartIndex = subLines[index].Length - 1;
 
                             if (index + 1 == subLines.Count)
                             {
@@ -123,46 +165,136 @@ namespace game_objects.ui
                             subLines[index] = subLines[index].Remove(wordStartIndex);
                         }
                     }
-                    int newIndex = i;
-                    foreach (string s in subLines)
-                    {
-                        if (newIndex < lines.Count)
-                        {
-                            lines.Insert(newIndex, s.Trim());                            
-                        }
-                        else
-                        {
-                            lines.Add(s.Trim());
-                        }
-                        newIndex++;
-                    }
+                    AddWrappedLines(i, subLines);
                 }
             }
         }
 
-        public TextBox(Renderer2D r2d, Vector3 dimensions)
-            : base(r2d)
+        private void AddWrappedLines(int newIndex, IEnumerable<string>subLines)
         {
-            this.lines = new List<string>();
-            this.dimensions = dimensions;
-            this.Size = 20;
-            this.lineSpacing = TextHelper.SpriteFont.LineSpacing;
+            bool removedWhiteSpace = false;
+            foreach (string s in subLines)
+            {
+                string newLine = s;
+                if (s.IndexOf(' ') == 0 && newIndex > 0)
+                {
+                    removedWhiteSpace = true;
+                    newLine = s.Substring(1);
+                }
+                if (removedWhiteSpace)
+                {
+                    lines[newIndex - 1] += ' ';
+                    removedWhiteSpace = false;
+                }
+
+                if (newIndex < lines.Count)
+                {
+                    lines.Insert(newIndex, newLine);
+                }
+                else
+                {
+                    lines.Add(newLine);
+                }
+                newIndex++;
+            }
         }
 
-        public override void Load(ContentManager cManager)
+        public override void Update(GameTime gameTime)
         {
+            base.Update(gameTime);
+            if (!basicLineSplitPerformed)
+            {
+                SplitLines();
+            }
 
+            if (!lineWrappingPerformed)
+            {
+                UpdateLines();
+            }
+            if (Display != DisplayType.ALL && lastVisibleCharIndex < charCount)
+            {
+                elapsed += gameTime.ElapsedGameTime.Milliseconds;
+                if (elapsed > displayDelay)
+                {
+                    elapsed = 0;
+                    UpdateVisibleChars();
+                }
+            }
+        }
+
+        private void UpdateVisibleChars()
+        {
+            int chars = 0;
+            for (int lineIndex = 0; lineIndex < lastVisibleLine; lineIndex++)
+            {
+                chars += lines[lineIndex].Length;
+            }
+            switch (Display)
+            {
+                case DisplayType.LETTER_BY_LETTER:
+                    lastVisibleCharIndex++;
+                    if (chars < lastVisibleCharIndex)
+                        lastVisibleLine++;
+
+                    break;
+                case DisplayType.WORD_BY_WORD:
+
+                    int index = lastVisibleCharIndex;
+                    if(lastVisibleLine > 0)
+                        index -= chars;
+
+                    string remainingCharsOnLine = lines[lastVisibleLine].Substring(index);
+                    string newWord = "";
+                    foreach (char c in remainingCharsOnLine)
+                    {
+                        newWord += c;
+                        lastVisibleCharIndex++;
+                        if (c == ' ')
+                            break;
+                    }
+                    if (chars + lines[lastVisibleLine].Length <= lastVisibleCharIndex)
+                        lastVisibleLine++;
+
+                    break;
+                case DisplayType.LINE_BY_LINE:
+                    if (lastVisibleLine < lines.Count)
+                    {
+                        lastVisibleCharIndex += (lines[lastVisibleLine].Length);
+                        lastVisibleLine++;
+                    }
+                    break;
+                    
+            }
         }
 
         public override void Draw(GameTime gameTime)
         {
-            Vector2 initialPos = new Vector2(position.X + Padding.Y, position.Y + Padding.X);
-            foreach (string line in lines)
+            Vector2 initialPos = new Vector2(X + Padding.X, Y + Padding.Y);
+            int charCount = 0;
+            bool keepGoing = true;
+            for (int lineIndex = 0; lineIndex < lines.Count && keepGoing; lineIndex++)
             {
-                if (initialPos.Y + LineSpacing*fontScale >= dimensions.Y + position.Y) break;
+                string line = lines[lineIndex];
 
-                ((Renderer2D)Renderer).DrawString(line, initialPos, Color.White, 0, Vector2.Zero, fontScale);
-                initialPos.Y += LineSpacing*fontScale;
+                charCount += line.Length;
+
+                string visibleLine;
+
+                if (lastVisibleCharIndex < charCount && Display != DisplayType.ALL)
+                {
+                    visibleLine = line.Substring(0, line.Length - (charCount - lastVisibleCharIndex));
+                    keepGoing = false;
+                }
+                else
+                {
+                    visibleLine = line;
+                }
+
+                ((Renderer2D)Renderer).DrawString(visibleLine, initialPos, Color.White, 0, Vector2.Zero, fontScale);
+                initialPos.Y += LineSpacing * fontScale;
+
+                if (initialPos.Y >= Height + Y)
+                    keepGoing = false; ;
             }
         }
     }
