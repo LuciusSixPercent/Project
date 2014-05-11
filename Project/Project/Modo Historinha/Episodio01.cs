@@ -489,7 +489,7 @@ class Episodio01 : GameState
                             {
                                 indiceDoAvancar = 0;
                             }
-                            if (repetir && selecionar < AlbumPrincipal[NoAlbum].Count && !ModoExercicios)//Aqui eu vou verificar se tem algum audio rodando, se não  tiver eu toco uma nova narração.
+                            if (repetir && selecionar < AlbumPrincipal[NoAlbum].Count && !ModoExercicios && Alpha ==1)//Aqui eu vou verificar se tem algum audio rodando, se não  tiver eu toco uma nova narração.
                             {
                                 MediaPlayer.Play(AlbumPrincipal[NoAlbum][selecionar]);//Narração.
                                 repetir = false;//Repetir serve para não deixar a música tocar sem parar
@@ -500,7 +500,7 @@ class Episodio01 : GameState
                                 if (mouse.LeftButton == ButtonState.Pressed && !cliqueDoMouse && parent.IsActive)
                                 {
                                     cliqueDoMouse = true;
-                                    if (ColisaoMouseOver(mouse, vVoltar))
+                                    if (ColisaoMouseOver(mouse, vVoltar) && Alpha ==1)
                                     {
                                         if (selecionar == 0 && Incremento0 !=0)
                                         {
@@ -522,7 +522,7 @@ class Episodio01 : GameState
                                         VoltarBool = true;
                                         repetir = true;
                                     }
-                                    if (ColisaoMouseOver(mouse, vBtAvancar))
+                                    if (ColisaoMouseOver(mouse, vBtAvancar) && Alpha == 1)
                                     {
                                         if (AlbumPrincipal[NoAlbum].Count == selecionar + 1)//Se o Album que está tocando chegou a sua ultima música
                                         {
@@ -1426,7 +1426,7 @@ class Episodio01 : GameState
     {
         if (!contentLoaded)
         {
-            arial = parent.Content.Load<SpriteFont>("Fonte/Arial");
+            arial = parent.Content.Load<SpriteFont>("Fonte/historinha");
             VoltarNormal = parent.Content.Load<Texture2D>("Imagem/Botao_Voltar");
             VoltarOver = parent.Content.Load<Texture2D>("Imagem/Botao_Voltar_Sel");
             CenarioInterior = parent.Content.Load<Texture2D>("Imagem/Cenario/Casa_Int");
