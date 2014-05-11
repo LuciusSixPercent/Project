@@ -67,7 +67,7 @@ class Episodio01 : GameState
     public string alternativa42 = "5";
     #endregion
     #region Dialogo 05
-    string fala11 = "Maria percebe que Apuã estava tentando enganar a todos. Apuã pede desculpas e diz que estava apenas brincando.";
+    string fala11 = "Maria percebe que Apuã estava tentando enganar a todos, ao colocar três pessoas para enfrentar uma sozinha. Apuã pede desculpas e diz que estava apenas brincando.";
     string fala12 = "Apuã treinou bastante algumas técnicas de futebol conhecidas como firulas. Passar a bola por entre as pernas do adversário; chutar a bola por cima... Dessa vez, Apuã diz que não perderá para os irmãos gêmeos!";
     string fala13 = "Cosme não quer perder para Apuã! Cosme pede para Maria encontra-lo no campo de futebol que fica próximo ao rio. Antes que Maria possa respondê-lo, ele sai da casa, ansioso pela partida!";
     string fala14 = "O que Maria não conseguiu falar para Cosme é que ela precisa buscar água no rio! Vamos rápido Maria, para que dê tempo de jogar futebol!";
