@@ -46,11 +46,13 @@
       <Name>Arial</Name>
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
+      <SubType>Designer</SubType>
     </Compile>
     <Compile Include="Fonte\Verdana.spritefont">
       <Name>Verdana</Name>
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
+      <SubType>Designer</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -1878,18 +1880,18 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Menu\Char_Selection\subjects\mathBtnC.png">
-      <Name>mathBtnC</Name>
+    <Compile Include="Imagem\ui\historinha\seta1.png">
+      <Name>seta1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Menu\Char_Selection\subjects\mathBtnH.png">
-      <Name>mathBtnH</Name>
+    <Compile Include="Imagem\ui\historinha\seta2.png">
+      <Name>seta2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Menu\Char_Selection\subjects\mathBtnN.png">
-      <Name>mathBtnN</Name>
+    <Compile Include="Imagem\Sprites\Botao2.png">
+      <Name>Botao2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

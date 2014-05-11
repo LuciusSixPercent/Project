@@ -231,12 +231,13 @@ class Episodio01 : GameState
     Texture2D CachorroAndando01, CachorroAndando02, CachorroAndando03, CachorroAndando04, CachorroAndando05, CachorroAndando06, CachorroAndando07, CachorroAndando08;
     Texture2D CachorroParado01, CachorroParado02, CachorroParado03, CachorroParado04, CachorroParado05, CachorroParado06, CachorroParado07, CachorroParado08;
     Texture2D CosmeBola, CosmeIrritado, CosmeFeliz, MariaFeliz, MariaPensativa, MariaAssustada, MariaIrritada, MariaParadaCbalde, SerafinaFeliz;
-    Texture2D[] CosmeAndando, MariaAndando, MariaAndandoComBola, MariaAndandoSemBola, MariaIpaciente, ApuaPose, ApuaAndando, SerafinaAndando, CachorroSentado, CachorroAndando;
+    Texture2D[] CosmeAndando, MariaAndando, MariaAndandoComBola, MariaAndandoSemBola, MariaIpaciente, ApuaPose, ApuaAndando, SerafinaAndando, CachorroSentado, CachorroAndando,Setas;
     Color CosmeColor, MariaColor, ApuaColor, SerafinaColor, CachorroColor, BolaColor, ButtonColor;
     Vector2 vCosme, vMaria, vApua, vSerafina, vCachorro, vCosmeObj, vMariaObj, vApuaObj, vSerafinaObj, vCachorroObj;
     Texture2D Cosme, Maria, Apua, Serafina, Cachorro;
-    Texture2D CaixadeTexto;
-    Rectangle vCaixa;
+    Texture2D CaixadeTexto,SetaAmarela,SetaVermelha;
+    Rectangle vCaixa,recSetas;
+    int indiceSetas = 0;
     float TransparenciaCosme = 0;
     float TransparenciaMaria = 0;
     float TransparenciaApua = 0;
@@ -302,12 +303,12 @@ class Episodio01 : GameState
             ButtonColor = Color.White;
             VoltarBool = false;
             Voltar = new Texture2D[2] { VoltarNormal, VoltarOver };
-            vVoltar = new Rectangle(0, 700, Voltar[VoltarIndice].Width / 7, Voltar[VoltarIndice].Height / 7);
+            vVoltar = new Rectangle(0, 700, Voltar[VoltarIndice].Width/3, Voltar[VoltarIndice].Height/3);
             audioEngine2 = new AudioEngine("Content\\Audio\\MyGameAudio2.xgs");
             waveBank2 = new WaveBank(audioEngine2, "Content\\Audio\\Wave Bank2.xwb");
             soundBank2 = new SoundBank(audioEngine2, "Content\\Audio\\Sound Bank2.xsb");
             // Vetores
-            vCaixa = new Rectangle(20, 600, CaixadeTexto.Width + 100, CaixadeTexto.Height + 50);
+            vCaixa = new Rectangle(20, 600, CaixadeTexto.Width, CaixadeTexto.Height);
             posicaoText = new Vector2(vCaixa.X+20, vCaixa.Y+20);
 
             //Dialogos
@@ -371,7 +372,7 @@ class Episodio01 : GameState
             Cachorro = CachorroSentado[Frame];
             Cenario = new Texture2D[4] { CenarioInterior, CenarioExterior, CenarioRio, CenarioCampo };
             BtAvancar = new Texture2D[2] { BtAvancarN, BtAvancarH };
-            vBtAvancar = new Rectangle(950, 700, BtAvancar[indiceDoAvancar].Width / 6, BtAvancar[indiceDoAvancar].Height / 6);
+            vBtAvancar = new Rectangle(950, 700, BtAvancar[indiceDoAvancar].Width/3, BtAvancar[indiceDoAvancar].Height/3);
             rcCenario = new Rectangle(0, 0, 1024, 768);
             vMaria = new Vector2(400, 400);
             vCosme = new Vector2(300, 400);
@@ -385,7 +386,8 @@ class Episodio01 : GameState
             vSerafinaObj = vSerafina;
             vBolaCenario = new Vector2(449, 325);
             vTV = new Vector2(871, 457);
-            
+            Setas = new Texture2D[2] { SetaVermelha, SetaAmarela };
+            recSetas = new Rectangle(490, 395, Setas[indiceSetas].Width / 4, Setas[indiceSetas].Height / 4);
             BolaColor = Color.White;
 
 
@@ -658,6 +660,7 @@ class Episodio01 : GameState
         }
         if (milesimos % 4 == 0)
         {
+            indiceSetas = (indiceSetas + 1) % 2;
             FrameMaria = (FrameMaria + 1) % 4;
         }
         if (!FimDaHistoria)
@@ -678,7 +681,10 @@ class Episodio01 : GameState
         {
             SpriteBatch.Draw(CenarioTv, vTV, Color.White * Alpha);
         }
-        
+        if (parte7 && !exercicio7)
+        {
+            SpriteBatch.Draw(Setas[indiceSetas], recSetas, null, Color.White, 180.0f, Vector2.Zero, SpriteEffects.FlipVertically, 0.0f);
+        }
         //*
 
         if (!caderno)
@@ -1099,9 +1105,10 @@ class Episodio01 : GameState
                         if (Alpha == 1)
                         {
                             transicaoDeCenario = false;
-
+                            
                         }
-
+                        MariaAndeComBaldeSemBola = true;
+                        vMariaObj.X = 600;
                         if (rep == 0)
                         {
                             engineSound.Stop(AudioStopOptions.Immediate);
@@ -1115,12 +1122,12 @@ class Episodio01 : GameState
                         CenarioIndice = 1;
                         rotMaria = false;
 
-                        MariaAndeComBaldeSemBola = true;
+                       // MariaAndeComBaldeSemBola = true;
                     }
 
                     if (Alpha == 1)
                     {
-                        vMariaObj.X = 600;
+                        //vMariaObj.X = 600;
                         if (Incremento0 == dialogo06.Length)
                         {
                             parte6 = true;
@@ -1142,6 +1149,7 @@ class Episodio01 : GameState
                             }
                             if (Incremento0 == 1)
                             {
+                                vMaria.X = 600;
                                 MariaEstaAnsiosa = false;
                                 MariaEstaAssustada = true;
                             }
@@ -1434,6 +1442,8 @@ class Episodio01 : GameState
             BtAvancarN = parent.Content.Load<Texture2D>("Imagem/Botao_Avancar");
             BtAvancarH = parent.Content.Load<Texture2D>("Imagem/Botao_Avancar_Sel");
             CaixadeTexto = parent.Content.Load<Texture2D>("Imagem/Caixa_texto");
+            SetaAmarela = parent.Content.Load<Texture2D>("Imagem/ui/historinha/seta1");
+            SetaVermelha = parent.Content.Load<Texture2D>("Imagem/ui/historinha/seta2");
             #region Emotes
             CosmeFeliz = parent.Content.Load<Texture2D>("Imagem/Personagem/Emoti/Cosme");
             CosmeIrritado = parent.Content.Load<Texture2D>("Imagem/Personagem/Emoti/Cosme_irritado");
