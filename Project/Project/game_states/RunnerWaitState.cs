@@ -4,13 +4,21 @@ using System.Linq;
 using System.Text;
 using Project;
 using Microsoft.Xna.Framework;
+using game_objects;
+using System.IO;
+using game_objects.ui;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace game_states
 {
     public class RunnerWaitState : GameState
     {
+        private const int WAIT_TIME = 1000;
         private int elapsed;
-        private const int WAIT_TIME = 3000;
+        private int count;
+        
+        private Scalable2DGameObject clock;
+        private Animated2DGameObject number;
 
         public RunnerWaitState(int id, Game1 parent)
             : base(id, parent)
@@ -24,11 +32,27 @@ namespace game_states
 
             FreezeUpdatesBelow = true;
             FreezeGraphicsBelow = false;
+
+            char separator = Path.AltDirectorySeparatorChar;
+
+            clock = new Scalable2DGameObject(goManager.R2D);
+            clock.TextureFileName = "clock";
+            clock.TextureFilePath = "Imagem" + separator + "ui" + separator + "bate_bola" + separator + "espera" + separator;
+
+            number = new Animated2DGameObject(goManager.R2D, clock.TextureFilePath, "num", 3, -1);
+
+            goManager.AddObject(clock);
+            goManager.AddObject(number);
+
         }
 
         public override void LoadContent()
         {
             base.LoadContent();
+
+            clock.X = (parent.GraphicsDevice.Viewport.Width - clock.Width) / 2;
+            clock.Y = (parent.GraphicsDevice.Viewport.Height - clock.Height) / 2 - 30;
+
             contentLoaded = true;
         }
 
@@ -38,8 +62,13 @@ namespace game_states
             if (!ContentLoaded)
             {
                 LoadContent();
-                elapsed = 0;
             }
+            else
+            {
+                number.AdvanceFrames();
+            }
+
+            count = 0;
         }
 
         public override void ExitState()
@@ -63,11 +92,31 @@ namespace game_states
                 {
                     if (elapsed >= WAIT_TIME)
                     {
-                        ExitState();
+                        elapsed = 0;
+
+                        if (count < 2)
+                            number.AdvanceFrames();
+
+                        count++;
                     }
                     else
                     {
+                        if (elapsed % 10 == 0)
+                        {
+                            number.Width *= 0.75f;
+                            number.Height *= 0.75f;
+                        }
+
                         elapsed += gameTime.ElapsedGameTime.Milliseconds;
+                    }
+
+                    Viewport screen = parent.GraphicsDevice.Viewport;
+                    number.X = (screen.Width - number.Width) / 2;
+                    number.Y = (screen.Height - number.Height) / 2;
+
+                    if (count >= 3)
+                    {
+                        ExitState();
                     }
                 }
             }

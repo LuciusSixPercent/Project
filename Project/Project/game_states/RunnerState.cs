@@ -20,6 +20,7 @@ namespace game_states
         #region Variables Declaration
         private RunnerLevel level;
         private QuestionSubject[] subjects;
+        private StatesIdList goBackTo;
 
         private int currentLoadingStep;
         private int totalLoadingSteps;
@@ -34,8 +35,6 @@ namespace game_states
         private Background bg;
         private Field field;
         private ProgressBar progress;
-
-        private string charName;
 
         private int foundAnswer; //0 for no; 1 for correct; -1 for incorrect
 
@@ -55,6 +54,13 @@ namespace game_states
 
         private bool shouldReset;
         #endregion
+
+
+        public StatesIdList GoBackTo
+        {
+            get { return goBackTo; }
+            set { goBackTo = value; }
+        }
 
         public bool ShouldReset
         {
@@ -116,7 +122,18 @@ namespace game_states
         public RunnerLevel Level
         {
             get { return level; }
-            set { level = value; }
+            set { 
+                level = value;
+                switch (level)
+                {
+                    case RunnerLevel.MEDIUM:
+                        numberOfQuestions = 4;
+                        break;
+                    default:
+                        numberOfQuestions = 3;
+                        break;
+                }
+            }
         }
 
         public QuestionSubject[] Subjects
@@ -523,6 +540,18 @@ namespace game_states
             }
         }
 
+        public void Continue()
+        {
+            if (goBackTo == StatesIdList.EMPTY_STATE)
+            {
+                if (level == RunnerLevel.HARD)
+                {
+                    numberOfQuestions++;
+                }
+                shouldReset = true;
+            }
+        }
+
         #region DRAWING
         public override void Draw(GameTime gameTime)
         {
@@ -621,6 +650,5 @@ namespace game_states
         }
 
         #endregion
-
     }
 }

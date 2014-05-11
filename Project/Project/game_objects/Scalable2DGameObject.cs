@@ -99,6 +99,32 @@ namespace game_objects
             }
         }
 
+        public override float X
+        {
+            get
+            {
+                return base.X;
+            }
+            set
+            {
+                base.X = value;
+                bounds.X = (int)value;
+            }
+        }
+
+        public override float Y
+        {
+            get
+            {
+                return base.Y;
+            }
+            set
+            {
+                base.Y = value;
+                bounds.Y = (int)value;
+            }
+        }
+
         public Rectangle Bounds
         {
             get { return bounds; }
@@ -119,6 +145,8 @@ namespace game_objects
             if (!string.IsNullOrEmpty(textureFileName) && !string.IsNullOrEmpty(textureFilePath))
             {
                 texture = cManager.Load<Texture2D>(textureFilePath + textureFileName);
+                Width = texture.Width;
+                Height = texture.Height;
             }
         }
 

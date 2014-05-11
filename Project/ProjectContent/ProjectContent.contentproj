@@ -1678,18 +1678,18 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\ui\bate_bola\espera\1.png">
-      <Name>1</Name>
+    <Compile Include="Imagem\ui\bate_bola\espera\num1.png">
+      <Name>num1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\ui\bate_bola\espera\2.png">
-      <Name>2</Name>
+    <Compile Include="Imagem\ui\bate_bola\espera\num2.png">
+      <Name>num2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\ui\bate_bola\espera\3.png">
-      <Name>3</Name>
+    <Compile Include="Imagem\ui\bate_bola\espera\num3.png">
+      <Name>num3</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -1703,8 +1703,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\ui\bate_bola\espera\relogio.png">
-      <Name>relogio</Name>
+    <Compile Include="Imagem\ui\bate_bola\espera\clock.png">
+      <Name>clock</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -1890,11 +1890,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Imagem\Sprites\Botao2.png">
-      <Name>Botao2</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Menu\Char_Selection\subjects\mathBtnP.png">
       <Name>mathBtnP</Name>
       <Importer>TextureImporter</Importer>
@@ -1937,6 +1932,21 @@
     </Compile>
     <Compile Include="Menu\Char_Selection\subjects\ptMathBtnP.png">
       <Name>ptMathBtnP</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\subjects\mathBtnC.png">
+      <Name>mathBtnC</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\subjects\mathBtnH.png">
+      <Name>mathBtnH</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\subjects\mathBtnN.png">
+      <Name>mathBtnN</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

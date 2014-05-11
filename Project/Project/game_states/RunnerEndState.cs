@@ -66,7 +66,9 @@ namespace game_states
 
         void _continue_mouseClicked(Button btn)
         {
-
+            monitoredState.Continue();
+            gotoState = StatesIdList.RUNNER;
+            DisableButtons();
         }
 
         void playAgain_mouseClicked(Button btn)

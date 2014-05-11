@@ -9,10 +9,10 @@ using System.IO;
 
 namespace game_objects.ui
 {
-    public class AnimatedBackground : Scalable2DGameObject
+    public class Animated2DGameObject : Scalable2DGameObject
     {
         private Texture2D[] frames;
-        private int frameDelay = 500;
+        private int frameDelay;
         private int elapsed;
         private int currentFrame;
 
@@ -24,7 +24,7 @@ namespace game_objects.ui
         /// <param name="basicFrameName">O nome padrão das texturas (sem sufixo algum). Uma instância com basicFrameName="teste" e com frameCount=3 tentará carregar os arquivos "teste1", "teste2" e "teste3".</param>
         /// <param name="frameCount">A quantidade de frames que a animação terá.</param>
         /// <param name="frameDelay">O tempo que cada frame permanecerá na tela.</param>
-        public AnimatedBackground(Renderer2D renderer, string framesPath, string basicFrameName, int frameCount, int frameDelay)
+        public Animated2DGameObject(Renderer2D renderer, string framesPath, string basicFrameName, int frameCount, int frameDelay)
             : base(renderer)
         {
             TextureFilePath = framesPath;
@@ -54,19 +54,27 @@ namespace game_objects.ui
 
         private void UpdateFrame(GameTime gameTime)
         {
-            if (elapsed >= frameDelay)
+            if (frameDelay >= 0)
             {
-                elapsed = 0;
-                if(++currentFrame >= frames.Length)
-                    currentFrame = 0;
-                Width = frames[currentFrame].Width;
-                Height = frames[currentFrame].Height;
-                texture = frames[currentFrame];
+                if (elapsed >= frameDelay)
+                {
+                    elapsed = 0;
+                    AdvanceFrames();
+                }
+                else
+                {
+                    elapsed += gameTime.ElapsedGameTime.Milliseconds;
+                }
             }
-            else
-            {
-                elapsed += gameTime.ElapsedGameTime.Milliseconds;
-            }
+        }
+
+        public void AdvanceFrames()
+        {
+            if (++currentFrame >= frames.Length)
+                currentFrame = 0;
+            Width = frames[currentFrame].Width;
+            Height = frames[currentFrame].Height;
+            texture = frames[currentFrame];
         }
     }
 }

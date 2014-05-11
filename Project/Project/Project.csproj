@@ -123,7 +123,7 @@
     <Compile Include="game_objects\PropType.cs" />
     <Compile Include="game_objects\questions\AnswerFactory.cs" />
     <Compile Include="game_objects\Scalable2DGameObject.cs" />
-    <Compile Include="game_objects\ui\AnimatedBackground.cs" />
+    <Compile Include="game_objects\ui\Animated2DGameObject.cs" />
     <Compile Include="game_objects\ui\AnimatedButton.cs" />
     <Compile Include="game_objects\ui\Button.cs" />
     <Compile Include="game_objects\Camera.cs" />

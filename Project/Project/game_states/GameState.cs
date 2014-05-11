@@ -31,9 +31,7 @@ namespace game_states
         private float alpha;
         private float alphaIncrement;
         #endregion
-
-        //private bool freezeBelow; //determina se os estados abaixo dele devem ser atualizados também
-
+        
         private bool freezeUpdatesBelow;
 
         private bool freezeGraphicsBelow;
@@ -49,12 +47,6 @@ namespace game_states
             get { return contentLoaded; }
         }
 
-        /*
-        public bool FreezeBelow
-        {
-            get { return freezeBelow; }
-        }
-        */
         public bool FreezeUpdatesBelow
         {
             get { return freezeUpdatesBelow; }

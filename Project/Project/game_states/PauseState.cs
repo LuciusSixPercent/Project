@@ -102,8 +102,7 @@ namespace game_states
             if (!ContentLoaded)
             {
                 base.LoadContent();
-                goManager.Load(parent.Content);
-                initialized = true;
+                contentLoaded = true;
             }
         }
 

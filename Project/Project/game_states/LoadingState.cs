@@ -13,7 +13,7 @@ namespace game_states
     {
         private GameState overseeingState;
 
-        private AnimatedBackground ab;
+        private Animated2DGameObject ab;
 
 
         private int elapsed;
@@ -33,7 +33,7 @@ namespace game_states
         protected override void Initialize()
         {
             base.Initialize();
-            ab = new AnimatedBackground(goManager.R2D, "Menu" + Path.AltDirectorySeparatorChar + "Loading" + Path.AltDirectorySeparatorChar, "loading", 4, 250);
+            ab = new Animated2DGameObject(goManager.R2D, "Menu" + Path.AltDirectorySeparatorChar + "Loading" + Path.AltDirectorySeparatorChar, "loading", 4, 250);
             goManager.AddObject(ab);
             enterTransitionDuration = 300;
             exitTransitionDuration = 100;

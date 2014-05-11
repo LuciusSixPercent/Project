@@ -318,7 +318,6 @@ namespace game_states
                 if (goToState == StatesIdList.RUNNER)
                 {
                     RunnerState rs = (RunnerState)parent.getState((int)goToState);
-                    rs.NumberOfQuestions = 1;
                     rs.CharName = selected.ToString().ToLower();
                     rs.Level = chosenLevel;
                     rs.Subjects = chosenSubjects;
