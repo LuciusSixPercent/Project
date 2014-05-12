@@ -42,6 +42,7 @@ namespace game_states
         private QuestionSubject[] chosenSubjects;
 
         private SelectedCharacter selected;
+        private Microsoft.Xna.Framework.Audio.Cue bgm;
 
         public CharSelectionState(int id, Game1 parent)
             : base(id, parent)
@@ -153,14 +154,14 @@ namespace game_states
             maria.mouseClicked += new Button.MouseClicked(maria_mouseClicked);
             maria.LockToggleState = true;
 
-            bounds = new Rectangle(screen.Width / 2 - 225, (int)maria.Bounds.Y + (int)maria.Bounds.Height + 50, 200, 50);
+            bounds = new Rectangle(screen.Width / 2 - 235, (int)maria.Bounds.Y + (int)maria.Bounds.Height + 50, 210, 70);
             titleScreen = new Button(goManager.R2D, bounds);
             titleScreen.BaseFileName = "menuInicialBtn";
             titleScreen.FilePath = "Menu" + separator + "Generic" + separator;
             titleScreen.UseText = false;
             titleScreen.mouseClicked += new Button.MouseClicked(titleScreen_mouseClicked);
 
-            bounds = new Rectangle(screen.Width/2 + 25, (int)titleScreen.Bounds.Y, 200, 50);
+            bounds = new Rectangle(screen.Width/2 + 25, (int)titleScreen.Bounds.Y, 210, 70);
             play = new Button(goManager.R2D, bounds);
             play.BaseFileName = "playBtn";
             play.FilePath = "Menu" + separator + "Char_Selection" + separator;
@@ -267,6 +268,11 @@ namespace game_states
             base.Update(gameTime);
             if (stateEntered)
             {
+                if (bgm == null || bgm.IsStopped)
+                {
+                    bgm = AudioManager.GetCue("515728_Soccer-Life-97");
+                    bgm.Play();
+                }
                 if (!buttonsEnabled && goToState == StatesIdList.EMPTY_STATE)
                 {
                     EnableButtons();
@@ -297,7 +303,6 @@ namespace game_states
                 cosme.ForceClick();
                 easy.ForceClick();
                 math.ForceClick();
-
                 LoadContent();
             }
         }
@@ -319,7 +324,10 @@ namespace game_states
                     rs.Subjects = chosenSubjects;
                     rs.GoBackTo = StatesIdList.EMPTY_STATE;
                 }
+
+                bgm.Stop(Microsoft.Xna.Framework.Audio.AudioStopOptions.AsAuthored) ;
                 parent.ExitState(ID, (int)goToState);
+
                 goToState = StatesIdList.EMPTY_STATE;
 
             }

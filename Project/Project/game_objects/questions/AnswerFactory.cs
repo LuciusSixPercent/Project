@@ -98,6 +98,14 @@ namespace game_objects.questions
                 {
                     min = max = numericAnswer;
                 }
+                else
+                {
+                    min = numericAnswer - 5;
+                    if(min < 0)
+                        min = 0;
+                    max = min + 10;
+                    
+                }
 
                 int attempts = 0;
                 bool alreadyInUse;

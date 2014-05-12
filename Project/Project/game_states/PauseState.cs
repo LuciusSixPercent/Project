@@ -54,10 +54,11 @@ namespace game_states
             int height = parent.GraphicsDevice.Viewport.Bounds.Height;
             int buttonsWidth = 180;
             int buttonsHeight = 60;
-            resumeGame = CreateButton(new Rectangle(width/2 - buttonsWidth/2, height/2 - 2*buttonsHeight, buttonsWidth, buttonsHeight), "voltar_ao_jogo");
+            char separator = Path.AltDirectorySeparatorChar; 
+            resumeGame = CreateButton(new Rectangle(width/2 - buttonsWidth/2, height/2 - 2*buttonsHeight, buttonsWidth, buttonsHeight), "playBtn", "Menu"+separator+"Char_Selection"+separator);
             resumeGame.mouseClicked += new Button.MouseClicked(resumeGame_mouseClicked);
 
-            titleScreen = CreateButton(new Rectangle(width / 2 - buttonsWidth / 2, height/2 + buttonsHeight, buttonsWidth, buttonsHeight), "menu_inicial");
+            titleScreen = CreateButton(new Rectangle(width / 2 - buttonsWidth / 2, height/2 + buttonsHeight, buttonsWidth, buttonsHeight), "menuInicialBtn", "Menu" + separator + "Generic" + separator);
             titleScreen.mouseClicked += new Button.MouseClicked(titleScreen_mouseClicked);
         }
 
@@ -79,11 +80,11 @@ namespace game_states
             }
         }
 
-        private Button CreateButton(Rectangle bounds, string baseFileName)
+        private Button CreateButton(Rectangle bounds, string baseFileName, string filePath)
         {
             Button btn = new Button(goManager.R2D, bounds);
             btn.BaseFileName = baseFileName;
-            btn.FilePath = "Menu" + Path.AltDirectorySeparatorChar + "Pause" + Path.AltDirectorySeparatorChar;
+            btn.FilePath = filePath;
             btn.UseText = false;
             return btn;
         }

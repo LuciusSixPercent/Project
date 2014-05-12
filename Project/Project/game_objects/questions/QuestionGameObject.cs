@@ -32,6 +32,7 @@ namespace game_objects.questions
         private Answer correctAnswer;
         private int fakeSpawnCount;
         private int maxFakeSpawnCount;
+        private float minAnswerDistance;
         
         /// <summary>
         /// Responsável por limitar o número de respostas falsas geradas entre cada geração de resposta correta. Um valor 3 significa que a cada resposta correta criada,
@@ -95,7 +96,8 @@ namespace game_objects.questions
         {
             this.question = question;
             this.currentAnswerIndex = 0;
-            maxFakeSpawnCount = 1;
+            this.maxFakeSpawnCount = 1;
+            this.minAnswerDistance = 3;
             CreateAnswers();
         }
 
@@ -346,19 +348,19 @@ namespace game_objects.questions
         /// <param name="a">A resposta a ser movida.</param>
         public void MoveAnswer(Answer a)
         {
-            float newZ = player.Position.Z + PublicRandom.Next(5, 8);
-            bool usableZ = false; //utilizado para garantir que as respostas mantenham uma distância mínima de 2.5 (no eixo Z) umas das outras
+            float newZ = player.Position.Z + PublicRandom.Next(4, 7);
+            bool usableZ = false;
             int tries = 0;
             do
             {
-                newZ += PublicRandom.Next(1, 4);
+                newZ += (float)PublicRandom.NextDouble(0.25);
                 foreach (Answer answer in answers)
                 {
-                    usableZ = (answer.Position.Z >= newZ + 3 || answer.Position.Z <= newZ - 3);
+                    usableZ = (answer.Position.Z >= newZ + minAnswerDistance || answer.Position.Z <= newZ - minAnswerDistance);
                     if (!usableZ) break;
                 }
                 tries++;
-            } while (!usableZ && tries < 10);
+            } while (!usableZ && tries < 50);
 
             a.Position = new Vector3(a.Position.X, PublicRandom.Next(3, 5), newZ);
             a.Visible = false;

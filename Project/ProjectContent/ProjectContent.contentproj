@@ -2078,6 +2078,26 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="Menu\Char_Selection\playBtnP.png">
+      <Name>playBtnP</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Imagem\ui\bate_bola\fim\continueBtP.png">
+      <Name>continueBtP</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Imagem\ui\bate_bola\fim\tryBtnP.png">
+      <Name>tryBtnP</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Generic\menuInicialBtnP.png">
+      <Name>menuInicialBtnP</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="questions.xml">
       <Name>questions</Name>
       <Importer>XmlImporter</Importer>

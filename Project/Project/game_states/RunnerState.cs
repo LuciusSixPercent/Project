@@ -321,12 +321,11 @@ namespace game_states
 
             mistakesMade = 0;
             NumberOfAnswers = 0;
-            mistakesMade = 0;
             foreach (QuestionGameObject q in questions)
             {
                 NumberOfAnswers += q.AnswerCount;
             }
-            maxAllowedMistakes = NumberOfAnswers / ((int)Level + 1);
+            maxAllowedMistakes = (int) Math.Round((double)NumberOfAnswers / ((int)Level + 2), MidpointRounding.AwayFromZero);
 
         }
 
