@@ -156,20 +156,7 @@ using Microsoft.Xna.Framework.Audio;
 
                     }
                 }
-                if (KeyboardHelper.IsKeyDown(Keys.Escape))
-                {
-                    KeyboardHelper.LockKey(Keys.Escape);
-                    if (parent.EnterState((int)StatesIdList.PAUSE))
-                    {
-                        Alpha = 0.5f;
-                        pauseFlag = true;
-                        stateEntered = false;
-                    }
-                }
-                else if (KeyboardHelper.KeyReleased(Keys.Escape))
-                {
-                    KeyboardHelper.UnlockKey(Keys.Escape);
-                }
+                
                 if (stateEntered)
                 {
 
@@ -308,68 +295,71 @@ using Microsoft.Xna.Framework.Audio;
                         
                         #endregion
                         #region Comandos Mouse
-                        #region Over
-                        if (ColisaoMouseOver(mouse, menu1[mn1], rcmenu1))
-                        {
-                            escolha = 0;
-                            mn1 = 1;
-                        }
-                        else { mn1 = 0; }
-                        if (ColisaoMouseOver(mouse, menu2[mn2], rcmenu2))
-                        {
-                            escolha = 1;
-                            mn2 = 1;
-                        }
-                        else { mn2 = 0; }
-                        if (ColisaoMouseOver(mouse, menu3[mn3], rcmenu3))
-                        {
-                            escolha = 2;
-                            mn3 = 1;
-                        }
-                        else { mn3 = 0; }
                         
-                        if (ColisaoMouseOver(mouse, menu5[mn5], rcmenu5))
+                        if (!Historinha && !Creditos)
                         {
-                            escolha = 3;
-                            mn5 = 1;
-                        }
-                        else { mn5 = 0; }
-                        if (ColisaoMouseOver(mouse, menu6[mn6], rcmenu6))
-                        {
-                            escolha = 4;
-                            mn6 = 1;
-                        }
-                        else { mn6 = 0; }
-                        #endregion
-
-                        #region Click
-                        if (mouse.LeftButton == ButtonState.Pressed)
-                        {
-                            bepe = true;
+                            #region Over
                             if (ColisaoMouseOver(mouse, menu1[mn1], rcmenu1))
                             {
-                                Historinha = true;
+                                escolha = 0;
+                                mn1 = 1;
                             }
+                            else { mn1 = 0; }
                             if (ColisaoMouseOver(mouse, menu2[mn2], rcmenu2))
                             {
-                                BateBola = true;
+                                escolha = 1;
+                                mn2 = 1;
                             }
+                            else { mn2 = 0; }
                             if (ColisaoMouseOver(mouse, menu3[mn3], rcmenu3))
                             {
-                                Caderno = true;
+                                escolha = 2;
+                                mn3 = 1;
                             }
-                           
+                            else { mn3 = 0; }
+
                             if (ColisaoMouseOver(mouse, menu5[mn5], rcmenu5))
                             {
-                                Creditos = true;
+                                escolha = 3;
+                                mn5 = 1;
                             }
+                            else { mn5 = 0; }
                             if (ColisaoMouseOver(mouse, menu6[mn6], rcmenu6))
                             {
-                                Sair = true;
+                                escolha = 4;
+                                mn6 = 1;
                             }
+                            else { mn6 = 0; }
+                            #endregion
+                            #region Click
+                            if (mouse.LeftButton == ButtonState.Pressed)
+                            {
+                                bepe = true;
+                                if (ColisaoMouseOver(mouse, menu1[mn1], rcmenu1))
+                                {
+                                    Historinha = true;
+                                }
+                                if (ColisaoMouseOver(mouse, menu2[mn2], rcmenu2))
+                                {
+                                    BateBola = true;
+                                }
+                                if (ColisaoMouseOver(mouse, menu3[mn3], rcmenu3))
+                                {
+                                    Caderno = true;
+                                }
 
+                                if (ColisaoMouseOver(mouse, menu5[mn5], rcmenu5))
+                                {
+                                    Creditos = true;
+                                }
+                                if (ColisaoMouseOver(mouse, menu6[mn6], rcmenu6))
+                                {
+                                    Sair = true;
+                                }
+
+                            }
+                            #endregion
                         }
-                        #endregion
                         if (Caderno)
                         {
                             Caderno = false;
@@ -543,7 +533,7 @@ using Microsoft.Xna.Framework.Audio;
             if (mouse.LeftButton == ButtonState.Pressed && !clique)
             {
                 clique = true;
-                if (ColisaoMouseOver(mouse, BTAvancar[indiceBTavancar], vBTAvancar) && !avancar)
+                if (ColisaoMouseOver(mouse, BTAvancar[indiceBTavancar], vBTAvancar) && !avancar &&!voltar)
                 {
                     if (vVaral2.X == 1024)
                     {
@@ -555,7 +545,7 @@ using Microsoft.Xna.Framework.Audio;
                     }
                     avancar = true;
                 }
-                if (ColisaoMouseOver(mouse, BTVoltar[indiceBTvoltar], vBTVoltar) && !voltar)
+                if (ColisaoMouseOver(mouse, BTVoltar[indiceBTvoltar], vBTVoltar) && !voltar && !avancar)
                 {
                     if (vVaral2.X == -1024)
                     {

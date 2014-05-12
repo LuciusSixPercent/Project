@@ -20,8 +20,8 @@ namespace Project
         Vector2 vlivro, vQ1, vQ2, vQ3, vQ4;
         string p1, p2, p3, p4, altQues1, altQues2, altQues3, altQues4, altQues5, altQues6, altQues7, altQues8, altQues9, altQues10;
         string[] q1, q2, q3, q4,alt1,alt2,alt3,alt4;
-        string Questão1, Questão2, Questão3, Questão4, Questão5, Questão6, Questão7, Questão8, Questão9, Questão10;
-        int linhas = 20;
+        
+        int linhas = 30;
         int barra1 = 0;
         int barra2 = 0;
         int barra3 = 0;
@@ -86,13 +86,13 @@ namespace Project
             {
                 for (int i = 0; i < q1[Page].Length; i++)
                 {
-                    if (i % 10 * linhas == 0 && i!=0)
+                    if (i % linhas == 0 && i!=0)
                     {
-                        if (q1[Page][i-1] == ' ')
+                        if (q1[Page][i] == ' ')
                         {
                             p1 += "\n";
                             barra1++;
-                            linhas = 20 * barra1;
+                            linhas = 30 * (barra1+1);
                         }
                         else
                         {
@@ -101,7 +101,7 @@ namespace Project
                     }
                     if (i == q1[Page].Length - 1)
                     {
-                        linhas = 40;
+                        linhas = 30;
                     }
 
                     p1 += q1[Page][i];
@@ -119,7 +119,7 @@ namespace Project
                             {
                                 p2 += "\n";
                                 barra2++;
-                                linhas = 40 * (barra2+1);
+                                linhas = 30 * (barra2+1);
                             }
                             else
                             {
@@ -128,7 +128,7 @@ namespace Project
                         }
                         if (i == q2[Page].Length - 1)
                         {
-                            linhas = 20;
+                            linhas = 30;
                         }
                         p2 += q2[Page][i];
                     }
@@ -138,12 +138,13 @@ namespace Project
             {
                 for (int i = 0; i < q3[Page].Length; i++)
                 {
-                    if (i % 10 * linhas == 0&& i!=0)
+                    if (i % linhas == 0&& i!=0)
                     {
                         if (q3[Page][i-1] == ' ')
                         {
                             p3 += "\n";
                             barra3++;
+                            linhas = 30 * (barra3 + 1);
 
                         }
                         else
@@ -153,7 +154,7 @@ namespace Project
                     }
                     if (i == q3[Page].Length - 1)
                     {
-                        linhas = 20;
+                        linhas = 30;
                     }
                     p3 += q3[Page][i];
                 }
@@ -162,13 +163,13 @@ namespace Project
             {
                 for (int i = 0; i < q4[Page].Length; i++)
                 {
-                    if (i % 10 * linhas == 0 && i!= 0)
+                    if (i % linhas == 0 && i!= 0)
                     {
                         if (q4[Page][i-1] == ' ')
                         {
                             p4 += "\n";
                             barra4++;
-
+                            linhas = 30 * (barra4 + 1);
                         }
                         else
                         {
@@ -177,7 +178,7 @@ namespace Project
                     }
                     if (i == q4[Page].Length - 1)
                     {
-                        linhas = 20;
+                        linhas = 30;
                     }
                   
                     p4 += q4[Page][i];

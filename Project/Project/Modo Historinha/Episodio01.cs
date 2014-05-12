@@ -91,9 +91,9 @@ class Episodio01 : GameState
     #region Exercicio07
     public string Pergunta7 = "Maria está procurando algo que começa com a letra B, tem duas sílabas e é usada no futebol... O que poderia ser?";
     public string alt70 = "BO-LA";//Certa
-    public string alt71 = "BA-NA-NA";
+    public string alt71 = "BAL-DE";
     public string alt72 = "BO-LO";//Errado, mas com fala do narrador
-    public string alt73 = "BE-RIN-GE-LA";
+    public string alt73 = "CA-SA";
     #endregion
     //Exercicio especial, criar um novo construtor que atenda as necessidades.
     #region Dialogo 8
@@ -125,8 +125,8 @@ class Episodio01 : GameState
     #region Exercicio10
     public string Pergunta010 = "Agora, finalmente nós iremos jogar...";
     public string alt100 = "FU-TE-BOL";
-    public string alt101 = "FUT-E-BOL";
-    public string alt102 = "FUTE-BOL";
+    public string alt101 = "BAS-QUE-TE";
+    public string alt102 = "TÊ-NIS";
     #endregion
     #endregion
     #region Variaveis
@@ -233,8 +233,8 @@ class Episodio01 : GameState
     Texture2D CosmeBola, CosmeIrritado, CosmeFeliz, MariaFeliz, MariaPensativa, MariaAssustada, MariaIrritada, MariaParadaCbalde, SerafinaFeliz;
     Texture2D[] CosmeAndando, MariaAndando, MariaAndandoComBola, MariaAndandoSemBola, MariaIpaciente, ApuaPose, ApuaAndando, SerafinaAndando, CachorroSentado, CachorroAndando,Setas;
     Color CosmeColor, MariaColor, ApuaColor, SerafinaColor, CachorroColor, BolaColor, ButtonColor;
-    Vector2 vMaria, vApua, vSerafina, vCachorro, vMariaObj, vApuaObj, vSerafinaObj, vCachorroObj;
-    Rectangle vCosme, vCosmeObj, vcad;
+    Vector2 vCosme,vCosmeObj,vMaria, vApua, vSerafina, vCachorro, vMariaObj, vApuaObj, vSerafinaObj, vCachorroObj;
+    Rectangle vcad;
     Texture2D Cosme, Maria, Apua, Serafina, Cachorro;
     Texture2D CaixadeTexto,SetaAmarela,SetaVermelha;
     Rectangle vCaixa,recSetas;
@@ -377,7 +377,7 @@ class Episodio01 : GameState
             vBtAvancar = new Rectangle(950, 700, BtAvancar[indiceDoAvancar].Width/3, BtAvancar[indiceDoAvancar].Height/3);
             rcCenario = new Rectangle(0, 0, 1024, 768);
             vMaria = new Vector2(400, 400);
-            vCosme = new Rectangle(300, 400, !cosmeTamanho ? Cosme.Width : 58, !cosmeTamanho ? Cosme.Height : 176);
+            vCosme = new Vector2(300, 400);
             vApua = new Vector2(500, 400);
             vSerafina = new Vector2(600, 400);
             vCachorro = new Vector2(700, 400);
@@ -408,6 +408,7 @@ class Episodio01 : GameState
     public override void Update(GameTime tempo)
     {
         base.Update(tempo);
+           
         if (stateEntered)
         {
             if (!exitingState)
@@ -704,7 +705,7 @@ class Episodio01 : GameState
         SpriteBatch.Draw(Maria, new Rectangle((int)vMaria.X, (int)vMaria.Y, !MariaTamnho ? Maria.Width : 58, !MariaTamnho ? Maria.Height : 176), null, (MariaColor * TransparenciaMaria) * Alpha, 0.0f, Vector2.Zero, EfeitoMaria, 0.0f);
         SpriteBatch.Draw(Apua, new Rectangle((int)vApua.X, (int)vApua.Y, Apua.Width, Apua.Height), null, (ApuaColor * TransparenciaApua) * Alpha, 0.0f, Vector2.Zero, EfeitoApua, 0.0f);
         SpriteBatch.Draw(Serafina, new Rectangle((int)vSerafina.X, (int)vSerafina.Y, !SerafinaTamanho ? Serafina.Width : 53, !SerafinaTamanho ? Serafina.Height : 171), null, (SerafinaColor * TransparenciaSerafina) * Alpha, 0.0f, Vector2.Zero, EfeitoSerafina, 0.0f);
-        SpriteBatch.Draw(Cosme, vCosme, null, (CosmeColor * TransparenciaCosme) * Alpha, 0.0f, Vector2.Zero, EfeitoCosme, 0.0f);
+        SpriteBatch.Draw(Cosme, new Rectangle((int)vCosme.X,(int)vCosme.Y, !cosmeTamanho ? Cosme.Width : 58, !cosmeTamanho ? Cosme.Height : 176), null, (CosmeColor * TransparenciaCosme) * Alpha, 0.0f, Vector2.Zero, EfeitoCosme, 0.0f);
         SpriteBatch.Draw(Cachorro, new Rectangle((int)vCachorro.X, (int)vCachorro.Y, Cachorro.Width, Cachorro.Height), null, (CachorroColor * TransparenciaCachorro) * Alpha, 0.0f, Vector2.Zero, EfeitoCachorro, 0.0f);
         if (CenarioIndice == 0)
         {
@@ -1683,7 +1684,7 @@ class Episodio01 : GameState
     }
     public void Resetar()
     {
-
+        exit = false;
         #region Reset das Cores
         CosmeColor = Color.Black;
         MariaColor = Color.Black;
@@ -1714,6 +1715,7 @@ class Episodio01 : GameState
         Limitedotexto = 80;
         indice = 0;
         zerar = 0;
+        
         #region Reset Sprites
         Cosme = Pcosme;
         Maria = Pmaria;
@@ -1734,7 +1736,7 @@ class Episodio01 : GameState
         #endregion
         #region Resete das Posições
         vMaria = new Vector2(400, 400);
-        vCosme = new Rectangle(300, 400, !cosmeTamanho ? Cosme.Width : 58, !cosmeTamanho ? Cosme.Height : 176);
+        vCosme = new Vector2(300, 400);
         vApua = new Vector2(500, 400);
         vSerafina = new Vector2(600, 400);
         vCachorro = new Vector2(700, 400);
