@@ -14,7 +14,7 @@ namespace Project
         Episodio01 questions;
         int Page = 0;
         SpriteFont arial;
-        Texture2D livro, BtAvancarN, BtAvancarH,VoltarOver, VoltarNormal;
+        Texture2D livro, BtAvancarN, BtAvancarH,VoltarOver, VoltarNormal,CaixaDeTexto;
         Texture2D[] BtAvancar, Voltar;
         Rectangle vBtAvancar, vVoltar;
         Vector2 vlivro, vQ1, vQ2, vQ3, vQ4;
@@ -29,6 +29,7 @@ namespace Project
         Color cor1, cor2, cor3, cor4;
         int VoltarIndice = 0;
         int indiceDoAvancar = 0;
+        int[] RespostasQ1, RespostasQ2, RespostasQ3, RespostasQ4;
         bool clique = false;
         public CadernoDeAtividades(int id, Game1 parent,Episodio01 ep)
             : base(id, parent)
@@ -64,11 +65,14 @@ namespace Project
                 alt2 = new string[3] { altQues2, altQues6, altQues10 };
                 alt3 = new string[3] { altQues3, altQues7, " " };
                 alt4 = new string[3] { altQues4, altQues8, " " };
-                
+                RespostasQ1 = new int[3] { 2, 3, 3 };
+                RespostasQ2 = new int[3] { 3, 2, 3 };
+                RespostasQ3 = new int[2] { 4, 4 };
+                RespostasQ4 = new int[2] { 2, 3 };
                 vlivro = new Vector2(0, 0);
-                vQ1 = new Vector2(vlivro.X + 60, vlivro.Y + 50);
-                vQ2 = new Vector2(vQ1.X, vQ1.Y + 400);
-                vQ3 = new Vector2(vQ1.X + 490, vQ1.Y);
+                vQ1 = new Vector2(vlivro.X + 100, vlivro.Y + 100);
+                vQ2 = new Vector2(vQ1.X, vQ1.Y + 300);
+                vQ3 = new Vector2(vQ1.X + 450, vQ1.Y);
                 vQ4 = new Vector2(vQ3.X, vQ2.Y);
                 Voltar = new Texture2D[2] { VoltarNormal, VoltarOver };
                 vVoltar = new Rectangle(0, 700, Voltar[VoltarIndice].Width / 3, Voltar[VoltarIndice].Height / 3);
@@ -88,7 +92,7 @@ namespace Project
                 {
                     if (i % linhas == 0 && i!=0)
                     {
-                        if (q1[Page][i] == ' ')
+                        if (q1[Page][i-1] == ' ')
                         {
                             p1 += "\n";
                             barra1++;
@@ -113,9 +117,9 @@ namespace Project
                 {
                     
 
-                        if (i % linhas == 0)
+                        if (i % linhas == 0&& i!=0)
                         {
-                            if (q2[Page][i] == ' ')
+                            if (q2[Page][i-1] == ' ')
                             {
                                 p2 += "\n";
                                 barra2++;
@@ -188,6 +192,16 @@ namespace Project
             KeyboardState teclado = Keyboard.GetState();
             MouseState mouse = Mouse.GetState();
             #region Comandos
+            if (ColisaoMouseOver(mouse, vBtAvancar))
+            {
+                indiceDoAvancar = 1;
+            }
+            else { indiceDoAvancar = 0; }
+            if (ColisaoMouseOver(mouse, vVoltar))
+            {
+                VoltarIndice = 1;
+            }
+            else { VoltarIndice = 0; }
             if (mouse.LeftButton == ButtonState.Pressed && !clique)
             {
                 clique = true;
@@ -339,7 +353,10 @@ namespace Project
             SpriteBatch.DrawString(arial, Page.ToString() + "/2", new Vector2(900, 700), Color.Black);
             if (cor1 == Color.Black)
             {
-                SpriteBatch.DrawString(arial, p1 + alt1[Page], vQ1, cor1);
+                SpriteBatch.Draw(CaixaDeTexto, new Rectangle((int)vQ1.X, (int)vQ1.Y, (int)(linhas + arial.MeasureString(p1).X), ((int)arial.MeasureString(p1).Y)), Color.White);
+                SpriteBatch.Draw(CaixaDeTexto, new Rectangle((int)vQ1.X, (int)vQ1.Y + (int)arial.MeasureString(p1).Y+arial.LineSpacing, (int)(linhas + arial.MeasureString(p1).X), arial.LineSpacing*RespostasQ1[Page]), Color.White);
+                
+                SpriteBatch.DrawString(arial, p1 +"\n"+ alt1[Page], vQ1, cor1);
             }
             else
             {
@@ -347,7 +364,9 @@ namespace Project
             }
             if (cor2 == Color.Black)
             {
-                SpriteBatch.DrawString(arial, p2 + alt2[Page], vQ2, cor2);
+                SpriteBatch.Draw(CaixaDeTexto, new Rectangle((int)vQ2.X, (int)vQ2.Y, (int)(linhas + arial.MeasureString(p2).X), ((int)arial.MeasureString(p2).Y)), Color.White);
+                SpriteBatch.Draw(CaixaDeTexto, new Rectangle((int)vQ2.X, (int)vQ2.Y + (int)arial.MeasureString(p2).Y + arial.LineSpacing, (int)(linhas + arial.MeasureString(p2).X), arial.LineSpacing * RespostasQ2[Page]), Color.White);
+                SpriteBatch.DrawString(arial, p2 +"\n"+ alt2[Page], vQ2, cor2);
             }
             else
             {
@@ -355,7 +374,9 @@ namespace Project
             }
             if (cor3 == Color.Black)
             {
-                SpriteBatch.DrawString(arial, p3 + alt3[Page], vQ3, cor3);
+                SpriteBatch.Draw(CaixaDeTexto, new Rectangle((int)vQ3.X, (int)vQ3.Y, (int)(linhas + arial.MeasureString(p3).X), ((int)arial.MeasureString(p3).Y)), Color.White);
+                SpriteBatch.Draw(CaixaDeTexto, new Rectangle((int)vQ3.X, (int)vQ3.Y + (int)arial.MeasureString(p3).Y + arial.LineSpacing, (int)(linhas + arial.MeasureString(p3).X), arial.LineSpacing * RespostasQ3[Page]), Color.White);
+                SpriteBatch.DrawString(arial, p3 +"\n"+ alt3[Page], vQ3, cor3);
             }
             else
             {
@@ -363,7 +384,9 @@ namespace Project
             }
             if (cor4 == Color.Black)
             {
-                SpriteBatch.DrawString(arial, p4 + alt4[Page], vQ4, cor4);
+                SpriteBatch.Draw(CaixaDeTexto, new Rectangle((int)vQ4.X, (int)vQ4.Y, (int)(linhas + arial.MeasureString(p4).X), ((int)arial.MeasureString(p4).Y)), Color.White);
+                SpriteBatch.Draw(CaixaDeTexto, new Rectangle((int)vQ4.X, (int)vQ4.Y + (int)arial.MeasureString(p4).Y + arial.LineSpacing, (int)(linhas + arial.MeasureString(p4).X), arial.LineSpacing * RespostasQ4[Page]), Color.White);
+                SpriteBatch.DrawString(arial, p4 +"\n"+ alt4[Page], vQ4, cor4);
             }
             else
             {
@@ -385,6 +408,7 @@ namespace Project
                 BtAvancarH = parent.Content.Load<Texture2D>("Imagem/Botao_Avancar_Sel");
                 VoltarNormal = parent.Content.Load<Texture2D>("Imagem/Botao_Voltar");
                 VoltarOver = parent.Content.Load<Texture2D>("Imagem/Botao_Voltar_Sel");
+                CaixaDeTexto = parent.Content.Load<Texture2D>("Imagem/textBoxCaderno");
                 contentLoaded = true;
             }
         }

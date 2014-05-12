@@ -535,18 +535,6 @@ using Microsoft.Xna.Framework.Audio;
                 clique = true;
                 if (ColisaoMouseOver(mouse, BTAvancar[indiceBTavancar], vBTAvancar) && !avancar &&!voltar)
                 {
-                    if (vVaral2.X == 1024)
-                    {
-                        vVaral2.X = -1024;
-                    }
-                    if (vVaral.X == 1024)
-                    {
-                        vVaral.X = -1024;
-                    }
-                    avancar = true;
-                }
-                if (ColisaoMouseOver(mouse, BTVoltar[indiceBTvoltar], vBTVoltar) && !voltar && !avancar)
-                {
                     if (vVaral2.X == -1024)
                     {
                         vVaral2.X = 1024;
@@ -555,6 +543,19 @@ using Microsoft.Xna.Framework.Audio;
                     {
                         vVaral.X = 1024;
                     }
+                    avancar = true;
+                }
+                if (ColisaoMouseOver(mouse, BTVoltar[indiceBTvoltar], vBTVoltar) && !voltar && !avancar)
+                {
+                    if (vVaral2.X == 1024)
+                    {
+                        vVaral2.X = -1024;
+                    }
+                    if (vVaral.X == 1024)
+                    {
+                        vVaral.X = -1024;
+                    }
+                    
                     voltar = true;
                 }
                 if (ColisaoMouseOver(mouse, SelecaoEpisodio1, vSelecaoEpisodio1))
@@ -569,7 +570,7 @@ using Microsoft.Xna.Framework.Audio;
             {
                 clique = false;
             }
-            if (avancar && !voltar)
+            if (!avancar && voltar)
             {
                 if (vVaral2.X >= 0)
                 {
@@ -581,7 +582,7 @@ using Microsoft.Xna.Framework.Audio;
                     }
                     if (vVaral2.X == 1024)
                     {
-                        avancar = false;
+                        voltar = false;
                     }
                 }
                 else if (vVaral2.X >= -1024 && vVaral2.X < 1)
@@ -593,7 +594,7 @@ using Microsoft.Xna.Framework.Audio;
                     }
                     if (vVaral2.X == 0)
                     {
-                        avancar = false;
+                        voltar = false;
                     }
                 }
                 if (vVaral.X >= 0)
@@ -605,7 +606,7 @@ using Microsoft.Xna.Framework.Audio;
                     }
                     if (vVaral.X == 1024)
                     {
-                        avancar = false;
+                        voltar = false;
                     }
                 }
                 else if (vVaral.X >= -1024 && vVaral.X < 1)
@@ -617,12 +618,12 @@ using Microsoft.Xna.Framework.Audio;
                     }
                     if (vVaral.X == 0)
                     {
-                        avancar = false;
+                        voltar = false;
                     }
                 }
                 
             }
-            if (voltar && !avancar)
+            if (!voltar && avancar)
             {
                 if (vVaral2.X <= 0)
                 {
@@ -633,7 +634,7 @@ using Microsoft.Xna.Framework.Audio;
                     }
                     if (vVaral2.X == -1024)
                     {
-                        voltar = false;
+                        avancar = false;
                     }
                 }
                 else if (vVaral2.X < 1025 && vVaral2.X >-1)
@@ -645,7 +646,7 @@ using Microsoft.Xna.Framework.Audio;
                     }
                     if (vVaral2.X == 0)
                     {
-                        voltar = false;
+                        avancar = false;
                     }
                 }
                 if (vVaral.X <= 0)
@@ -657,7 +658,7 @@ using Microsoft.Xna.Framework.Audio;
                     }
                     if (vVaral.X == -1024)
                     {
-                        voltar = false;
+                        avancar = false;
                     }
                 }
                 else if (vVaral.X <= 1024 && vVaral.X > -1)
@@ -669,7 +670,7 @@ using Microsoft.Xna.Framework.Audio;
                     }
                     if (vVaral.X == 0)
                     {
-                        voltar = false;
+                        avancar = false;
                     }
                 }
                
