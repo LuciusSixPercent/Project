@@ -67,7 +67,7 @@ class Episodio01 : GameState
     public string alternativa42 = "5";
     #endregion
     #region Dialogo 05
-    string fala11 = "Maria percebe que Apuã estava tentando enganar a todos. Apuã pede desculpas e diz que estava apenas brincando.";
+    string fala11 = "Maria percebe que Apuã estava tentando enganar a todos, ao colocar três pessoas para enfrentar uma sozinha. Apuã pede desculpas e diz que estava apenas brincando.";
     string fala12 = "Apuã treinou bastante algumas técnicas de futebol conhecidas como firulas. Passar a bola por entre as pernas do adversário; chutar a bola por cima... Dessa vez, Apuã diz que não perderá para os irmãos gêmeos!";
     string fala13 = "Cosme não quer perder para Apuã! Cosme pede para Maria encontra-lo no campo de futebol que fica próximo ao rio. Antes que Maria possa respondê-lo, ele sai da casa, ansioso pela partida!";
     string fala14 = "O que Maria não conseguiu falar para Cosme é que ela precisa buscar água no rio! Vamos rápido Maria, para que dê tempo de jogar futebol!";
@@ -489,7 +489,7 @@ class Episodio01 : GameState
                             {
                                 indiceDoAvancar = 0;
                             }
-                            if (repetir && selecionar < AlbumPrincipal[NoAlbum].Count && !ModoExercicios)//Aqui eu vou verificar se tem algum audio rodando, se não  tiver eu toco uma nova narração.
+                            if (repetir && selecionar < AlbumPrincipal[NoAlbum].Count && !ModoExercicios && Alpha ==1)//Aqui eu vou verificar se tem algum audio rodando, se não  tiver eu toco uma nova narração.
                             {
                                 MediaPlayer.Play(AlbumPrincipal[NoAlbum][selecionar]);//Narração.
                                 repetir = false;//Repetir serve para não deixar a música tocar sem parar
@@ -500,7 +500,7 @@ class Episodio01 : GameState
                                 if (mouse.LeftButton == ButtonState.Pressed && !cliqueDoMouse && parent.IsActive)
                                 {
                                     cliqueDoMouse = true;
-                                    if (ColisaoMouseOver(mouse, vVoltar))
+                                    if (ColisaoMouseOver(mouse, vVoltar) && Alpha ==1)
                                     {
                                         if (selecionar == 0 && Incremento0 !=0)
                                         {
@@ -522,7 +522,7 @@ class Episodio01 : GameState
                                         VoltarBool = true;
                                         repetir = true;
                                     }
-                                    if (ColisaoMouseOver(mouse, vBtAvancar))
+                                    if (ColisaoMouseOver(mouse, vBtAvancar) && Alpha == 1)
                                     {
                                         if (AlbumPrincipal[NoAlbum].Count == selecionar + 1)//Se o Album que está tocando chegou a sua ultima música
                                         {
@@ -1426,7 +1426,7 @@ class Episodio01 : GameState
     {
         if (!contentLoaded)
         {
-            arial = parent.Content.Load<SpriteFont>("Fonte/Arial");
+            arial = parent.Content.Load<SpriteFont>("Fonte/historinha");
             VoltarNormal = parent.Content.Load<Texture2D>("Imagem/Botao_Voltar");
             VoltarOver = parent.Content.Load<Texture2D>("Imagem/Botao_Voltar_Sel");
             CenarioInterior = parent.Content.Load<Texture2D>("Imagem/Cenario/Casa_Int");
