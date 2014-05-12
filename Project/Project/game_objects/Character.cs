@@ -112,12 +112,13 @@ namespace game_objects
 
             this.name = name;
 
+            /*
             framesRunning = new Texture2D[10];
 
             framesKicking = new Texture2D[7];
 
             framesJumping = new Texture2D[7];
-
+            */
             this.ball = ball;
 
             touchingGround = true;
@@ -220,23 +221,28 @@ namespace game_objects
         {
             quadWidthScale = quadHeightScale;
 
-            framesRunning = LoadFrames(cManager, framesRunning.Length, "_correndo");
+            framesRunning = LoadFrames(cManager, "_correndo");
 
             quadWidthScale *= ((float)framesRunning[0].Width / framesRunning[0].Height);
 
-            framesKicking = LoadFrames(cManager, framesKicking.Length, "_chutando");
+            framesKicking = LoadFrames(cManager, "_chutando");
 
-            framesJumping = LoadFrames(cManager, framesJumping.Length, "_pulando");
+            framesJumping = LoadFrames(cManager, "_pulando");
 
-            framesSad = LoadFrames(cManager, framesJumping.Length, "_triste");
+            framesSad = LoadFrames(cManager, "_triste");
 
             Reset();
         }
 
-        private Texture2D[] LoadFrames(ContentManager cManager, int lenght, string folderSuffix)
+        private Texture2D[] LoadFrames(ContentManager cManager, string folderSuffix)
         {
+            string path = cManager.RootDirectory + Path.AltDirectorySeparatorChar + "Imagem" + Path.AltDirectorySeparatorChar +
+                    "Personagem" + Path.AltDirectorySeparatorChar +
+                    Name + Path.AltDirectorySeparatorChar +
+                    Name + folderSuffix + Path.AltDirectorySeparatorChar;
 
-            Texture2D[] frames = new Texture2D[lenght];
+            DirectoryInfo dirInfo = new DirectoryInfo(path);
+            Texture2D[] frames = new Texture2D[dirInfo.GetFiles("*.*").Length];
             for (int i = 0; i < frames.Length; i++)
                 frames[i] =
                     cManager.Load<Texture2D>(

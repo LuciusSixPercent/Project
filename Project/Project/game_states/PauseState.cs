@@ -14,7 +14,6 @@ namespace game_states
     public class PauseState : GameState
     {        
         Button resumeGame;
-        Button configMenu;
         Button titleScreen;
 
         bool toTile;
@@ -44,7 +43,6 @@ namespace game_states
             InitButtons();
 
             goManager.AddObject(resumeGame);
-            goManager.AddObject(configMenu);
             goManager.AddObject(titleScreen);
 
             FreezeGraphicsBelow = false;
@@ -59,9 +57,6 @@ namespace game_states
             resumeGame = CreateButton(new Rectangle(width/2 - buttonsWidth/2, height/2 - 2*buttonsHeight, buttonsWidth, buttonsHeight), "voltar_ao_jogo");
             resumeGame.mouseClicked += new Button.MouseClicked(resumeGame_mouseClicked);
 
-            configMenu = CreateButton(new Rectangle(width/2 - buttonsWidth/2, height/2 - buttonsHeight/2, buttonsWidth, buttonsHeight), "configuracoes");
-            configMenu.mouseClicked += new Button.MouseClicked(optionsMenu_mouseClicked);
-
             titleScreen = CreateButton(new Rectangle(width / 2 - buttonsWidth / 2, height/2 + buttonsHeight, buttonsWidth, buttonsHeight), "menu_inicial");
             titleScreen.mouseClicked += new Button.MouseClicked(titleScreen_mouseClicked);
         }
@@ -74,10 +69,6 @@ namespace game_states
                 toTile = true;
                 ExitState();
             }
-        }
-
-        void optionsMenu_mouseClicked(Button btn)
-        {
         }
 
         private void resumeGame_mouseClicked(Button btn)
@@ -150,7 +141,6 @@ namespace game_states
                 toTile = false;
                 resumeGame.Enable();
                 titleScreen.Enable();
-                configMenu.Enable();
             }
         }
 
@@ -162,7 +152,6 @@ namespace game_states
                 {
                     resumeGame.Disable();
                     titleScreen.Disable();
-                    configMenu.Disable();
                     base.ExitState();
                 }
                 else

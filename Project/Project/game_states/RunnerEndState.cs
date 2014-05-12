@@ -36,28 +36,27 @@ namespace game_states
             exitTransitionDuration = 300;
 
             Viewport screen = parent.GraphicsDevice.Viewport;
+            char separator = Path.AltDirectorySeparatorChar;
 
             titleScreen = new Button(goManager.R2D, new Rectangle(screen.Width / 2 + 25, (int)(screen.Height * 0.75), 200, 50));
-            titleScreen.FilePath = "Menu" + Path.AltDirectorySeparatorChar + "Pause" + Path.AltDirectorySeparatorChar;
-            titleScreen.BaseFileName = "menu_inicial";
+            titleScreen.FilePath = "Menu" + separator + "Generic" + separator;
+            titleScreen.BaseFileName = "menuInicialBtn";
             titleScreen.mouseClicked += new Button.MouseClicked(titleScreen_mouseClicked);
 
             tryAgain = new Button(goManager.R2D, new Rectangle(screen.Width / 2 - 225, (int)titleScreen.Position.Y, 200, 50));
-            tryAgain.Text = "TENTAR NOVAMENTE";
-            tryAgain.FilePath = "Menu" + Path.AltDirectorySeparatorChar + "Pause" + Path.AltDirectorySeparatorChar;
-            tryAgain.BaseFileName = "menu_inicial";
+            tryAgain.FilePath = "Imagem" + separator + "ui" + separator + "bate_bola" + separator + "fim" + separator;
+            tryAgain.BaseFileName = "tryBtn";
             tryAgain.mouseClicked += new Button.MouseClicked(playAgain_mouseClicked);
 
             _continue = new Button(goManager.R2D, new Rectangle((int)tryAgain.Position.X, (int)tryAgain.Position.Y, (int)tryAgain.Dimensions.X, (int)tryAgain.Dimensions.Y));
-            _continue.Text = "CONTINUAR";
-            _continue.FilePath = "Menu" + Path.AltDirectorySeparatorChar + "Pause" + Path.AltDirectorySeparatorChar;
-            _continue.BaseFileName = "menu_inicial";
+            _continue.FilePath = tryAgain.FilePath;
+            _continue.BaseFileName = "continueBtn";
             _continue.mouseClicked += new Button.MouseClicked(_continue_mouseClicked);
 
             results = new TextBox(goManager.R2D);
-            results.Width = 400;
+            results.Width = 500;
             results.Height = 300;
-            results.Position = new Vector3(300, 300, 0);
+            results.Position = new Vector3((screen.Width - results.Width)/2, 300, 0);
             results.Display = DisplayType.LINE_BY_LINE;
 
             goManager.AddObject(titleScreen);
@@ -146,7 +145,9 @@ namespace game_states
 
             if (monitoredState.AnswersGot == monitoredState.NumberOfAnswers)
             {
-                txt = "PERFEITO! (Você acertou tudo de primeira, parabens!)\n" + txt;
+                if(monitoredState.MistakesMade == 0)
+                    txt = "PERFEITO! (Você acertou tudo de primeira, parabens!)\n";
+
                 txt += "Pontuação total: " + monitoredState.Score + " x " + monitoredState.PerfectSscoreMultiplier + " = " + monitoredState.Score * monitoredState.PerfectSscoreMultiplier;
 
                 txt += "\n";
@@ -158,7 +159,6 @@ namespace game_states
                 txt = "Hmmm, dessa vez não deu. Que tal tentar de novo?";
             }
 
-            txt += "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur aliquam lorem et libero lobortis accumsan. Aenean sodales imperdiet libero in malesuada.";
             results.Text = txt;
         }
 

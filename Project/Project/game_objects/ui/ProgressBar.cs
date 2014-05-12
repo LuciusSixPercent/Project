@@ -35,14 +35,6 @@ namespace game_objects.ui
 
         private bool positionsSet;
 
-        private string meterFileName;
-
-        public string MeterFileName
-        {
-            get { return meterFileName; }
-            set { meterFileName = value; }
-        }
-
         public string FilePath
         {
             get { return filePath; }
@@ -138,18 +130,18 @@ namespace game_objects.ui
             }
             catch (FileNotFoundException ex) { }
 
+            LoadMeter(cManager);
+
             dimensions = new Vector3(width, height, 0);
         }
 
-        public void LoadMeter(ContentManager cManager)
+        private void LoadMeter(ContentManager cManager)
         {
-            if (!string.IsNullOrEmpty(meterFileName))
-            {
-                barMeter = cManager.Load<Texture2D>(FilePath + meterFileName);
-                if (barMeter.Width > dimensions.X) dimensions.X = barMeter.Width;
-                if (barMeter.Height > dimensions.Y) dimensions.Y = barMeter.Height;
-                positionsSet = false;
-            }
+            barMeter = cManager.Load<Texture2D>(FilePath + "meter");
+            if (barMeter.Width > dimensions.X) dimensions.X = barMeter.Width;
+            if (barMeter.Height > dimensions.Y) dimensions.Y = barMeter.Height;
+            positionsSet = false;
+
         }
 
         public override void Update(GameTime gameTime)
@@ -198,7 +190,7 @@ namespace game_objects.ui
 
                     fillPos.Y = barBgPos.Y + (barBg.Height - barFill.Height) / 2;
                     fillPos.X = barBgPos.X + (barBg.Width - barFill.Width) / 2;
-                    
+
                     if (barMeter != null)
                         meterPos.Y = dimensions.Y + (barMeter.Height - barMeter.Height) / 2;
 
@@ -251,8 +243,7 @@ namespace game_objects.ui
                 Renderer2D r2d = (Renderer2D)Renderer;
                 DrawPart(barBgPos, barBg, null);
                 DrawPart(fillPos, barFill, fillTexSource, fillOpacity);
-                if (fillTexSource.Height > 0 && fillTexSource.Width > 0)
-                    DrawPart(meterPos, barMeter, null);
+                DrawPart(meterPos, barMeter, null);
                 DrawPart(goalPos, goal, null);
             }
         }
@@ -264,11 +255,11 @@ namespace game_objects.ui
                 Renderer2D r2d = (Renderer2D)Renderer;
                 if (source == null)
                 {
-                    r2d.Draw(tex, pos, Color.White*opacity, BlendState.AlphaBlend);
+                    r2d.Draw(tex, pos, Color.White * opacity, BlendState.AlphaBlend);
                 }
                 else
                 {
-                    r2d.Draw(tex, pos, (Rectangle)source, Color.White*opacity, BlendState.AlphaBlend);
+                    r2d.Draw(tex, pos, (Rectangle)source, Color.White * opacity, BlendState.AlphaBlend);
                 }
             }
         }

@@ -13,7 +13,6 @@ namespace game_objects.questions
 {
     public class QuestionGameObject : CollidableGameObject
     {
-        //private QuestionSubject type;
         private Question question;
         private Answer[] answers;
 
@@ -31,6 +30,19 @@ namespace game_objects.questions
         private Answer collidedAnswer;
 
         private Answer correctAnswer;
+        private int fakeSpawnCount;
+        private int maxFakeSpawnCount;
+        
+        /// <summary>
+        /// Responsável por limitar o número de respostas falsas geradas entre cada geração de resposta correta. Um valor 3 significa que a cada resposta correta criada,
+        /// apenas 3 falsas poderão ser criadas antes que uma nova resposta correta apareça.
+        /// </summary>
+        public int MaxFakeSpawnCount
+        {
+            get { return maxFakeSpawnCount; }
+            set { maxFakeSpawnCount = value; }
+        }
+
         public int AnswerCount
         {
             get { return question.AnswerCount; }
@@ -83,6 +95,7 @@ namespace game_objects.questions
         {
             this.question = question;
             this.currentAnswerIndex = 0;
+            maxFakeSpawnCount = 1;
             CreateAnswers();
         }
 
@@ -213,9 +226,9 @@ namespace game_objects.questions
         {
             string text;
 
-            if (correctAnswerSpawned || PublicRandom.NextDouble() > chanceToSpawnCorrectAnswer) //alterar a resposta para alguma outra incorreta
+            if (correctAnswerSpawned || (PublicRandom.NextDouble() > chanceToSpawnCorrectAnswer && fakeSpawnCount < maxFakeSpawnCount)) //alterar a resposta para alguma outra incorreta
             {
-                text = IncorrectAnswer(a);
+                text = IncorrectAnswer();
 
                 //se a resposta sendo alterada for a correta, avisar o sistema para que uma nova resposta correta possa ser gerada futuramente
                 if (correctAnswer != null && a.Equals(correctAnswer))
@@ -223,11 +236,14 @@ namespace game_objects.questions
                     correctAnswerSpawned = false;
                     correctAnswer = null;
                 }
-                chanceToSpawnCorrectAnswer *= 2; //dobra a chance de "spawnar" a resposta correta na próxima vez
+                chanceToSpawnCorrectAnswer *= 3; //triplica a chance de "spawnar" a resposta correta na próxima vez
+                fakeSpawnCount++;
             }
             else //alterar a resposta para a resposta correta
             {
-                text = CorrectAnswer(a);
+                text = CorrectAnswer();
+                chanceToSpawnCorrectAnswer = 0.1;
+                fakeSpawnCount = 0;
                 correctAnswerSpawned = true;
                 this.correctAnswer = a;
             }
@@ -235,7 +251,11 @@ namespace game_objects.questions
             a.Text = text;
         }
 
-        private string CorrectAnswer(Answer a)
+        /// <summary>
+        /// Gera uma resposta correta de acordo com a matéria da qual a questão trata.
+        /// </summary>
+        /// <returns>Uma string contendo a resposta correta.</returns>
+        private string CorrectAnswer()
         {
             string correctAnswerText;
 
@@ -251,7 +271,11 @@ namespace game_objects.questions
             return correctAnswerText;
         }
 
-        private string IncorrectAnswer(Answer a)
+        /// <summary>
+        /// Gera uma resposta incorreta de acordo com a matéria da qual a questão trata.
+        /// </summary>
+        /// <returns>Uma string contendo a resposta incorreta.</returns>
+        private string IncorrectAnswer()
         {
             string incorrectAnswerText;
 
@@ -311,8 +335,6 @@ namespace game_objects.questions
             bool hasNext = ++currentAnswerIndex < question.AnswerCount;
             if (hasNext)
             {
-                //UpdateAnswer();
-
                 CreateAnswers();
             }
             return hasNext;
