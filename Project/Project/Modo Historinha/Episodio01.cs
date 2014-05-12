@@ -233,10 +233,12 @@ class Episodio01 : GameState
     Texture2D CosmeBola, CosmeIrritado, CosmeFeliz, MariaFeliz, MariaPensativa, MariaAssustada, MariaIrritada, MariaParadaCbalde, SerafinaFeliz;
     Texture2D[] CosmeAndando, MariaAndando, MariaAndandoComBola, MariaAndandoSemBola, MariaIpaciente, ApuaPose, ApuaAndando, SerafinaAndando, CachorroSentado, CachorroAndando,Setas;
     Color CosmeColor, MariaColor, ApuaColor, SerafinaColor, CachorroColor, BolaColor, ButtonColor;
-    Vector2 vCosme, vMaria, vApua, vSerafina, vCachorro, vCosmeObj, vMariaObj, vApuaObj, vSerafinaObj, vCachorroObj;
+    Vector2 vMaria, vApua, vSerafina, vCachorro, vMariaObj, vApuaObj, vSerafinaObj, vCachorroObj;
+    Rectangle vCosme, vCosmeObj, vcad;
     Texture2D Cosme, Maria, Apua, Serafina, Cachorro;
     Texture2D CaixadeTexto,SetaAmarela,SetaVermelha;
     Rectangle vCaixa,recSetas;
+    Texture2D icoCad;
     int indiceSetas = 0;
     float TransparenciaCosme = 0;
     float TransparenciaMaria = 0;
@@ -375,7 +377,7 @@ class Episodio01 : GameState
             vBtAvancar = new Rectangle(950, 700, BtAvancar[indiceDoAvancar].Width/3, BtAvancar[indiceDoAvancar].Height/3);
             rcCenario = new Rectangle(0, 0, 1024, 768);
             vMaria = new Vector2(400, 400);
-            vCosme = new Vector2(300, 400);
+            vCosme = new Rectangle(300, 400, !cosmeTamanho ? Cosme.Width : 58, !cosmeTamanho ? Cosme.Height : 176);
             vApua = new Vector2(500, 400);
             vSerafina = new Vector2(600, 400);
             vCachorro = new Vector2(700, 400);
@@ -389,7 +391,7 @@ class Episodio01 : GameState
             Setas = new Texture2D[2] { SetaVermelha, SetaAmarela };
             recSetas = new Rectangle(490, 395, Setas[indiceSetas].Width / 4, Setas[indiceSetas].Height / 4);
             BolaColor = Color.White;
-
+            vcad = new Rectangle(900, 500, 100, 100);
 
         }
     }
@@ -549,6 +551,12 @@ class Episodio01 : GameState
                                         repetir = true;
 
                                     }
+                                    if (ColisaoMouseOver(mouse, vcad))
+                                    {
+
+                                        MediaPlayer.Pause();
+                                        caderno = true;
+                                    }
 
 
                                 }
@@ -557,10 +565,27 @@ class Episodio01 : GameState
                             {
                                 cliqueDoMouse = false;
                             }
-                            if (teclado.IsKeyDown(Keys.C) && lastKey != Keys.C)
+                            if (ColisaoMouseOver(mouse, vcad))
                             {
-                                MediaPlayer.Pause();
-                                caderno = true;
+                                if (vcad.Width < 110)
+                                {
+                                    vcad.Width++;
+                                }
+                                if (vcad.Height < 110)
+                                {
+                                    vcad.Height++;
+                                }
+                            }
+                            else
+                            {
+                                if (vcad.Width > 100)
+                                {
+                                    vcad.Width--;
+                                }
+                                if (vcad.Height > 100)
+                                {
+                                    vcad.Height--;
+                                }
                             }
                             Keys[] ks = teclado.GetPressedKeys();
 
@@ -660,8 +685,12 @@ class Episodio01 : GameState
         }
         if (milesimos % 4 == 0)
         {
-            indiceSetas = (indiceSetas + 1) % 2;
+            
             FrameMaria = (FrameMaria + 1) % 4;
+        }
+        if (milesimos % 8==0)
+        {
+            indiceSetas = (indiceSetas + 1) % 2;
         }
         if (!FimDaHistoria)
         {
@@ -675,7 +704,7 @@ class Episodio01 : GameState
         SpriteBatch.Draw(Maria, new Rectangle((int)vMaria.X, (int)vMaria.Y, !MariaTamnho ? Maria.Width : 58, !MariaTamnho ? Maria.Height : 176), null, (MariaColor * TransparenciaMaria) * Alpha, 0.0f, Vector2.Zero, EfeitoMaria, 0.0f);
         SpriteBatch.Draw(Apua, new Rectangle((int)vApua.X, (int)vApua.Y, Apua.Width, Apua.Height), null, (ApuaColor * TransparenciaApua) * Alpha, 0.0f, Vector2.Zero, EfeitoApua, 0.0f);
         SpriteBatch.Draw(Serafina, new Rectangle((int)vSerafina.X, (int)vSerafina.Y, !SerafinaTamanho ? Serafina.Width : 53, !SerafinaTamanho ? Serafina.Height : 171), null, (SerafinaColor * TransparenciaSerafina) * Alpha, 0.0f, Vector2.Zero, EfeitoSerafina, 0.0f);
-        SpriteBatch.Draw(Cosme, new Rectangle((int)vCosme.X, (int)vCosme.Y, !cosmeTamanho ? Cosme.Width : 58, !cosmeTamanho ? Cosme.Height : 176), null, (CosmeColor * TransparenciaCosme) * Alpha, 0.0f, Vector2.Zero, EfeitoCosme, 0.0f);
+        SpriteBatch.Draw(Cosme, vCosme, null, (CosmeColor * TransparenciaCosme) * Alpha, 0.0f, Vector2.Zero, EfeitoCosme, 0.0f);
         SpriteBatch.Draw(Cachorro, new Rectangle((int)vCachorro.X, (int)vCachorro.Y, Cachorro.Width, Cachorro.Height), null, (CachorroColor * TransparenciaCachorro) * Alpha, 0.0f, Vector2.Zero, EfeitoCachorro, 0.0f);
         if (CenarioIndice == 0)
         {
@@ -732,7 +761,7 @@ class Episodio01 : GameState
                             MariaColor = Color.White;
                         }
                         SpriteBatch.Draw(CaixadeTexto, vCaixa, Color.White * Alpha);
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White * Alpha);//Imprimir texto
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.Black * Alpha);//Imprimir texto
 
                     }
 
@@ -829,7 +858,7 @@ class Episodio01 : GameState
 
                         }
                         SpriteBatch.Draw(CaixadeTexto, vCaixa, Color.White * Alpha);
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White * Alpha);
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.Black * Alpha);
 
                     }
                     if (!exercicio2 && parte2)
@@ -869,7 +898,7 @@ class Episodio01 : GameState
                             TextoAtt = dialogo03[Incremento0];
                         }
                         SpriteBatch.Draw(CaixadeTexto, vCaixa, Color.White * Alpha);
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White * Alpha);
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.Black * Alpha);
                     }
                     if (parte3 && !exercicio3)
                     {
@@ -925,7 +954,7 @@ class Episodio01 : GameState
                             else { vMariaObj.Y = 400; }
                         }
                         SpriteBatch.Draw(CaixadeTexto, vCaixa, Color.White * Alpha);
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White * Alpha);
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.Black * Alpha);
 
                     }
                     if (parte4 && !exercicio4)
@@ -1086,7 +1115,7 @@ class Episodio01 : GameState
                                 CosmeColor = Color.Transparent;
                         }
                         SpriteBatch.Draw(CaixadeTexto, vCaixa, Color.White * Alpha);
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White * Alpha);
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.Black * Alpha);
                     }
 
                 }
@@ -1154,7 +1183,7 @@ class Episodio01 : GameState
                                 MariaEstaAssustada = true;
                             }
                             SpriteBatch.Draw(CaixadeTexto, vCaixa, Color.White * Alpha);
-                            SpriteBatch.DrawString(arial, texto, posicaoText, Color.White * Alpha);
+                            SpriteBatch.DrawString(arial, texto, posicaoText, Color.Black * Alpha);
                         }
                         if (parte6 && !exercicio6)
                         {
@@ -1196,7 +1225,7 @@ class Episodio01 : GameState
                             TextoAtt = dialogo07[Incremento0];
                         }
                         SpriteBatch.Draw(CaixadeTexto, vCaixa, Color.White * Alpha);
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White * Alpha);
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.Black * Alpha);
                         if (Incremento0 == 0)
                         {
                             MariaEstaPensativa = true;
@@ -1239,13 +1268,13 @@ class Episodio01 : GameState
                             TextoAtt = dialogo08[Incremento0];
                         }
                         SpriteBatch.Draw(CaixadeTexto, vCaixa, Color.White * Alpha);
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White * Alpha);
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.Black * Alpha);
                         
                     }
                     if (parte8 && !exercicio8)
                     {
                         ButtonColor = Color.Transparent;
-                        BolaColor = oitavo ? Color.White : Color.Yellow;
+                        BolaColor = Color.White;
                         texto = "";
                         indice = 0;
                         Incremento0 = 0;
@@ -1329,7 +1358,7 @@ class Episodio01 : GameState
 
                         }
                         SpriteBatch.Draw(CaixadeTexto, vCaixa, Color.White * Alpha);
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White * Alpha);
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.Black * Alpha);
                     }
                     if (parte9 && !exercicio9)
                     {
@@ -1388,7 +1417,7 @@ class Episodio01 : GameState
                             TextoAtt = dialogo10[Incremento0];
                         }
                         SpriteBatch.Draw(CaixadeTexto, vCaixa, Color.White * Alpha);
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.White * Alpha);
+                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.Black * Alpha);
                     }
                     if (parte10 && !exercicio10)
                     {
@@ -1413,9 +1442,11 @@ class Episodio01 : GameState
                     FimDaHistoria = true;
 
                 }
+                
+                #endregion
                 SpriteBatch.Draw(BtAvancar[indiceDoAvancar], vBtAvancar, ButtonColor * Alpha);
                 SpriteBatch.Draw(Voltar[VoltarIndice], vVoltar, Color.White * Alpha);
-                #endregion
+                SpriteBatch.Draw(icoCad, vcad, Color.White * Alpha);
             }
         }
         //*/
@@ -1444,6 +1475,7 @@ class Episodio01 : GameState
             CaixadeTexto = parent.Content.Load<Texture2D>("Imagem/Caixa_texto");
             SetaAmarela = parent.Content.Load<Texture2D>("Imagem/ui/historinha/seta1");
             SetaVermelha = parent.Content.Load<Texture2D>("Imagem/ui/historinha/seta2");
+            icoCad = parent.Content.Load<Texture2D>("Imagem/ui/historinha/IconeCaderno");
             #region Emotes
             CosmeFeliz = parent.Content.Load<Texture2D>("Imagem/Personagem/Emoti/Cosme");
             CosmeIrritado = parent.Content.Load<Texture2D>("Imagem/Personagem/Emoti/Cosme_irritado");
@@ -1702,7 +1734,7 @@ class Episodio01 : GameState
         #endregion
         #region Resete das Posições
         vMaria = new Vector2(400, 400);
-        vCosme = new Vector2(300, 400);
+        vCosme = new Rectangle(300, 400, !cosmeTamanho ? Cosme.Width : 58, !cosmeTamanho ? Cosme.Height : 176);
         vApua = new Vector2(500, 400);
         vSerafina = new Vector2(600, 400);
         vCachorro = new Vector2(700, 400);

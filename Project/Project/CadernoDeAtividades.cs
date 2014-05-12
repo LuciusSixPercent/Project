@@ -14,17 +14,22 @@ namespace Project
         Episodio01 questions;
         int Page = 0;
         SpriteFont arial;
-        Texture2D livro;
+        Texture2D livro, BtAvancarN, BtAvancarH,VoltarOver, VoltarNormal;
+        Texture2D[] BtAvancar, Voltar;
+        Rectangle vBtAvancar, vVoltar;
         Vector2 vlivro, vQ1, vQ2, vQ3, vQ4;
         string p1, p2, p3, p4, altQues1, altQues2, altQues3, altQues4, altQues5, altQues6, altQues7, altQues8, altQues9, altQues10;
         string[] q1, q2, q3, q4,alt1,alt2,alt3,alt4;
         string Questão1, Questão2, Questão3, Questão4, Questão5, Questão6, Questão7, Questão8, Questão9, Questão10;
-        int linhas = 1;
+        int linhas = 20;
         int barra1 = 0;
         int barra2 = 0;
         int barra3 = 0;
         int barra4 = 0;
         Color cor1, cor2, cor3, cor4;
+        int VoltarIndice = 0;
+        int indiceDoAvancar = 0;
+        bool clique = false;
         public CadernoDeAtividades(int id, Game1 parent,Episodio01 ep)
             : base(id, parent)
         {
@@ -60,12 +65,15 @@ namespace Project
                 alt3 = new string[3] { altQues3, altQues7, " " };
                 alt4 = new string[3] { altQues4, altQues8, " " };
                 
-                vlivro = new Vector2(20, 30);
-                vQ1 = new Vector2(vlivro.X + 10, vlivro.Y + 20);
+                vlivro = new Vector2(0, 0);
+                vQ1 = new Vector2(vlivro.X + 60, vlivro.Y + 50);
                 vQ2 = new Vector2(vQ1.X, vQ1.Y + 400);
-                vQ3 = new Vector2(vQ1.X + 500, vQ1.Y);
+                vQ3 = new Vector2(vQ1.X + 490, vQ1.Y);
                 vQ4 = new Vector2(vQ3.X, vQ2.Y);
-                
+                Voltar = new Texture2D[2] { VoltarNormal, VoltarOver };
+                vVoltar = new Rectangle(0, 700, Voltar[VoltarIndice].Width / 3, Voltar[VoltarIndice].Height / 3);
+                BtAvancar = new Texture2D[2] { BtAvancarN, BtAvancarH };
+                vBtAvancar = new Rectangle(950, 700, BtAvancar[indiceDoAvancar].Width / 3, BtAvancar[indiceDoAvancar].Height / 3);
                 
                 base.Initialize();
             }
@@ -73,17 +81,18 @@ namespace Project
         Keys lastKey = Keys.A;
         public override void Update(GameTime tempo)
         {
+            #region Quebra de Linhas
             if (p1.Length != q1[Page].Length+barra1)
             {
                 for (int i = 0; i < q1[Page].Length; i++)
                 {
-                    if (i % 10 * linhas == 0)
+                    if (i % 10 * linhas == 0 && i!=0)
                     {
-                        if (q1[Page][i] == ' ')
+                        if (q1[Page][i-1] == ' ')
                         {
                             p1 += "\n";
                             barra1++;
-                            linhas = 0;
+                            linhas = 20 * barra1;
                         }
                         else
                         {
@@ -92,7 +101,7 @@ namespace Project
                     }
                     if (i == q1[Page].Length - 1)
                     {
-                        linhas = 0;
+                        linhas = 40;
                     }
 
                     p1 += q1[Page][i];
@@ -102,33 +111,36 @@ namespace Project
             {
                 for (int i = 0; i < q2[Page].Length; i++)
                 {
-                    if (i % 10 * linhas == 0)
-                    {
-                        if (q2[Page][i] == ' ')
-                        {
-                            p2 += "\n";
-                            barra2++;
+                    
 
-                        }
-                        else
+                        if (i % linhas == 0)
                         {
-                            linhas++;
+                            if (q2[Page][i] == ' ')
+                            {
+                                p2 += "\n";
+                                barra2++;
+                                linhas = 40 * (barra2+1);
+                            }
+                            else
+                            {
+                                linhas++;
+                            }
                         }
+                        if (i == q2[Page].Length - 1)
+                        {
+                            linhas = 20;
+                        }
+                        p2 += q2[Page][i];
                     }
-                    if (i == q2[Page].Length - 1)
-                    {
-                        linhas = 0;
-                    }
-                    p2 += q2[Page][i];
-                }
+                
             }
             if (p3.Length != q3[Page].Length + barra3)
             {
                 for (int i = 0; i < q3[Page].Length; i++)
                 {
-                    if (i % 10 * linhas == 0)
+                    if (i % 10 * linhas == 0&& i!=0)
                     {
-                        if (q3[Page][i] == ' ')
+                        if (q3[Page][i-1] == ' ')
                         {
                             p3 += "\n";
                             barra3++;
@@ -141,7 +153,7 @@ namespace Project
                     }
                     if (i == q3[Page].Length - 1)
                     {
-                        linhas = 0;
+                        linhas = 20;
                     }
                     p3 += q3[Page][i];
                 }
@@ -150,9 +162,9 @@ namespace Project
             {
                 for (int i = 0; i < q4[Page].Length; i++)
                 {
-                    if (i % 10 * linhas == 0)
+                    if (i % 10 * linhas == 0 && i!= 0)
                     {
-                        if (q4[Page][i] == ' ')
+                        if (q4[Page][i-1] == ' ')
                         {
                             p4 += "\n";
                             barra4++;
@@ -165,58 +177,68 @@ namespace Project
                     }
                     if (i == q4[Page].Length - 1)
                     {
-                        linhas = 0;
+                        linhas = 20;
                     }
                   
                     p4 += q4[Page][i];
                 }
             }
+            #endregion
             KeyboardState teclado = Keyboard.GetState();
-            if (teclado.IsKeyDown(Keys.Back))
+            MouseState mouse = Mouse.GetState();
+            #region Comandos
+            if (mouse.LeftButton == ButtonState.Pressed && !clique)
             {
-                questions.Cad(false);
-                ExitState();
-                
-            }
-            if ((teclado.IsKeyDown(Keys.Right)) && (lastKey != Keys.Right))
-            {
-                Page++;
-                p1 = "";
-                p2 = "";
-                p3 = "";
-                p4 = "";
-                barra1 = 0;
-                barra2 = 0;
-                barra3 = 0;
-                barra4 = 0;
-                
-                if (Page >= 2)
+                clique = true;
+                if (ColisaoMouseOver(mouse, vBtAvancar))
                 {
-                    Page = 2;
-                }
+                    Page++;
+                    p1 = "";
+                    p2 = "";
+                    p3 = "";
+                    p4 = "";
+                    barra1 = 0;
+                    barra2 = 0;
+                    barra3 = 0;
+                    barra4 = 0;
 
-            }
-            if ((teclado.IsKeyDown(Keys.Left)) && (lastKey != Keys.Left))
-            {
-                Page--;
-                p1 = "";
-                p2 = "";
-                p3 = "";
-                p4 = "";
-                barra1 = 0;
-                barra2 = 0;
-                barra3 = 0;
-                barra4 = 0;
-                if (Page <= 0)
+                    if (Page >= 2)
+                    {
+                        Page = 2;
+                    }
+
+                }
+                if (ColisaoMouseOver(mouse, vVoltar))
                 {
-                    Page = 0;
+                    if (Page > 0)
+                    {
+                        Page--;
+                        p1 = "";
+                        p2 = "";
+                        p3 = "";
+                        p4 = "";
+                        barra1 = 0;
+                        barra2 = 0;
+                        barra3 = 0;
+                        barra4 = 0;
+                        if (Page <= 0)
+                        {
+                            Page = 0;
+                        }
+                    }
+                    else
+                    {
+                        questions.Cad(false);
+                        ExitState();
+                    }
                 }
-
             }
-            Keys[] ks = teclado.GetPressedKeys();
-
-            if (ks.Length == 0) lastKey = Keys.A;
-            else lastKey = ks[0];
+            if (mouse.LeftButton == ButtonState.Released)
+            {
+                clique = false;
+            }
+            
+            #endregion
             if (Page == 0)
             {
                 if (questions.EX1)
@@ -345,18 +367,23 @@ namespace Project
             else
             {
                 SpriteBatch.DrawString(arial, "Questão não feita", vQ4, Color.Black);
-            }           
-                    
-                
-            
+            }
+
+
+            SpriteBatch.Draw(Voltar[VoltarIndice], vVoltar, Color.White);
+            SpriteBatch.Draw(BtAvancar[indiceDoAvancar], vBtAvancar, Color.White);
             SpriteBatch.End();
         }
         public override void LoadContent()
         {
             if (!contentLoaded)
             {
-                arial = parent.Content.Load<SpriteFont>("Fonte/Arial");
+                arial = parent.Content.Load<SpriteFont>("Fonte/historinha");
                 livro = parent.Content.Load<Texture2D>("Imagem/Book");
+                BtAvancarN = parent.Content.Load<Texture2D>("Imagem/Botao_Avancar");
+                BtAvancarH = parent.Content.Load<Texture2D>("Imagem/Botao_Avancar_Sel");
+                VoltarNormal = parent.Content.Load<Texture2D>("Imagem/Botao_Voltar");
+                VoltarOver = parent.Content.Load<Texture2D>("Imagem/Botao_Voltar_Sel");
                 contentLoaded = true;
             }
         }

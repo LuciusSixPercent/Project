@@ -402,12 +402,11 @@ class ModoHistorinha
     }
     public void Desenhar(SpriteBatch spriteBatch)
     {
-        //spriteBatch.Draw(TelaDeFundo, VTelaFundo, Color.White);
-        //spriteBatch.Draw(PersonagemEmCena, VPersonagens, Color.White);
+        
         if (indice < pergunta.Length) { texto += pergunta[indice]; }
         indice = indice + (indice < pergunta.Length ? 1 : 0);
         spriteBatch.Draw(CaixadeTexto, vCaixa, Color.White);
-        spriteBatch.DrawString(arial, texto, Vpergunta, Color.White);
+        spriteBatch.DrawString(arial, texto, Vpergunta, Color.Black);
         for (int respotas = 0; respotas < NoDeRespostas; respotas++)
         {
             spriteBatch.Draw(OpcoeSprite, respotas == 3 ? VOpcoes4 : respotas == 2 ? VOpcoes3 : respotas == 1 ? VOpcoes2 : VOpcoes1, respotas == 3 ? Calt3 : respotas == 2 ? Calt2 : respotas == 1 ? Calt1 : Calt0);
@@ -416,23 +415,22 @@ class ModoHistorinha
         switch (NoDeRespostas)
         {
             case 2:
-                spriteBatch.DrawString(arial, res1, Valt0, Color.Black);
-                spriteBatch.DrawString(arial, res2, Valt1, Color.Black);
+                spriteBatch.DrawString(arial, res1, Valt0, Calt0==Color.White?Color.Black:Calt0);
+                spriteBatch.DrawString(arial, res2, Valt1, Calt1 == Color.White ? Color.Black : Calt1);
                 break;
             case 3:
-                spriteBatch.DrawString(arial, res1, Valt0, Calt0);
-                spriteBatch.DrawString(arial, res2, Valt1, Calt1);
-                spriteBatch.DrawString(arial, res3, Valt2, Calt2);
+                spriteBatch.DrawString(arial, res1, Valt0, Calt0 == Color.White ? Color.Black : Calt0);
+                spriteBatch.DrawString(arial, res2, Valt1, Calt1 == Color.White ? Color.Black : Calt1);
+                spriteBatch.DrawString(arial, res3, Valt2, Calt2 == Color.White ? Color.Black : Calt2);
                 break;
             case 4:
-                spriteBatch.DrawString(arial, res1, Valt0, Calt0);
-                spriteBatch.DrawString(arial, res2, Valt1, Calt1);
-                spriteBatch.DrawString(arial, res3, Valt2, Calt2);
-                spriteBatch.DrawString(arial, res4, Valt3, Calt3);
+                spriteBatch.DrawString(arial, res1, Valt0, Calt0 == Color.White ? Color.Black : Calt0);
+                spriteBatch.DrawString(arial, res2, Valt1, Calt1 == Color.White ? Color.Black : Calt1);
+                spriteBatch.DrawString(arial, res3, Valt2, Calt2 == Color.White ? Color.Black : Calt2);
+                spriteBatch.DrawString(arial, res4, Valt3, Calt3 == Color.White ? Color.Black : Calt3);
                 break;
         }
-        if(NoDeRespostas ==4)
-            spriteBatch.DrawString(arial, justified4.ToString() + "---" + arial.MeasureString(res4).X.ToString(), new Vector2(700, 600), Color.Red);
+        
 
     }
     public bool Continuar()
