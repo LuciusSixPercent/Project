@@ -106,10 +106,6 @@ namespace game_states
             {
                 player.Name = value;
                 player.Load(parent.Content);
-
-                progress.MeterFileName = "meter_" + value;
-                progress.LoadMeter(parent.Content);
-
             }
         }
 
@@ -162,6 +158,8 @@ namespace game_states
                 exitTransitionDuration = 1000;
 
                 shouldWait = true;
+
+                goBackTo = StatesIdList.EMPTY_STATE;
 
                 questions = new List<QuestionGameObject>();
 
@@ -355,7 +353,10 @@ namespace game_states
             }
             else
             {
-                parent.ExitState(ID);
+                if (goBackTo == StatesIdList.EMPTY_STATE)
+                    parent.ExitState(ID);
+                else
+                    parent.ExitState(ID, (int)goBackTo);
                 shouldReset = true;
             }
         }
@@ -462,7 +463,8 @@ namespace game_states
                 {
                     QuestionGameObject question = questions[questions.Count - 1];
                     Answer a = question.GetClosestAnswer();
-                    if (a.Position.Z <= player.Position.Z - 2)
+
+                    if (cam.ViewFrustum.Contains(a.BoundingBox) == ContainmentType.Disjoint && a.Z < player.Z)
                     {
                         if (question.CheckAnswer(a, true))
                         {
@@ -549,6 +551,10 @@ namespace game_states
                     numberOfQuestions++;
                 }
                 shouldReset = true;
+            }
+            else
+            {
+                ExitState();
             }
         }
 

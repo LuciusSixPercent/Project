@@ -155,19 +155,15 @@ namespace game_states
 
             bounds = new Rectangle(screen.Width / 2 - 225, (int)maria.Bounds.Y + (int)maria.Bounds.Height + 50, 200, 50);
             titleScreen = new Button(goManager.R2D, bounds);
-            titleScreen.BaseFileName = "menu_inicial";
-            titleScreen.FilePath = "Menu" + separator + "Pause" + separator;
+            titleScreen.BaseFileName = "menuInicialBtn";
+            titleScreen.FilePath = "Menu" + separator + "Generic" + separator;
             titleScreen.UseText = false;
             titleScreen.mouseClicked += new Button.MouseClicked(titleScreen_mouseClicked);
 
             bounds = new Rectangle(screen.Width/2 + 25, (int)titleScreen.Bounds.Y, 200, 50);
             play = new Button(goManager.R2D, bounds);
-            play.Text = "JOGAR";
-            play.HoverColor = Color.Orange;
-            play.PressColor = Color.DarkRed;
-            //play.BaseFileName = "menu_inicial";
-            //play.FilePath = "Menu" + separator + "Pause" + separator;
-            play.UseText = true;
+            play.BaseFileName = "playBtn";
+            play.FilePath = "Menu" + separator + "Char_Selection" + separator;
             play.mouseClicked += new Button.MouseClicked(play_mouseClicked);
 
             goManager.AddObject(difficultyLbl);
@@ -321,6 +317,7 @@ namespace game_states
                     rs.CharName = selected.ToString().ToLower();
                     rs.Level = chosenLevel;
                     rs.Subjects = chosenSubjects;
+                    rs.GoBackTo = StatesIdList.EMPTY_STATE;
                 }
                 parent.ExitState(ID, (int)goToState);
                 goToState = StatesIdList.EMPTY_STATE;

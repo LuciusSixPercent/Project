@@ -14,11 +14,18 @@ namespace game_objects
         private Vector2 clip;
         private Matrix view;
         private Matrix projection;
+        private BoundingFrustum viewFrustum;
         private float fieldOfView;
         private bool lockRotation;
 
         public delegate void CameraMoved();
         public event CameraMoved cam_moved;
+
+        public BoundingFrustum ViewFrustum
+        {
+            get { return viewFrustum; }
+            set { viewFrustum = value; }
+        }
 
         public bool LockRotation
         {
@@ -100,6 +107,8 @@ namespace game_objects
             this.target = target;
             this.lockRotation = lockRotation;
             view = Matrix.CreateLookAt(position, target, up);
+
+            viewFrustum = new BoundingFrustum(View * Projection);
         }
 
         public void createProjection(float fieldOfView, float aspectRatio)

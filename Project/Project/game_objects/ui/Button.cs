@@ -244,7 +244,7 @@ namespace game_objects.ui
             {
                 tex = cManager.Load<Texture2D>(fullPath);
             }
-            catch (FileNotFoundException ex)
+            catch (ContentLoadException ex)
             {
             }
 

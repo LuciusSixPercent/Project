@@ -11,7 +11,6 @@ namespace game_objects
     public class Renderer3D : Renderer
     {
         private AlphaTestEffect basicEffect;
-        private BoundingFrustum frustum;
         private Camera cam;
         private Quad[] singleQuad;
         private SamplerState sampler;
@@ -69,7 +68,6 @@ namespace game_objects
         {
             basicEffect.View = view;
             basicEffect.Projection = projection;
-            frustum = new BoundingFrustum(basicEffect.View * basicEffect.Projection);
         }
 
         public void changeFog(float start, float end)
@@ -103,7 +101,7 @@ namespace game_objects
                         ContainmentType containment = ContainmentType.Intersects;
                         if (!DEFAULT_BOX.Equals(bbox))
                         {
-                            containment = frustum.Contains(bbox);
+                            containment = cam.ViewFrustum.Contains(bbox);
                         }
                         bool visibleToCamera = containment != ContainmentType.Disjoint;
                         if(visibleToCamera)
