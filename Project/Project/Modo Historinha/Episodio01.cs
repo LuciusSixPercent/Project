@@ -283,6 +283,7 @@ class Episodio01 : GameState
     string TextoAtt = "";
     bool transicaoDeCenario = false;
     int FrameMaria = 0;
+    float OpaciTexto = 1;
     // Desça o código até Initialize
     public Episodio01(int id, Game1 parent)
         : base(id, parent)
@@ -306,12 +307,12 @@ class Episodio01 : GameState
             ButtonColor = Color.White;
             VoltarBool = false;
             Voltar = new Texture2D[2] { VoltarNormal, VoltarOver };
-            vVoltar = new Rectangle(0, CaixadeTexto.Height - 40, Voltar[VoltarIndice].Width / 3, Voltar[VoltarIndice].Height / 3);
+            vVoltar = new Rectangle(0, 700, Voltar[VoltarIndice].Width / 3, Voltar[VoltarIndice].Height / 3);
             audioEngine2 = new AudioEngine("Content\\Audio\\MyGameAudio2.xgs");
             waveBank2 = new WaveBank(audioEngine2, "Content\\Audio\\Wave Bank2.xwb");
             soundBank2 = new SoundBank(audioEngine2, "Content\\Audio\\Sound Bank2.xsb");
             // Vetores
-            vCaixa = new Rectangle(20, 0, CaixadeTexto.Width, CaixadeTexto.Height);
+            vCaixa = new Rectangle(20, 600, CaixadeTexto.Width, CaixadeTexto.Height);
             posicaoText = new Vector2(vCaixa.X+20, vCaixa.Y+20);
 
             //Dialogos
@@ -375,7 +376,7 @@ class Episodio01 : GameState
             Cachorro = CachorroSentado[Frame];
             Cenario = new Texture2D[4] { CenarioInterior, CenarioExterior, CenarioRio, CenarioCampo };
             BtAvancar = new Texture2D[2] { BtAvancarN, BtAvancarH };
-            vBtAvancar = new Rectangle(950, CaixadeTexto.Height-40, BtAvancar[indiceDoAvancar].Width / 3, BtAvancar[indiceDoAvancar].Height / 3);
+            vBtAvancar = new Rectangle(950, 700, BtAvancar[indiceDoAvancar].Width / 3, BtAvancar[indiceDoAvancar].Height / 3);
             rcCenario = new Rectangle(0, 0, 1024, 768);
             vMaria = new Vector2(400, 400);
             vCosme = new Vector2(300, 400);
@@ -392,7 +393,7 @@ class Episodio01 : GameState
             Setas = new Texture2D[2] { SetaVermelha, SetaAmarela };
             recSetas = new Rectangle(490, 400, Setas[indiceSetas].Width / 4, Setas[indiceSetas].Height / 4);
             BolaColor = Color.White;
-            vcad = new Rectangle(900, 650, 100, 100);
+            vcad = new Rectangle(900, 500, 100, 100);
 
         }
     }
@@ -407,6 +408,10 @@ class Episodio01 : GameState
     int musica = 0;
     int rep = 0;
     bool QuebrarLinhaForca = false;
+    bool primeiraTransicao = false;
+    bool segundaTransicao = false;
+    bool terceiraTransicao = false;
+    int milesimos = 0;
     public override void Update(GameTime tempo)
     {
         base.Update(tempo);
@@ -480,7 +485,7 @@ class Episodio01 : GameState
                         {
                             if (musica == 0)
                             {
-                                engineSound = soundBank2.GetCue("385591_Night_sea_ln");
+                                engineSound = soundBank2.GetCue("Night sea ln");
 
 
                             }
@@ -488,17 +493,17 @@ class Episodio01 : GameState
                             {
 
                                 engineSound = null;
-                                engineSound = soundBank2.GetCue("549944_Trickster");
+                                engineSound = soundBank2.GetCue("trickster");
                             }
                             if (musica == 2)
                             {
                                 engineSound = null;
-                                engineSound = soundBank2.GetCue("558441_Raikoh---Hoppy");
+                                engineSound = soundBank2.GetCue("raikoh hoppy");
                             }
                             if (musica == 3)
                             {
                                 engineSound = null;
-                                engineSound = soundBank2.GetCue("515728_Soccer-Life-97");
+                                engineSound = soundBank2.GetCue("Soccer Life 97");
                             }
                             engineSound.Play();
 
@@ -518,7 +523,20 @@ class Episodio01 : GameState
 
                             }
                             else { VoltarIndice = 0; }
-                          
+                            if (ColisaoMouseOver(mouse, new Rectangle(vCaixa.X+100,vCaixa.Y,vCaixa.Width-200,vCaixa.Height)))
+                            {
+                                if (OpaciTexto > 0.3f)
+                                {
+                                    OpaciTexto -= 0.01f;
+                                }
+                            }
+                            else
+                            {
+                                if (OpaciTexto < 1)
+                                {
+                                    OpaciTexto += 0.01f;
+                                }
+                            }
                             KeyboardState teclado = Keyboard.GetState();
                            
                             //////////////////////////////////////////////////////////////////Aqui é onde a narração vai acontecer////////////////////////////////////////////////
@@ -693,13 +711,6 @@ class Episodio01 : GameState
             ExitState();
         }
     }
-    string Tmusica, TpLAYER, NomeMusica;
-    int frames = 30;
-    bool primeiraTransicao = false;
-    bool segundaTransicao = false;
-    bool terceiraTransicao = false;
-    int milesimos = 0;
-
     public override void Draw(GameTime gameTime)
     {
 
@@ -801,8 +812,8 @@ class Episodio01 : GameState
                             MariaEstaFeliz = true;
                             MariaColor = Color.White;
                         }
-                        SpriteBatch.Draw(CaixadeTexto, vCaixa, Color.White * Alpha);
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.Black * Alpha);//Imprimir texto
+                        SpriteBatch.Draw(CaixadeTexto, vCaixa, (Color.White * Alpha)*OpaciTexto);
+                        SpriteBatch.DrawString(arial, texto, posicaoText, (Color.Black * Alpha)*OpaciTexto);//Imprimir texto
 
                     }
 
@@ -901,8 +912,8 @@ class Episodio01 : GameState
                             }
 
                         }
-                        SpriteBatch.Draw(CaixadeTexto, vCaixa, Color.White * Alpha);
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.Black * Alpha);
+                        SpriteBatch.Draw(CaixadeTexto, vCaixa, (Color.White * Alpha) * OpaciTexto);
+                        SpriteBatch.DrawString(arial, texto, posicaoText, (Color.Black * Alpha) * OpaciTexto);//Imprimir texto
 
                     }
                     if (!exercicio2 && parte2)
@@ -945,8 +956,8 @@ class Episodio01 : GameState
                         {
                             TextoAtt = dialogo03[Incremento0];
                         }
-                        SpriteBatch.Draw(CaixadeTexto, vCaixa, Color.White * Alpha);
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.Black * Alpha);
+                        SpriteBatch.Draw(CaixadeTexto, vCaixa, (Color.White * Alpha) * OpaciTexto);
+                        SpriteBatch.DrawString(arial, texto, posicaoText, (Color.Black * Alpha) * OpaciTexto);//Imprimir texto
                     }
                     if (parte3 && !exercicio3)
                     {
@@ -1004,8 +1015,8 @@ class Episodio01 : GameState
                             }
                             else { vMariaObj.Y = 400; }
                         }
-                        SpriteBatch.Draw(CaixadeTexto, vCaixa, Color.White * Alpha);
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.Black * Alpha);
+                        SpriteBatch.Draw(CaixadeTexto, vCaixa, (Color.White * Alpha) * OpaciTexto);
+                        SpriteBatch.DrawString(arial, texto, posicaoText, (Color.Black * Alpha) * OpaciTexto);//Imprimir texto
 
                     }
                     if (parte4 && !exercicio4)
@@ -1168,8 +1179,8 @@ class Episodio01 : GameState
                             if (TransparenciaCosme == 0)
                                 CosmeColor = Color.Transparent;
                         }
-                        SpriteBatch.Draw(CaixadeTexto, vCaixa, Color.White * Alpha);
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.Black * Alpha);
+                        SpriteBatch.Draw(CaixadeTexto, vCaixa, (Color.White * Alpha) * OpaciTexto);
+                        SpriteBatch.DrawString(arial, texto, posicaoText, (Color.Black * Alpha) * OpaciTexto);//Imprimir texto
                     }
 
                 }
@@ -1239,8 +1250,8 @@ class Episodio01 : GameState
                                 MariaEstaAnsiosa = false;
                                 MariaEstaAssustada = true;
                             }
-                            SpriteBatch.Draw(CaixadeTexto, vCaixa, Color.White * Alpha);
-                            SpriteBatch.DrawString(arial, texto, posicaoText, Color.Black * Alpha);
+                            SpriteBatch.Draw(CaixadeTexto, vCaixa, (Color.White * Alpha) * OpaciTexto);
+                            SpriteBatch.DrawString(arial, texto, posicaoText, (Color.Black * Alpha) * OpaciTexto);//Imprimir texto
                         }
                         if (parte6 && !exercicio6)
                         {
@@ -1308,8 +1319,8 @@ class Episodio01 : GameState
                             {
                                 TextoAtt = dialogo07[Incremento0];
                             }
-                            SpriteBatch.Draw(CaixadeTexto, vCaixa, Color.White * Alpha);
-                            SpriteBatch.DrawString(arial, texto, posicaoText, Color.Black * Alpha);
+                            SpriteBatch.Draw(CaixadeTexto, vCaixa, (Color.White * Alpha) * OpaciTexto);
+                            SpriteBatch.DrawString(arial, texto, posicaoText, (Color.Black * Alpha) * OpaciTexto);//Imprimir texto
                             if (Incremento0 == 0)
                             {
                                 
@@ -1356,8 +1367,8 @@ class Episodio01 : GameState
                         {
                             SpriteBatch.Draw(Setas[indiceSetas], recSetas, null, Color.White, 180.0f, Vector2.Zero, SpriteEffects.FlipVertically, 0.0f);
                         }
-                        SpriteBatch.Draw(CaixadeTexto, vCaixa, Color.White * Alpha);
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.Black * Alpha);
+                        SpriteBatch.Draw(CaixadeTexto, vCaixa, (Color.White * Alpha) * OpaciTexto);
+                        SpriteBatch.DrawString(arial, texto, posicaoText, (Color.Black * Alpha) * OpaciTexto);//Imprimir texto
                         
                     }
                     if (parte8 && !exercicio8)
@@ -1450,8 +1461,8 @@ class Episodio01 : GameState
                             TextoAtt = dialogo09[Incremento0];
 
                         }
-                        SpriteBatch.Draw(CaixadeTexto, vCaixa, Color.White * Alpha);
-                        SpriteBatch.DrawString(arial, texto, posicaoText, Color.Black * Alpha);
+                        SpriteBatch.Draw(CaixadeTexto, vCaixa, (Color.White * Alpha) * OpaciTexto);
+                        SpriteBatch.DrawString(arial, texto, posicaoText, (Color.Black * Alpha) * OpaciTexto);//Imprimir texto
                     }
                     if (parte9 && !exercicio9)
                     {
@@ -1542,8 +1553,8 @@ class Episodio01 : GameState
                             {
                                 TextoAtt = dialogo10[Incremento0];
                             }
-                            SpriteBatch.Draw(CaixadeTexto, vCaixa, Color.White * Alpha);
-                            SpriteBatch.DrawString(arial, texto, posicaoText, Color.Black * Alpha);
+                            SpriteBatch.Draw(CaixadeTexto, vCaixa, (Color.White * Alpha) * OpaciTexto);
+                            SpriteBatch.DrawString(arial, texto, posicaoText, (Color.Black * Alpha) * OpaciTexto);//Imprimir texto
                         }
                         if (parte10 && !exercicio10)
                         {

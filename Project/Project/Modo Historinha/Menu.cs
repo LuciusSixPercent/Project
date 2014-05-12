@@ -123,7 +123,7 @@ using Microsoft.Xna.Framework.Audio;
             MediaPlayer.Volume = (rcMedidor.X / (rcbarra.X + rcbarra.Width));
             if (MediaPlayer.State == MediaState.Stopped && tocar)
             {
-                engineSound = soundBank3.GetCue("Silly Fun");
+                engineSound = soundBank3.GetCue("silly fun");
                 engineSound.Play();
                 tocar = false;
                
@@ -137,7 +137,7 @@ using Microsoft.Xna.Framework.Audio;
                 if (repetir)
                 {
                     Player1 = soundBank.GetCue("logo_music_36");
-                    engineSound = soundBank3.GetCue("Silly Fun");
+                    engineSound = soundBank3.GetCue("silly fun");
                     Player1.Play();
                     MediaPlayer.Play(Inicio);
                     tocar = true;
@@ -150,7 +150,7 @@ using Microsoft.Xna.Framework.Audio;
 
                         //engineSound = soundBank.GetCue("magic-chime-07");
                         //engineSound.Play();
-                        soundBank.PlayCue("magic-chime-07");
+                        soundBank.PlayCue("magic chime 07");
 
                         bepe = false;
 
@@ -162,7 +162,7 @@ using Microsoft.Xna.Framework.Audio;
 
                     if (engineSound.IsStopped && tocar == false)
                     {
-                        engineSound = soundBank3.GetCue("Silly Fun");
+                        engineSound = soundBank3.GetCue("silly sun");
                         engineSound.Play();
                     }
                     rcSeta = new Rectangle((int)menus[escolha].X, (int)menus[escolha].Y, seta.Width, seta.Height);

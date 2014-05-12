@@ -215,6 +215,7 @@ class ModoHistorinha
             {
                 if (!seq)
                 {
+                    PlayerModoHistoria = null;
                     MediaPlayer.Stop();
                     venceu = true;
                 }
