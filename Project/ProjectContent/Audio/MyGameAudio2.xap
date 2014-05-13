@@ -225,192 +225,8 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = <none>;
-    Bank Last Revised Low = 794369295;
-    Bank Last Revised High = 30370356;
-
-    Wave
-    {
-        Name = 385591_Night_sea_ln;
-        File = 385591_Night_sea_ln.wav;
-        Build Settings Last Modified Low = 2876414922;
-        Build Settings Last Modified High = 30367920;
-
-        Cache
-        {
-            Format Tag = 0;
-            Channels = 2;
-            Sampling Rate = 44100;
-            Bits Per Sample = 1;
-            Play Region Offset = 44;
-            Play Region Length = 5213952;
-            Loop Region Offset = 0;
-            Loop Region Length = 0;
-            File Type = 1;
-            Last Modified Low = 817942528;
-            Last Modified High = 30367782;
-        }
-    }
-
-    Wave
-    {
-        Name = 429208_Vanilla;
-        File = 429208_Vanilla.wav;
-        Build Settings Last Modified Low = 3530318195;
-        Build Settings Last Modified High = 30367920;
-
-        Cache
-        {
-            Format Tag = 0;
-            Channels = 2;
-            Sampling Rate = 44100;
-            Bits Per Sample = 1;
-            Play Region Offset = 44;
-            Play Region Length = 10035068;
-            Loop Region Offset = 0;
-            Loop Region Length = 0;
-            File Type = 1;
-            Last Modified Low = 853171456;
-            Last Modified High = 30367789;
-        }
-    }
-
-    Wave
-    {
-        Name = 515728_Soccer-Life-97;
-        File = 515728_Soccer-Life-97.wav;
-        Build Settings Last Modified Low = 3530328203;
-        Build Settings Last Modified High = 30367920;
-
-        Cache
-        {
-            Format Tag = 0;
-            Channels = 2;
-            Sampling Rate = 44100;
-            Bits Per Sample = 1;
-            Play Region Offset = 44;
-            Play Region Length = 11422044;
-            Loop Region Offset = 0;
-            Loop Region Length = 0;
-            File Type = 1;
-            Last Modified Low = 2583106048;
-            Last Modified High = 30367787;
-        }
-    }
-
-    Wave
-    {
-        Name = 540428_quotSports-Fanaticq;
-        File = 540428_quotSports-Fanaticq.wav;
-        Build Settings Last Modified Low = 3530328203;
-        Build Settings Last Modified High = 30367920;
-
-        Cache
-        {
-            Format Tag = 0;
-            Channels = 2;
-            Sampling Rate = 44100;
-            Bits Per Sample = 1;
-            Play Region Offset = 44;
-            Play Region Length = 6434080;
-            Loop Region Offset = 3211264;
-            Loop Region Length = 3222816;
-            File Type = 1;
-            Last Modified Low = 3861082112;
-            Last Modified High = 30367878;
-        }
-    }
-
-    Wave
-    {
-        Name = 177474_wedo_midi;
-        File = 177474_wedo_midi.wav;
-        Build Settings Last Modified Low = 2212152631;
-        Build Settings Last Modified High = 30369584;
-
-        Cache
-        {
-            Format Tag = 0;
-            Channels = 1;
-            Sampling Rate = 44100;
-            Bits Per Sample = 1;
-            Play Region Offset = 44;
-            Play Region Length = 1197344;
-            Loop Region Offset = 0;
-            Loop Region Length = 0;
-            File Type = 1;
-            Last Modified Low = 1412856188;
-            Last Modified High = 30369584;
-        }
-    }
-
-    Wave
-    {
-        Name = 479232_relaxing-summer-bea;
-        File = 479232_relaxing-summer-bea.wav;
-        Build Settings Last Modified Low = 2212162618;
-        Build Settings Last Modified High = 30369584;
-
-        Cache
-        {
-            Format Tag = 0;
-            Channels = 1;
-            Sampling Rate = 44100;
-            Bits Per Sample = 1;
-            Play Region Offset = 44;
-            Play Region Length = 1324032;
-            Loop Region Offset = 0;
-            Loop Region Length = 0;
-            File Type = 1;
-            Last Modified Low = 1437081043;
-            Last Modified High = 30369584;
-        }
-    }
-
-    Wave
-    {
-        Name = 549944_Trickster;
-        File = 549944_Trickster.wav;
-        Build Settings Last Modified Low = 2212162618;
-        Build Settings Last Modified High = 30369584;
-
-        Cache
-        {
-            Format Tag = 0;
-            Channels = 1;
-            Sampling Rate = 44100;
-            Bits Per Sample = 1;
-            Play Region Offset = 44;
-            Play Region Length = 10664226;
-            Loop Region Offset = 0;
-            Loop Region Length = 0;
-            File Type = 1;
-            Last Modified Low = 1437281183;
-            Last Modified High = 30369584;
-        }
-    }
-
-    Wave
-    {
-        Name = 558441_Raikoh---Hoppy;
-        File = 558441_Raikoh---Hoppy.wav;
-        Build Settings Last Modified Low = 2212162618;
-        Build Settings Last Modified High = 30369584;
-
-        Cache
-        {
-            Format Tag = 0;
-            Channels = 1;
-            Sampling Rate = 44100;
-            Bits Per Sample = 1;
-            Play Region Offset = 44;
-            Play Region Length = 7284742;
-            Loop Region Offset = 0;
-            Loop Region Length = 0;
-            File Type = 1;
-            Last Modified Low = 1437351231;
-            Last Modified High = 30369584;
-        }
-    }
+    Bank Last Revised Low = 3700299754;
+    Bank Last Revised High = 30371362;
 
     Wave
     {
@@ -848,6 +664,213 @@ Wave Bank
             Last Modified High = 30370352;
         }
     }
+
+    Wave
+    {
+        Name = night_sea_ln;
+        File = Win\night_sea_ln.wav;
+        Build Settings Last Modified Low = 3324038233;
+        Build Settings Last Modified High = 30371362;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 2;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 5213952;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2652113077;
+            Last Modified High = 30371360;
+        }
+    }
+
+    Wave
+    {
+        Name = quotsports_fanaticq;
+        File = Win\quotsports_fanaticq.wav;
+        Build Settings Last Modified Low = 3403852798;
+        Build Settings Last Modified High = 30371362;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 1;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 3217040;
+            Loop Region Offset = 1605632;
+            Loop Region Length = 1611408;
+            File Type = 1;
+            Last Modified Low = 2716376753;
+            Last Modified High = 30371360;
+        }
+    }
+
+    Wave
+    {
+        Name = raikoh_hoppy;
+        File = Win\raikoh_hoppy.wav;
+        Build Settings Last Modified Low = 3462006124;
+        Build Settings Last Modified High = 30371362;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 1;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 7284742;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2715576707;
+            Last Modified High = 30371360;
+        }
+    }
+
+    Wave
+    {
+        Name = relaxing_summer_bea;
+        File = Win\relaxing_summer_bea.wav;
+        Build Settings Last Modified Low = 3508508784;
+        Build Settings Last Modified High = 30371362;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 1;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 1324032;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2714756660;
+            Last Modified High = 30371360;
+        }
+    }
+
+    Wave
+    {
+        Name = silly_fun;
+        File = Win\silly_fun.wav;
+        Build Settings Last Modified Low = 3568412211;
+        Build Settings Last Modified High = 30371362;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 1;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 6186042;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2668364007;
+            Last Modified High = 30371360;
+        }
+    }
+
+    Wave
+    {
+        Name = soccer_life_97;
+        File = Win\soccer_life_97.wav;
+        Build Settings Last Modified Low = 3603324207;
+        Build Settings Last Modified High = 30371362;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 1;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 5711022;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2652723112;
+            Last Modified High = 30371360;
+        }
+    }
+
+    Wave
+    {
+        Name = trickster;
+        File = Win\trickster.wav;
+        Build Settings Last Modified Low = 3631325809;
+        Build Settings Last Modified High = 30371362;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 1;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 10664226;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2713926613;
+            Last Modified High = 30371360;
+        }
+    }
+
+    Wave
+    {
+        Name = vanilla;
+        File = Win\vanilla.wav;
+        Build Settings Last Modified Low = 3662227576;
+        Build Settings Last Modified High = 30371362;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 1;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 5017534;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2712476530;
+            Last Modified High = 30371360;
+        }
+    }
+
+    Wave
+    {
+        Name = wedo_midi;
+        File = Win\wedo_midi.wav;
+        Build Settings Last Modified Low = 3700299754;
+        Build Settings Last Modified High = 30371362;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 1;
+            Sampling Rate = 44100;
+            Bits Per Sample = 1;
+            Play Region Offset = 44;
+            Play Region Length = 1197344;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2711886496;
+            Last Modified High = 30371360;
+        }
+    }
 }
 
 Sound Bank
@@ -857,390 +880,6 @@ Sound Bank
     Windows File = Win\Sound Bank2.xsb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
-
-    Sound
-    {
-        Name = 385591_Night_sea_ln;
-        Volume = -1200;
-        Pitch = 0;
-        Priority = 0;
-
-        Category Entry
-        {
-            Name = Music;
-        }
-
-        Track
-        {
-            Volume = 0;
-            Use Filter = 0;
-
-            Play Wave Event
-            {
-                Loop Count = 255;
-                Break Loop = 0;
-                Use Speaker Position = 0;
-                Use Center Speaker = 1;
-                New Speaker Position On Loop = 1;
-                Speaker Position Angle = 0.000000;
-                Speaker Position Arc = 0.000000;
-
-                Event Header
-                {
-                    Timestamp = 0;
-                    Relative = 0;
-                    Random Recurrence = 0;
-                    Random Offset = 0;
-                }
-
-                Wave Entry
-                {
-                    Bank Name = Wave Bank2;
-                    Bank Index = 0;
-                    Entry Name = 385591_Night_sea_ln;
-                    Entry Index = 0;
-                    Weight = 255;
-                    Weight Min = 0;
-                }
-            }
-        }
-    }
-
-    Sound
-    {
-        Name = 429208_Vanilla;
-        Volume = -1200;
-        Pitch = 0;
-        Priority = 0;
-
-        Category Entry
-        {
-            Name = Music;
-        }
-
-        Track
-        {
-            Volume = 0;
-            Use Filter = 0;
-
-            Play Wave Event
-            {
-                Loop Count = 255;
-                Break Loop = 0;
-                Use Speaker Position = 0;
-                Use Center Speaker = 1;
-                New Speaker Position On Loop = 1;
-                Speaker Position Angle = 0.000000;
-                Speaker Position Arc = 0.000000;
-
-                Event Header
-                {
-                    Timestamp = 0;
-                    Relative = 0;
-                    Random Recurrence = 0;
-                    Random Offset = 0;
-                }
-
-                Wave Entry
-                {
-                    Bank Name = Wave Bank2;
-                    Bank Index = 0;
-                    Entry Name = 429208_Vanilla;
-                    Entry Index = 1;
-                    Weight = 255;
-                    Weight Min = 0;
-                }
-            }
-        }
-    }
-
-    Sound
-    {
-        Name = 515728_Soccer-Life-97;
-        Volume = -1200;
-        Pitch = 0;
-        Priority = 0;
-
-        Category Entry
-        {
-            Name = Music;
-        }
-
-        Track
-        {
-            Volume = 0;
-            Use Filter = 0;
-
-            Play Wave Event
-            {
-                Loop Count = 255;
-                Break Loop = 0;
-                Use Speaker Position = 0;
-                Use Center Speaker = 1;
-                New Speaker Position On Loop = 1;
-                Speaker Position Angle = 0.000000;
-                Speaker Position Arc = 0.000000;
-
-                Event Header
-                {
-                    Timestamp = 0;
-                    Relative = 0;
-                    Random Recurrence = 0;
-                    Random Offset = 0;
-                }
-
-                Wave Entry
-                {
-                    Bank Name = Wave Bank2;
-                    Bank Index = 0;
-                    Entry Name = 515728_Soccer-Life-97;
-                    Entry Index = 2;
-                    Weight = 255;
-                    Weight Min = 0;
-                }
-            }
-        }
-    }
-
-    Sound
-    {
-        Name = 540428_quotSports-Fanaticq;
-        Volume = -1200;
-        Pitch = 0;
-        Priority = 0;
-
-        Category Entry
-        {
-            Name = Music;
-        }
-
-        Track
-        {
-            Volume = 0;
-            Use Filter = 0;
-
-            Play Wave Event
-            {
-                Loop Count = 255;
-                Break Loop = 0;
-                Use Speaker Position = 0;
-                Use Center Speaker = 1;
-                New Speaker Position On Loop = 1;
-                Speaker Position Angle = 0.000000;
-                Speaker Position Arc = 0.000000;
-
-                Event Header
-                {
-                    Timestamp = 0;
-                    Relative = 0;
-                    Random Recurrence = 0;
-                    Random Offset = 0;
-                }
-
-                Wave Entry
-                {
-                    Bank Name = Wave Bank2;
-                    Bank Index = 0;
-                    Entry Name = 540428_quotSports-Fanaticq;
-                    Entry Index = 3;
-                    Weight = 255;
-                    Weight Min = 0;
-                }
-            }
-        }
-    }
-
-    Sound
-    {
-        Name = 177474_wedo_midi;
-        Volume = -1200;
-        Pitch = 0;
-        Priority = 0;
-
-        Category Entry
-        {
-            Name = Music;
-        }
-
-        Track
-        {
-            Volume = 0;
-            Use Filter = 0;
-
-            Play Wave Event
-            {
-                Loop Count = 255;
-                Break Loop = 0;
-                Use Speaker Position = 0;
-                Use Center Speaker = 1;
-                New Speaker Position On Loop = 1;
-                Speaker Position Angle = 0.000000;
-                Speaker Position Arc = 0.000000;
-
-                Event Header
-                {
-                    Timestamp = 0;
-                    Relative = 0;
-                    Random Recurrence = 0;
-                    Random Offset = 0;
-                }
-
-                Wave Entry
-                {
-                    Bank Name = Wave Bank2;
-                    Bank Index = 0;
-                    Entry Name = 177474_wedo_midi;
-                    Entry Index = 4;
-                    Weight = 255;
-                    Weight Min = 0;
-                }
-            }
-        }
-    }
-
-    Sound
-    {
-        Name = 479232_relaxing-summer-bea;
-        Volume = -1200;
-        Pitch = 0;
-        Priority = 0;
-
-        Category Entry
-        {
-            Name = Music;
-        }
-
-        Track
-        {
-            Volume = 0;
-            Use Filter = 0;
-
-            Play Wave Event
-            {
-                Loop Count = 255;
-                Break Loop = 0;
-                Use Speaker Position = 0;
-                Use Center Speaker = 1;
-                New Speaker Position On Loop = 1;
-                Speaker Position Angle = 0.000000;
-                Speaker Position Arc = 0.000000;
-
-                Event Header
-                {
-                    Timestamp = 0;
-                    Relative = 0;
-                    Random Recurrence = 0;
-                    Random Offset = 0;
-                }
-
-                Wave Entry
-                {
-                    Bank Name = Wave Bank2;
-                    Bank Index = 0;
-                    Entry Name = 479232_relaxing-summer-bea;
-                    Entry Index = 5;
-                    Weight = 255;
-                    Weight Min = 0;
-                }
-            }
-        }
-    }
-
-    Sound
-    {
-        Name = 549944_Trickster;
-        Volume = -1200;
-        Pitch = 0;
-        Priority = 0;
-
-        Category Entry
-        {
-            Name = Music;
-        }
-
-        Track
-        {
-            Volume = 0;
-            Use Filter = 0;
-
-            Play Wave Event
-            {
-                Loop Count = 255;
-                Break Loop = 0;
-                Use Speaker Position = 0;
-                Use Center Speaker = 1;
-                New Speaker Position On Loop = 1;
-                Speaker Position Angle = 0.000000;
-                Speaker Position Arc = 0.000000;
-
-                Event Header
-                {
-                    Timestamp = 0;
-                    Relative = 0;
-                    Random Recurrence = 0;
-                    Random Offset = 0;
-                }
-
-                Wave Entry
-                {
-                    Bank Name = Wave Bank2;
-                    Bank Index = 0;
-                    Entry Name = 549944_Trickster;
-                    Entry Index = 6;
-                    Weight = 255;
-                    Weight Min = 0;
-                }
-            }
-        }
-    }
-
-    Sound
-    {
-        Name = 558441_Raikoh---Hoppy;
-        Volume = -1200;
-        Pitch = 0;
-        Priority = 0;
-
-        Category Entry
-        {
-            Name = Music;
-        }
-
-        Track
-        {
-            Volume = 0;
-            Use Filter = 0;
-
-            Play Wave Event
-            {
-                Loop Count = 255;
-                Break Loop = 0;
-                Use Speaker Position = 0;
-                Use Center Speaker = 1;
-                New Speaker Position On Loop = 1;
-                Speaker Position Angle = 0.000000;
-                Speaker Position Arc = 0.000000;
-
-                Event Header
-                {
-                    Timestamp = 0;
-                    Relative = 0;
-                    Random Recurrence = 0;
-                    Random Offset = 0;
-                }
-
-                Wave Entry
-                {
-                    Bank Name = Wave Bank2;
-                    Bank Index = 0;
-                    Entry Name = 558441_Raikoh---Hoppy;
-                    Entry Index = 7;
-                    Weight = 255;
-                    Weight Min = 0;
-                }
-            }
-        }
-    }
 
     Sound
     {
@@ -1281,7 +920,7 @@ Sound Bank
                     Bank Name = Wave Bank2;
                     Bank Index = 0;
                     Entry Name = cancel2;
-                    Entry Index = 8;
+                    Entry Index = 0;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -1328,7 +967,7 @@ Sound Bank
                     Bank Name = Wave Bank2;
                     Bank Index = 0;
                     Entry Name = cursor7;
-                    Entry Index = 9;
+                    Entry Index = 1;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -1375,7 +1014,7 @@ Sound Bank
                     Bank Name = Wave Bank2;
                     Bank Index = 0;
                     Entry Name = decision5;
-                    Entry Index = 10;
+                    Entry Index = 2;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -1422,7 +1061,7 @@ Sound Bank
                     Bank Name = Wave Bank2;
                     Bank Index = 0;
                     Entry Name = decision7;
-                    Entry Index = 11;
+                    Entry Index = 3;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -1469,7 +1108,7 @@ Sound Bank
                     Bank Name = Wave Bank2;
                     Bank Index = 0;
                     Entry Name = warning1;
-                    Entry Index = 12;
+                    Entry Index = 4;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -1516,7 +1155,7 @@ Sound Bank
                     Bank Name = Wave Bank2;
                     Bank Index = 0;
                     Entry Name = BB003;
-                    Entry Index = 13;
+                    Entry Index = 5;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -1563,7 +1202,7 @@ Sound Bank
                     Bank Name = Wave Bank2;
                     Bank Index = 0;
                     Entry Name = BB004;
-                    Entry Index = 14;
+                    Entry Index = 6;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -1610,7 +1249,7 @@ Sound Bank
                     Bank Name = Wave Bank2;
                     Bank Index = 0;
                     Entry Name = BB005;
-                    Entry Index = 15;
+                    Entry Index = 7;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -1657,7 +1296,7 @@ Sound Bank
                     Bank Name = Wave Bank2;
                     Bank Index = 0;
                     Entry Name = BB006;
-                    Entry Index = 16;
+                    Entry Index = 8;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -1704,7 +1343,7 @@ Sound Bank
                     Bank Name = Wave Bank2;
                     Bank Index = 0;
                     Entry Name = BB007;
-                    Entry Index = 17;
+                    Entry Index = 9;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -1751,7 +1390,7 @@ Sound Bank
                     Bank Name = Wave Bank2;
                     Bank Index = 0;
                     Entry Name = BB008;
-                    Entry Index = 18;
+                    Entry Index = 10;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -1798,7 +1437,7 @@ Sound Bank
                     Bank Name = Wave Bank2;
                     Bank Index = 0;
                     Entry Name = BB009;
-                    Entry Index = 19;
+                    Entry Index = 11;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -1845,7 +1484,7 @@ Sound Bank
                     Bank Name = Wave Bank2;
                     Bank Index = 0;
                     Entry Name = decision8;
-                    Entry Index = 20;
+                    Entry Index = 12;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -1892,7 +1531,7 @@ Sound Bank
                     Bank Name = Wave Bank2;
                     Bank Index = 0;
                     Entry Name = decision9;
-                    Entry Index = 21;
+                    Entry Index = 13;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -1939,7 +1578,7 @@ Sound Bank
                     Bank Name = Wave Bank2;
                     Bank Index = 0;
                     Entry Name = decision17;
-                    Entry Index = 22;
+                    Entry Index = 14;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -1986,7 +1625,7 @@ Sound Bank
                     Bank Name = Wave Bank2;
                     Bank Index = 0;
                     Entry Name = miss_answer_1;
-                    Entry Index = 23;
+                    Entry Index = 15;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -2033,7 +1672,7 @@ Sound Bank
                     Bank Name = Wave Bank2;
                     Bank Index = 0;
                     Entry Name = miss_answer_2;
-                    Entry Index = 24;
+                    Entry Index = 16;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -2080,7 +1719,7 @@ Sound Bank
                     Bank Name = Wave Bank2;
                     Bank Index = 0;
                     Entry Name = wrong_answer_1;
-                    Entry Index = 25;
+                    Entry Index = 17;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -2127,6 +1766,390 @@ Sound Bank
                     Bank Name = Wave Bank2;
                     Bank Index = 0;
                     Entry Name = whistle;
+                    Entry Index = 18;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = night_sea_ln;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Loop Count = 255;
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank2;
+                    Bank Index = 0;
+                    Entry Name = night_sea_ln;
+                    Entry Index = 19;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = quotsports_fanaticq;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Loop Count = 255;
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank2;
+                    Bank Index = 0;
+                    Entry Name = quotsports_fanaticq;
+                    Entry Index = 20;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = raikoh_hoppy;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Loop Count = 255;
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank2;
+                    Bank Index = 0;
+                    Entry Name = raikoh_hoppy;
+                    Entry Index = 21;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = relaxing_summer_bea;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Loop Count = 255;
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank2;
+                    Bank Index = 0;
+                    Entry Name = relaxing_summer_bea;
+                    Entry Index = 22;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = silly_fun;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Loop Count = 255;
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank2;
+                    Bank Index = 0;
+                    Entry Name = silly_fun;
+                    Entry Index = 23;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = soccer_life_97;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Loop Count = 255;
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank2;
+                    Bank Index = 0;
+                    Entry Name = soccer_life_97;
+                    Entry Index = 24;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = trickster;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Loop Count = 255;
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank2;
+                    Bank Index = 0;
+                    Entry Name = trickster;
+                    Entry Index = 25;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
+    Sound
+    {
+        Name = vanilla;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Loop Count = 255;
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank2;
+                    Bank Index = 0;
+                    Entry Name = vanilla;
                     Entry Index = 26;
                     Weight = 255;
                     Weight Min = 0;
@@ -2135,163 +2158,51 @@ Sound Bank
         }
     }
 
-    Cue
+    Sound
     {
-        Name = 385591_Night_sea_ln;
+        Name = wedo_midi;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
 
-        Variation
+        Category Entry
         {
-            Variation Type = 3;
-            Variation Table Type = 1;
-            New Variation on Loop = 0;
+            Name = Default;
         }
 
-        Sound Entry
+        Track
         {
-            Name = 385591_Night_sea_ln;
-            Index = 0;
-            Weight Min = 0;
-            Weight Max = 255;
-        }
-    }
+            Volume = 0;
+            Use Filter = 0;
 
-    Cue
-    {
-        Name = 429208_Vanilla;
+            Play Wave Event
+            {
+                Loop Count = 255;
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
 
-        Variation
-        {
-            Variation Type = 3;
-            Variation Table Type = 1;
-            New Variation on Loop = 0;
-        }
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
 
-        Sound Entry
-        {
-            Name = 429208_Vanilla;
-            Index = 1;
-            Weight Min = 0;
-            Weight Max = 255;
-        }
-    }
-
-    Cue
-    {
-        Name = 515728_Soccer-Life-97;
-
-        Variation
-        {
-            Variation Type = 3;
-            Variation Table Type = 1;
-            New Variation on Loop = 0;
-        }
-
-        Sound Entry
-        {
-            Name = 515728_Soccer-Life-97;
-            Index = 2;
-            Weight Min = 0;
-            Weight Max = 255;
-        }
-    }
-
-    Cue
-    {
-        Name = 540428_quotSports-Fanaticq;
-
-        Variation
-        {
-            Variation Type = 3;
-            Variation Table Type = 1;
-            New Variation on Loop = 0;
-        }
-
-        Sound Entry
-        {
-            Name = 540428_quotSports-Fanaticq;
-            Index = 3;
-            Weight Min = 0;
-            Weight Max = 255;
-        }
-    }
-
-    Cue
-    {
-        Name = 177474_wedo_midi;
-
-        Variation
-        {
-            Variation Type = 3;
-            Variation Table Type = 1;
-            New Variation on Loop = 0;
-        }
-
-        Sound Entry
-        {
-            Name = 177474_wedo_midi;
-            Index = 4;
-            Weight Min = 0;
-            Weight Max = 255;
-        }
-    }
-
-    Cue
-    {
-        Name = 479232_relaxing-summer-bea;
-
-        Variation
-        {
-            Variation Type = 3;
-            Variation Table Type = 1;
-            New Variation on Loop = 0;
-        }
-
-        Sound Entry
-        {
-            Name = 479232_relaxing-summer-bea;
-            Index = 5;
-            Weight Min = 0;
-            Weight Max = 255;
-        }
-    }
-
-    Cue
-    {
-        Name = 549944_Trickster;
-
-        Variation
-        {
-            Variation Type = 3;
-            Variation Table Type = 1;
-            New Variation on Loop = 0;
-        }
-
-        Sound Entry
-        {
-            Name = 549944_Trickster;
-            Index = 6;
-            Weight Min = 0;
-            Weight Max = 255;
-        }
-    }
-
-    Cue
-    {
-        Name = 558441_Raikoh---Hoppy;
-
-        Variation
-        {
-            Variation Type = 3;
-            Variation Table Type = 1;
-            New Variation on Loop = 0;
-        }
-
-        Sound Entry
-        {
-            Name = 558441_Raikoh---Hoppy;
-            Index = 7;
-            Weight Min = 0;
-            Weight Max = 255;
+                Wave Entry
+                {
+                    Bank Name = Wave Bank2;
+                    Bank Index = 0;
+                    Entry Name = wedo_midi;
+                    Entry Index = 27;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
         }
     }
 
@@ -2309,7 +2220,7 @@ Sound Bank
         Sound Entry
         {
             Name = cancel2;
-            Index = 8;
+            Index = 0;
             Weight Min = 0;
             Weight Max = 255;
         }
@@ -2329,7 +2240,7 @@ Sound Bank
         Sound Entry
         {
             Name = cursor7;
-            Index = 9;
+            Index = 1;
             Weight Min = 0;
             Weight Max = 255;
         }
@@ -2349,7 +2260,7 @@ Sound Bank
         Sound Entry
         {
             Name = decision5;
-            Index = 10;
+            Index = 2;
             Weight Min = 0;
             Weight Max = 255;
         }
@@ -2369,7 +2280,7 @@ Sound Bank
         Sound Entry
         {
             Name = decision7;
-            Index = 11;
+            Index = 3;
             Weight Min = 0;
             Weight Max = 255;
         }
@@ -2389,7 +2300,7 @@ Sound Bank
         Sound Entry
         {
             Name = warning1;
-            Index = 12;
+            Index = 4;
             Weight Min = 0;
             Weight Max = 255;
         }
@@ -2409,7 +2320,7 @@ Sound Bank
         Sound Entry
         {
             Name = BB003;
-            Index = 13;
+            Index = 5;
             Weight Min = 0;
             Weight Max = 255;
         }
@@ -2429,7 +2340,7 @@ Sound Bank
         Sound Entry
         {
             Name = BB004;
-            Index = 14;
+            Index = 6;
             Weight Min = 0;
             Weight Max = 255;
         }
@@ -2449,7 +2360,7 @@ Sound Bank
         Sound Entry
         {
             Name = BB005;
-            Index = 15;
+            Index = 7;
             Weight Min = 0;
             Weight Max = 255;
         }
@@ -2469,7 +2380,7 @@ Sound Bank
         Sound Entry
         {
             Name = BB006;
-            Index = 16;
+            Index = 8;
             Weight Min = 0;
             Weight Max = 255;
         }
@@ -2489,7 +2400,7 @@ Sound Bank
         Sound Entry
         {
             Name = BB007;
-            Index = 17;
+            Index = 9;
             Weight Min = 0;
             Weight Max = 255;
         }
@@ -2509,7 +2420,7 @@ Sound Bank
         Sound Entry
         {
             Name = BB008;
-            Index = 18;
+            Index = 10;
             Weight Min = 0;
             Weight Max = 255;
         }
@@ -2529,7 +2440,7 @@ Sound Bank
         Sound Entry
         {
             Name = BB009;
-            Index = 19;
+            Index = 11;
             Weight Min = 0;
             Weight Max = 255;
         }
@@ -2549,7 +2460,7 @@ Sound Bank
         Sound Entry
         {
             Name = decision8;
-            Index = 20;
+            Index = 12;
             Weight Min = 0;
             Weight Max = 255;
         }
@@ -2569,7 +2480,7 @@ Sound Bank
         Sound Entry
         {
             Name = decision9;
-            Index = 21;
+            Index = 13;
             Weight Min = 0;
             Weight Max = 255;
         }
@@ -2589,7 +2500,7 @@ Sound Bank
         Sound Entry
         {
             Name = decision17;
-            Index = 22;
+            Index = 14;
             Weight Min = 0;
             Weight Max = 255;
         }
@@ -2609,7 +2520,7 @@ Sound Bank
         Sound Entry
         {
             Name = miss_answer_1;
-            Index = 23;
+            Index = 15;
             Weight Min = 0;
             Weight Max = 255;
         }
@@ -2629,7 +2540,7 @@ Sound Bank
         Sound Entry
         {
             Name = miss_answer_2;
-            Index = 24;
+            Index = 16;
             Weight Min = 0;
             Weight Max = 255;
         }
@@ -2649,7 +2560,7 @@ Sound Bank
         Sound Entry
         {
             Name = wrong_answer_1;
-            Index = 25;
+            Index = 17;
             Weight Min = 0;
             Weight Max = 255;
         }
@@ -2669,7 +2580,187 @@ Sound Bank
         Sound Entry
         {
             Name = whistle;
+            Index = 18;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = night_sea_ln;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = night_sea_ln;
+            Index = 19;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = quotsports_fanaticq;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = quotsports_fanaticq;
+            Index = 20;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = raikoh_hoppy;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = raikoh_hoppy;
+            Index = 21;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = relaxing_summer_bea;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = relaxing_summer_bea;
+            Index = 22;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = silly_fun;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = silly_fun;
+            Index = 23;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = soccer_life_97;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = soccer_life_97;
+            Index = 24;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = trickster;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = trickster;
+            Index = 25;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = vanilla;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = vanilla;
             Index = 26;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = wedo_midi;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = wedo_midi;
+            Index = 27;
             Weight Min = 0;
             Weight Max = 255;
         }

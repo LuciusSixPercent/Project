@@ -123,7 +123,7 @@ using Microsoft.Xna.Framework.Audio;
             MediaPlayer.Volume = (rcMedidor.X / (rcbarra.X + rcbarra.Width));
             if (MediaPlayer.State == MediaState.Stopped && tocar)
             {
-                engineSound = soundBank3.GetCue("Silly Fun");
+                engineSound = soundBank3.GetCue("silly_fun");
                 engineSound.Play();
                 tocar = false;
                
@@ -137,7 +137,7 @@ using Microsoft.Xna.Framework.Audio;
                 if (repetir)
                 {
                     Player1 = soundBank.GetCue("logo_music_36");
-                    engineSound = soundBank3.GetCue("Silly Fun");
+                    engineSound = soundBank3.GetCue("silly_fun");
                     Player1.Play();
                     MediaPlayer.Play(Inicio);
                     tocar = true;
@@ -147,10 +147,7 @@ using Microsoft.Xna.Framework.Audio;
                 {
                     if (bepe)
                     {
-
-                        //engineSound = soundBank.GetCue("magic-chime-07");
-                        //engineSound.Play();
-                        soundBank.PlayCue("magic-chime-07");
+                        soundBank.PlayCue("magic_chime_07");
 
                         bepe = false;
 
@@ -162,7 +159,7 @@ using Microsoft.Xna.Framework.Audio;
 
                     if (engineSound.IsStopped && tocar == false)
                     {
-                        engineSound = soundBank3.GetCue("Silly Fun");
+                        engineSound = soundBank3.GetCue("silly_fun");
                         engineSound.Play();
                     }
                     rcSeta = new Rectangle((int)menus[escolha].X, (int)menus[escolha].Y, seta.Width, seta.Height);
@@ -535,18 +532,6 @@ using Microsoft.Xna.Framework.Audio;
                 clique = true;
                 if (ColisaoMouseOver(mouse, BTAvancar[indiceBTavancar], vBTAvancar) && !avancar &&!voltar)
                 {
-                    if (vVaral2.X == 1024)
-                    {
-                        vVaral2.X = -1024;
-                    }
-                    if (vVaral.X == 1024)
-                    {
-                        vVaral.X = -1024;
-                    }
-                    avancar = true;
-                }
-                if (ColisaoMouseOver(mouse, BTVoltar[indiceBTvoltar], vBTVoltar) && !voltar && !avancar)
-                {
                     if (vVaral2.X == -1024)
                     {
                         vVaral2.X = 1024;
@@ -555,6 +540,19 @@ using Microsoft.Xna.Framework.Audio;
                     {
                         vVaral.X = 1024;
                     }
+                    avancar = true;
+                }
+                if (ColisaoMouseOver(mouse, BTVoltar[indiceBTvoltar], vBTVoltar) && !voltar && !avancar)
+                {
+                    if (vVaral2.X == 1024)
+                    {
+                        vVaral2.X = -1024;
+                    }
+                    if (vVaral.X == 1024)
+                    {
+                        vVaral.X = -1024;
+                    }
+                    
                     voltar = true;
                 }
                 if (ColisaoMouseOver(mouse, SelecaoEpisodio1, vSelecaoEpisodio1))
@@ -569,7 +567,7 @@ using Microsoft.Xna.Framework.Audio;
             {
                 clique = false;
             }
-            if (avancar && !voltar)
+            if (!avancar && voltar)
             {
                 if (vVaral2.X >= 0)
                 {
@@ -581,7 +579,7 @@ using Microsoft.Xna.Framework.Audio;
                     }
                     if (vVaral2.X == 1024)
                     {
-                        avancar = false;
+                        voltar = false;
                     }
                 }
                 else if (vVaral2.X >= -1024 && vVaral2.X < 1)
@@ -593,7 +591,7 @@ using Microsoft.Xna.Framework.Audio;
                     }
                     if (vVaral2.X == 0)
                     {
-                        avancar = false;
+                        voltar = false;
                     }
                 }
                 if (vVaral.X >= 0)
@@ -605,7 +603,7 @@ using Microsoft.Xna.Framework.Audio;
                     }
                     if (vVaral.X == 1024)
                     {
-                        avancar = false;
+                        voltar = false;
                     }
                 }
                 else if (vVaral.X >= -1024 && vVaral.X < 1)
@@ -617,12 +615,12 @@ using Microsoft.Xna.Framework.Audio;
                     }
                     if (vVaral.X == 0)
                     {
-                        avancar = false;
+                        voltar = false;
                     }
                 }
                 
             }
-            if (voltar && !avancar)
+            if (!voltar && avancar)
             {
                 if (vVaral2.X <= 0)
                 {
@@ -633,7 +631,7 @@ using Microsoft.Xna.Framework.Audio;
                     }
                     if (vVaral2.X == -1024)
                     {
-                        voltar = false;
+                        avancar = false;
                     }
                 }
                 else if (vVaral2.X < 1025 && vVaral2.X >-1)
@@ -645,7 +643,7 @@ using Microsoft.Xna.Framework.Audio;
                     }
                     if (vVaral2.X == 0)
                     {
-                        voltar = false;
+                        avancar = false;
                     }
                 }
                 if (vVaral.X <= 0)
@@ -657,7 +655,7 @@ using Microsoft.Xna.Framework.Audio;
                     }
                     if (vVaral.X == -1024)
                     {
-                        voltar = false;
+                        avancar = false;
                     }
                 }
                 else if (vVaral.X <= 1024 && vVaral.X > -1)
@@ -669,7 +667,7 @@ using Microsoft.Xna.Framework.Audio;
                     }
                     if (vVaral.X == 0)
                     {
-                        voltar = false;
+                        avancar = false;
                     }
                 }
                

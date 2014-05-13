@@ -53,6 +53,10 @@ namespace game_states
         Cue engineSound = null;
 
         private bool shouldReset;
+
+        private TextBox questionHeader;
+        private List<TextBox> answersGotLbl;
+        private Repeatable2DGameObject answersSupports;
         #endregion
 
 
@@ -163,6 +167,23 @@ namespace game_states
 
                 questions = new List<QuestionGameObject>();
 
+                questionHeader = new TextBox(goManager.R2D);
+                questionHeader.FontSize = 40;
+                questionHeader.DropShadow = true;
+                questionHeader.Alignment = TextAlignment.CENTER;
+                questionHeader.Width = 1024;
+                questionHeader.Height = 100;
+                
+                string path = "Imagem" + Path.AltDirectorySeparatorChar + "ui" + Path.AltDirectorySeparatorChar + "bate_bola"+ 
+                    Path.AltDirectorySeparatorChar+"respostas_e_pontos"+ Path.AltDirectorySeparatorChar;
+                
+                answersSupports = new Repeatable2DGameObject(goManager.R2D, path, "suporte", 2, -1);
+                answersSupports.Y = 100;
+                answersSupports.RepeatAmount = Vector2.Zero;
+                answersSupports.AdaptToFrame = false;
+
+                answersGotLbl = new List<TextBox>();
+
                 numberOfQuestions = 1;
 
                 ball = new Ball(goManager.R3D, goManager.CollidableGameObjects);
@@ -193,19 +214,44 @@ namespace game_states
                 goManager.AddObject(ball);
                 goManager.AddObject(player);
                 goManager.AddObject(progress);
+                goManager.AddObject(questionHeader);
+                goManager.AddObject(answersSupports);
             }
         }
 
-        private void player_collidedWithAnswer(Vector3 position, Answer answer)
+        private void player_collidedWithAnswer(Answer answer)
         {
             if (questions[questions.Count - 1].CheckAnswer(answer, false))
             {
                 foundAnswer = 1;
+                foreach (char c in answer.Text)
+                {
+                    Vector3 position = answersSupports.GetClonePosition(answersGotLbl.Count);
+                    position.Y -= 50;
+                    TextBox answerLbl = CreateLabel(c.ToString(), position);
+                    answersSupports.AdvanceCloneFrame(answersGotLbl.Count);
+                    answersGotLbl.Add(answerLbl);
+                    goManager.AddObject(answerLbl);
+                }
             }
             else
             {
                 foundAnswer = -1;
             }
+        }
+
+        private TextBox CreateLabel(string text, Vector3 position)
+        {
+            TextBox answerLbl = new TextBox(goManager.R2D);
+            answerLbl.Text = text;
+            answerLbl.Alignment = TextAlignment.CENTER;
+            answerLbl.Position = position;
+            answerLbl.FontSize = (int)(50 * (answersSupports.Width/93)); //escalona o tamanho da fonte caso o suporte tenha sido reduzido
+            answerLbl.DropShadow = true;
+            answerLbl.Width = answersSupports.Width;
+            answerLbl.Height = 40;
+
+            return answerLbl;
         }
 
         private void LoadQuestions()
@@ -215,10 +261,50 @@ namespace game_states
             {
                 questions.Add(QuestionFactory.CreateQuestion(level, subjects[PublicRandom.Next(subjects.Length)], goManager.R3D, goManager.CollidableGameObjects, questions));
             }
+
             goManager.AddObject(questions[questions.Count - 1]);
+            questionHeader.Text = questions[questions.Count - 1].Header;
+
+            ResetAnswersDisplay();
+            CreateAnswersSupports();
+
             questions[questions.Count - 1].Player = player;
             questions[questions.Count - 1].Position = new Vector3(0, 0.25f, 5);
 
+        }
+
+        private void ResetAnswersDisplay()
+        {
+            for (int i = 0; i < answersGotLbl.Count; i++)
+            {
+                goManager.RemoveObject(answersGotLbl[i]);
+            } 
+            answersGotLbl.Clear();
+            answersSupports.RepeatAmount = Vector2.Zero;
+        }
+
+        private void CreateAnswersSupports()
+        {
+            string path = "Imagem" + Path.AltDirectorySeparatorChar + "ui" + Path.AltDirectorySeparatorChar + "bate_bola" + Path.AltDirectorySeparatorChar + "repostas_e_pontos" + Path.AltDirectorySeparatorChar;
+            int charCount = 0;
+            for (int j = 0; j < questions[questions.Count - 1].Question.AnswerCount; j++)
+            {
+                string answer = questions[questions.Count - 1].Question.GetAnswer(j);
+                charCount += answer.Length;
+            }
+
+            float widthScale = 1;
+            float baseWidht = 93;
+            float padding = 2;
+            answersSupports.RepeatAmount = new Vector2(charCount, 1);
+            float totalWidht = baseWidht * (answersSupports.RepeatAmount.X+1) + padding * (1+answersSupports.RepeatAmount.X) * 2;
+            Viewport screen = parent.GraphicsDevice.Viewport;
+            if (totalWidht > screen.Width)
+            {
+                widthScale = screen.Width / totalWidht;
+            }
+            answersSupports.Width = 93 * widthScale;
+            answersSupports.X = (screen.Width - totalWidht) / 2;
         }
 
         private void ChangeCurrentQuestion()
@@ -227,13 +313,16 @@ namespace game_states
             QuestionGameObject answeredQuestion = questions[questions.Count - 1];
             questions.RemoveAt(questions.Count - 1);
             score += answeredQuestion.Score;
-            goManager.removeObject(answeredQuestion);
+            goManager.RemoveObject(answeredQuestion);
 
             if (questions.Count > 0)
             {
                 goManager.AddObject(questions[questions.Count - 1]);
                 questions[questions.Count - 1].Position = new Vector3(0, 0.25f, player.Position.Z + 5);
                 questions[questions.Count - 1].Player = player;
+                questionHeader.Text = questions[questions.Count - 1].Header;
+                ResetAnswersDisplay();
+                CreateAnswersSupports();
             }
             else
             {
@@ -287,6 +376,7 @@ namespace game_states
         private void LoadUI()
         {
             progress.Load(parent.Content);
+            answersSupports.Load(parent.Content);
         }
 
         public void Reset()
@@ -315,7 +405,7 @@ namespace game_states
             score = 0;
             perfectSscoreMultiplier = 2;
             foreach (QuestionGameObject q in questions)
-                goManager.removeObject(q);
+                goManager.RemoveObject(q);
 
             LoadQuestions();
 
@@ -434,7 +524,7 @@ namespace game_states
         {
             if (engineSound == null || engineSound.IsStopped)
             {
-                engineSound = AudioManager.GetCue("540428_quotSports-Fanaticq");
+                engineSound = AudioManager.GetCue("quotsports_fanaticq");
             }
 
             if (!engineSound.IsPlaying)
@@ -481,7 +571,7 @@ namespace game_states
                 centerPlayer();
                 foreach (QuestionGameObject q in questions)
                 {
-                    goManager.removeObject(q);
+                    goManager.RemoveObject(q);
                 }
             }
         }
@@ -563,7 +653,7 @@ namespace game_states
             if (ContentLoaded)
             {
                 base.Draw(gameTime);
-                drawDebugData();
+                //drawDebugData();
             }
         }
 

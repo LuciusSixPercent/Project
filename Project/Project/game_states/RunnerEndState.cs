@@ -58,6 +58,7 @@ namespace game_states
             results.Height = 300;
             results.Position = new Vector3((screen.Width - results.Width)/2, 300, 0);
             results.Display = DisplayType.LINE_BY_LINE;
+            results.Alignment = TextAlignment.CENTER;
 
             goManager.AddObject(titleScreen);
             goManager.AddObject(results);
@@ -132,12 +133,12 @@ namespace game_states
             if (monitoredState.MistakesMade < monitoredState.AllowedMistakes)
             {
                 goManager.AddObject(_continue);
-                goManager.removeObject(tryAgain);
+                goManager.RemoveObject(tryAgain);
             }
             else
             {
                 goManager.AddObject(tryAgain);
-                goManager.removeObject(_continue);
+                goManager.RemoveObject(_continue);
             }
             EnableButtons();
             gotoState = StatesIdList.EMPTY_STATE;

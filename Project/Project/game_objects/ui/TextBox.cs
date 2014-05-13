@@ -16,12 +16,23 @@ namespace game_objects.ui
         LINE_BY_LINE
     }
 
+    public enum TextAlignment
+    {
+        LEFT,
+        RIGHT,
+        CENTER
+    }
+
     public class TextBox : DrawableGameObject
     {
 
         private List<string> lines;
+
         private string text;
+
         private DisplayType display;
+        private TextAlignment alignment;
+
         private int displayDelay;
         private int elapsed;
 
@@ -50,6 +61,12 @@ namespace game_objects.ui
             set { display = value; }
         }
 
+        public TextAlignment Alignment
+        {
+            get { return alignment; }
+            set { alignment = value; }
+        }
+
         public int FontSize
         {
             get { return fontSize; }
@@ -57,6 +74,7 @@ namespace game_objects.ui
             {
                 fontSize = value;
                 this.fontScale = ((float)fontSize / TextHelper.FontSize);
+                lineWrappingPerformed = false;
             }
         }
 
@@ -151,6 +169,7 @@ namespace game_objects.ui
             this.FontSize = 20;
             this.lineSpacing = TextHelper.SpriteFont.LineSpacing;
             this.display = DisplayType.ALL;
+            this.alignment = TextAlignment.LEFT;
             this.displayDelay = 500;
             this.textColor = Color.White;
             this.shadowColor = Color.Black;
@@ -328,23 +347,14 @@ namespace game_objects.ui
 
                 charCount += line.Length;
 
-                string visibleLine;
+                string visibleLine = GetVisibleLine(charCount, line, out keepGoing);
 
-                if (lastVisibleCharIndex < charCount && Display != DisplayType.ALL)
-                {
-                    visibleLine = line.Substring(0, line.Length - (charCount - lastVisibleCharIndex));
-                    keepGoing = false;
-                }
-                else
-                {
-                    visibleLine = line;
-                }
+                initialPos.X = AlignLine(initialPos, visibleLine);
 
                 if (DropShadow)
                 {
                     ((Renderer2D)Renderer).DrawString(visibleLine, initialPos, shadowColor, 0, shadowOffset, fontScale);
                 }
-
                 ((Renderer2D)Renderer).DrawString(visibleLine, initialPos, textColor, 0, Vector2.Zero, fontScale);
 
 
@@ -353,6 +363,37 @@ namespace game_objects.ui
                 if (initialPos.Y >= Height + Y)
                     keepGoing = false; ;
             }
+        }
+
+        private float AlignLine(Vector2 initialPos, string visibleLine)
+        {
+            float x = initialPos.X;
+            switch (alignment)
+            {
+                case TextAlignment.CENTER:
+                    x += (Width - TextHelper.SpriteFont.MeasureString(visibleLine).X*fontScale - padding.X) / 2;
+                    break;
+                case TextAlignment.RIGHT:
+                    x += (Width - TextHelper.SpriteFont.MeasureString(visibleLine).X*fontScale);
+                    break;
+            }
+            return x;
+        }
+
+        private string GetVisibleLine(int charCount, string line, out bool keepGoing)
+        {
+            string visibleLine;
+            if (lastVisibleCharIndex < charCount && Display != DisplayType.ALL)
+            {
+                visibleLine = line.Substring(0, line.Length - (charCount - lastVisibleCharIndex));
+                keepGoing = false;
+            }
+            else
+            {
+                visibleLine = line;
+                keepGoing = true;
+            }
+            return visibleLine;
         }
     }
 }

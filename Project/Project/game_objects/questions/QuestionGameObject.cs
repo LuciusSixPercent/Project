@@ -33,6 +33,11 @@ namespace game_objects.questions
         private int fakeSpawnCount;
         private int maxFakeSpawnCount;
         private float minAnswerDistance;
+
+        public Question Question
+        {
+            get { return question; }
+        }
         
         /// <summary>
         /// Responsável por limitar o número de respostas falsas geradas entre cada geração de resposta correta. Um valor 3 significa que a cada resposta correta criada,
@@ -106,7 +111,7 @@ namespace game_objects.questions
             base.Update(gameTime);
             foreach (Answer a in answers)
             {
-                if (a.Position.Z <= player.Position.Z + 5)
+                if (a.Position.Z <= player.Position.Z + 7)
                     a.Visible = true;
                 a.Update(gameTime);
             }
@@ -215,7 +220,7 @@ namespace game_objects.questions
                 this.answers[i].Position = position + offset;
                 this.answers[i].Visible = visible;
                 visible = false;
-                zIncrement += PublicRandom.Next(4, 8);
+                zIncrement += PublicRandom.Next(3, 6);
                 max--;
             }
         }

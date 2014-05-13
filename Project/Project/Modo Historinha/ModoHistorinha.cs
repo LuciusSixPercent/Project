@@ -215,6 +215,7 @@ class ModoHistorinha
             {
                 if (!seq)
                 {
+                    PlayerModoHistoria = null;
                     MediaPlayer.Stop();
                     venceu = true;
                 }
@@ -341,7 +342,7 @@ class ModoHistorinha
         if ((mouse.X > VOpcoes1.X && mouse.X < VOpcoes1.X + VOpcoes1.Width) && (mouse.Y >= VOpcoes1.Y && mouse.Y <= VOpcoes1.Y + VOpcoes1.Height))
         {
 
-            if (VOpcoes1.Y > altura1-10)
+            if (VOpcoes1.Y > altura1-5)
             {
                 VOpcoes1.Y -= 1;
 
@@ -349,21 +350,21 @@ class ModoHistorinha
         }
         if ((mouse.X > VOpcoes2.X && mouse.X < VOpcoes2.X + VOpcoes2.Width) && (mouse.Y >= VOpcoes2.Y && mouse.Y <= VOpcoes2.Y + VOpcoes2.Height))
         {
-            if (VOpcoes2.Y > altura2 - 10)
+            if (VOpcoes2.Y > altura2 - 5)
             {
                 VOpcoes2.Y -= 1;
             }
         }
         if ((mouse.X > VOpcoes3.X && mouse.X < VOpcoes3.X + VOpcoes3.Width) && (mouse.Y >= VOpcoes3.Y && mouse.Y <= VOpcoes3.Y + VOpcoes3.Height))
         {
-            if (VOpcoes3.Y > altura3 - 10)
+            if (VOpcoes3.Y > altura3 - 5)
             {
                 VOpcoes3.Y -= 1;
             }
         }
         if ((mouse.X > VOpcoes4.X && mouse.X < VOpcoes4.X + VOpcoes4.Width) && (mouse.Y >= VOpcoes4.Y && mouse.Y <= VOpcoes4.Y + VOpcoes4.Height))
         {
-            if (VOpcoes4.Y > altura4 - 10)
+            if (VOpcoes4.Y > altura4 - 5)
             {
                 VOpcoes4.Y -= 1;
             }
@@ -549,8 +550,9 @@ class ModoHistorinha
             Valt2 = new Vector2((VOpcoes3.X + 120) - arial.MeasureString(res3).X - justified3, VOpcoes3.Y + 60);
         if (quantidade >= 4)
             Valt3 = new Vector2((VOpcoes4.X + 120) - arial.MeasureString(res4).X - justified4, VOpcoes4.Y + 60);
-        Vpergunta = new Vector2(20, 20);
-        vCaixa = new Rectangle(0, 0, CaixadeTexto.Width, CaixadeTexto.Height);
+        vCaixa = new Rectangle(20, 0, CaixadeTexto.Width, CaixadeTexto.Height);
+        Vpergunta = new Vector2(vCaixa.X+20,vCaixa.Y+20);
+        
     }
 }
 

@@ -156,6 +156,7 @@
     <Compile Include="game_objects\questions\QuestionType.cs" />
     <Compile Include="game_objects\ui\ButtonStates.cs" />
     <Compile Include="game_objects\ui\ProgressBar.cs" />
+    <Compile Include="game_objects\ui\Repeatable2DGameObject.cs" />
     <Compile Include="game_objects\ui\TextBox.cs" />
     <Compile Include="game_objects\ui\ToggleButton.cs" />
     <Compile Include="game_states\CharSelectionState.cs" />

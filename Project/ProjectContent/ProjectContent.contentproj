@@ -168,51 +168,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Menu\Pause\configuracoesH.png">
-      <Name>configuracoesH</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Menu\Pause\configuracoesN.png">
-      <Name>configuracoesN</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Menu\Pause\configuracoesP.png">
-      <Name>configuracoesP</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Menu\Pause\menu_inicialH.png">
-      <Name>menu_inicialH</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Menu\Pause\menu_inicialN.png">
-      <Name>menu_inicialN</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Menu\Pause\menu_inicialP.png">
-      <Name>menu_inicialP</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Menu\Pause\voltar_ao_jogoH.png">
-      <Name>voltar_ao_jogoH</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Menu\Pause\voltar_ao_jogoN.png">
-      <Name>voltar_ao_jogoN</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Menu\Pause\voltar_ao_jogoP.png">
-      <Name>voltar_ao_jogoP</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Menu\sairH.png">
       <Name>sairH</Name>
       <Importer>TextureImporter</Importer>
@@ -610,11 +565,6 @@
       <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
       <ProcessorParameters_ColorKeyEnabled>False</ProcessorParameters_ColorKeyEnabled>
     </Compile>
-    <Compile Include="Audio\385591_Night_sea_ln_loop.wav">
-      <Name>385591_Night_sea_ln_loop</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
     <Compile Include="Audio\Menu\magic-chime-07.wav">
       <Name>magic-chime-07</Name>
       <Importer>WavImporter</Importer>
@@ -634,36 +584,6 @@
       <Name>MyGameAudio2</Name>
       <Importer>XactImporter</Importer>
       <Processor>XactProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\magic-chime-07.wav">
-      <Name>magic-chime-07</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\385591_Night_sea_ln.wav">
-      <Name>385591_Night_sea_ln</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\429208_Vanilla.wav">
-      <Name>429208_Vanilla</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\515728_Soccer-Life-97.wav">
-      <Name>515728_Soccer-Life-97</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\540428_quotSports-Fanaticq.wav">
-      <Name>540428_quotSports-Fanaticq</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\Silly Fun.wav">
-      <Name>Silly Fun</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
     </Compile>
     <Compile Include="Imagem\Cenario\Bate_Bola\ball1.png">
       <Name>ball1</Name>
@@ -1353,26 +1273,6 @@
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
     </Compile>
-    <Compile Include="Audio\177474_wedo_midi.wav">
-      <Name>177474_wedo_midi</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\479232_relaxing-summer-bea.wav">
-      <Name>479232_relaxing-summer-bea</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\549944_Trickster.wav">
-      <Name>549944_Trickster</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\558441_Raikoh---Hoppy.wav">
-      <Name>558441_Raikoh---Hoppy</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
     <Compile Include="Menu\Loading\loading1.png">
       <Name>loading1</Name>
       <Importer>TextureImporter</Importer>
@@ -1885,66 +1785,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Menu\Char_Selection\subjects\mathBtnP.png">
-      <Name>mathBtnP</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Menu\Char_Selection\subjects\ptBtnC.png">
-      <Name>ptBtnC</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Menu\Char_Selection\subjects\ptBtnH.png">
-      <Name>ptBtnH</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Menu\Char_Selection\subjects\ptBtnN.png">
-      <Name>ptBtnN</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Menu\Char_Selection\subjects\ptBtnP.png">
-      <Name>ptBtnP</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Menu\Char_Selection\subjects\ptMathBtnC.png">
-      <Name>ptMathBtnC</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Menu\Char_Selection\subjects\ptMathBtnH.png">
-      <Name>ptMathBtnH</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Menu\Char_Selection\subjects\ptMathBtnN.png">
-      <Name>ptMathBtnN</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Menu\Char_Selection\subjects\ptMathBtnP.png">
-      <Name>ptMathBtnP</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Menu\Char_Selection\subjects\mathBtnC.png">
-      <Name>mathBtnC</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Menu\Char_Selection\subjects\mathBtnH.png">
-      <Name>mathBtnH</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Menu\Char_Selection\subjects\mathBtnN.png">
-      <Name>mathBtnN</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Imagem\Personagem\maria\maria_triste\1.png">
       <Name>1</Name>
       <Importer>TextureImporter</Importer>
@@ -2078,8 +1918,58 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Menu\Char_Selection\playBtnP.png">
-      <Name>playBtnP</Name>
+    <Compile Include="Audio\Win\magic_chime_07.wav">
+      <Name>magic_chime_07</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Win\night_sea_ln.wav">
+      <Name>night_sea_ln</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Win\quotsports_fanaticq.wav">
+      <Name>quotsports_fanaticq</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Win\raikoh_hoppy.wav">
+      <Name>raikoh_hoppy</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Win\relaxing_summer_bea.wav">
+      <Name>relaxing_summer_bea</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Win\silly_fun.wav">
+      <Name>silly_fun</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Win\soccer_life_97.wav">
+      <Name>soccer_life_97</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Win\trickster.wav">
+      <Name>trickster</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Win\vanilla.wav">
+      <Name>vanilla</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\Win\wedo_midi.wav">
+      <Name>wedo_midi</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Generic\menuInicialBtnP.png">
+      <Name>menuInicialBtnP</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -2093,8 +1983,78 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Menu\Generic\menuInicialBtnP.png">
-      <Name>menuInicialBtnP</Name>
+    <Compile Include="Menu\Char_Selection\subjects\mathBtnH.png">
+      <Name>mathBtnH</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\subjects\mathBtnN.png">
+      <Name>mathBtnN</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\subjects\mathBtnP.png">
+      <Name>mathBtnP</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\subjects\mathBtnC.png">
+      <Name>mathBtnC</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\subjects\ptBtnH.png">
+      <Name>ptBtnH</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\subjects\ptBtnN.png">
+      <Name>ptBtnN</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\subjects\ptBtnP.png">
+      <Name>ptBtnP</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\subjects\ptBtnC.png">
+      <Name>ptBtnC</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\subjects\ptMathBtnH.png">
+      <Name>ptMathBtnH</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\subjects\ptMathBtnN.png">
+      <Name>ptMathBtnN</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\subjects\ptMathBtnP.png">
+      <Name>ptMathBtnP</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\subjects\ptMathBtnC.png">
+      <Name>ptMathBtnC</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Imagem\ui\bate_bola\respostas_e_pontos\suporte1.png">
+      <Name>suporte1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Imagem\ui\bate_bola\respostas_e_pontos\suporte2.png">
+      <Name>suporte2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Menu\Char_Selection\playBtnP.png">
+      <Name>playBtnP</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -2115,7 +2075,6 @@
   <ItemGroup>
     <Folder Include="Audio\Menu\Win\" />
     <Folder Include="Audio\Menu\Xbox\" />
-    <Folder Include="Audio\Win\" />
     <Folder Include="Audio\Xbox\" />
   </ItemGroup>
   <ItemGroup>

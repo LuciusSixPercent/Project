@@ -229,17 +229,15 @@ Wave Bank
     Xbox Bank Last Modified High = 0;
     PC Bank Last Modified Low = 0;
     PC Bank Last Modified High = 0;
-    Header Last Modified Low = 0;
-    Header Last Modified High = 0;
-    Bank Last Revised Low = 1471541103;
-    Bank Last Revised High = 30369954;
+    Bank Last Revised Low = 1679182515;
+    Bank Last Revised High = 30371363;
 
     Wave
     {
-        Name = magic-chime-07;
-        File = magic-chime-07.wav;
-        Build Settings Last Modified Low = 212797441;
-        Build Settings Last Modified High = 30367716;
+        Name = magic_chime_07;
+        File = Win\magic_chime_07.wav;
+        Build Settings Last Modified Low = 138324383;
+        Build Settings Last Modified High = 30371363;
 
         Cache
         {
@@ -252,31 +250,31 @@ Wave Bank
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 113698406;
-            Last Modified High = 30367716;
+            Last Modified Low = 2716736773;
+            Last Modified High = 30371360;
         }
     }
 
     Wave
     {
-        Name = Silly Fun;
-        File = Silly Fun.wav;
-        Build Settings Last Modified Low = 916390147;
-        Build Settings Last Modified High = 30367932;
+        Name = silly_fun;
+        File = Win\silly_fun.wav;
+        Build Settings Last Modified Low = 179126717;
+        Build Settings Last Modified High = 30371363;
 
         Cache
         {
             Format Tag = 0;
-            Channels = 2;
+            Channels = 1;
             Sampling Rate = 44100;
             Bits Per Sample = 1;
             Play Region Offset = 44;
-            Play Region Length = 12372084;
+            Play Region Length = 6186042;
             Loop Region Offset = 0;
             Loop Region Length = 0;
             File Type = 1;
-            Last Modified Low = 1248007936;
-            Last Modified High = 30367784;
+            Last Modified Low = 2668364007;
+            Last Modified High = 30371360;
         }
     }
 
@@ -334,12 +332,10 @@ Sound Bank
     Windows File = Win\Sound Bank.xsb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
-    Header Last Modified High = 0;
-    Header Last Modified Low = 0;
 
     Sound
     {
-        Name = magic-chime-07;
+        Name = magic_chime_07;
         Volume = -2000;
         Pitch = 0;
         Priority = 0;
@@ -375,56 +371,8 @@ Sound Bank
                 {
                     Bank Name = Wave Bank;
                     Bank Index = 0;
-                    Entry Name = magic-chime-07;
+                    Entry Name = magic_chime_07;
                     Entry Index = 0;
-                    Weight = 255;
-                    Weight Min = 0;
-                }
-            }
-        }
-    }
-
-    Sound
-    {
-        Name = Silly Fun;
-        Volume = -1200;
-        Pitch = 0;
-        Priority = 0;
-
-        Category Entry
-        {
-            Name = Music;
-        }
-
-        Track
-        {
-            Volume = 0;
-            Use Filter = 0;
-
-            Play Wave Event
-            {
-                Loop Count = 255;
-                Break Loop = 0;
-                Use Speaker Position = 0;
-                Use Center Speaker = 1;
-                New Speaker Position On Loop = 1;
-                Speaker Position Angle = 0.000000;
-                Speaker Position Arc = 0.000000;
-
-                Event Header
-                {
-                    Timestamp = 0;
-                    Relative = 0;
-                    Random Recurrence = 0;
-                    Random Offset = 0;
-                }
-
-                Wave Entry
-                {
-                    Bank Name = Wave Bank;
-                    Bank Index = 0;
-                    Entry Name = Silly Fun;
-                    Entry Index = 1;
                     Weight = 255;
                     Weight Min = 0;
                 }
@@ -526,29 +474,57 @@ Sound Bank
         }
     }
 
-    Cue
+    Sound
     {
-        Name = magic-chime-07;
+        Name = silly_fun;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
 
-        Variation
+        Category Entry
         {
-            Variation Type = 3;
-            Variation Table Type = 1;
-            New Variation on Loop = 0;
+            Name = Music;
         }
 
-        Sound Entry
+        Track
         {
-            Name = magic-chime-07;
-            Index = 0;
-            Weight Min = 0;
-            Weight Max = 255;
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Loop Count = 255;
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = Wave Bank;
+                    Bank Index = 0;
+                    Entry Name = silly_fun;
+                    Entry Index = 1;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
         }
     }
 
     Cue
     {
-        Name = Silly Fun;
+        Name = magic_chime_07;
 
         Variation
         {
@@ -559,8 +535,8 @@ Sound Bank
 
         Sound Entry
         {
-            Name = Silly Fun;
-            Index = 1;
+            Name = magic_chime_07;
+            Index = 0;
             Weight Min = 0;
             Weight Max = 255;
         }
@@ -580,7 +556,7 @@ Sound Bank
         Sound Entry
         {
             Name = cursor2;
-            Index = 2;
+            Index = 1;
             Weight Min = 0;
             Weight Max = 255;
         }
@@ -600,6 +576,26 @@ Sound Bank
         Sound Entry
         {
             Name = logo_music_36;
+            Index = 2;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = silly_fun;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = silly_fun;
             Index = 3;
             Weight Min = 0;
             Weight Max = 255;

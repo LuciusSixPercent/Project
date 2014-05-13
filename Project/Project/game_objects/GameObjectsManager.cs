@@ -15,10 +15,13 @@ namespace game_objects
         private List<DrawableGameObject> drawableGameObjects;
         private List<CollidableGameObject> collidableGameObjects;
         private List<GameObject> toRemove;
+        private List<GameObject> toAdd;
 
         private GraphicsDevice graphicsDevice;
         private Renderer2D r2D;
         private Renderer3D r3D;
+
+        private bool updating;
 
         public List<CollidableGameObject> CollidableGameObjects
         {
@@ -46,6 +49,7 @@ namespace game_objects
             drawableGameObjects = new List<DrawableGameObject>();
             collidableGameObjects = new List<CollidableGameObject>();
             toRemove = new List<GameObject>();
+            toAdd = new List<GameObject>();
 
             this.graphicsDevice = graphicsDevice;
             r2D = new Renderer2D(graphicsDevice);
@@ -54,18 +58,38 @@ namespace game_objects
 
         public void AddObject(GameObject obj)
         {
-            gameObjects.Add(obj);
-            if (obj is DrawableGameObject)
+            if (!updating)
             {
-                drawableGameObjects.Add((DrawableGameObject)obj);
-                if (obj is CollidableGameObject)
-                    collidableGameObjects.Add((CollidableGameObject)obj);
+                gameObjects.Add(obj);
+                if (obj is DrawableGameObject)
+                {
+                    drawableGameObjects.Add((DrawableGameObject)obj);
+                    if (obj is CollidableGameObject)
+                        collidableGameObjects.Add((CollidableGameObject)obj);
+                }
+            }
+            else
+            {
+                toAdd.Add(obj);
             }
         }
 
-        public void removeObject(GameObject obj)
+        public void RemoveObject(GameObject obj)
         {
-            toRemove.Add(obj);
+            if (!updating)
+            {
+                gameObjects.Remove(obj);
+                if (obj is DrawableGameObject)
+                {
+                    drawableGameObjects.Remove((DrawableGameObject)obj);
+                    if (obj is CollidableGameObject)
+                        collidableGameObjects.Remove((CollidableGameObject)obj);
+                }
+            }
+            else
+            {
+                toRemove.Add(obj);
+            }
         }
 
         public void Load(ContentManager cManager)
@@ -78,18 +102,21 @@ namespace game_objects
         {
             for (int i = toRemove.Count - 1; i >= 0; i--)
             {
-                gameObjects.Remove(toRemove[i]);
-                if (toRemove[i] is DrawableGameObject)
-                {
-                    drawableGameObjects.Remove((DrawableGameObject)toRemove[i]);
-                    if (toRemove[i] is CollidableGameObject)
-                        collidableGameObjects.Remove((CollidableGameObject)toRemove[i]);
-                }
+                RemoveObject(toRemove[i]);
                 toRemove.RemoveAt(i);
             }
+
+            updating = true;
             foreach (GameObject gObj in gameObjects)
             {
                 gObj.Update(gameTime);
+            }
+
+            updating = false;
+            for (int i = toAdd.Count - 1; i >= 0; i--)
+            {
+                AddObject(toAdd[i]);
+                toAdd.RemoveAt(i);
             }
         }
 
@@ -103,6 +130,11 @@ namespace game_objects
                     if (lastRenderer is Renderer2D)
                         ((Renderer2D)lastRenderer).End();
                     lastRenderer = dgObj.Renderer;
+                }
+
+                if (drawableGameObjects.IndexOf(dgObj) == 7)
+                {
+                    int a = 0;
                 }
                 dgObj.Draw(gameTime);
             }

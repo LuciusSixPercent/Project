@@ -42,7 +42,7 @@ namespace game_objects
         private int currentFrame;
         private int elapsedTime;
 
-        public delegate void CollidedWithAnswer(Vector3 position, Answer answer);
+        public delegate void CollidedWithAnswer(Answer answer);
         public event CollidedWithAnswer collidedWithAnswer;
 
         private Ball ball;
@@ -112,13 +112,6 @@ namespace game_objects
 
             this.name = name;
 
-            /*
-            framesRunning = new Texture2D[10];
-
-            framesKicking = new Texture2D[7];
-
-            framesJumping = new Texture2D[7];
-            */
             this.ball = ball;
 
             touchingGround = true;
@@ -222,8 +215,8 @@ namespace game_objects
             quadWidthScale = quadHeightScale;
 
             framesRunning = LoadFrames(cManager, "_correndo");
-
-            quadWidthScale *= ((float)framesRunning[0].Width / framesRunning[0].Height);
+            if(framesRunning[0] != null)
+                quadWidthScale *= ((float)framesRunning[0].Width / framesRunning[0].Height);
 
             framesKicking = LoadFrames(cManager, "_chutando");
 
@@ -236,20 +229,21 @@ namespace game_objects
 
         private Texture2D[] LoadFrames(ContentManager cManager, string folderSuffix)
         {
-            string path = cManager.RootDirectory + Path.AltDirectorySeparatorChar + "Imagem" + Path.AltDirectorySeparatorChar +
+            string path = "Imagem" + Path.AltDirectorySeparatorChar +
                     "Personagem" + Path.AltDirectorySeparatorChar +
                     Name + Path.AltDirectorySeparatorChar +
                     Name + folderSuffix + Path.AltDirectorySeparatorChar;
 
-            DirectoryInfo dirInfo = new DirectoryInfo(path);
+            DirectoryInfo dirInfo = new DirectoryInfo(cManager.RootDirectory + Path.AltDirectorySeparatorChar + path);
             Texture2D[] frames = new Texture2D[dirInfo.GetFiles("*.*").Length];
             for (int i = 0; i < frames.Length; i++)
-                frames[i] =
-                    cManager.Load<Texture2D>(
-                    "Imagem" + Path.AltDirectorySeparatorChar +
-                    "Personagem" + Path.AltDirectorySeparatorChar +
-                    Name + Path.AltDirectorySeparatorChar +
-                    Name + folderSuffix + Path.AltDirectorySeparatorChar + (i + 1));
+            {
+                try
+                {
+                    frames[i] = cManager.Load<Texture2D>(path + (i + 1));
+                }
+                catch (ContentLoadException ex) { }
+            }
             return frames;
         }
 
@@ -293,7 +287,7 @@ namespace game_objects
                     {
                         if (collidedWithAnswer != null)
                         {
-                            collidedWithAnswer(Position, ((QuestionGameObject)obj).CollidedAnswer);
+                            collidedWithAnswer(((QuestionGameObject)obj).CollidedAnswer);
                         }
                     }
                     else if (obj is Ball && !kickBall)
@@ -389,8 +383,8 @@ namespace game_objects
 
                 kickDeviation.Z = -(float)PublicRandom.NextDouble(0.15, 0.25);
 
-                kickDeviation.X = (float)PublicRandom.NextDouble(0, 0.1);
-                if (PublicRandom.NextDouble() > 0.5) kickDeviation.X *= -1;
+                kickDeviation.X = -(float)PublicRandom.NextDouble(0, 0.1);
+                // if (PublicRandom.NextDouble() > 0.5) kickDeviation.X *= -1;
             }
 
             ball.Position = ball.Position * (Vector3.UnitX + Vector3.UnitZ);

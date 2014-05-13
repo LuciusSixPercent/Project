@@ -270,7 +270,7 @@ namespace game_states
             {
                 if (bgm == null || bgm.IsStopped)
                 {
-                    bgm = AudioManager.GetCue("515728_Soccer-Life-97");
+                    bgm = AudioManager.GetCue("soccer_life_97");
                     bgm.Play();
                 }
                 if (!buttonsEnabled && goToState == StatesIdList.EMPTY_STATE)
