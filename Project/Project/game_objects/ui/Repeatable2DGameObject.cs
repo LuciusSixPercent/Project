@@ -52,7 +52,7 @@ namespace game_objects.ui
                 X += Width + padding.X;
                 Y = actualPositon.Y;
             }
-            position = actualPositon;
+            Position = actualPositon;
         }
 
         public void AdvanceCloneFrame(int cloneIndex)
@@ -70,8 +70,8 @@ namespace game_objects.ui
         {
             Vector3 pos = Vector3.Zero;
             if(cloneIndex < currentFrames.Length){
-                pos.X = padding.X * ((cloneIndex+1) % currentFrames.Length) + Width * ((cloneIndex+1) % currentFrames.Length) + X;
-                pos.Y = padding.Y * ((cloneIndex+1) / currentFrames.Length) + Height * ((cloneIndex+1) / currentFrames.Length) + Y;
+                pos.X = padding.X * ((cloneIndex) % currentFrames.Length) + Width * ((cloneIndex) % currentFrames.Length) + X;
+                pos.Y = padding.Y * ((cloneIndex) / currentFrames.Length) + Height * ((cloneIndex) / currentFrames.Length) + Y;
             }
             return pos;
         }

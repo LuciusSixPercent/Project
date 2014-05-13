@@ -55,6 +55,13 @@ namespace game_objects.ui
 
         private Vector2 shadowOffset;
 
+
+        private const float MAX_OUTLINE_WEIGHT = 2f;
+
+        private bool outline;
+        private Color outlineColor;
+        private float outlineWeight;
+
         public DisplayType Display
         {
             get { return display; }
@@ -162,6 +169,33 @@ namespace game_objects.ui
             set { shadowOffset = value; }
         }
 
+        public bool Outline
+        {
+            get { return outline; }
+            set { outline = value; }
+        }
+
+        /// <summary>
+        /// The thickness of the outline, ranging from 0.0 to 2.0.
+        /// </summary>
+        public float OutlineWeight
+        {
+            get { return outlineWeight; }
+            set
+            {
+                if (value < 0) value = 0;
+                if (value > MAX_OUTLINE_WEIGHT) value = MAX_OUTLINE_WEIGHT;
+
+                outlineWeight = value;
+            }
+        }
+
+        public Color OutlineColor
+        {
+            get { return outlineColor; }
+            set { outlineColor = value; }
+        }
+
         public TextBox(Renderer2D r2d)
             : base(r2d)
         {
@@ -174,6 +208,7 @@ namespace game_objects.ui
             this.textColor = Color.White;
             this.shadowColor = Color.Black;
             this.shadowOffset = Vector2.One;
+            this.outlineColor = Color.Black;
         }
 
         public override void Load(ContentManager cManager)
@@ -355,6 +390,12 @@ namespace game_objects.ui
                 {
                     ((Renderer2D)Renderer).DrawString(visibleLine, initialPos, shadowColor, 0, shadowOffset, fontScale);
                 }
+
+                if (Outline)
+                {
+                    DrawOutline(visibleLine, initialPos);
+                }
+
                 ((Renderer2D)Renderer).DrawString(visibleLine, initialPos, textColor, 0, Vector2.Zero, fontScale);
 
 
@@ -365,16 +406,27 @@ namespace game_objects.ui
             }
         }
 
+        private void DrawOutline(string visibleLine, Vector2 initialPos)
+        {
+            for (int i = -1; i <= 1; i++)
+            {
+                for (int j = -1; j <= 1; j++)
+                {
+                    ((Renderer2D)Renderer).DrawString(visibleLine, initialPos, outlineColor, 0, new Vector2(i, j) * outlineWeight, fontScale);
+                }
+            }
+        }
+
         private float AlignLine(Vector2 initialPos, string visibleLine)
         {
             float x = initialPos.X;
             switch (alignment)
             {
                 case TextAlignment.CENTER:
-                    x += (Width - TextHelper.SpriteFont.MeasureString(visibleLine).X*fontScale - padding.X) / 2;
+                    x += (Width - TextHelper.SpriteFont.MeasureString(visibleLine).X * fontScale - padding.X) / 2;
                     break;
                 case TextAlignment.RIGHT:
-                    x += (Width - TextHelper.SpriteFont.MeasureString(visibleLine).X*fontScale);
+                    x += (Width - TextHelper.SpriteFont.MeasureString(visibleLine).X * fontScale);
                     break;
             }
             return x;

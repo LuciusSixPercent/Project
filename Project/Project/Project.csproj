@@ -169,7 +169,6 @@
     <Compile Include="graphics\Renderer3D.cs" />
     <Compile Include="game_states\GameState.cs" />
     <Compile Include="game_states\PauseState.cs" />
-    <Compile Include="game_states\RunnerLevel.cs" />
     <Compile Include="game_states\RunnerState.cs" />
     <Compile Include="game_states\StatesIdList.cs" />
     <Compile Include="KeyboardHelper.cs" />

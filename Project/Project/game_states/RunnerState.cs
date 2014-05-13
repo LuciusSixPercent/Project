@@ -15,6 +15,13 @@ using game_objects.ui;
 
 namespace game_states
 {
+    public enum RunnerLevel
+    {
+        EASY,
+        MEDIUM,
+        HARD
+    }
+
     public class RunnerState : GameState
     {
         #region Variables Declaration
@@ -168,11 +175,15 @@ namespace game_states
                 questions = new List<QuestionGameObject>();
 
                 questionHeader = new TextBox(goManager.R2D);
-                questionHeader.FontSize = 40;
-                questionHeader.DropShadow = true;
+                questionHeader.FontSize = 60;
+                questionHeader.TextColor = new Color(245, 236, 222);
+                questionHeader.Outline = true;
+                questionHeader.OutlineColor = new Color(111, 129, 129);
+                questionHeader.OutlineWeight = 2;
                 questionHeader.Alignment = TextAlignment.CENTER;
                 questionHeader.Width = 1024;
                 questionHeader.Height = 100;
+                questionHeader.Y = 5;
                 
                 string path = "Imagem" + Path.AltDirectorySeparatorChar + "ui" + Path.AltDirectorySeparatorChar + "bate_bola"+ 
                     Path.AltDirectorySeparatorChar+"respostas_e_pontos"+ Path.AltDirectorySeparatorChar;
@@ -227,8 +238,9 @@ namespace game_states
                 foreach (char c in answer.Text)
                 {
                     Vector3 position = answersSupports.GetClonePosition(answersGotLbl.Count);
-                    position.Y -= 50;
                     TextBox answerLbl = CreateLabel(c.ToString(), position);
+                    answerLbl.Y -= answersSupports.Height;
+                    answerLbl.Y -= answerLbl.Height;
                     answersSupports.AdvanceCloneFrame(answersGotLbl.Count);
                     answersGotLbl.Add(answerLbl);
                     goManager.AddObject(answerLbl);
@@ -244,12 +256,13 @@ namespace game_states
         {
             TextBox answerLbl = new TextBox(goManager.R2D);
             answerLbl.Text = text;
+            answerLbl.TextColor = Color.LightPink;
             answerLbl.Alignment = TextAlignment.CENTER;
             answerLbl.Position = position;
-            answerLbl.FontSize = (int)(50 * (answersSupports.Width/93)); //escalona o tamanho da fonte caso o suporte tenha sido reduzido
+            answerLbl.FontSize = (int)(60 * (answersSupports.Width/93)); //escalona o tamanho da fonte caso o suporte tenha sido reduzido
             answerLbl.DropShadow = true;
             answerLbl.Width = answersSupports.Width;
-            answerLbl.Height = 40;
+            answerLbl.Height = 25;
 
             return answerLbl;
         }
@@ -269,7 +282,7 @@ namespace game_states
             CreateAnswersSupports();
 
             questions[questions.Count - 1].Player = player;
-            questions[questions.Count - 1].Position = new Vector3(0, 0.25f, 5);
+            questions[questions.Count - 1].Position = new Vector3(0, 0f, 5);
 
         }
 
@@ -293,18 +306,27 @@ namespace game_states
                 charCount += answer.Length;
             }
 
-            float widthScale = 1;
-            float baseWidht = 93;
-            float padding = 2;
             answersSupports.RepeatAmount = new Vector2(charCount, 1);
-            float totalWidht = baseWidht * (answersSupports.RepeatAmount.X+1) + padding * (1+answersSupports.RepeatAmount.X) * 2;
+
+            float widthScale = 1;
+            float baseWidth = 93;
+            float padding = 2;
+            float totalWidth = baseWidth * (answersSupports.RepeatAmount.X) +padding * (answersSupports.RepeatAmount.X);
+
             Viewport screen = parent.GraphicsDevice.Viewport;
-            if (totalWidht > screen.Width)
+
+            if (totalWidth > screen.Width)
             {
-                widthScale = screen.Width / totalWidht;
+                widthScale = screen.Width / totalWidth;
             }
-            answersSupports.Width = 93 * widthScale;
-            answersSupports.X = (screen.Width - totalWidht) / 2;
+
+            totalWidth *= widthScale;
+
+            answersSupports.Width = baseWidth * widthScale;
+            
+            answersSupports.X = (screen.Width - totalWidth) / 2;
+
+            float remaining = screen.Width - answersSupports.X - totalWidth;
         }
 
         private void ChangeCurrentQuestion()
@@ -318,7 +340,7 @@ namespace game_states
             if (questions.Count > 0)
             {
                 goManager.AddObject(questions[questions.Count - 1]);
-                questions[questions.Count - 1].Position = new Vector3(0, 0.25f, player.Position.Z + 5);
+                questions[questions.Count - 1].Position = new Vector3(0, 0.25f, player.Position.Z + 16);
                 questions[questions.Count - 1].Player = player;
                 questionHeader.Text = questions[questions.Count - 1].Header;
                 ResetAnswersDisplay();

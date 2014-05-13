@@ -84,7 +84,10 @@ namespace game_objects.ui
         public void AdvanceFrames()
         {
             if (++currentFrame >= frames.Length)
+            {
                 currentFrame = 0;
+            }
+                texture = frames[currentFrame];
             Addapt();
         }
 
