@@ -15,13 +15,6 @@ namespace game_objects.ui
         private int frameDelay;
         private int elapsed;
         private int currentFrame;
-        private bool adaptToFrame;
-
-        public bool AdaptToFrame
-        {
-            get { return adaptToFrame; }
-            set { adaptToFrame = value; }
-        }
 
         public int FrameCount
         {
@@ -44,7 +37,6 @@ namespace game_objects.ui
             this.frameDelay = frameDelay;
             this.frames = new Texture2D[frameCount];
             this.currentFrame = 0;
-            this.adaptToFrame = true;
         }
 
         public override void Load(ContentManager cManager)
@@ -90,6 +82,17 @@ namespace game_objects.ui
                 texture = frames[currentFrame];
             Addapt();
         }
+        
+        public void RecedeFrames()
+        {
+            if (--currentFrame < 0)
+            {
+                currentFrame = frames.Length-1;
+            }
+            texture = frames[currentFrame];
+            Addapt();
+        }
+
 
         public void SetFrame(int index)
         {
@@ -98,15 +101,6 @@ namespace game_objects.ui
                 currentFrame = index;
                 texture = frames[currentFrame];
                 Addapt();
-            }
-        }
-
-        private void Addapt()
-        {
-            if (adaptToFrame)
-            {
-                Width = frames[currentFrame].Width;
-                Height = frames[currentFrame].Height;
             }
         }
     }

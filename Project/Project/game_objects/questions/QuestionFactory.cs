@@ -9,9 +9,10 @@ namespace game_objects.questions
 {
     public static class QuestionFactory
     {
+        private static Question lastCreated;
+
         public static QuestionGameObject CreateQuestion(RunnerLevel level, QuestionSubject subject, Renderer3D renderer, List<CollidableGameObject> collidableObjects, List<QuestionGameObject> existingQuestions)
         {
-            //TODO: gerar questões de forma correta utilizando o QuestionLoader
             Question q = null;
             switch (subject)
             {
@@ -32,14 +33,15 @@ namespace game_objects.questions
             int testingIndex = PublicRandom.Next(questions[level].Length);
 
             q = questions[level][testingIndex];
-            for (int i = 0; i < existingQuestions.Count; i++)
+            int tries = 0;
+            for (int i = 0; i < existingQuestions.Count && tries < 100; i++)
             {
                 if (q.Header.Equals(existingQuestions[i].Header))
                 {
                     usedIndexes[testingIndex] = true;
                     i = 0;
-                    int tries = 0;
-                    while (usedIndexes[testingIndex] && tries < 20)
+                    
+                    while (usedIndexes[testingIndex] || q.Equals(lastCreated) && tries < 25)
                     {
                         testingIndex = PublicRandom.Next(questions[level].Length);
                         tries++;
@@ -47,6 +49,7 @@ namespace game_objects.questions
                     q = questions[level][testingIndex];
                 }
             }
+            lastCreated = q;
             return q;
         }
     }

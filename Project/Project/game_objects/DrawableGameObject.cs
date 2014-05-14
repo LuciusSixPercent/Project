@@ -21,6 +21,7 @@ namespace game_objects
         public DrawableGameObject(Renderer renderer) : base()
         {
             this.renderer = renderer;
+            this.visible = true;
         }
 
         public bool is3D

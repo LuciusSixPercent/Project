@@ -21,6 +21,14 @@ namespace game_objects
 
         private float colorModifier;
 
+        private bool adaptToFrame;
+
+        public bool AdaptToFrame
+        {
+            get { return adaptToFrame; }
+            set { adaptToFrame = value; }
+        }
+
         public string TextureFileName
         {
             get { return textureFileName; }
@@ -136,8 +144,18 @@ namespace game_objects
             : base(r2d)
         {
             this.bounds = Rectangle.Empty;
-            color = Color.White;
-            colorModifier = 1;
+            this.color = Color.White;
+            this.colorModifier = 1;
+            this.adaptToFrame = false;
+        }
+
+        public void Addapt()
+        {
+            if (adaptToFrame)
+            {
+                Width = texture.Width;
+                Height = texture.Height;
+            }
         }
 
         public override void Load(ContentManager cManager)
@@ -145,14 +163,14 @@ namespace game_objects
             if (!string.IsNullOrEmpty(textureFileName) && !string.IsNullOrEmpty(textureFilePath))
             {
                 texture = cManager.Load<Texture2D>(textureFilePath + textureFileName);
-                Width = texture.Width;
-                Height = texture.Height;
+                Addapt();
             }
         }
 
         public override void Draw(GameTime gameTime)
         {
-            ((Renderer2D)Renderer).Draw(texture, Bounds, Color*colorModifier, BlendState.AlphaBlend);
+            if(Visible)
+                ((Renderer2D)Renderer).Draw(texture, Bounds, Color*colorModifier, BlendState.AlphaBlend);
         }
     }
 }

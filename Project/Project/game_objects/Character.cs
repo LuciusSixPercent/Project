@@ -16,6 +16,7 @@ namespace game_objects
     {
         private const float MAX_X = 1f;
         private const float MIN_X = -1f;
+        private const float BASE_SCALE = 1.1f;
 
         private string name;
 
@@ -30,8 +31,8 @@ namespace game_objects
 
         private Quad quad;
 
-        private float quadWidthScale = 1.1f;
-        private float quadHeightScale = 1.1f;
+        private float quadWidthScale;
+        private float quadHeightScale;
 
         private Texture2D[] framesRunning;
         private Texture2D[] framesKicking;
@@ -59,6 +60,27 @@ namespace game_objects
         private bool finishedEnding;
         private bool sadEnding;
 
+        private Texture2D[] FramesBeingUsed
+        {
+            get { return framesBeingUsed; }
+            set {
+                Texture2D[] oldFrames = framesBeingUsed;
+                framesBeingUsed = value;
+                if (oldFrames != framesBeingUsed)
+                {
+                    UpdateProportions();
+                    CreateQuad();
+                }
+            }
+        }
+
+        private void UpdateProportions()
+        {
+            quadWidthScale = quadHeightScale = BASE_SCALE;
+            if (framesBeingUsed[0] != null)
+                quadWidthScale *= ((float)framesBeingUsed[0].Width / framesBeingUsed[0].Height);
+        }
+
         public bool FinishedEnding
         {
             get { return finishedEnding; }
@@ -80,7 +102,7 @@ namespace game_objects
             get
             {
                 if (quad == null)
-                    createQuad();
+                    CreateQuad();
                 return quad;
             }
         }
@@ -95,7 +117,7 @@ namespace game_objects
             {
                 base.Position = value;
                 ball.Position = position + new Vector3(0, 0, 0.25f);
-                createQuad();
+                CreateQuad();
             }
         }
 
@@ -183,7 +205,7 @@ namespace game_objects
 
         public void Reset()
         {
-            framesBeingUsed = framesRunning;
+            FramesBeingUsed = framesRunning;
             currentFrame = 0;
             jumpCount = 0;
             touchingGround = true;
@@ -197,11 +219,20 @@ namespace game_objects
 
         public void KickBall(bool makeGoal, Vector3 target)
         {
-            kickBall = true;
-            this.makeGoal = makeGoal;
+            if (!kickBall)
+            {
+                kickBall = true;
+                this.makeGoal = makeGoal;
+
+                ball.X = X;
+                ball.Y = 0;
+                ball.Z = boundingBox.Max.Z + 0.5f;
+                VariableMovementComponent vmc = ball.GetComponent<VariableMovementComponent>();
+                vmc.Acceleration = vmc.AccelerationVariation = vmc.CurrentVelocity = vmc.InitialVelocity = Vector3.Zero;
+            }
         }
 
-        private void createQuad()
+        private void CreateQuad()
         {
             quad = new Quad(position + new Vector3(0, quadHeightScale / 2, 0), new Vector3(0, 0, -1), Vector3.Up, quadWidthScale, quadHeightScale);
             Vector3 backUpperLeft = quad.UpperLeft;
@@ -212,11 +243,8 @@ namespace game_objects
 
         public override void Load(ContentManager cManager)
         {
-            quadWidthScale = quadHeightScale;
 
             framesRunning = LoadFrames(cManager, "_correndo");
-            if(framesRunning[0] != null)
-                quadWidthScale *= ((float)framesRunning[0].Width / framesRunning[0].Height);
 
             framesKicking = LoadFrames(cManager, "_chutando");
 
@@ -249,29 +277,35 @@ namespace game_objects
 
         public override void Draw(GameTime gameTime)
         {
-            if (framesBeingUsed != null)
+            if (FramesBeingUsed != null)
             {
-                ((Renderer3D)Renderer).Draw(framesBeingUsed[currentFrame], quad, BlendState.AlphaBlend, BoundingBox);
+                ((Renderer3D)Renderer).Draw(FramesBeingUsed[currentFrame], quad, BlendState.AlphaBlend, BoundingBox);
             }
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            if (kickBall && position.Z >= ball.Position.Z - 0.1f && keepMoving)
+            if (kickBall)
             {
-                keepMoving = false;
-                currentFrame = 0;
-                framesBeingUsed = framesKicking;
-                kickingBall = true;
+                if (boundingBox.Max.Z >= ball.Position.Z && keepMoving)
+                {
+                    keepMoving = false;
+                    currentFrame = 0;
+                    FramesBeingUsed = framesKicking;
+                    kickingBall = true;
+                }
             }
-            else if (happyEnding)
+            if (!kickingBall)
             {
-                UpdateJump(gameTime);
-            }
-            else if (sadEnding)
-            {
-                UpdateSadEnding(gameTime);
+                if (happyEnding)
+                {
+                    UpdateJump(gameTime);
+                }
+                else if (sadEnding)
+                {
+                    UpdateSadEnding(gameTime);
+                }
             }
             CheckCollisions();
             UpdateBallKick(gameTime);
@@ -362,11 +396,11 @@ namespace game_objects
                     {
                         KickBall();
                     }
-                    if (currentFrame >= framesBeingUsed.Length)
+                    if (currentFrame >= FramesBeingUsed.Length)
                     {
                         currentFrame = 0;
                         kickingBall = false;
-                        framesBeingUsed = framesJumping;
+                        FramesBeingUsed = framesJumping;
                     }
                 }
             }
@@ -375,7 +409,7 @@ namespace game_objects
         private void KickBall()
         {
             Vector3 kickDeviation = Vector3.Zero;
-
+            
             if (!makeGoal)
             {
                 kickDeviation.Y = (float)PublicRandom.NextDouble(0, 0.2);
@@ -384,11 +418,11 @@ namespace game_objects
                 kickDeviation.Z = -(float)PublicRandom.NextDouble(0.15, 0.25);
 
                 kickDeviation.X = -(float)PublicRandom.NextDouble(0, 0.1);
-                // if (PublicRandom.NextDouble() > 0.5) kickDeviation.X *= -1;
+                if (PublicRandom.NextDouble() > 0.5) kickDeviation.X *= -1;
             }
 
             ball.Position = ball.Position * (Vector3.UnitX + Vector3.UnitZ);
-            ball.Kick2(new Vector3(0, 0.4f, 0.3f) + kickDeviation, new Vector3(-kickDeviation.X/100, -0.05f, -0.0005f), Vector3.Zero);
+            ball.Kick2(new Vector3(0, 0.4f, 0.3f) + kickDeviation, new Vector3(-kickDeviation.X/1000, -0.05f, -0.0005f), Vector3.Zero);
         }
 
         public void PlayEnding()
@@ -396,7 +430,7 @@ namespace game_objects
             happyEnding = makeGoal;
             sadEnding = !makeGoal;
             if (sadEnding)
-                framesBeingUsed = framesSad;
+                FramesBeingUsed = framesSad;
         }
 
         public void LockMovement()

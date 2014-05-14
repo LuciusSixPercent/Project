@@ -34,6 +34,43 @@ namespace game_objects
             }
         }
 
+        public override float X
+        {
+            get
+            {
+                return base.X;
+            }
+            set
+            {
+                base.X = value;
+                createQuad();
+            }
+        }
+        public override float Y
+        {
+            get
+            {
+                return base.Y;
+            }
+            set
+            {
+                base.Y = value;
+                createQuad();
+            }
+        }
+        public override float Z
+        {
+            get
+            {
+                return base.Z;
+            }
+            set
+            {
+                base.Z = value;
+                createQuad();
+            }
+        }
+
         public bool Bouncing
         {
             get { return maxArcHeight > 0 || position.Y > 0 || vmc.CurrentVelocity.Y > 0; }
@@ -150,7 +187,7 @@ namespace game_objects
             vmc.Acceleration = acceleration;
             vmc.InitialAcceleration = acceleration;
             vmc.AccelerationVariation = accelerationVariation;
-            vmc.LowerVelocityThreshold = new Vector3(0, -1, 0);
+            vmc.LowerVelocityThreshold = new Vector3(-1, -1, 0);
         }
 
         internal void Reset()
