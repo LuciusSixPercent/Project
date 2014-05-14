@@ -205,7 +205,7 @@ class Episodio01 : GameState
     List<List<Song>> AlbumPrincipal;
     AudioEngine audioEngine2;
     WaveBank waveBank2;
-    SoundBank soundBank2;
+    SoundBank AudioManager;
     Cue engineSound = null;
 
     Texture2D ReplayOver, ReplayNormal, CenarioInterior, CenarioExterior, CenarioCampo, CenarioRio, BtAvancarN, BtAvancarH;
@@ -231,13 +231,13 @@ class Episodio01 : GameState
     Texture2D CachorroAndando01, CachorroAndando02, CachorroAndando03, CachorroAndando04, CachorroAndando05, CachorroAndando06, CachorroAndando07, CachorroAndando08;
     Texture2D CachorroParado01, CachorroParado02, CachorroParado03, CachorroParado04, CachorroParado05, CachorroParado06, CachorroParado07, CachorroParado08;
     Texture2D CosmeBola, CosmeIrritado, CosmeFeliz, MariaFeliz, MariaPensativa, MariaAssustada, MariaIrritada, MariaParadaCbalde, SerafinaFeliz;
-    Texture2D[] CosmeAndando, MariaAndando, MariaAndandoComBola, MariaAndandoSemBola, MariaIpaciente, ApuaPose, ApuaAndando, SerafinaAndando, CachorroSentado, CachorroAndando,Setas;
+    Texture2D[] CosmeAndando, MariaAndando, MariaAndandoComBola, MariaAndandoSemBola, MariaIpaciente, ApuaPose, ApuaAndando, SerafinaAndando, CachorroSentado, CachorroAndando, Setas;
     Color CosmeColor, MariaColor, ApuaColor, SerafinaColor, CachorroColor, BolaColor, ButtonColor;
-    Vector2 vCosme,vCosmeObj,vMaria, vApua, vSerafina, vCachorro, vMariaObj, vApuaObj, vSerafinaObj, vCachorroObj;
+    Vector2 vCosme, vCosmeObj, vMaria, vApua, vSerafina, vCachorro, vMariaObj, vApuaObj, vSerafinaObj, vCachorroObj;
     Rectangle vcad;
     Texture2D Cosme, Maria, Apua, Serafina, Cachorro;
-    Texture2D CaixadeTexto,SetaAmarela,SetaVermelha;
-    Rectangle vCaixa,recSetas;
+    Texture2D CaixadeTexto, SetaAmarela, SetaVermelha;
+    Rectangle vCaixa, recSetas;
     Texture2D icoCad;
     int indiceSetas = 0;
     float TransparenciaCosme = 0;
@@ -284,6 +284,7 @@ class Episodio01 : GameState
     bool transicaoDeCenario = false;
     int FrameMaria = 0;
     float OpaciTexto = 1;
+    
     // Desça o código até Initialize
     public Episodio01(int id, Game1 parent)
         : base(id, parent)
@@ -299,6 +300,7 @@ class Episodio01 : GameState
         {
             LoadContent();
             base.Initialize();
+            
             CosmeColor = Color.Black;
             MariaColor = Color.Black;
             ApuaColor = Color.Transparent;
@@ -310,10 +312,10 @@ class Episodio01 : GameState
             vReplay = new Rectangle(0, 700, Replay[VoltarIndice].Width / 6, Replay[VoltarIndice].Height / 6);
             audioEngine2 = new AudioEngine("Content\\Audio\\MyGameAudio2.xgs");
             waveBank2 = new WaveBank(audioEngine2, "Content\\Audio\\Wave Bank2.xwb");
-            soundBank2 = new SoundBank(audioEngine2, "Content\\Audio\\Sound Bank2.xsb");
+            AudioManager = new SoundBank(audioEngine2, "Content\\Audio\\Sound Bank2.xsb");
             // Vetores
             vCaixa = new Rectangle(20, 600, CaixadeTexto.Width, CaixadeTexto.Height);
-            posicaoText = new Vector2(vCaixa.X+20, vCaixa.Y+20);
+            posicaoText = new Vector2(vCaixa.X + 20, vCaixa.Y + 20);
 
             //Dialogos
             dialogo01 = new string[2] { fala01, fala02 };
@@ -415,7 +417,7 @@ class Episodio01 : GameState
     public override void Update(GameTime tempo)
     {
         base.Update(tempo);
-           
+
         if (stateEntered)
         {
             if (SecondGamePlay)
@@ -425,7 +427,7 @@ class Episodio01 : GameState
             }
             if (QuebrarLinhaForca)
             {
-                if ((texto.Length >=80 && texto.Length != 0)) //Quando o texto atingir um limite da tela e tiver um espaço em branco ele pula uma linha;
+                if ((texto.Length >= 80 && texto.Length != 0)) //Quando o texto atingir um limite da tela e tiver um espaço em branco ele pula uma linha;
                 {
                     if (TextoAtt[indice - 1] == ' ')
                     {
@@ -471,7 +473,7 @@ class Episodio01 : GameState
 
 
                     MouseState mouse = Mouse.GetState();
-                   
+
                     if (!pauseFlag)
                     {
 
@@ -485,7 +487,7 @@ class Episodio01 : GameState
                         {
                             if (musica == 0)
                             {
-                                engineSound = soundBank2.GetCue("night_sea_ln");
+                                engineSound = AudioManager.GetCue("night_sea_ln");
 
 
                             }
@@ -493,17 +495,17 @@ class Episodio01 : GameState
                             {
 
                                 engineSound = null;
-                                engineSound = soundBank2.GetCue("trickster");
+                                engineSound = AudioManager.GetCue("trickster");
                             }
                             if (musica == 2)
                             {
                                 engineSound = null;
-                                engineSound = soundBank2.GetCue("raikoh_hoppy");
+                                engineSound = AudioManager.GetCue("raikoh_hoppy");
                             }
                             if (musica == 3)
                             {
                                 engineSound = null;
-                                engineSound = soundBank2.GetCue("soccer_life_97");
+                                engineSound = AudioManager.GetCue("soccer_life_97");
                             }
                             engineSound.Play();
 
@@ -513,7 +515,7 @@ class Episodio01 : GameState
                         {
                             engineSound.Resume();
                         }
-                        
+
                         if (!FimDaHistoria)
                         {
                             AnimacaoDoEpisodio();
@@ -523,7 +525,7 @@ class Episodio01 : GameState
 
                             }
                             else { VoltarIndice = 0; }
-                            if (ColisaoMouseOver(mouse, new Rectangle(vCaixa.X+100,vCaixa.Y,vCaixa.Width-200,vCaixa.Height)))
+                            if (ColisaoMouseOver(mouse, new Rectangle(vCaixa.X + 100, vCaixa.Y, vCaixa.Width - 200, vCaixa.Height)))
                             {
                                 if (OpaciTexto > 0.3f)
                                 {
@@ -538,7 +540,7 @@ class Episodio01 : GameState
                                 }
                             }
                             KeyboardState teclado = Keyboard.GetState();
-                           
+
                             //////////////////////////////////////////////////////////////////Aqui é onde a narração vai acontecer////////////////////////////////////////////////
                             if (ColisaoMouseOver(mouse, vBtAvancar))
                             {
@@ -548,7 +550,7 @@ class Episodio01 : GameState
                             {
                                 indiceDoAvancar = 0;
                             }
-                            if (repetir && selecionar < AlbumPrincipal[NoAlbum].Count && !ModoExercicios && Alpha ==1)//Aqui eu vou verificar se tem algum audio rodando, se não  tiver eu toco uma nova narração.
+                            if (repetir && selecionar < AlbumPrincipal[NoAlbum].Count && !ModoExercicios && Alpha == 1)//Aqui eu vou verificar se tem algum audio rodando, se não  tiver eu toco uma nova narração.
                             {
                                 MediaPlayer.Play(AlbumPrincipal[NoAlbum][selecionar]);//Narração.
                                 repetir = false;//Repetir serve para não deixar a música tocar sem parar
@@ -559,7 +561,7 @@ class Episodio01 : GameState
                                 if (mouse.LeftButton == ButtonState.Pressed && !cliqueDoMouse && parent.IsActive)
                                 {
                                     cliqueDoMouse = true;
-                                    if (ColisaoMouseOver(mouse, vReplay) && Alpha ==1)
+                                    if (ColisaoMouseOver(mouse, vReplay) && Alpha == 1)
                                     {
                                         repetir = true;
                                     }
@@ -641,8 +643,10 @@ class Episodio01 : GameState
                                 {
                                     QuebrarLinhaForca = true;
                                     KeyboardHelper.LockKey(Keys.Escape);
-                                    if (parent.EnterState((int)StatesIdList.PAUSE))
+                                    PauseState ps = (PauseState)parent.getState((int)StatesIdList.PAUSE);
+                                    if (parent.EnterState(ps.ID))
                                     {
+                                        ps.TutorialVisible = false;
                                         Alpha = 0.5f;
                                         pauseFlag = true;
                                         stateEntered = false;
@@ -663,7 +667,7 @@ class Episodio01 : GameState
 
                             ExitState();
                         }
-                        
+
 
                     }
                     else
@@ -680,7 +684,7 @@ class Episodio01 : GameState
                 }
             }
         }
-        
+
         else if (exit)
         {
             if (primeiro && segundo && terceiro && quarto && quinto && sexto && setimo && oitavo && nono && decimo)
@@ -719,10 +723,10 @@ class Episodio01 : GameState
         }
         if (milesimos % 4 == 0)
         {
-            
+
             FrameMaria = (FrameMaria + 1) % 4;
         }
-        if (milesimos % 8==0)
+        if (milesimos % 8 == 0)
         {
             indiceSetas = (indiceSetas + 1) % 2;
         }
@@ -738,7 +742,7 @@ class Episodio01 : GameState
         SpriteBatch.Draw(Maria, new Rectangle((int)vMaria.X, (int)vMaria.Y, !MariaTamnho ? Maria.Width : 58, !MariaTamnho ? Maria.Height : 176), null, (MariaColor * TransparenciaMaria) * Alpha, 0.0f, Vector2.Zero, EfeitoMaria, 0.0f);
         SpriteBatch.Draw(Apua, new Rectangle((int)vApua.X, (int)vApua.Y, Apua.Width, Apua.Height), null, (ApuaColor * TransparenciaApua) * Alpha, 0.0f, Vector2.Zero, EfeitoApua, 0.0f);
         SpriteBatch.Draw(Serafina, new Rectangle((int)vSerafina.X, (int)vSerafina.Y, !SerafinaTamanho ? Serafina.Width : 53, !SerafinaTamanho ? Serafina.Height : 171), null, (SerafinaColor * TransparenciaSerafina) * Alpha, 0.0f, Vector2.Zero, EfeitoSerafina, 0.0f);
-        SpriteBatch.Draw(Cosme, new Rectangle((int)vCosme.X,(int)vCosme.Y, !cosmeTamanho ? Cosme.Width : 58, !cosmeTamanho ? Cosme.Height : 176), null, (CosmeColor * TransparenciaCosme) * Alpha, 0.0f, Vector2.Zero, EfeitoCosme, 0.0f);
+        SpriteBatch.Draw(Cosme, new Rectangle((int)vCosme.X, (int)vCosme.Y, !cosmeTamanho ? Cosme.Width : 58, !cosmeTamanho ? Cosme.Height : 176), null, (CosmeColor * TransparenciaCosme) * Alpha, 0.0f, Vector2.Zero, EfeitoCosme, 0.0f);
         SpriteBatch.Draw(Cachorro, new Rectangle((int)vCachorro.X, (int)vCachorro.Y, Cachorro.Width, Cachorro.Height), null, (CachorroColor * TransparenciaCachorro) * Alpha, 0.0f, Vector2.Zero, EfeitoCachorro, 0.0f);
         if (CenarioIndice == 0)
         {
@@ -746,9 +750,9 @@ class Episodio01 : GameState
         }
         #region Nome dos Personagens
         MouseState mouse = Mouse.GetState();
-        if(ColisaoMouseOver(mouse,new Rectangle((int)vSerafina.X, (int)vSerafina.Y, !SerafinaTamanho ? Serafina.Width : 53, !SerafinaTamanho ? Serafina.Height : 171)) && SerafinaColor == Color.White)
+        if (ColisaoMouseOver(mouse, new Rectangle((int)vSerafina.X, (int)vSerafina.Y, !SerafinaTamanho ? Serafina.Width : 53, !SerafinaTamanho ? Serafina.Height : 171)) && SerafinaColor == Color.White)
         {
-            SpriteBatch.DrawString(arial,"Serafina",new Vector2(vSerafina.X-10,vSerafina.Y-20),Color.Purple);
+            SpriteBatch.DrawString(arial, "Serafina", new Vector2(vSerafina.X - 10, vSerafina.Y - 20), Color.Purple);
         }
         if (ColisaoMouseOver(mouse, new Rectangle((int)vApua.X, (int)vApua.Y, Apua.Width, Apua.Height)) && ApuaColor == Color.White)
         {
@@ -794,7 +798,7 @@ class Episodio01 : GameState
                         }
                         if (texto.Length == dialogo01[Incremento0].Length + zerar)//Se o texto impresso tiver o mesmo numero de letras do dialogo...O MAIS UM É POR CAUSA DO \N QUE EU COLOCO AUTOMATICAMENTE
                         {
-                            
+
 
 
                         }
@@ -812,8 +816,8 @@ class Episodio01 : GameState
                             MariaEstaFeliz = true;
                             MariaColor = Color.White;
                         }
-                        SpriteBatch.Draw(CaixadeTexto, vCaixa, (Color.White * Alpha)*OpaciTexto);
-                        SpriteBatch.DrawString(arial, texto, posicaoText, (Color.Black * Alpha)*OpaciTexto);//Imprimir texto
+                        SpriteBatch.Draw(CaixadeTexto, vCaixa, (Color.White * Alpha) * OpaciTexto);
+                        SpriteBatch.DrawString(arial, texto, posicaoText, (Color.Black * Alpha) * OpaciTexto);//Imprimir texto
 
                     }
 
@@ -1199,7 +1203,7 @@ class Episodio01 : GameState
                         if (Alpha == 1)
                         {
                             transicaoDeCenario = false;
-                            
+
                         }
                         MariaAndeComBaldeSemBola = true;
                         vMariaObj.X = 600;
@@ -1216,7 +1220,7 @@ class Episodio01 : GameState
                         CenarioIndice = 1;
                         rotMaria = false;
 
-                       // MariaAndeComBaldeSemBola = true;
+                        // MariaAndeComBaldeSemBola = true;
                     }
 
                     if (Alpha == 1)
@@ -1278,7 +1282,7 @@ class Episodio01 : GameState
                     Alpha = Alpha > 0 ? Alpha - 0.01f : 0;
                     vMariaObj.X = 200;
                     MariaAndeComBaldeSemBola = true;
-                    
+
                     if (Alpha == 0)
                     { segundaTransicao = true; }
                 }
@@ -1292,7 +1296,7 @@ class Episodio01 : GameState
                             transicaoDeCenario = false;
 
                         }
-                        
+
                         CenarioIndice = 1;
                         CenarioIndice = 0;
                         vMaria.X = 350;
@@ -1323,7 +1327,7 @@ class Episodio01 : GameState
                             SpriteBatch.DrawString(arial, texto, posicaoText, (Color.Black * Alpha) * OpaciTexto);//Imprimir texto
                             if (Incremento0 == 0)
                             {
-                                
+
                                 BolaColor = Color.White;
                             }
                         }
@@ -1363,12 +1367,12 @@ class Episodio01 : GameState
                         {
                             TextoAtt = dialogo08[Incremento0];
                         }
-                        
-                            SpriteBatch.Draw(Setas[indiceSetas], recSetas, null, Color.White, 180.0f, Vector2.Zero, SpriteEffects.FlipVertically, 0.0f);
-                        
+
+                        SpriteBatch.Draw(Setas[indiceSetas], recSetas, null, Color.White, 180.0f, Vector2.Zero, SpriteEffects.FlipVertically, 0.0f);
+
                         SpriteBatch.Draw(CaixadeTexto, vCaixa, (Color.White * Alpha) * OpaciTexto);
                         SpriteBatch.DrawString(arial, texto, posicaoText, (Color.Black * Alpha) * OpaciTexto);//Imprimir texto
-                        
+
                     }
                     if (parte8 && !exercicio8)
                     {
@@ -1505,7 +1509,7 @@ class Episodio01 : GameState
 
                         }
                         MariaEstaParadaComOBalde = false;
-                        
+
                         CosmeComBola = false;
                         CenarioIndice = 3;
                         ApuaColor = Color.White;
@@ -1578,7 +1582,7 @@ class Episodio01 : GameState
                     FimDaHistoria = true;
 
                 }
-                
+
                 #endregion
                 SpriteBatch.Draw(BtAvancar[indiceDoAvancar], vBtAvancar, ButtonColor * Alpha);
                 SpriteBatch.Draw(Replay[VoltarIndice], vReplay, ButtonColor * Alpha);
@@ -1734,27 +1738,31 @@ class Episodio01 : GameState
             base.EnterState();
 
             pauseFlag = false;
-            Resetar();
         }
     }
     public override void ExitState()
     {
         if (!enteringState)
         {
-            if (!exitingState && !exit)
+            if (!exit)
             {
                 base.ExitState();
             }
-            if (FimDaHistoria)
+            else
             {
-                RunnerState rs = ((RunnerState)parent.getState((int)StatesIdList.RUNNER));
-                rs.CharName = "maria";
-                rs.GoBackTo = StatesIdList.EPISODE_01_END;
-                parent.ExitState(ID, (int)StatesIdList.RUNNER);
-            }
-            else if (exit || VoltarBool)
-            {
-                parent.ExitState(ID);
+                if (FimDaHistoria)
+                {
+                    RunnerState rs = ((RunnerState)parent.getState((int)StatesIdList.RUNNER));
+                    rs.CharName = "maria";
+                    rs.GoBackTo = StatesIdList.EPISODE_01_END;
+                    parent.ExitState(ID, (int)StatesIdList.RUNNER);
+                }
+                else
+                {
+                    parent.ExitState(ID);
+                }
+
+                Resetar();
             }
 
         }
@@ -1820,6 +1828,12 @@ class Episodio01 : GameState
     }
     public void Resetar()
     {
+        primeiraTransicao = false;
+        segundaTransicao = false;
+        terceiraTransicao = false;
+        
+
+        ButtonColor = Color.White;
         SecondGamePlay = true;
         musica = 0;
         #region Reset das Cores
@@ -1852,7 +1866,8 @@ class Episodio01 : GameState
         Limitedotexto = 80;
         indice = 0;
         zerar = 0;
-        
+        ex = true;
+
         #region Reset Sprites
         Cosme = Pcosme;
         Maria = Pmaria;

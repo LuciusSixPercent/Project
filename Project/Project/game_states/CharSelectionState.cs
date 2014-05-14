@@ -71,8 +71,8 @@ namespace game_states
             bg = new Scalable2DGameObject(goManager.R2D);
             bg.Width = screen.Width;
             bg.Height = screen.Height;
-            bg.TextureFilePath = basePath;
-            bg.TextureFileName = "char_select_bg";
+            bg.FilePath = basePath;
+            bg.BaseFileName = "char_select_bg";
 
             difficultyLbl = new TextBox(goManager.R2D);
             difficultyLbl.Width = 300;
@@ -151,7 +151,7 @@ namespace game_states
 
 
             characterLbl = new TextBox(goManager.R2D);
-            characterLbl.Width = 180;
+            characterLbl.Width = 400;
             characterLbl.Height = 30;
             characterLbl.X = 5;
             characterLbl.Y = math.Y + math.Height + 40;
@@ -160,9 +160,9 @@ namespace game_states
             characterLbl.ShadowColor = Color.Beige * 0.5f;
             characterLbl.DropShadow = true;
             characterLbl.ShadowOffset = new Vector2(-4, -4);
-            characterLbl.Text = "COM QUEM VAI JOGAR:";
+            characterLbl.Text = "ESCALE SEU ATACANTE:";
 
-            bounds = new Rectangle(screen.Width / 2 - 250, screen.Height / 2 - 25, 200, 250);
+            bounds = new Rectangle(screen.Width / 2 - 250, (int)(characterLbl.Y+characterLbl.Height+10), 200, 250);
             cosme = new AnimatedButton(goManager.R2D, bounds, new int[] { 1, 1, 1, 1 }, new bool[] { false, false, false, false });
             cosme.UseText = false;
             cosme.BaseFileName = "cosmeBtn";
@@ -200,6 +200,7 @@ namespace game_states
             goManager.AddObject(math);
             goManager.AddObject(pt);
             goManager.AddObject(both);
+            goManager.AddObject(characterLbl);
             goManager.AddObject(cosme);
             goManager.AddObject(maria);
             goManager.AddObject(titleScreen);

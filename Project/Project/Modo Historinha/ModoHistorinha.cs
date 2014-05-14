@@ -36,9 +36,6 @@ class ModoHistorinha
     #endregion
     Vector2  Valt0, Valt1, Valt2, Valt3, Vpergunta;
     Rectangle VOpcoes1, VOpcoes2, VOpcoes3, VOpcoes4;
-    AudioEngine audioEngine2;
-    WaveBank waveBank2;
-    SoundBank soundBank2;
     Cue PlayerModoHistoria = null;
     int[] PosicoesDasRespostas;
     Random NumeroRandomico;
@@ -56,9 +53,6 @@ class ModoHistorinha
     public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, string alt2, string alt3, SpriteFont a, int n, Song narra)
         
     {
-        audioEngine2 = new AudioEngine("Content\\Audio\\MyGameAudio2.xgs");
-        waveBank2 = new WaveBank(audioEngine2, "Content\\Audio\\Wave Bank2.xwb");
-        soundBank2 = new SoundBank(audioEngine2, "Content\\Audio\\Sound Bank2.xsb");
         venceu = false;
         narrador = new List<Song>() { narra };
         NoDeRespostas = n;
@@ -78,9 +72,6 @@ class ModoHistorinha
     public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, SpriteFont a, int n, Song narra)
         
     {
-        audioEngine2 = new AudioEngine("Content\\Audio\\MyGameAudio2.xgs");
-        waveBank2 = new WaveBank(audioEngine2, "Content\\Audio\\Wave Bank2.xwb");
-        soundBank2 = new SoundBank(audioEngine2, "Content\\Audio\\Sound Bank2.xsb");
         venceu = false;
         narrador = new List<Song>() { narra };
         NoDeRespostas = n;
@@ -96,9 +87,6 @@ class ModoHistorinha
     public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, string alt2, SpriteFont a, int n, Song narra)
         
     {
-        audioEngine2 = new AudioEngine("Content\\Audio\\MyGameAudio2.xgs");
-        waveBank2 = new WaveBank(audioEngine2, "Content\\Audio\\Wave Bank2.xwb");
-        soundBank2 = new SoundBank(audioEngine2, "Content\\Audio\\Sound Bank2.xsb");
         venceu = false;
         narrador = new List<Song>() { narra };
         NoDeRespostas = n;
@@ -116,9 +104,6 @@ class ModoHistorinha
     public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, string alt2, string alt3, SpriteFont a, int n, Song narra, bool sequencia)
         
     {
-        audioEngine2 = new AudioEngine("Content\\Audio\\MyGameAudio2.xgs");
-        waveBank2 = new WaveBank(audioEngine2, "Content\\Audio\\Wave Bank2.xwb");
-        soundBank2 = new SoundBank(audioEngine2, "Content\\Audio\\Sound Bank2.xsb");
         venceu = false;
         narrador = new List<Song>() { narra };
         seq = sequencia;
@@ -139,9 +124,6 @@ class ModoHistorinha
     public ModoHistorinha(ContentManager c, string perguntaz, string alt0, string alt1, string alt2, string alt3, SpriteFont a, int n, Song narra1, Song narrar2, bool sequencia)
         
     {
-        audioEngine2 = new AudioEngine("Content\\Audio\\MyGameAudio2.xgs");
-        waveBank2 = new WaveBank(audioEngine2, "Content\\Audio\\Wave Bank2.xwb");
-        soundBank2 = new SoundBank(audioEngine2, "Content\\Audio\\Sound Bank2.xsb");
         venceu = false;
         narrador = new List<Song>() { narra1, narrar2 };
         seq = sequencia;
@@ -239,7 +221,7 @@ class ModoHistorinha
                     if (primeiroclique && segundoclique)
                     {
                         PlayerModoHistoria = null;
-                        PlayerModoHistoria = soundBank2.GetCue("decision7");
+                        PlayerModoHistoria = AudioManager.GetCue("decision7");
                         PlayerModoHistoria.Play();
                         terceiroclique = true;
                         Calt0 = Color.Transparent;
@@ -247,7 +229,7 @@ class ModoHistorinha
                     else
                     {
                         PlayerModoHistoria = null;
-                        PlayerModoHistoria = soundBank2.GetCue("warning1");
+                        PlayerModoHistoria = AudioManager.GetCue("warning1");
                         PlayerModoHistoria.Play();
                         erro++;
                         primeiroclique = false;
@@ -265,7 +247,7 @@ class ModoHistorinha
                 if (!seq)
                 {
                     PlayerModoHistoria = null;
-                    PlayerModoHistoria = soundBank2.GetCue("warning1");
+                    PlayerModoHistoria = AudioManager.GetCue("warning1");
                     PlayerModoHistoria.Play();
                     erro++;
                     Calt1 = Color.Transparent;
@@ -273,7 +255,7 @@ class ModoHistorinha
                 else
                 {
                     PlayerModoHistoria = null;
-                    PlayerModoHistoria = soundBank2.GetCue("decision7");
+                    PlayerModoHistoria = AudioManager.GetCue("decision7");
                     PlayerModoHistoria.Play();
                     primeiroclique = true;
                     Calt1 = Color.Transparent;
@@ -285,7 +267,7 @@ class ModoHistorinha
                 if (!seq)
                 {
                     PlayerModoHistoria = null;
-                    PlayerModoHistoria = soundBank2.GetCue("warning1");
+                    PlayerModoHistoria = AudioManager.GetCue("warning1");
                     PlayerModoHistoria.Play();
                     erro++;
                     if (narrador.Count == 2)
@@ -300,7 +282,7 @@ class ModoHistorinha
                     if (primeiroclique)
                     {
                         PlayerModoHistoria = null;
-                        PlayerModoHistoria = soundBank2.GetCue("decision7");
+                        PlayerModoHistoria = AudioManager.GetCue("decision7");
                         PlayerModoHistoria.Play();
                         segundoclique = true;
                         Calt2 = Color.Transparent;
@@ -308,7 +290,7 @@ class ModoHistorinha
                     else
                     {
                         PlayerModoHistoria = null;
-                        PlayerModoHistoria = soundBank2.GetCue("warning1");
+                        PlayerModoHistoria = AudioManager.GetCue("warning1");
                         PlayerModoHistoria.Play();
                         erro++;
                         primeiroclique = false;
@@ -323,7 +305,7 @@ class ModoHistorinha
                 if (!seq)
                 {
                     PlayerModoHistoria = null;
-                    PlayerModoHistoria = soundBank2.GetCue("warning1");
+                    PlayerModoHistoria = AudioManager.GetCue("warning1");
                     PlayerModoHistoria.Play();
                     erro++;
                     Calt3 = Color.Transparent;
@@ -333,7 +315,7 @@ class ModoHistorinha
                     if (primeiroclique && segundoclique && terceiroclique)
                     {
                         PlayerModoHistoria = null;
-                        PlayerModoHistoria = soundBank2.GetCue("decision7");
+                        PlayerModoHistoria = AudioManager.GetCue("decision7");
                         PlayerModoHistoria.Play();
                         quartoclique = true;
                         Calt3 = Color.Transparent;
@@ -341,7 +323,7 @@ class ModoHistorinha
                     else
                     {
                         PlayerModoHistoria = null;
-                        PlayerModoHistoria = soundBank2.GetCue("warning1");
+                        PlayerModoHistoria = AudioManager.GetCue("warning1");
                         PlayerModoHistoria.Play();
                         erro++;
                         primeiroclique = false;
@@ -454,7 +436,7 @@ class ModoHistorinha
         if (venceu)
         {
             PlayerModoHistoria = null;
-            PlayerModoHistoria = soundBank2.GetCue("decision5");
+            PlayerModoHistoria = AudioManager.GetCue("decision5");
             PlayerModoHistoria.Play();
         }
         return venceu ;
@@ -470,49 +452,59 @@ class ModoHistorinha
         CaixadeTexto = Content.Load<Texture2D>("Imagem/Caixa_texto");
         ReplayNormal = Content.Load<Texture2D>("Imagem/botao_replay");
         ReplayOver = Content.Load<Texture2D>("Imagem/botao_replay_sel");
-        PosicoesDasRespostas = new int[4] { 100, OpcoeSprite.Width / 3 + 100, ((OpcoeSprite.Width / 3) * 2) + 100, OpcoeSprite.Width + 100 };
-        for (int j = 0; j < quantidade; j++)
+       
+        if (res1 != "TimeA\n(Serafina/Cosme/\nApuã)")
         {
-            if (j != 0)
+            PosicoesDasRespostas = new int[4] { 100, OpcoeSprite.Width / 3 + 100, ((OpcoeSprite.Width / 3) * 2) + 100, OpcoeSprite.Width + 100 };
+            for (int j = 0; j < quantidade; j++)
             {
-                if (numerosPegos[j - 1] == sorte)
+                if (j != 0)
                 {
-                    while (numerosPegos[j - 1] == sorte)
+                    if (numerosPegos[j - 1] == sorte)
                     {
-                        sorte = aleatorio.Next(0, quantidade);
-                        numerosPegos[j] = sorte;
-                    }
-                }
-
-                if (j > 1)
-                {
-                    if (numerosPegos[j - 2] == sorte || numerosPegos[j - 1] == sorte)
-                    {
-                        while (numerosPegos[j - 2] == sorte || numerosPegos[j - 1] == sorte)
+                        while (numerosPegos[j - 1] == sorte)
                         {
                             sorte = aleatorio.Next(0, quantidade);
                             numerosPegos[j] = sorte;
                         }
                     }
-                }
-                if (j == 3)
-                {
-                    if (numerosPegos[j - 2] == sorte || numerosPegos[j - 1] == sorte || numerosPegos[j - 3] == sorte)
+
+                    if (j > 1)
                     {
-                        while (numerosPegos[j - 2] == sorte || numerosPegos[j - 1] == sorte || numerosPegos[j - 3] == sorte)
+                        if (numerosPegos[j - 2] == sorte || numerosPegos[j - 1] == sorte)
                         {
-                            sorte = aleatorio.Next(0, quantidade);
-                            numerosPegos[j] = sorte;
+                            while (numerosPegos[j - 2] == sorte || numerosPegos[j - 1] == sorte)
+                            {
+                                sorte = aleatorio.Next(0, quantidade);
+                                numerosPegos[j] = sorte;
+                            }
+                        }
+                    }
+                    if (j == 3)
+                    {
+                        if (numerosPegos[j - 2] == sorte || numerosPegos[j - 1] == sorte || numerosPegos[j - 3] == sorte)
+                        {
+                            while (numerosPegos[j - 2] == sorte || numerosPegos[j - 1] == sorte || numerosPegos[j - 3] == sorte)
+                            {
+                                sorte = aleatorio.Next(0, quantidade);
+                                numerosPegos[j] = sorte;
+                            }
                         }
                     }
                 }
-            }
-            if (j == 0)
-            {
-                sorte = aleatorio.Next(0, quantidade);
-                numerosPegos[j] = sorte;
-            }
+                if (j == 0)
+                {
+                    sorte = aleatorio.Next(0, quantidade);
+                    numerosPegos[j] = sorte;
+                }
 
+            }
+        }
+        else
+        {
+            PosicoesDasRespostas = new int[4] { 300, 700,0,0 };
+            numerosPegos[0] = 0;
+            numerosPegos[1] = 1;
         }
         if (arial.MeasureString(res1).X < 20)
         {

@@ -16,6 +16,20 @@ namespace game_objects.ui
         private int elapsed;
         private int currentFrame;
 
+        public int CurrentFrame
+        {
+            get { return currentFrame; }
+            set
+            {
+                if (value < frames.Length)
+                {
+                    currentFrame = value;
+                    texture = frames[currentFrame];
+                    Addapt();
+                }
+            }
+        }
+
         public int FrameCount
         {
             get { return frames.Length; }
@@ -32,8 +46,8 @@ namespace game_objects.ui
         public Animated2DGameObject(Renderer2D renderer, string framesPath, string basicFrameName, int frameCount, int frameDelay)
             : base(renderer)
         {
-            TextureFilePath = framesPath;
-            TextureFileName = basicFrameName;
+            FilePath = framesPath;
+            BaseFileName = basicFrameName;
             this.frameDelay = frameDelay;
             this.frames = new Texture2D[frameCount];
             this.currentFrame = 0;
@@ -43,7 +57,7 @@ namespace game_objects.ui
         {
             for (int i = 0; i < frames.Length; i++)
             {
-                frames[i] = cManager.Load<Texture2D>(TextureFilePath + Path.AltDirectorySeparatorChar + TextureFileName + (i + 1));
+                frames[i] = cManager.Load<Texture2D>(FilePath + Path.AltDirectorySeparatorChar + BaseFileName + (i + 1));
             }
             texture = frames[0];
 
@@ -93,15 +107,9 @@ namespace game_objects.ui
             Addapt();
         }
 
-
-        public void SetFrame(int index)
+        public bool Ended()
         {
-            if (index < frames.Length)
-            {
-                currentFrame = index;
-                texture = frames[currentFrame];
-                Addapt();
-            }
+            return currentFrame == FrameCount - 1;
         }
     }
 }

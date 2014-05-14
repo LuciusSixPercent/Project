@@ -71,6 +71,8 @@ namespace game_states
         private TextBox mistakesLbl;
 
         private bool keepScore;
+
+        private bool showTutorial;
         #endregion
 
 
@@ -206,6 +208,8 @@ namespace game_states
                 enterTransitionDuration = 500;
                 exitTransitionDuration = 1000;
 
+                showTutorial = true;
+
                 shouldWait = true;
 
                 goBackTo = StatesIdList.EMPTY_STATE;
@@ -259,8 +263,8 @@ namespace game_states
 
                 uiPath += "bate_bola" + separator;
                 scoreLbl = new TextBox(goManager.R2D);
-                scoreLbl.TextureFileName = "pontos";
-                scoreLbl.TextureFilePath = uiPath + "respostas_e_pontos" + separator;
+                scoreLbl.BaseFileName = "pontos";
+                scoreLbl.FilePath = uiPath + "respostas_e_pontos" + separator;
                 scoreLbl.FontSize = 30;
                 scoreLbl.Alignment = TextAlignment.CENTER;
                 scoreLbl.Width = 219;
@@ -269,10 +273,10 @@ namespace game_states
                 scoreLbl.Padding = new Vector4(0, scoreLbl.Height * 0.4f, 0, 0);
 
                 mistakesLbl = new TextBox(goManager.R2D);
-                mistakesLbl.TextureFileName = "erros";
+                mistakesLbl.BaseFileName = "erros";
                 mistakesLbl.FontSize = 30;
                 mistakesLbl.Alignment = TextAlignment.CENTER;
-                mistakesLbl.TextureFilePath = uiPath + "respostas_e_pontos" + separator;
+                mistakesLbl.FilePath = uiPath + "respostas_e_pontos" + separator;
                 mistakesLbl.Width = 219;
                 mistakesLbl.Height = 60;
                 mistakesLbl.X = scoreLbl.X;
@@ -603,59 +607,67 @@ namespace game_states
                 else
                 {
                     base.Update(gameTime);
-                    if (shouldWait && Alpha >= 0.5f)
+                    if (showTutorial)
                     {
-                        shouldWait = false;
-                        parent.EnterState((int)StatesIdList.RUNNER_WAIT);
+                        parent.EnterState((int)StatesIdList.RUNNER_TUTORIAL);
+                        showTutorial = false;
                     }
                     else
                     {
-                        if (stateEntered)
+                        if (shouldWait && Alpha >= 0.5f)
                         {
-                            if (!exitingState && !finished)
-                            {
-
-                                if (!progress.Visible)
-                                {
-                                    ShowUI();
-                                }
-
-                                PlayBGM();
-                                CheckAnswer();
-                                if (answeredAll)
-                                {
-                                    player.LockMovement();
-                                    field.KeepMoving = false;
-                                    if (player.KeepMoving)
-                                    {
-                                        if (field.Goal.Position.Z - player.Position.Z <= 8)
-                                        {
-                                            player.KickBall(MistakesMade < AllowedMistakes, field.Goal.Position);
-                                            cam.KeepMoving = false;
-                                        }
-                                    }
-                                    else if (!player.PlayingEnding)
-                                    {
-                                        if (!ball.Bouncing && !player.KickingBall)
-                                        {
-                                            player.PlayEnding();
-                                        }
-                                    }
-                                    else if (player.FinishedEnding)
-                                    {
-                                        finished = true;
-                                        Alpha = 0.5f;
-                                        parent.EnterState((int)StatesIdList.RUNNER_END);
-                                    }
-                                }
-
-                                handleInput();
-                            }
+                            shouldWait = false;
+                            parent.EnterState((int)StatesIdList.RUNNER_WAIT);
                         }
-                        else if (exit)
+                        else
                         {
-                            bgm.Stop(AudioStopOptions.AsAuthored);
-                            ExitState();
+                            if (stateEntered)
+                            {
+                                if (!exitingState && !finished)
+                                {
+
+                                    if (!progress.Visible)
+                                    {
+                                        ShowUI();
+                                    }
+
+                                    PlayBGM();
+                                    CheckAnswer();
+                                    if (answeredAll)
+                                    {
+                                        player.LockMovement();
+                                        field.KeepMoving = false;
+                                        if (player.KeepMoving)
+                                        {
+                                            if (field.Goal.Position.Z - player.Position.Z <= 8)
+                                            {
+                                                player.KickBall(MistakesMade < AllowedMistakes, field.Goal.Position);
+                                                cam.KeepMoving = false;
+                                            }
+                                        }
+                                        else if (!player.PlayingEnding)
+                                        {
+                                            if (!ball.Bouncing && !player.KickingBall)
+                                            {
+                                                player.PlayEnding();
+                                            }
+                                        }
+                                        else if (player.FinishedEnding)
+                                        {
+                                            finished = true;
+                                            Alpha = 0.5f;
+                                            parent.EnterState((int)StatesIdList.RUNNER_END);
+                                        }
+                                    }
+
+                                    handleInput();
+                                }
+                            }
+                            else if (exit)
+                            {
+                                bgm.Stop(AudioStopOptions.AsAuthored);
+                                ExitState();
+                            }
                         }
                     }
                 }
@@ -784,8 +796,10 @@ namespace game_states
                 KeyboardHelper.LockKey(Keys.Escape);
                 if (!answeredAll)
                 {
+                    PauseState ps = (PauseState)parent.getState((int)StatesIdList.PAUSE);
                     if (parent.EnterState((int)StatesIdList.PAUSE))
                     {
+                        ps.TutorialVisible = true;
                         if (!bgm.IsStopped)
                             bgm.Pause();
                         Alpha = 0.5f;

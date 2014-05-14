@@ -36,6 +36,7 @@ namespace game_objects.questions
 
         private float bonusChance;
         private bool bonusSpawned;
+        private int bonusCount;
 
         public float BonusChance
         {
@@ -75,11 +76,6 @@ namespace game_objects.questions
         {
             get { return currentAnswerValue; }
         }
-        /*
-        public int Score
-        {
-            get { return questionScore; }
-        }*/
 
         public string Header
         {
@@ -112,7 +108,7 @@ namespace game_objects.questions
             this.currentAnswerIndex = 0;
             this.maxFakeSpawnCount = 1;
             this.minAnswerDistance = 3;
-            this.bonusChance = 0.5f;
+            this.bonusChance = 0.75f;
             CreateAnswers();
         }
 
@@ -242,14 +238,15 @@ namespace game_objects.questions
         private void ChangeAnswer(Answer a)
         {
             string text;
-
-            if (correctAnswerSpawned || (PublicRandom.NextDouble() > chanceToSpawnCorrectAnswer && fakeSpawnCount < maxFakeSpawnCount)) //alterar a resposta para alguma outra incorreta
+            double bonusLottery = PublicRandom.NextDouble();
+            if (correctAnswerSpawned || (PublicRandom.NextDouble() > chanceToSpawnCorrectAnswer && fakeSpawnCount < maxFakeSpawnCount || (bonusLottery > bonusChance  && !bonusSpawned))) //alterar a resposta para alguma outra incorreta
             {
-                if (PublicRandom.NextDouble() <= bonusChance && !bonusSpawned)
+                if (!bonusSpawned && bonusLottery <= bonusChance && !correctAnswerSpawned && bonusCount < 3)
                 {
                     text = "+1";
                     a.IsBonus = true;
                     bonusSpawned = true;
+                    bonusCount++;
                 }
                 else
                 {
@@ -274,6 +271,7 @@ namespace game_objects.questions
                 text = CorrectAnswer();
                 chanceToSpawnCorrectAnswer = 0.1;
                 fakeSpawnCount = 0;
+                bonusCount = 0;
                 correctAnswerSpawned = true;
                 this.correctAnswer = a;
             }

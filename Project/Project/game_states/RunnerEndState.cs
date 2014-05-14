@@ -38,12 +38,12 @@ namespace game_states
             Viewport screen = parent.GraphicsDevice.Viewport;
             char separator = Path.AltDirectorySeparatorChar;
 
-            titleScreen = new Button(goManager.R2D, new Rectangle(screen.Width / 2 + 25, (int)(screen.Height * 0.75), 200, 50));
+            titleScreen = new Button(goManager.R2D, new Rectangle(screen.Width / 2 + 25, (int)(screen.Height * 0.75), 200, 66));
             titleScreen.FilePath = "Menu" + separator + "Generic" + separator;
             titleScreen.BaseFileName = "menuInicialBtn";
             titleScreen.mouseClicked += new Button.MouseClicked(titleScreen_mouseClicked);
 
-            tryAgain = new Button(goManager.R2D, new Rectangle(screen.Width / 2 - 225, (int)titleScreen.Position.Y, 200, 50));
+            tryAgain = new Button(goManager.R2D, new Rectangle(screen.Width / 2 - 225, (int)titleScreen.Position.Y, (int)titleScreen.Dimensions.X, (int)titleScreen.Dimensions.Y));
             tryAgain.FilePath = "Imagem" + separator + "ui" + separator + "bate_bola" + separator + "fim" + separator;
             tryAgain.BaseFileName = "tryBtn";
             tryAgain.mouseClicked += new Button.MouseClicked(playAgain_mouseClicked);

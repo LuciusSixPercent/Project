@@ -88,7 +88,7 @@ namespace Project.Modo_Historinha
                         {
                             if (ColisaoMouseOver(mouse, vbtx))
                             {
-                                ExitState();
+                                parent.Exit();
                             }
                         }
                     }
@@ -118,7 +118,7 @@ namespace Project.Modo_Historinha
             {
                 if (videoplayer.State != MediaState.Stopped)
                     TexturaDovideo = videoplayer.GetTexture();
-                Rectangle screen = new Rectangle(parent.GraphicsDevice.Viewport.X, parent.GraphicsDevice.Viewport.Y, parent.GraphicsDevice.Viewport.Width, parent.GraphicsDevice.Viewport.Height);
+                Rectangle screen = new Rectangle(0, 0, 1024, 768);
                 if (TexturaDovideo != null)
                 {
                     SpriteBatch.Begin();

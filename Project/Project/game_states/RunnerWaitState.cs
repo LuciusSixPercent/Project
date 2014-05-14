@@ -40,10 +40,10 @@ namespace game_states
 
             clock = new Scalable2DGameObject(goManager.R2D);
             clock.AdaptToFrame = true;
-            clock.TextureFileName = "clock";
-            clock.TextureFilePath = "Imagem" + separator + "ui" + separator + "bate_bola" + separator + "espera" + separator;
+            clock.BaseFileName = "clock";
+            clock.FilePath = "Imagem" + separator + "ui" + separator + "bate_bola" + separator + "espera" + separator;
 
-            number = new Animated2DGameObject(goManager.R2D, clock.TextureFilePath, "num", 3, -1);
+            number = new Animated2DGameObject(goManager.R2D, clock.FilePath, "num", 3, -1);
             number.AdaptToFrame = true;
 
             goManager.AddObject(clock);
@@ -57,7 +57,7 @@ namespace game_states
 
             clock.X = (parent.GraphicsDevice.Viewport.Width - clock.Width) / 2;
             clock.Y = (parent.GraphicsDevice.Viewport.Height - clock.Height) / 2 - 30;
-            number.SetFrame(2);
+            number.CurrentFrame = (2);
 
             contentLoaded = true;
         }

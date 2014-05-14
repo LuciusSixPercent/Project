@@ -29,13 +29,13 @@ namespace game_objects
             set { adaptToFrame = value; }
         }
 
-        public string TextureFileName
+        public virtual string BaseFileName
         {
             get { return textureFileName; }
             set { textureFileName = value; }
         }
 
-        public string TextureFilePath
+        public string FilePath
         {
             get { return textureFilePath; }
             set { textureFilePath = value; }

@@ -22,6 +22,7 @@ namespace game_states
         RUNNER = 50,
         RUNNER_WAIT = 55,
         RUNNER_END = 57,
+        RUNNER_TUTORIAL = 58,
         PAUSE = 60,
         CREDITS = 100
     }

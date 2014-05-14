@@ -45,7 +45,7 @@ namespace game_objects.ui
             {
                 for (int j = 0; j < repeatAmount.Y; j++)
                 {
-                    SetFrame(currentFrames[(int)((i * repeatAmount.Y) + j)]);
+                    CurrentFrame = (currentFrames[(int)((i * repeatAmount.Y) + j)]);
                     base.Draw(gameTime);
                     Y += Height + padding.Y;
                 }

@@ -14,13 +14,13 @@ namespace Project
         Episodio01 questions;
         int Page = 0;
         SpriteFont arial;
-        Texture2D livro, BtAvancarN, BtAvancarH,VoltarOver, VoltarNormal,CaixaDeTexto,BTx;
-        Texture2D[] BtAvancar, Voltar;
+        Texture2D livro, BtAvancarN, BtAvancarH, VoltarOver, VoltarNormal, CaixaDeTexto, BTxO, BTxN;
+        Texture2D[] BtAvancar, Voltar, BTx;
         Rectangle vBtAvancar, vVoltar,vBTx;
         Vector2 vlivro, vQ1, vQ2, vQ3, vQ4;
         string p1, p2, p3, p4, altQues1, altQues2, altQues3, altQues4, altQues5, altQues6, altQues7, altQues8, altQues9, altQues10, explica01, explica02, explica03, explica04, explica05, explica06, explica07, explica08, explica09, explica10,exp1,exp2,exp3,exp4;
         string[] q1, q2, q3, q4, alt1, alt2, alt3, alt4, explicaP1, explicaP2, explicaP3, explicaP4;
-        
+        int indiceX = 0;
         int linhas = 30;
         int barra1 = 0;
         int barra2 = 0;
@@ -31,6 +31,16 @@ namespace Project
         int qbr3 = 0;
         int qbr4 = 0;
         Color cor1, cor2, cor3, cor4;
+        public bool ex1 = false;
+        public bool ex2 = false;
+        public bool ex3 = false;
+        public bool ex4 = false;
+        public bool ex5 = false;
+        public bool ex6 = false;
+        public bool ex7 = false;
+        public bool ex8 = false;
+        public bool ex9 = false;
+        public bool ex10 = false;
         int VoltarIndice = 0;
         int indiceDoAvancar = 0;
         int[] RespostasQ1, RespostasQ2, RespostasQ3, RespostasQ4;
@@ -99,8 +109,9 @@ namespace Project
                 Voltar = new Texture2D[2] { VoltarNormal, VoltarOver };
                 vVoltar = new Rectangle(0, 700, Voltar[VoltarIndice].Width / 3, Voltar[VoltarIndice].Height / 3);
                 BtAvancar = new Texture2D[2] { BtAvancarN, BtAvancarH };
+                BTx = new Texture2D[2] { BTxN, BTxO };
                 vBtAvancar = new Rectangle(950, 700, BtAvancar[indiceDoAvancar].Width / 3, BtAvancar[indiceDoAvancar].Height / 3);
-                vBTx = new Rectangle(950, 0, BTx.Width / 6, BTx.Height / 6);
+                vBTx = new Rectangle(950, 0, BTx[indiceX].Width / 6, BTx[indiceX].Height / 6);
                 
                 base.Initialize();
             }
@@ -329,6 +340,11 @@ namespace Project
                 VoltarIndice = 1;
             }
             else { VoltarIndice = 0; }
+            if (ColisaoMouseOver(mouse, vBTx))
+            {
+                indiceX = 1;
+            }
+            else { indiceX = 0; }
             if (mouse.LeftButton == ButtonState.Pressed && !clique)
             {
                 clique = true;
@@ -398,9 +414,49 @@ namespace Project
             }
             
             #endregion
+            if (!ex1)
+            {
+                ex1 = questions.EX1;
+            }
+            if (!ex2)
+            {
+                ex2 = questions.EX2;
+            }
+            if (!ex3)
+            {
+                ex3 = questions.EX3;
+            }
+            if (!ex4)
+            {
+                ex4 = questions.EX4;
+            }
+            if (!ex5)
+            {
+                ex5 = questions.EX5;
+            }
+            if (!ex6)
+            {
+                ex6 = questions.EX6;
+            }
+            if (!ex7)
+            {
+                ex7 = questions.EX7;
+            }
+            if (!ex8)
+            {
+                ex8 = questions.EX8;
+            }
+            if (!ex9)
+            {
+                ex9 = questions.EX9;
+            }
+            if (!ex10)
+            {
+                ex10 = questions.EX10;
+            }
             if (Page == 0)
             {
-                if (questions.EX1)
+                if (ex1)
                 {
                     cor1 = Color.Black;
                 }
@@ -408,7 +464,7 @@ namespace Project
                 {
                     cor1 = Color.Transparent;
                 }
-                if (questions.EX2)
+                if (ex2)
                 {
                     cor2 = Color.Black;
                 }
@@ -416,7 +472,7 @@ namespace Project
                 {
                     cor2 = Color.Transparent;
                 }
-                if (questions.EX3)
+                if (ex3)
                 {
                     cor3 = Color.Black;
                 }
@@ -424,7 +480,7 @@ namespace Project
                 {
                     cor3 = Color.Transparent;
                 }
-                if (questions.EX4)
+                if (ex4)
                 {
                     cor4 = Color.Black;
                 }
@@ -435,7 +491,7 @@ namespace Project
             }
             if (Page == 1)
             {
-                if (questions.EX5)
+                if (ex5)
                 {
                     cor1 = Color.Black;
                 }
@@ -443,7 +499,7 @@ namespace Project
                 {
                     cor1 = Color.Transparent;
                 }
-                if (questions.EX6)
+                if (ex6)
                 {
                     cor2 = Color.Black;
                 }
@@ -451,7 +507,7 @@ namespace Project
                 {
                     cor2 = Color.Transparent;
                 }
-                if (questions.EX7)
+                if (ex7)
                 {
                     cor3 = Color.Black;
                 }
@@ -459,7 +515,7 @@ namespace Project
                 {
                     cor3 = Color.Transparent;
                 }
-                if (questions.EX8)
+                if (ex8)
                 {
                     cor4 = Color.Black;
                 }
@@ -470,7 +526,7 @@ namespace Project
             }
             if (Page == 2)
             {
-                if (questions.EX9)
+                if (ex9)
                 {
                     cor1 = Color.Black;
                 }
@@ -478,7 +534,7 @@ namespace Project
                 {
                     cor1 = Color.Transparent;
                 }
-                if (questions.EX10)
+                if (ex10)
                 {
                     cor2 = Color.Black;
                 }
@@ -554,7 +610,7 @@ namespace Project
             {
                 SpriteBatch.Draw(BtAvancar[indiceDoAvancar], vBtAvancar, Color.White);
             }
-            SpriteBatch.Draw(BTx, vBTx, Color.White);
+            SpriteBatch.Draw(BTx[indiceX], vBTx, Color.White);
             SpriteBatch.End();
         }
         public override void LoadContent()
@@ -568,7 +624,8 @@ namespace Project
                 VoltarNormal = parent.Content.Load<Texture2D>("Imagem/Botao_Voltar");
                 VoltarOver = parent.Content.Load<Texture2D>("Imagem/Botao_Voltar_Sel");
                 CaixaDeTexto = parent.Content.Load<Texture2D>("Imagem/textBoxCaderno");
-                BTx = parent.Content.Load<Texture2D>("Imagem/ui/historinha/Botao_X");
+                BTxN = parent.Content.Load<Texture2D>("Imagem/ui/historinha/Botao_X");
+                BTxO = parent.Content.Load<Texture2D>("Imagem/ui/historinha/Botao_X_menor");
                 contentLoaded = true;
             }
         }

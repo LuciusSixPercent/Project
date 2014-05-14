@@ -31,9 +31,6 @@ namespace game_objects.ui
 
         public delegate void MouseClicked(Button btn);
         public event MouseClicked mouseClicked;
-
-        private string filePath;
-        private string baseFileName;
         private bool forcingClick;
 
         public bool Enabled
@@ -73,23 +70,6 @@ namespace game_objects.ui
                 fontSize = value;
                 this.fontScale = ((float)fontSize / TextHelper.FontSize);
             }
-        }
-
-        /// <summary>
-        /// O nome da textura que será utilizada nem nenhum sufixo (N, H, P).
-        /// Por exemplo, para um botão que possua 3 arquivos "voltarN", "voltarH" e "voltarP",
-        /// BaseFileName deve ser somente "voltar".
-        /// </summary>
-        public string BaseFileName
-        {
-            get { return baseFileName; }
-            set { baseFileName = value; }
-        }
-
-        public string FilePath
-        {
-            get { return filePath; }
-            set { filePath = value; }
         }
 
         public string Text
@@ -219,15 +199,15 @@ namespace game_objects.ui
 
         public override void Load(ContentManager cManager)
         {
-            if (string.IsNullOrEmpty(filePath))
+            if (string.IsNullOrEmpty(FilePath))
             {
-                filePath = "Menu" + Path.AltDirectorySeparatorChar;
+                FilePath = "Menu" + Path.AltDirectorySeparatorChar;
             }
-            if (!string.IsNullOrEmpty(baseFileName))
+            if (!string.IsNullOrEmpty(BaseFileName))
             {
-                textures[0] = GetTexture(filePath + baseFileName + "N", cManager);
-                textures[1] = GetTexture(filePath + baseFileName + "H", cManager);
-                textures[2] = GetTexture(filePath + baseFileName + "P", cManager);
+                textures[0] = GetTexture(FilePath + BaseFileName + "N", cManager);
+                textures[1] = GetTexture(FilePath + BaseFileName + "H", cManager);
+                textures[2] = GetTexture(FilePath + BaseFileName + "P", cManager);
 
                 texture = textures[0];
             }

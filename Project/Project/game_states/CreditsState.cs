@@ -39,8 +39,8 @@ namespace game_states
             char separator = Path.AltDirectorySeparatorChar;
             credits = new Scalable2DGameObject(goManager.R2D);
             credits.AdaptToFrame = true;
-            credits.TextureFileName = "credits";
-            credits.TextureFilePath = "Imagem" + separator + "ui" + separator;
+            credits.BaseFileName = "credits";
+            credits.FilePath = "Imagem" + separator + "ui" + separator;
             scrollSpeed = 1;
 
             goManager.AddObject(credits);
@@ -123,7 +123,7 @@ namespace game_states
         private void ResetCredits()
         {
             credits.Y = parent.GraphicsDevice.Viewport.Height;
-            scrollSpeed = 0;
+            scrollSpeed = 1;
         }
 
         private void HandleKeyPress()

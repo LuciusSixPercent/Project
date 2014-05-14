@@ -13,10 +13,23 @@ namespace game_states
 {
     public class PauseState : GameState
     {        
-        Button resumeGame;
-        Button titleScreen;
+        private Button resumeGame;
+        private Button tutorial;
+        private Button titleScreen;
 
-        bool toTile;
+        private bool toTile;
+
+        public bool TutorialVisible {
+            set
+            {
+                tutorial.Visible = value;
+                if (value)
+                    tutorial.Enable();
+                else
+                    tutorial.Disable();
+            }
+                
+        }
 
         protected override float Alpha
         {
@@ -43,6 +56,7 @@ namespace game_states
             InitButtons();
 
             goManager.AddObject(resumeGame);
+            goManager.AddObject(tutorial);
             goManager.AddObject(titleScreen);
 
             FreezeGraphicsBelow = false;
@@ -60,6 +74,16 @@ namespace game_states
 
             titleScreen = CreateButton(new Rectangle(width / 2 - buttonsWidth / 2, height/2 + buttonsHeight, buttonsWidth, buttonsHeight), "menuInicialBtn", "Menu" + separator + "Generic" + separator);
             titleScreen.mouseClicked += new Button.MouseClicked(titleScreen_mouseClicked);
+
+            tutorial = CreateButton(new Rectangle(width / 2 - buttonsWidth / 2, height / 2 - buttonsHeight/2, buttonsWidth, buttonsHeight), "tut", "Menu" + separator + "Pause" + separator);
+            tutorial.Visible = false;
+            tutorial.Disable();
+            tutorial.mouseClicked += new Button.MouseClicked(tutorial_mouseClicked);
+        }
+
+        void tutorial_mouseClicked(Button btn)
+        {
+            parent.EnterState((int)StatesIdList.RUNNER_TUTORIAL);
         }
 
         void titleScreen_mouseClicked(Button btn)

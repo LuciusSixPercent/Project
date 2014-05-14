@@ -22,9 +22,9 @@ namespace Project
         private Dictionary<int, GameState> states;
         private List<GameState> statesStack;
         private StatesIdList querriedState;
-
         public Game1()
         {
+            this.Window.Title = "As Aventuras de Cosme e Maria";
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferHeight = 768;
@@ -65,6 +65,9 @@ namespace Project
             RunnerEndState res = new RunnerEndState((int)StatesIdList.RUNNER_END, this, rs);
             states.Add(res.ID, res);
 
+            TutorialState ts = new TutorialState((int)StatesIdList.RUNNER_TUTORIAL, this);
+            states.Add(ts.ID, ts);
+
             CadernoDeAtividades cda = new CadernoDeAtividades((int)StatesIdList.OPTIONS, this, md);
             states.Add(cda.ID, cda);
 
@@ -80,6 +83,7 @@ namespace Project
             CreditsState cs = new CreditsState((int)StatesIdList.CREDITS, this);
             states.Add(cs.ID, cs);
 
+           
 
             EnterState(menu.ID);
         }
