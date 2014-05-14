@@ -1062,7 +1062,7 @@ class Episodio01 : GameState
                         {
                             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
                             {
-                                Mouse.SetPosition(200, 300);
+                                Mouse.SetPosition(200, 400);
                             }
                         }
                     }
@@ -1179,7 +1179,7 @@ class Episodio01 : GameState
 
                             }
                         }
-                        if (vApua.X == 850)
+                        if (vApua.X >= 850)
                         {
                             TransparenciaApua = TransparenciaApua > 0 ? TransparenciaApua - 0.1f : 0;
                             if (TransparenciaApua >= 0)
@@ -1381,10 +1381,9 @@ class Episodio01 : GameState
                         {
                             TextoAtt = dialogo08[Incremento0];
                         }
-                        if (Incremento0 == 0)
-                        {
+                        
                             SpriteBatch.Draw(Setas[indiceSetas], recSetas, null, Color.White, 180.0f, Vector2.Zero, SpriteEffects.FlipVertically, 0.0f);
-                        }
+                        
                         SpriteBatch.Draw(CaixadeTexto, vCaixa, (Color.White * Alpha) * OpaciTexto);
                         SpriteBatch.DrawString(arial, texto, posicaoText, (Color.Black * Alpha) * OpaciTexto);//Imprimir texto
                         
