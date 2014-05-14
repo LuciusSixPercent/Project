@@ -92,11 +92,11 @@ using Microsoft.Xna.Framework.Audio;
                 BTVoltar = new Texture2D[2] { BTVoltarN, BTVoltarO };
                 #region Retangulos
                 rcfundo = new Rectangle(0, 0, 1024, 768);
-                rcmenu1 = new Rectangle(0, 600, menu1[mn1].Width, menu1[mn1].Height);
-                rcmenu2 = new Rectangle(200,600, menu2[mn2].Width, menu2[mn2].Height);
-                rcmenu3 = new Rectangle(400,600, menu3[mn3].Width, menu3[mn3].Height);
+                rcmenu1 = new Rectangle(70, 600, menu1[mn1].Width, menu1[mn1].Height);
+                rcmenu2 = new Rectangle(250,600, menu2[mn2].Width, menu2[mn2].Height);
+                rcmenu3 = new Rectangle(430,600, menu3[mn3].Width, menu3[mn3].Height);
                
-                rcmenu5 = new Rectangle(600,600, menu5[mn5].Width, menu5[mn5].Height);
+                rcmenu5 = new Rectangle(610,600, menu5[mn5].Width, menu5[mn5].Height);
                 rcmenu6 = new Rectangle(800,600, menu6[mn6].Width, menu6[mn6].Height);
                 rcOK = new Rectangle(300, 350, OK[OKin].Width, OK[OKin].Height);
                 rcCancelar = new Rectangle(550, 350, Cancelar[CancIN].Width, Cancelar[CancIN].Height);
@@ -405,9 +405,12 @@ using Microsoft.Xna.Framework.Audio;
                 spriteBatch.Draw(menu6[mn6], rcmenu6, Color.White * Alpha);
                 spriteBatch.Draw(seta, rcSeta, Color.White * Alpha);
             }
-            else
+            else 
             {
-                spriteBatch.Draw(Voltar[VoltarIndice], vVoltar, Color.White);
+                if (Creditos)
+                {
+                    spriteBatch.Draw(Voltar[VoltarIndice], vVoltar, Color.White);
+                }
             }
             if (Sair)
             {

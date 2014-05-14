@@ -14,9 +14,9 @@ namespace Project
         Episodio01 questions;
         int Page = 0;
         SpriteFont arial;
-        Texture2D livro, BtAvancarN, BtAvancarH,VoltarOver, VoltarNormal,CaixaDeTexto;
+        Texture2D livro, BtAvancarN, BtAvancarH,VoltarOver, VoltarNormal,CaixaDeTexto,BTx;
         Texture2D[] BtAvancar, Voltar;
-        Rectangle vBtAvancar, vVoltar;
+        Rectangle vBtAvancar, vVoltar,vBTx;
         Vector2 vlivro, vQ1, vQ2, vQ3, vQ4;
         string p1, p2, p3, p4, altQues1, altQues2, altQues3, altQues4, altQues5, altQues6, altQues7, altQues8, altQues9, altQues10, explica01, explica02, explica03, explica04, explica05, explica06, explica07, explica08, explica09, explica10,exp1,exp2,exp3,exp4;
         string[] q1, q2, q3, q4, alt1, alt2, alt3, alt4, explicaP1, explicaP2, explicaP3, explicaP4;
@@ -100,6 +100,7 @@ namespace Project
                 vVoltar = new Rectangle(0, 700, Voltar[VoltarIndice].Width / 3, Voltar[VoltarIndice].Height / 3);
                 BtAvancar = new Texture2D[2] { BtAvancarN, BtAvancarH };
                 vBtAvancar = new Rectangle(950, 700, BtAvancar[indiceDoAvancar].Width / 3, BtAvancar[indiceDoAvancar].Height / 3);
+                vBTx = new Rectangle(950, 0, BTx.Width / 6, BTx.Height / 6);
                 
                 base.Initialize();
             }
@@ -331,6 +332,11 @@ namespace Project
             if (mouse.LeftButton == ButtonState.Pressed && !clique)
             {
                 clique = true;
+                if (ColisaoMouseOver(mouse, vBTx))
+                {
+                    questions.Cad(false);
+                    ExitState();
+                }
                 if (ColisaoMouseOver(mouse, vBtAvancar))
                 {
                     Page++;
@@ -383,11 +389,7 @@ namespace Project
                             Page = 0;
                         }
                     }
-                    else
-                    {
-                        questions.Cad(false);
-                        ExitState();
-                    }
+                    
                 }
             }
             if (mouse.LeftButton == ButtonState.Released)
@@ -544,9 +546,15 @@ namespace Project
                 SpriteBatch.DrawString(arial, "Questão não realizada", vQ4, Color.Black);
             }
 
-
-            SpriteBatch.Draw(Voltar[VoltarIndice], vVoltar, Color.White);
-            SpriteBatch.Draw(BtAvancar[indiceDoAvancar], vBtAvancar, Color.White);
+            if (Page > 0)
+            {
+                SpriteBatch.Draw(Voltar[VoltarIndice], vVoltar, Color.White);
+            }
+            if (Page < 2)
+            {
+                SpriteBatch.Draw(BtAvancar[indiceDoAvancar], vBtAvancar, Color.White);
+            }
+            SpriteBatch.Draw(BTx, vBTx, Color.White);
             SpriteBatch.End();
         }
         public override void LoadContent()
@@ -560,6 +568,7 @@ namespace Project
                 VoltarNormal = parent.Content.Load<Texture2D>("Imagem/Botao_Voltar");
                 VoltarOver = parent.Content.Load<Texture2D>("Imagem/Botao_Voltar_Sel");
                 CaixaDeTexto = parent.Content.Load<Texture2D>("Imagem/textBoxCaderno");
+                BTx = parent.Content.Load<Texture2D>("Imagem/ui/historinha/Botao_X");
                 contentLoaded = true;
             }
         }
