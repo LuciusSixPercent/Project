@@ -22,7 +22,7 @@ namespace game_objects.questions
 
         private int currentAnswerIndex; //qual das respostas da questão o jogador deve pegar atualmente
         private int currentAnswerValue;
-        private int questionScore;
+        //private int questionScore;
 
         private double chanceToSpawnCorrectAnswer;
 
@@ -34,11 +34,20 @@ namespace game_objects.questions
         private int maxFakeSpawnCount;
         private float minAnswerDistance;
 
+        private float bonusChance;
+        private bool bonusSpawned;
+
+        public float BonusChance
+        {
+            get { return bonusChance; }
+            set { bonusChance = value; }
+        }
+
         public Question Question
         {
             get { return question; }
         }
-        
+
         /// <summary>
         /// Responsável por limitar o número de respostas falsas geradas entre cada geração de resposta correta. Um valor 3 significa que a cada resposta correta criada,
         /// apenas 3 falsas poderão ser criadas antes que uma nova resposta correta apareça.
@@ -66,11 +75,11 @@ namespace game_objects.questions
         {
             get { return currentAnswerValue; }
         }
-
+        /*
         public int Score
         {
             get { return questionScore; }
-        }
+        }*/
 
         public string Header
         {
@@ -103,6 +112,7 @@ namespace game_objects.questions
             this.currentAnswerIndex = 0;
             this.maxFakeSpawnCount = 1;
             this.minAnswerDistance = 3;
+            this.bonusChance = 0.5f;
             CreateAnswers();
         }
 
@@ -235,7 +245,18 @@ namespace game_objects.questions
 
             if (correctAnswerSpawned || (PublicRandom.NextDouble() > chanceToSpawnCorrectAnswer && fakeSpawnCount < maxFakeSpawnCount)) //alterar a resposta para alguma outra incorreta
             {
-                text = IncorrectAnswer();
+                if (PublicRandom.NextDouble() <= bonusChance && !bonusSpawned)
+                {
+                    text = "+1";
+                    a.IsBonus = true;
+                    bonusSpawned = true;
+                }
+                else
+                {
+                    text = IncorrectAnswer();
+                    a.IsBonus = false;
+                    bonusSpawned = false;
+                }
 
                 //se a resposta sendo alterada for a correta, avisar o sistema para que uma nova resposta correta possa ser gerada futuramente
                 if (correctAnswer != null && a.Equals(correctAnswer))
@@ -248,6 +269,8 @@ namespace game_objects.questions
             }
             else //alterar a resposta para a resposta correta
             {
+                a.IsBonus = false;
+                bonusSpawned = false;
                 text = CorrectAnswer();
                 chanceToSpawnCorrectAnswer = 0.1;
                 fakeSpawnCount = 0;
@@ -373,7 +396,7 @@ namespace game_objects.questions
         }
 
         /// <summary>
-        /// Checa se uma dada resposta é correta ou não.
+        /// Checa se uma dada resposta é correta ou não ou se é um bonus e atualiza a pontuação conforme necessário.
         /// </summary>
         /// <param name="a">A resposta a ser checada.</param>
         /// <param name="passingBy">True Se o jogador passou pela questão; False se ele colidiu com a questão.</param>
@@ -381,27 +404,30 @@ namespace game_objects.questions
         public bool CheckAnswer(Answer a, bool passingBy)
         {
             bool correct = correctAnswerSpawned && a.Equals(correctAnswer);
+
             if (correct)
             {
-                if (passingBy) //se a resposta é correta e o jogador passou por ela, ele cometeu um erro e perderá pontos
+                if (passingBy)
                     ReducePoints();
-                else
-                    AddPoints();
             }
-            else if (!passingBy) //se a resposta é incorreta, porém o jogador apenas passou por ela, não faz sentido fazê-lo perder pontos
+            else if (!passingBy)
             {
-                ReducePoints();
+                if (!a.IsBonus)
+                {
+                    ReducePoints();
+                }
             }
+
             return correct;
         }
 
         /// <summary>
         /// Soma o valor da resposta atual ao score da questão.
         /// </summary>
-        private void AddPoints()
-        {
-            questionScore += currentAnswerValue;
-        }
+        //private void AddPoints(int amount)
+        //{
+        //    questionScore += amount;
+        //}
 
         /// <summary>
         /// Reduz o valor da resposta atual.

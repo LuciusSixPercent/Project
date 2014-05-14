@@ -17,8 +17,15 @@ namespace game_objects.questions
         private const float scale = 0.5f;
         private Quad quad;
         private Texture2D texture;
+        bool isBonus;
 
         private bool textureLoaded;
+
+        public bool IsBonus
+        {
+            get { return isBonus; }
+            set { isBonus = value; }
+        }
 
         public string Text
         {

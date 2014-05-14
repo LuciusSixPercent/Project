@@ -23,7 +23,7 @@ namespace game_objects.ui
         CENTER
     }
 
-    public class TextBox : DrawableGameObject
+    public class TextBox : Scalable2DGameObject
     {
 
         private List<string> lines;
@@ -36,7 +36,7 @@ namespace game_objects.ui
         private int displayDelay;
         private int elapsed;
 
-        private Vector2 padding;
+        private Vector4 padding;
         private float lineSpacing;
         private int fontSize;
         private float fontScale;
@@ -56,7 +56,7 @@ namespace game_objects.ui
         private Vector2 shadowOffset;
 
 
-        private const float MAX_OUTLINE_WEIGHT = 2f;
+        private const float MAX_OUTLINE_WEIGHT = 4f;
 
         private bool outline;
         private Color outlineColor;
@@ -85,7 +85,7 @@ namespace game_objects.ui
             }
         }
 
-        public Vector2 Padding
+        public Vector4 Padding
         {
             get { return padding; }
             set
@@ -204,16 +204,13 @@ namespace game_objects.ui
             this.lineSpacing = TextHelper.SpriteFont.LineSpacing;
             this.display = DisplayType.ALL;
             this.alignment = TextAlignment.LEFT;
+            this.padding = Vector4.Zero;
             this.displayDelay = 500;
             this.textColor = Color.White;
             this.shadowColor = Color.Black;
             this.shadowOffset = Vector2.One;
             this.outlineColor = Color.Black;
-        }
-
-        public override void Load(ContentManager cManager)
-        {
-
+            this.Visible = true;
         }
 
         /// <summary>
@@ -244,7 +241,7 @@ namespace game_objects.ui
         {
             for (int i = lines.Count - 1; i >= 0; i--)
             {
-                if (TextHelper.SpriteFont.MeasureString(lines[i]).X * fontScale > Width - 2 * padding.X)
+                if (TextHelper.SpriteFont.MeasureString(lines[i]).X * fontScale > Width - padding.X - padding.W)
                 {
 
                     List<string> subLines = new List<string>();
@@ -253,7 +250,7 @@ namespace game_objects.ui
 
                     for (int index = 0; index < subLines.Count; index++)
                     {
-                        while (TextHelper.SpriteFont.MeasureString(subLines[index]).X * fontScale > Width - 2 * padding.X)
+                        while (TextHelper.SpriteFont.MeasureString(subLines[index]).X * fontScale > Width - padding.X - padding.W)
                         {
                             int wordStartIndex = subLines[index].LastIndexOf(' ');
 
@@ -367,42 +364,45 @@ namespace game_objects.ui
                         lastVisibleLine++;
                     }
                     break;
-
             }
         }
 
         public override void Draw(GameTime gameTime)
         {
-            Vector2 initialPos = new Vector2(X + Padding.X, Y + Padding.Y);
-            int charCount = 0;
-            bool keepGoing = true;
-            for (int lineIndex = 0; lineIndex < lines.Count && keepGoing; lineIndex++)
+            if (Visible)
             {
-                string line = lines[lineIndex];
-
-                charCount += line.Length;
-
-                string visibleLine = GetVisibleLine(charCount, line, out keepGoing);
-
-                initialPos.X = AlignLine(initialPos, visibleLine);
-
-                if (DropShadow)
+                base.Draw(gameTime);
+                Vector2 initialPos = new Vector2(X + Padding.X, Y + Padding.Y);
+                int charCount = 0;
+                bool keepGoing = true;
+                for (int lineIndex = 0; lineIndex < lines.Count && keepGoing; lineIndex++)
                 {
-                    ((Renderer2D)Renderer).DrawString(visibleLine, initialPos, shadowColor, 0, shadowOffset, fontScale);
+                    string line = lines[lineIndex];
+
+                    charCount += line.Length;
+
+                    string visibleLine = GetVisibleLine(charCount, line, out keepGoing);
+
+                    initialPos.X = AlignLine(initialPos, visibleLine);
+
+                    if (DropShadow)
+                    {
+                        ((Renderer2D)Renderer).DrawString(visibleLine, initialPos, shadowColor, 0, shadowOffset, fontScale);
+                    }
+
+                    if (Outline)
+                    {
+                        DrawOutline(visibleLine, initialPos);
+                    }
+
+                    ((Renderer2D)Renderer).DrawString(visibleLine, initialPos, textColor, 0, Vector2.Zero, fontScale);
+
+
+                    initialPos.Y += LineSpacing * fontScale;
+
+                    if (initialPos.Y >= Height + Y + padding.Y + padding.Z)
+                        keepGoing = false; ;
                 }
-
-                if (Outline)
-                {
-                    DrawOutline(visibleLine, initialPos);
-                }
-
-                ((Renderer2D)Renderer).DrawString(visibleLine, initialPos, textColor, 0, Vector2.Zero, fontScale);
-
-
-                initialPos.Y += LineSpacing * fontScale;
-
-                if (initialPos.Y >= Height + Y)
-                    keepGoing = false; ;
             }
         }
 
@@ -423,10 +423,10 @@ namespace game_objects.ui
             switch (alignment)
             {
                 case TextAlignment.CENTER:
-                    x += (Width - TextHelper.SpriteFont.MeasureString(visibleLine).X * fontScale - padding.X) / 2;
+                    x = X + (Width - TextHelper.SpriteFont.MeasureString(visibleLine).X * fontScale - padding.X - padding.W) / 2;
                     break;
                 case TextAlignment.RIGHT:
-                    x += (Width - TextHelper.SpriteFont.MeasureString(visibleLine).X * fontScale);
+                    x = X + (Width - TextHelper.SpriteFont.MeasureString(visibleLine).X * fontScale - padding.W);
                     break;
             }
             return x;

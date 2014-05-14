@@ -14,7 +14,6 @@ namespace game_objects.ui
     public class Button : Scalable2DGameObject
     {
         protected Texture2D[] textures;
-        private string[] texturesFileName;
 
         private ButtonStates state;
 
@@ -130,7 +129,6 @@ namespace game_objects.ui
             this.dimensions = new Vector3(Bounds.Width, Bounds.Height, 0);
             this.textPosition = Vector2.Zero;
             this.useText = true;
-            this.Visible = true;
             this.enabled = true;
             this.FontSize = 20;
             this.textures = new Texture2D[3];

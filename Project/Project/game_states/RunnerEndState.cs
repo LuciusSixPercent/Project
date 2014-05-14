@@ -47,21 +47,34 @@ namespace game_states
             tryAgain.FilePath = "Imagem" + separator + "ui" + separator + "bate_bola" + separator + "fim" + separator;
             tryAgain.BaseFileName = "tryBtn";
             tryAgain.mouseClicked += new Button.MouseClicked(playAgain_mouseClicked);
+            tryAgain.Disable();
+            tryAgain.Visible = false;
 
             _continue = new Button(goManager.R2D, new Rectangle((int)tryAgain.Position.X, (int)tryAgain.Position.Y, (int)tryAgain.Dimensions.X, (int)tryAgain.Dimensions.Y));
             _continue.FilePath = tryAgain.FilePath;
             _continue.BaseFileName = "continueBtn";
             _continue.mouseClicked += new Button.MouseClicked(_continue_mouseClicked);
+            _continue.Disable();
+            _continue.Visible = false;
 
             results = new TextBox(goManager.R2D);
-            results.Width = 500;
+            results.Width = screen.Width;
             results.Height = 300;
-            results.Position = new Vector3((screen.Width - results.Width)/2, 300, 0);
+            results.FontSize = 40;
+            results.Outline = true;
+            results.OutlineColor = Color.SandyBrown;
+            results.OutlineWeight = 1;
+            results.DropShadow = true;
+            results.ShadowColor = Color.Gray * 0.5f;
+            results.ShadowOffset = new Vector2(0, -8);
+            results.Position = new Vector3((screen.Width - results.Width)/2, (screen.Height - results.Height)/2, 0);
             results.Display = DisplayType.LINE_BY_LINE;
             results.Alignment = TextAlignment.CENTER;
 
             goManager.AddObject(titleScreen);
             goManager.AddObject(results);
+            goManager.AddObject(_continue);
+            goManager.AddObject(tryAgain);
         }
 
         void _continue_mouseClicked(Button btn)
@@ -132,13 +145,19 @@ namespace game_states
         {
             if (monitoredState.MistakesMade < monitoredState.AllowedMistakes)
             {
-                goManager.AddObject(_continue);
-                goManager.RemoveObject(tryAgain);
+                _continue.Visible = true;
+                _continue.Enable();
+
+                tryAgain.Visible = false;
+                tryAgain.Disable();
             }
             else
             {
-                goManager.AddObject(tryAgain);
-                goManager.RemoveObject(_continue);
+                _continue.Visible = false;
+                _continue.Disable();
+
+                tryAgain.Visible = true;
+                tryAgain.Enable();
             }
             EnableButtons();
             gotoState = StatesIdList.EMPTY_STATE;
