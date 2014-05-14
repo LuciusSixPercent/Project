@@ -42,8 +42,10 @@ class ModoHistorinha
     Cue PlayerModoHistoria = null;
     int[] PosicoesDasRespostas;
     Random NumeroRandomico;
-    Texture2D CaixadeTexto;
-    Rectangle vCaixa;
+    Texture2D CaixadeTexto,ReplayNormal,ReplayOver;
+    Texture2D[] Replay;
+    int indiceReplay = 0;
+    Rectangle vCaixa,vReplay;
     //teste
     bool venceu = false;
     int erro = 0;
@@ -213,8 +215,17 @@ class ModoHistorinha
     }
     public void Click(MouseState mouse)
     {
+        if (ColisaoMouseOver(mouse, vReplay))
+        {
+            indiceReplay = 1;
+        }
+        else { indiceReplay = 0; }
         if (mouse.LeftButton == ButtonState.Pressed)
         {
+            if (ColisaoMouseOver(mouse, vReplay))
+            {
+                repetir = true;
+            }
             if ((mouse.X > VOpcoes1.X && mouse.X < VOpcoes1.X + VOpcoes1.Width) && (mouse.Y >= VOpcoes1.Y && mouse.Y <= VOpcoes1.Y + VOpcoes1.Height))
             {
                 if (!seq)
@@ -435,7 +446,7 @@ class ModoHistorinha
                 spriteBatch.DrawString(arial, res4, Valt3, Calt3 == Color.White ? Color.Black : Calt3);
                 break;
         }
-        
+        spriteBatch.Draw(Replay[indiceReplay], vReplay, Color.White);
 
     }
     public bool Continuar()
@@ -457,6 +468,8 @@ class ModoHistorinha
         numerosPegos = new int[4];
         OpcoeSprite = Content.Load<Texture2D>("Imagem/Sprites/op");
         CaixadeTexto = Content.Load<Texture2D>("Imagem/Caixa_texto");
+        ReplayNormal = Content.Load<Texture2D>("Imagem/botao_replay");
+        ReplayOver = Content.Load<Texture2D>("Imagem/botao_replay_sel");
         PosicoesDasRespostas = new int[4] { 100, OpcoeSprite.Width / 3 + 100, ((OpcoeSprite.Width / 3) * 2) + 100, OpcoeSprite.Width + 100 };
         for (int j = 0; j < quantidade; j++)
         {
@@ -556,7 +569,19 @@ class ModoHistorinha
             Valt3 = new Vector2((VOpcoes4.X + 120) - arial.MeasureString(res4).X - justified4, VOpcoes4.Y + 50);
         vCaixa = new Rectangle(20, 600, CaixadeTexto.Width, CaixadeTexto.Height);
         Vpergunta = new Vector2(vCaixa.X+20,vCaixa.Y+20);
+        Replay = new Texture2D[2] { ReplayNormal, ReplayOver };
+        vReplay = new Rectangle(0, 700, Replay[indiceReplay].Width / 6, Replay[indiceReplay].Height / 6);
         
+    }
+    public bool ColisaoMouseOver(MouseState mouse, Rectangle rec)
+    {
+        if ((mouse.X > rec.X && mouse.X < rec.X + rec.Width) && (mouse.Y > rec.Y && mouse.Y < rec.Y + rec.Height))
+        {
+
+            return true;
+        }
+
+        return false;
     }
 }
 

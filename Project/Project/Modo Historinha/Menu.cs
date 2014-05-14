@@ -48,7 +48,7 @@ using Microsoft.Xna.Framework.Audio;
         SoundBank soundBank, soundBank3;
         Cue engineSound = null;
         Cue Player1 = null;
-        
+        float FadeFundo = 1;
         public Menu(int id, Game1 parent)
             : base(id, parent)
         {
@@ -168,7 +168,7 @@ using Microsoft.Xna.Framework.Audio;
                     if (Sair)
                     {
                         
-                        Alpha = 0.5f;
+                        Alpha = 0.3f;
                         if (ColisaoMouseOver(mouse, OK[OKin], rcOK))
                         {
                             OKin = 1;
@@ -398,7 +398,7 @@ using Microsoft.Xna.Framework.Audio;
             {
                 Fundo = Fnorm;
             }
-            spriteBatch.Draw(Fundo, rcfundo, Color.White * Alpha);
+            spriteBatch.Draw(Fundo, rcfundo, (Color.White * Alpha)*FadeFundo);
             if (!Config && !Creditos && !Historinha)
             {
                 Fundo = Fnorm;
@@ -427,6 +427,7 @@ using Microsoft.Xna.Framework.Audio;
             }
             if (Historinha)
             {
+                FadeFundo = 0.3f;
                 spriteBatch.Draw(BTAvancar[indiceBTavancar], vBTAvancar, Color.White);
                 spriteBatch.Draw(BTVoltar[indiceBTvoltar], vBTVoltar, Color.White);
                 spriteBatch.Draw(SelecaoEpisodio1, vSelecaoEpisodio1, Color.White);

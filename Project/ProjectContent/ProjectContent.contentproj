@@ -2063,6 +2063,31 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="Imagem\botao_replay.png">
+      <Name>botao_replay</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Imagem\botao_replay_sel.png">
+      <Name>botao_replay_sel</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Imagem\ui\historinha\Botao_X_menor.png">
+      <Name>Botao_X_menor</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Imagem\Personagem\eduardo.png">
+      <Name>eduardo</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Audio\EduardoFala.wav">
+      <Name>EduardoFala</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
     <Content Include="questions.xml">
       <Name>questions</Name>
       <Importer>XmlImporter</Importer>

@@ -208,9 +208,9 @@ class Episodio01 : GameState
     SoundBank soundBank2;
     Cue engineSound = null;
 
-    Texture2D VoltarOver, VoltarNormal, CenarioInterior, CenarioExterior, CenarioCampo, CenarioRio, BtAvancarN, BtAvancarH;
-    Texture2D[] Voltar, Cenario, BtAvancar;
-    Rectangle vVoltar, rcCenario;
+    Texture2D ReplayOver, ReplayNormal, CenarioInterior, CenarioExterior, CenarioCampo, CenarioRio, BtAvancarN, BtAvancarH;
+    Texture2D[] Replay, Cenario, BtAvancar;
+    Rectangle vReplay, rcCenario;
     Rectangle vBtAvancar;
     int VoltarIndice = 0;
     int CenarioIndice = 0;
@@ -306,8 +306,8 @@ class Episodio01 : GameState
             CachorroColor = Color.Transparent;
             ButtonColor = Color.White;
             VoltarBool = false;
-            Voltar = new Texture2D[2] { VoltarNormal, VoltarOver };
-            vVoltar = new Rectangle(0, 700, Voltar[VoltarIndice].Width / 3, Voltar[VoltarIndice].Height / 3);
+            Replay = new Texture2D[2] { ReplayNormal, ReplayOver };
+            vReplay = new Rectangle(0, 700, Replay[VoltarIndice].Width / 6, Replay[VoltarIndice].Height / 6);
             audioEngine2 = new AudioEngine("Content\\Audio\\MyGameAudio2.xgs");
             waveBank2 = new WaveBank(audioEngine2, "Content\\Audio\\Wave Bank2.xwb");
             soundBank2 = new SoundBank(audioEngine2, "Content\\Audio\\Sound Bank2.xsb");
@@ -517,7 +517,7 @@ class Episodio01 : GameState
                         if (!FimDaHistoria)
                         {
                             AnimacaoDoEpisodio();
-                            if (ColisaoMouseOver(mouse, vVoltar))
+                            if (ColisaoMouseOver(mouse, vReplay))
                             {
                                 VoltarIndice = 1;
 
@@ -559,26 +559,8 @@ class Episodio01 : GameState
                                 if (mouse.LeftButton == ButtonState.Pressed && !cliqueDoMouse && parent.IsActive)
                                 {
                                     cliqueDoMouse = true;
-                                    if (ColisaoMouseOver(mouse, vVoltar) && Alpha ==1)
+                                    if (ColisaoMouseOver(mouse, vReplay) && Alpha ==1)
                                     {
-                                        if (selecionar == 0 && Incremento0 !=0)
-                                        {
-                                            NoAlbum -= NoAlbum > 0 ? 1 : 0;
-                                            selecionar = AlbumPrincipal[NoAlbum].Count - 1;
-                                            if (Incremento0 != 0)
-                                                Incremento0--;
-                                        }
-                                        else if (Incremento0 != 0)
-                                        {
-                                            selecionar--;
-                                            if (Incremento0 != 0)
-                                                Incremento0--;
-                                            indice = 0;
-                                            zerar = 0;
-                                            texto = "";
-                                            Limitedotexto = 80;
-                                        }
-                                        VoltarBool = true;
                                         repetir = true;
                                     }
                                     if (ColisaoMouseOver(mouse, vBtAvancar) && Alpha == 1)
@@ -762,7 +744,7 @@ class Episodio01 : GameState
         {
             SpriteBatch.Draw(CenarioTv, vTV, Color.White * Alpha);
         }
-        #region Teste
+        #region Nome dos Personagens
         MouseState mouse = Mouse.GetState();
         if(ColisaoMouseOver(mouse,new Rectangle((int)vSerafina.X, (int)vSerafina.Y, !SerafinaTamanho ? Serafina.Width : 53, !SerafinaTamanho ? Serafina.Height : 171)) && SerafinaColor == Color.White)
         {
@@ -1342,7 +1324,7 @@ class Episodio01 : GameState
                             if (Incremento0 == 0)
                             {
                                 
-                                BolaColor = Color.Yellow;
+                                BolaColor = Color.White;
                             }
                         }
                         if (parte7 && !exercicio7)
@@ -1599,7 +1581,7 @@ class Episodio01 : GameState
                 
                 #endregion
                 SpriteBatch.Draw(BtAvancar[indiceDoAvancar], vBtAvancar, ButtonColor * Alpha);
-                SpriteBatch.Draw(Voltar[VoltarIndice], vVoltar, ButtonColor * Alpha);
+                SpriteBatch.Draw(Replay[VoltarIndice], vReplay, ButtonColor * Alpha);
                 SpriteBatch.Draw(icoCad, vcad, ButtonColor * Alpha);
             }
         }
@@ -1612,8 +1594,8 @@ class Episodio01 : GameState
         if (!contentLoaded)
         {
             arial = parent.Content.Load<SpriteFont>("Fonte/historinha");
-            VoltarNormal = parent.Content.Load<Texture2D>("Imagem/Botao_Voltar");
-            VoltarOver = parent.Content.Load<Texture2D>("Imagem/Botao_Voltar_Sel");
+            ReplayNormal = parent.Content.Load<Texture2D>("Imagem/botao_replay");
+            ReplayOver = parent.Content.Load<Texture2D>("Imagem/botao_replay_sel");
             CenarioInterior = parent.Content.Load<Texture2D>("Imagem/Cenario/Casa_Int");
             CenarioExterior = parent.Content.Load<Texture2D>("Imagem/Cenario/Casa_Ext");
             CenarioRio = parent.Content.Load<Texture2D>("Imagem/Cenario/CenarioRio");
