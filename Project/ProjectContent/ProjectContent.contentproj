@@ -133,11 +133,11 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Menu\FundoConfiguracoes.png">
+    <None Include="Menu\FundoConfiguracoes.png">
       <Name>FundoConfiguracoes</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
+    </None>
     <Compile Include="Menu\FundoCreditos.png">
       <Name>FundoCreditos</Name>
       <Importer>TextureImporter</Importer>
@@ -2066,16 +2066,12 @@
       <Processor>TextureProcessor</Processor>
       <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
     </Compile>
-    <Compile Include="Video\Encerramento.wmv">
-      <Name>Encerramento</Name>
-      <Importer>WmvImporter</Importer>
-      <Processor>VideoProcessor</Processor>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Audio\Menu\Win\" />
     <Folder Include="Audio\Menu\Xbox\" />
     <Folder Include="Audio\Xbox\" />
+    <Folder Include="Video\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fonte\historinha.spritefont">
