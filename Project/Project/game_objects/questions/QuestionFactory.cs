@@ -41,7 +41,7 @@ namespace game_objects.questions
                     usedIndexes[testingIndex] = true;
                     i = 0;
                     
-                    while (usedIndexes[testingIndex] || q.Equals(lastCreated) && tries < 25)
+                    while ((usedIndexes[testingIndex] || q.Equals(lastCreated)) && tries < 100)
                     {
                         testingIndex = PublicRandom.Next(questions[level].Length);
                         tries++;

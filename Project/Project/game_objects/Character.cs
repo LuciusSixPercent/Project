@@ -215,6 +215,7 @@ namespace game_objects
             pmc.Unlock();
             Position = Vector3.Zero;
             pmc.Destiny = Position.X;
+            pmc.Origin = Position.X;
         }
 
         public void KickBall(bool makeGoal, Vector3 target)
@@ -436,8 +437,11 @@ namespace game_objects
         public void LockMovement()
         {
             PlayerMovementComponent pmc = GetComponent<PlayerMovementComponent>();
-            pmc.Destiny = 0;
-            pmc.Lock();
+            if (!pmc.Locked)
+            {
+                pmc.Destiny = 0;
+                pmc.Lock();
+            }
         }
     }
 }

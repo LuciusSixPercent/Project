@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using game_states;
+using Project.Modo_Historinha;
 
 namespace Project
 {
@@ -49,8 +50,11 @@ namespace Project
             Menu menu = new Menu((int)StatesIdList.MAIN_MENU, this);
             states.Add(menu.ID, menu);
 
-            Episodio01 md = new Episodio01((int)StatesIdList.STORY, this);
+            Episodio01 md = new Episodio01((int)StatesIdList.EPISODE_01, this);
             states.Add(md.ID, md);
+
+            EncerramentoDoEpisodio1 ede1 = new EncerramentoDoEpisodio1((int)StatesIdList.EPISODE_01_END, this);
+            states.Add(ede1.ID, ede1);
 
             RunnerState rs = new RunnerState((int)StatesIdList.RUNNER, this);
             states.Add(rs.ID, rs);
@@ -72,6 +76,9 @@ namespace Project
 
             LoadingState ls = new LoadingState((int)StatesIdList.LOADING, this);
             states.Add(ls.ID, ls);
+
+            CreditsState cs = new CreditsState((int)StatesIdList.CREDITS, this);
+            states.Add(cs.ID, cs);
 
 
             EnterState(menu.ID);
@@ -166,7 +173,7 @@ namespace Project
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(statesStack[statesStack.Count-1].BgColor);
             TextHelper.CacheQueued();
             DrawStates(gameTime);
             base.Draw(gameTime);

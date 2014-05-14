@@ -166,17 +166,28 @@ namespace game_states
             if (monitoredState.AnswersGot == monitoredState.NumberOfAnswers)
             {
                 if(monitoredState.MistakesMade == 0)
-                    txt = "PERFEITO! (Você acertou tudo de primeira, parabens!)\n";
+                    txt = "PERFEITO!\n(Você acertou tudo de primeira, merece o dobro de pontos!)\n\n";
+                
+                int instanceScore = monitoredState.Score * monitoredState.PerfectSscoreMultiplier;
 
-                txt += "Pontuação total: " + monitoredState.Score + " x " + monitoredState.PerfectSscoreMultiplier + " = " + monitoredState.Score * monitoredState.PerfectSscoreMultiplier;
+                txt += "Pontuação obtida: " + monitoredState.Score + " x " + monitoredState.PerfectSscoreMultiplier + " = " + instanceScore;
 
                 txt += "\n";
 
-                txt += "Erros: " + monitoredState.MistakesMade;
+                txt += "Pontuação acumulada: " + monitoredState.AccumulatedScore;
+
+                txt += "\n";
+
+                txt += "Pontuação total: " + instanceScore + " + " + monitoredState.AccumulatedScore + " = " + (instanceScore + monitoredState.AccumulatedScore);
+
             }
             else
             {
-                txt = "Hmmm, dessa vez não deu. Que tal tentar de novo?";
+                txt = "Hmmm, dessa vez não deu. Que tal tentar de novo?\n\n";
+
+                txt += "Respostas corretas obtidas: " + monitoredState.AnswersGot + " / " + monitoredState.NumberOfAnswers + "\n";
+
+                txt += "Erros cometidos: " + monitoredState.MistakesMade;
             }
 
             results.Text = txt;

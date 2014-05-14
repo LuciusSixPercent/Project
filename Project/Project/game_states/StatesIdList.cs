@@ -17,10 +17,12 @@ namespace game_states
         MAIN_MENU = 20,
         OPTIONS = 30,
         CHAR_SELECTION = 35,
-        STORY = 40,
+        EPISODE_01 = 40,
+        EPISODE_01_END = 41,
         RUNNER = 50,
         RUNNER_WAIT = 55,
         RUNNER_END = 57,
-        PAUSE = 60
+        PAUSE = 60,
+        CREDITS = 100
     }
 }

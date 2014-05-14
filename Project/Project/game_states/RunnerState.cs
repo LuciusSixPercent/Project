@@ -50,7 +50,8 @@ namespace game_states
         private int mistakesMade;
 
         private int score;
-        private int perfectSscoreMultiplier;
+        private int accumulatedScore;
+        private int perfectScoreMultiplier;
 
         private bool answeredAll;
         private bool finished;
@@ -68,6 +69,8 @@ namespace game_states
 
         private TextBox scoreLbl;
         private TextBox mistakesLbl;
+
+        private bool keepScore;
         #endregion
 
 
@@ -85,20 +88,26 @@ namespace game_states
 
         public int PerfectSscoreMultiplier
         {
-            get { return perfectSscoreMultiplier; }
+            get { return perfectScoreMultiplier; }
         }
 
         public int Score
         {
             get { return score; }
-            set 
-            { 
+            set
+            {
                 score = value;
                 if (scoreLbl != null)
                 {
                     scoreLbl.Text = score.ToString();
                 }
             }
+        }
+
+        public int AccumulatedScore
+        {
+            get { return accumulatedScore; }
+            set { accumulatedScore = value; }
         }
 
         public int NumberOfAnswers
@@ -157,7 +166,8 @@ namespace game_states
         public RunnerLevel Level
         {
             get { return level; }
-            set { 
+            set
+            {
                 level = value;
                 switch (level)
                 {
@@ -191,7 +201,7 @@ namespace game_states
                 level = RunnerLevel.EASY;
                 subjects = new QuestionSubject[] { QuestionSubject.PT };
                 Score = 0;
-                perfectSscoreMultiplier = 2;
+                perfectScoreMultiplier = 2;
 
                 enterTransitionDuration = 500;
                 exitTransitionDuration = 1000;
@@ -212,10 +222,10 @@ namespace game_states
                 questionHeader.Width = 1024;
                 questionHeader.Height = 100;
                 questionHeader.Y = 5;
-                
-                string path = "Imagem" + Path.AltDirectorySeparatorChar + "ui" + Path.AltDirectorySeparatorChar + "bate_bola"+ 
-                    Path.AltDirectorySeparatorChar+"respostas_e_pontos"+ Path.AltDirectorySeparatorChar;
-                
+
+                string path = "Imagem" + Path.AltDirectorySeparatorChar + "ui" + Path.AltDirectorySeparatorChar + "bate_bola" +
+                    Path.AltDirectorySeparatorChar + "respostas_e_pontos" + Path.AltDirectorySeparatorChar;
+
                 answersSupports = new Repeatable2DGameObject(goManager.R2D, path, "suporte", 2, -1);
                 answersSupports.Y = 100;
                 answersSupports.RepeatAmount = Vector2.Zero;
@@ -242,7 +252,7 @@ namespace game_states
                 progress.Orientation = BarOrientation.VERTICAL;
 
                 char separator = Path.AltDirectorySeparatorChar;
-                string uiPath ="Imagem" + separator + "ui" + separator;
+                string uiPath = "Imagem" + separator + "ui" + separator;
 
                 progress.FilePath = uiPath + "progress_bar";
                 progress.FillOpacity = 0.75f;
@@ -255,8 +265,8 @@ namespace game_states
                 scoreLbl.Alignment = TextAlignment.CENTER;
                 scoreLbl.Width = 219;
                 scoreLbl.Height = 60;
-                scoreLbl.X = parent.GraphicsDevice.Viewport.Width - scoreLbl.Width - 5;        
-                scoreLbl.Padding = new Vector4(0, scoreLbl.Height*0.4f, 0, 0);
+                scoreLbl.X = parent.GraphicsDevice.Viewport.Width - scoreLbl.Width - 5;
+                scoreLbl.Padding = new Vector4(0, scoreLbl.Height * 0.4f, 0, 0);
 
                 mistakesLbl = new TextBox(goManager.R2D);
                 mistakesLbl.TextureFileName = "erros";
@@ -266,7 +276,7 @@ namespace game_states
                 mistakesLbl.Width = 219;
                 mistakesLbl.Height = 60;
                 mistakesLbl.X = scoreLbl.X;
-                mistakesLbl.Padding = new Vector4(0, mistakesLbl.Height*0.4f, 0, 0);
+                mistakesLbl.Padding = new Vector4(0, mistakesLbl.Height * 0.4f, 0, 0);
 
 
                 bgmNames = new string[] { "wedo_midi", "vanilla", "relaxing_summer_bea", "quotsports_fanaticq" };
@@ -292,12 +302,28 @@ namespace game_states
             if (questions[questions.Count - 1].CheckAnswer(answer, false))
             {
                 foundAnswer = 1;
-                Score += questions[questions.Count - 1].CurrentAnswerValue;
+                QuestionGameObject currentQuestion = questions[questions.Count - 1];
+                Score += currentQuestion.CurrentAnswerValue;
+
                 scoreLbl.Text = Score.ToString();
-                foreach (char c in answer.Text)
+
+                if (string.IsNullOrEmpty(currentQuestion.Question.GetModifier(0)))
+                {
+                    foreach (char c in answer.Text)
+                    {
+                        Vector3 position = answersSupports.GetClonePosition(answersGotLbl.Count);
+                        TextBox answerLbl = CreateLabel(c.ToString(), position);
+                        answerLbl.Y -= answersSupports.Height;
+                        answerLbl.Y -= answerLbl.Height;
+                        answersSupports.AdvanceCloneFrame(answersGotLbl.Count);
+                        answersGotLbl.Add(answerLbl);
+                        goManager.AddObject(answerLbl);
+                    }
+                }
+                else
                 {
                     Vector3 position = answersSupports.GetClonePosition(answersGotLbl.Count);
-                    TextBox answerLbl = CreateLabel(c.ToString(), position);
+                    TextBox answerLbl = CreateLabel(answer.Text, position);
                     answerLbl.Y -= answersSupports.Height;
                     answerLbl.Y -= answerLbl.Height;
                     answersSupports.AdvanceCloneFrame(answersGotLbl.Count);
@@ -321,11 +347,11 @@ namespace game_states
             answerLbl.Text = text;
             answerLbl.TextColor = Color.GhostWhite;
             answerLbl.Outline = true;
-            answerLbl.OutlineColor = Color.Black*0.5f;
+            answerLbl.OutlineColor = Color.Black * 0.5f;
             answerLbl.OutlineWeight = 2f;
             answerLbl.Alignment = TextAlignment.CENTER;
             answerLbl.Position = position;
-            answerLbl.FontSize = (int)(60 * (answersSupports.Width/93)); //escalona o tamanho da fonte caso o suporte tenha sido reduzido
+            answerLbl.FontSize = (int)(60 * (answersSupports.Width / 93)); //escalona o tamanho da fonte caso o suporte tenha sido reduzido
             answerLbl.DropShadow = true;
             answerLbl.Width = answersSupports.Width;
             answerLbl.Height = 25;
@@ -357,7 +383,7 @@ namespace game_states
             for (int i = 0; i < answersGotLbl.Count; i++)
             {
                 goManager.RemoveObject(answersGotLbl[i]);
-            } 
+            }
             answersGotLbl.Clear();
             answersSupports.RepeatAmount = Vector2.Zero;
         }
@@ -366,10 +392,18 @@ namespace game_states
         {
             string path = "Imagem" + Path.AltDirectorySeparatorChar + "ui" + Path.AltDirectorySeparatorChar + "bate_bola" + Path.AltDirectorySeparatorChar + "repostas_e_pontos" + Path.AltDirectorySeparatorChar;
             int charCount = 0;
-            for (int j = 0; j < questions[questions.Count - 1].Question.AnswerCount; j++)
+            Question question = questions[questions.Count - 1].Question;
+            if (string.IsNullOrEmpty(question.GetModifier(0)))
             {
-                string answer = questions[questions.Count - 1].Question.GetAnswer(j);
-                charCount += answer.Length;
+                for (int j = 0; j < question.AnswerCount; j++)
+                {
+                    string answer = questions[questions.Count - 1].Question.GetAnswer(j);
+                    charCount += answer.Length;
+                }
+            }
+            else
+            {
+                charCount = question.AnswerCount;
             }
 
             answersSupports.RepeatAmount = new Vector2(charCount, 1);
@@ -377,7 +411,7 @@ namespace game_states
             float widthScale = 1;
             float baseWidth = 93;
             float padding = 2;
-            float totalWidth = baseWidth * (answersSupports.RepeatAmount.X) +padding * (answersSupports.RepeatAmount.X);
+            float totalWidth = baseWidth * (answersSupports.RepeatAmount.X) + padding * (answersSupports.RepeatAmount.X);
 
             Viewport screen = parent.GraphicsDevice.Viewport;
 
@@ -389,7 +423,7 @@ namespace game_states
             totalWidth *= widthScale;
 
             answersSupports.Width = baseWidth * widthScale;
-            
+
             answersSupports.X = (screen.Width - totalWidth) / 2;
 
             float remaining = screen.Width - answersSupports.X - totalWidth;
@@ -415,7 +449,6 @@ namespace game_states
             {
                 ChangeBgm(bgmNames[bgmNames.Length - 1]);
                 answeredAll = true;
-                centerPlayer();
             }
         }
 
@@ -426,11 +459,6 @@ namespace game_states
                 bgm.Stop(AudioStopOptions.AsAuthored);
             bgm = AudioManager.GetCue(bgmName);
             PlayBGM();
-        }
-
-        private void centerPlayer()
-        {
-            player.LockMovement();
         }
 
         public override void LoadContent()
@@ -504,8 +532,19 @@ namespace game_states
             cam.lookAt(new Vector3(0f, 0.25f, 2f), true);
             goManager.R3D.updateEffect(cam.View, cam.Projection);
             field.Reset();
+            if (keepScore)
+            {
+                keepScore = false;
+                accumulatedScore += Score * perfectScoreMultiplier;
+            }
+            else
+            {
+                accumulatedScore = 0;
+            }
+
             Score = 0;
-            perfectSscoreMultiplier = 2;
+
+            perfectScoreMultiplier = 2;
             foreach (QuestionGameObject q in questions)
                 goManager.RemoveObject(q);
 
@@ -517,7 +556,7 @@ namespace game_states
             {
                 NumberOfAnswers += q.AnswerCount;
             }
-            AllowedMistakes = (int) Math.Round((double)NumberOfAnswers / ((int)Level + 2), MidpointRounding.AwayFromZero);
+            AllowedMistakes = (int)Math.Round((double)NumberOfAnswers / ((int)Level + 2), MidpointRounding.AwayFromZero);
             HideUI();
         }
 
@@ -585,6 +624,7 @@ namespace game_states
                                 CheckAnswer();
                                 if (answeredAll)
                                 {
+                                    player.LockMovement();
                                     field.KeepMoving = false;
                                     if (player.KeepMoving)
                                     {
@@ -679,7 +719,7 @@ namespace game_states
                     {
                         if (question.CheckAnswer(a, true))
                         {
-                            perfectSscoreMultiplier = 1;    //a partir do momento que o jogador errou uma questão, não ganha mais o dobro de pontos
+                            perfectScoreMultiplier = 1;    //a partir do momento que o jogador errou uma questão, não ganha mais o dobro de pontos
                             MistakesMade++;
                             AudioManager.GetCue("miss_answer_" + (PublicRandom.Next(2) + 1)).Play();
                         }
@@ -690,7 +730,6 @@ namespace game_states
             else if (!answeredAll)
             {
                 answeredAll = true;
-                centerPlayer();
                 foreach (QuestionGameObject q in questions)
                 {
                     goManager.RemoveObject(q);
@@ -722,9 +761,13 @@ namespace game_states
                 Answer answer = questions[questions.Count - 1].GetClosestAnswer();
                 if (!answer.IsBonus)
                 {
-                    perfectSscoreMultiplier = 1;    //a partir do momento que o jogador errou uma questão, não ganha mais o dobro de pontos
+                    perfectScoreMultiplier = 1;    //a partir do momento que o jogador errou uma questão, não ganha mais o dobro de pontos
                     MistakesMade++;
                     AudioManager.GetCue("wrong_answer_1").Play();
+                }
+                else
+                {
+                    AudioManager.GetCue("decision17").Play();
                 }
                 questions[questions.Count - 1].MoveAnswer(answer);
             }
@@ -765,6 +808,7 @@ namespace game_states
                 {
                     numberOfQuestions++;
                 }
+                keepScore = true;
                 shouldReset = true;
             }
             else
@@ -794,16 +838,15 @@ namespace game_states
             if (questions.Count > 0)
             {
                 header = questions[questions.Count - 1].Header;
-                //questionScore = questions[questions.Count - 1].Score;
                 answerValue = questions[questions.Count - 1].CurrentAnswerValue;
             }
             Viewport screen = parent.GraphicsDevice.Viewport;
             Color c = new Color(120, 20, 60);
 
             float scale = 0.5f;
-            goManager.R2D.DrawString(header, new Vector2(screen.Width - TextHelper.SpriteFont.MeasureString(header).X*scale, 0), c, 0, Vector2.Zero, scale);
+            goManager.R2D.DrawString(header, new Vector2(screen.Width - TextHelper.SpriteFont.MeasureString(header).X * scale, 0), c, 0, Vector2.Zero, scale);
             c *= 0.95f;
-            string s = "Pontos acumulados na iteração: " + Score + " x (" + perfectSscoreMultiplier + ")";
+            string s = "Pontos acumulados na iteração: " + Score + " x (" + perfectScoreMultiplier + ")";
 
             goManager.R2D.DrawString(s, new Vector2(screen.Width - TextHelper.SpriteFont.MeasureString(s).X * scale, 30), c, 0, Vector2.Zero, scale);
 
@@ -837,8 +880,8 @@ namespace game_states
 
             goManager.R2D.DrawString(header, new Vector2(screen.Width - TextHelper.SpriteFont.MeasureString(header).X * scale - 1, 1), c, 0, Vector2.Zero, scale);
             c *= 0.95f;
-            s = "Pontos acumulados na iteração: " + Score + " x (" + perfectSscoreMultiplier + ")";
-            goManager.R2D.DrawString(s, new Vector2(screen.Width - TextHelper.SpriteFont.MeasureString(s).X * scale -1, 31), c, 0, Vector2.Zero, scale);
+            s = "Pontos acumulados na iteração: " + Score + " x (" + perfectScoreMultiplier + ")";
+            goManager.R2D.DrawString(s, new Vector2(screen.Width - TextHelper.SpriteFont.MeasureString(s).X * scale - 1, 31), c, 0, Vector2.Zero, scale);
 
             /*
             s = "Pontos acumulados na questão: " + questionScore;

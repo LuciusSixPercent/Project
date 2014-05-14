@@ -14,6 +14,8 @@ namespace game_states
         private int id;
         protected Game1 parent;
 
+        private Color bgColor;
+
         private SpriteBatch spriteBatch;
 
         protected bool initialized;
@@ -89,13 +91,20 @@ namespace game_states
             }
         }
 
+        public Color BgColor
+        {
+            get { return bgColor; }
+            set { bgColor = value; }
+        }
+
         protected GameState(int id, Game1 parent)
         {
             this.id = id;
             this.parent = parent;
             this.stateEntered = false;
-            freezeUpdatesBelow = true;
-            freezeGraphicsBelow = true;
+            this.bgColor = Color.Black;
+            this.freezeUpdatesBelow = true;
+            this.freezeGraphicsBelow = true;
         }
 
         public virtual void EnterState()

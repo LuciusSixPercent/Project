@@ -161,6 +161,7 @@
     <Compile Include="game_objects\ui\ToggleButton.cs" />
     <Compile Include="game_states\CharSelectionState.cs" />
     <Compile Include="game_states\ConfigMenuState.cs" />
+    <Compile Include="game_states\CreditsState.cs" />
     <Compile Include="game_states\LoadingState.cs" />
     <Compile Include="game_states\RunnerEndState.cs" />
     <Compile Include="game_states\RunnerWaitState.cs" />
@@ -172,6 +173,7 @@
     <Compile Include="game_states\RunnerState.cs" />
     <Compile Include="game_states\StatesIdList.cs" />
     <Compile Include="KeyboardHelper.cs" />
+    <Compile Include="Modo Historinha\EncerramentoDoEpisodio1.cs" />
     <Compile Include="Modo Historinha\Episodio01.cs" />
     <Compile Include="Modo Historinha\Menu.cs" />
     <Compile Include="Modo Historinha\ModoHistorinha.cs" />

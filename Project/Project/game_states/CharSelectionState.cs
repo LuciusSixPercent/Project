@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using game_objects.ui;
 using System.IO;
 using game_objects.questions;
+using game_objects;
 
 namespace game_states
 {
@@ -20,8 +21,9 @@ namespace game_states
     public class CharSelectionState : GameState
     {
         private StatesIdList goToState;
-        private ToggleButton cosme;
-        private ToggleButton maria;
+
+        private Scalable2DGameObject bg;
+
         private Button titleScreen;
         private Button play;
 
@@ -35,10 +37,13 @@ namespace game_states
         private ToggleButton pt;
         private ToggleButton both;
 
+        private TextBox characterLbl;
+        private ToggleButton cosme;
+        private ToggleButton maria;
+
         private bool buttonsEnabled;
 
         private RunnerLevel chosenLevel;
-        private int subjectChoice;
         private QuestionSubject[] chosenSubjects;
 
         private SelectedCharacter selected;
@@ -57,7 +62,17 @@ namespace game_states
             exitTransitionDuration = 100;
             goToState = StatesIdList.EMPTY_STATE;
 
+
             Rectangle screen = parent.GraphicsDevice.Viewport.Bounds;
+            char separator = Path.AltDirectorySeparatorChar;
+            string basePath = "Menu" + separator + "Char_Selection" + separator;
+
+
+            bg = new Scalable2DGameObject(goManager.R2D);
+            bg.Width = screen.Width;
+            bg.Height = screen.Height;
+            bg.TextureFilePath = basePath;
+            bg.TextureFileName = "char_select_bg";
 
             difficultyLbl = new TextBox(goManager.R2D);
             difficultyLbl.Width = 300;
@@ -71,8 +86,6 @@ namespace game_states
             difficultyLbl.ShadowOffset = new Vector2(-4, -4);
             difficultyLbl.Text = "DIFICULDADE:";
 
-            char separator = Path.AltDirectorySeparatorChar;
-            string basePath = "Menu" + separator + "Char_Selection" + separator;
 
             Rectangle bounds = new Rectangle((int)(difficultyLbl.Y + difficultyLbl.Height + 10), (int)(difficultyLbl.Y + difficultyLbl.Height), 163, 76);
 
@@ -136,9 +149,21 @@ namespace game_states
             both.mouseClicked += new Button.MouseClicked(subjectBtn_mouseClicked);
             both.LockToggleState = true;
 
+
+            characterLbl = new TextBox(goManager.R2D);
+            characterLbl.Width = 180;
+            characterLbl.Height = 30;
+            characterLbl.X = 5;
+            characterLbl.Y = math.Y + math.Height + 40;
+            characterLbl.FontSize = 40;
+            characterLbl.TextColor = Color.Beige;
+            characterLbl.ShadowColor = Color.Beige * 0.5f;
+            characterLbl.DropShadow = true;
+            characterLbl.ShadowOffset = new Vector2(-4, -4);
+            characterLbl.Text = "COM QUEM VAI JOGAR:";
+
             bounds = new Rectangle(screen.Width / 2 - 250, screen.Height / 2 - 25, 200, 250);
             cosme = new AnimatedButton(goManager.R2D, bounds, new int[] { 1, 1, 1, 1 }, new bool[] { false, false, false, false });
-            //cosme = new ToggleButton(goManager.R2D, bounds);
             cosme.UseText = false;
             cosme.BaseFileName = "cosmeBtn";
             cosme.FilePath = basePath;
@@ -147,7 +172,6 @@ namespace game_states
 
             bounds = new Rectangle(screen.Width / 2 + 50, screen.Height / 2 - 25, 200, 250);
             maria = new AnimatedButton(goManager.R2D, bounds, new int[] { 1, 1, 1, 1 }, new bool[] { false, false, false, false });
-            //maria = new ToggleButton(goManager.R2D, bounds);
             maria.UseText = false;
             maria.BaseFileName = "mariaBtn";
             maria.FilePath = cosme.FilePath;
@@ -167,6 +191,7 @@ namespace game_states
             play.FilePath = "Menu" + separator + "Char_Selection" + separator;
             play.mouseClicked += new Button.MouseClicked(play_mouseClicked);
 
+            goManager.AddObject(bg);
             goManager.AddObject(difficultyLbl);
             goManager.AddObject(easy);
             goManager.AddObject(medium);
@@ -268,10 +293,10 @@ namespace game_states
             base.Update(gameTime);
             if (stateEntered)
             {
-                if (bgm == null || bgm.IsStopped)
+                PlayBGM();
+                if (!play.Enabled)
                 {
-                    bgm = AudioManager.GetCue("soccer_life_97");
-                    bgm.Play();
+                    CheckButtonsStates();
                 }
                 if (!buttonsEnabled && goToState == StatesIdList.EMPTY_STATE)
                 {
@@ -279,13 +304,49 @@ namespace game_states
                 }
                 else if (goToState != StatesIdList.EMPTY_STATE)
                 {
-                    if (cosme.State == ButtonStates.TOGGLED || maria.State == ButtonStates.TOGGLED)
-                        ExitState();
+                    ExitState();
                 }
             }
             if (exit)
             {
                 ExitState();
+            }
+        }
+
+        private void CheckButtonsStates()
+        {
+            int steps = 0;
+            if(easy.State == ButtonStates.TOGGLED ||
+                medium.State == ButtonStates.TOGGLED ||
+                hard.State == ButtonStates.TOGGLED)
+            {
+                steps++;
+            }
+
+            if (pt.State == ButtonStates.TOGGLED ||
+                math.State == ButtonStates.TOGGLED ||
+                both.State == ButtonStates.TOGGLED)
+            {
+                steps++;
+            }
+
+            if (cosme.State == ButtonStates.TOGGLED || maria.State == ButtonStates.TOGGLED)
+            {
+                steps++;
+            }
+            if (steps == 3)
+            {
+                play.Enable();
+            }
+
+        }
+
+        private void PlayBGM()
+        {
+            if (bgm == null || bgm.IsStopped)
+            {
+                bgm = AudioManager.GetCue("soccer_life_97");
+                bgm.Play();
             }
         }
 
@@ -300,9 +361,6 @@ namespace game_states
             {
                 base.EnterState();
 
-                cosme.ForceClick();
-                easy.ForceClick();
-                math.ForceClick();
                 LoadContent();
             }
         }
@@ -330,24 +388,50 @@ namespace game_states
 
                 goToState = StatesIdList.EMPTY_STATE;
 
+                ToggleButtonsOff();
             }
+        }
+
+        private void ToggleButtonsOff()
+        {
+            easy.State = ButtonStates.NORMAL;
+            medium.State = ButtonStates.NORMAL;
+            hard.State = ButtonStates.NORMAL;
+            math.State = ButtonStates.NORMAL;
+            pt.State = ButtonStates.NORMAL;
+            both.State = ButtonStates.NORMAL;
+            cosme.State = ButtonStates.NORMAL;
+            maria.State = ButtonStates.NORMAL;
+            titleScreen.State = ButtonStates.NORMAL;
+            play.State = ButtonStates.NORMAL;
         }
 
         private void EnableButtons()
         {
             buttonsEnabled = true;
-            titleScreen.Enable();
-            play.Enable();
+            easy.Enable();
+            medium.Enable();
+            hard.Enable();
+            math.Enable();
+            pt.Enable();
+            both.Enable();
             cosme.Enable();
             maria.Enable();
+            titleScreen.Enable();
         }
 
         private void DisableButtons()
         {
-            titleScreen.Disable();
-            play.Disable();
+            easy.Disable();
+            medium.Disable();
+            hard.Disable();
+            math.Disable();
+            pt.Disable();
+            both.Disable();
             cosme.Disable();
             maria.Disable();
+            play.Disable();
+            titleScreen.Disable();
             buttonsEnabled = false;
         }
     }

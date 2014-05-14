@@ -200,6 +200,7 @@ using Microsoft.Xna.Framework.Audio;
                     }
                     if (Creditos)
                     {
+                        /*
                         CreditosMENU();
                         if (ColisaoMouseOver(mouse, Voltar[VoltarIndice], vVoltar))
                         {
@@ -213,7 +214,7 @@ using Microsoft.Xna.Framework.Audio;
                                 Creditos = false;
                                 
                             }
-                        }
+                        }*/
                     }
                     if (Config)
                     {
@@ -358,6 +359,13 @@ using Microsoft.Xna.Framework.Audio;
                                 }
                                 #endregion
                             }
+                            if (Creditos)
+                            {
+                                engineSound.Stop(AudioStopOptions.AsAuthored);
+                                MediaPlayer.Stop();
+                                Creditos = false;
+                                parent.EnterState((int)StatesIdList.CREDITS);
+                            }
                             if (Caderno)
                             {
                                 Caderno = false;
@@ -373,7 +381,6 @@ using Microsoft.Xna.Framework.Audio;
                                     engineSound.Stop(AudioStopOptions.AsAuthored);
                                     MediaPlayer.Stop();
                                     BateBola = false;
-                                    //parent.EnterState((int)StatesIdList.RUNNER);
                                     parent.EnterState((int)StatesIdList.CHAR_SELECTION);
                                 }
                             #endregion
@@ -466,7 +473,7 @@ using Microsoft.Xna.Framework.Audio;
                 #region Inicializar Variaveis
                 #region Texturas
                 Fnorm = parent.Content.Load<Texture2D>("Menu/Abertura");
-                Fconf = parent.Content.Load<Texture2D>("Menu/FundoConfiguracoes");
+                //Fconf = parent.Content.Load<Texture2D>("Menu/FundoConfiguracoes");
                 Fcre = parent.Content.Load<Texture2D>("Menu/FundoCreditos");
                 seta = parent.Content.Load<Texture2D>("Menu/Seta");
                 menu1Normal = parent.Content.Load<Texture2D>("Menu/historinhaN");
@@ -565,7 +572,7 @@ using Microsoft.Xna.Framework.Audio;
                     MediaPlayer.Stop();
                     engineSound.Stop(AudioStopOptions.AsAuthored);
                     Historinha = false;
-                    parent.EnterState((int)StatesIdList.STORY);
+                    parent.EnterState((int)StatesIdList.EPISODE_01);
                 }
             }
             if (mouse.LeftButton == ButtonState.Released)

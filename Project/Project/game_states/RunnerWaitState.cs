@@ -8,6 +8,7 @@ using game_objects;
 using System.IO;
 using game_objects.ui;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 
 namespace game_states
 {
@@ -19,6 +20,8 @@ namespace game_states
         
         private Scalable2DGameObject clock;
         private Animated2DGameObject number;
+
+        private Cue bgm;
 
         public RunnerWaitState(int id, Game1 parent)
             : base(id, parent)
@@ -93,6 +96,7 @@ namespace game_states
             {
                 if (!exitingState)
                 {
+                    PlayBGM();
                     if (elapsed >= WAIT_TIME)
                     {
                         elapsed = 0;
@@ -126,7 +130,17 @@ namespace game_states
             else if (exit)
             {
                 ExitState();
+                bgm.Stop(AudioStopOptions.AsAuthored);
                 AudioManager.GetCue("whistle").Play();
+            }
+        }
+
+        private void PlayBGM()
+        {
+            if (bgm == null || bgm.IsStopped)
+            {
+                bgm = AudioManager.GetCue("soccer_life_97");
+                bgm.Play();
             }
         }
 

@@ -89,10 +89,12 @@ namespace game_objects.questions
                 if (currentModifier.Equals((correct ? "<" : ">")))
                 {
                     max = Int32.Parse(correctAnswer);
+                    min = max - 10;
                 }
                 else if (currentModifier.Equals((correct ? ">" : "<")))
                 {
                     min = Int32.Parse(correctAnswer) + 1;
+                    max = min + 10;
                 }
                 else if (correct)
                 {
@@ -101,11 +103,11 @@ namespace game_objects.questions
                 else
                 {
                     min = numericAnswer - 5;
-                    if(min < 0)
-                        min = 0;
                     max = min + 10;
-                    
                 }
+
+                if (min < 0)
+                    min = 0;
 
                 int attempts = 0;
                 bool alreadyInUse;

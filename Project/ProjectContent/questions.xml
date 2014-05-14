@@ -210,11 +210,13 @@
       </question>
 
     </difficulty>
+    
   </subject>
 
   <subject name="MAT">
 
     <difficulty level="0">
+      
       <question>
         <header>Escolha os números em ordem de 0 a 5</header>
         <answer>0</answer>
@@ -247,14 +249,99 @@
 
       <question>
         <header>Escolha apenas o número SETE!</header>
-        <answer repeat="6">7</answer>
+        <answer repeat="7">7</answer>
       </question>
+      
     </difficulty>
+    
     <difficulty level="1">
+      
       <question>
         <header>Escolha os números maiores que 5</header>
-        <answer modifier=">" repeat="3">5</answer>
+        <answer modifier="larger" repeat="3">5</answer>
       </question>
+
+      <question>
+        <header>Escolha os números menores que 8</header>
+        <answer modifier="smaller" repeat="3">8</answer>
+      </question>
+
+      <question>
+        <header>Escolha os números em ordem de 0 a 5</header>
+        <answer>0</answer>
+        <answer>1</answer>
+        <answer>2</answer>
+        <answer>3</answer>
+        <answer>4</answer>
+        <answer>5</answer>
+      </question>
+
+      <question>
+        <header>Escolha os números em ordem de 2 a 7</header>
+        <answer>2</answer>
+        <answer>3</answer>
+        <answer>4</answer>
+        <answer>5</answer>
+        <answer>6</answer>
+        <answer>7</answer>
+      </question>
+
+      <question>
+        <header>Escolha os números em ordem de 4 a 9</header>
+        <answer>4</answer>
+        <answer>5</answer>
+        <answer>6</answer>
+        <answer>7</answer>
+        <answer>8</answer>
+        <answer>9</answer>
+      </question>
+      
     </difficulty>
+
+
+    <difficulty level="2">
+      
+      <question>
+        <header>Escolha os números maiores que 5</header>
+        <answer modifier="larger" repeat="3">5</answer>
+      </question>
+
+      <question>
+        <header>Escolha os números menores que 8</header>
+        <answer modifier="smaller" repeat="3">8</answer>
+      </question>
+
+      <question>
+        <header>Escolha os números em ordem de 0 a 5</header>
+        <answer>0</answer>
+        <answer>1</answer>
+        <answer>2</answer>
+        <answer>3</answer>
+        <answer>4</answer>
+        <answer>5</answer>
+      </question>
+
+      <question>
+        <header>Escolha os números em ordem de 2 a 7</header>
+        <answer>2</answer>
+        <answer>3</answer>
+        <answer>4</answer>
+        <answer>5</answer>
+        <answer>6</answer>
+        <answer>7</answer>
+      </question>
+
+      <question>
+        <header>Escolha os números em ordem de 4 a 9</header>
+        <answer>4</answer>
+        <answer>5</answer>
+        <answer>6</answer>
+        <answer>7</answer>
+        <answer>8</answer>
+        <answer>9</answer>
+      </question>
+
+    </difficulty>
+    
   </subject>
 </subjects>

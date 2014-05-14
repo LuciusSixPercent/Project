@@ -1751,7 +1751,6 @@ class Episodio01 : GameState
         {
             base.EnterState();
 
-            //LoadContent();
             pauseFlag = false;
             Resetar();
         }
@@ -1766,7 +1765,9 @@ class Episodio01 : GameState
             }
             if (FimDaHistoria)
             {
-                ((RunnerState)parent.getState((int)StatesIdList.RUNNER)).CharName = "maria";
+                RunnerState rs = ((RunnerState)parent.getState((int)StatesIdList.RUNNER));
+                rs.CharName = "maria";
+                rs.GoBackTo = StatesIdList.EPISODE_01_END;
                 parent.ExitState(ID, (int)StatesIdList.RUNNER);
             }
             else if (exit || VoltarBool)

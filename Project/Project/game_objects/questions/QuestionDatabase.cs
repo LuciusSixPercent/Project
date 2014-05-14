@@ -56,7 +56,7 @@ namespace game_objects.questions
                                         XAttribute xmlModifier = xmlAnswer.Attribute("modifier");
                                         if (xmlModifier != null)
                                         {
-                                            modifier = "|modifier=" + xmlModifier.Value + "|";
+                                            modifier = "|modifier=" + xmlModifier.Value.Replace("larger", ">").Replace("smaller", "<") + "|";
                                         }
 
                                         for (int i = 0; i < repeat; i++)

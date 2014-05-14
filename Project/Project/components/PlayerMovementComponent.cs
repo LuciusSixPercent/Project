@@ -18,6 +18,16 @@ namespace components
         private float destiny;
         private Vector3 ownerLastPos;
         private bool lockMovement;
+        private bool moving;
+
+
+        public bool Locked 
+        { 
+            get 
+            { 
+                return lockMovement; 
+            } 
+        }
 
         public int Direction
         {
@@ -29,6 +39,11 @@ namespace components
             }
         }
 
+        public float Origin
+        {
+            get { return origin; }
+            set { origin = value; }
+        }
         public float Destiny
         {
             get { return destiny; }
@@ -59,10 +74,19 @@ namespace components
             {
                 elapsed = 0;
 
-                if (ownerLastPos.Equals(owner.Position) && direction != 0)
+                moving = (ownerLastPos.X != owner.Position.X);
+
+                if (!moving && direction != 0)
                 {
-                    Direction = 0;
-                    origin = destiny;
+                    if (!lockMovement)
+                    {
+                        Direction = 0;
+                        origin = destiny;
+                    }
+                    else if (owner.Position.X == destiny)
+                    {
+                        Direction = 0;
+                    }
                 }
 
                 if (!lockMovement)
@@ -88,15 +112,17 @@ namespace components
                 float absDestiny = Math.Abs(destiny);
                 actualStepSize += (absX - absDestiny) * (direction * -1);
             }
-
             ownerLastPos = owner.Position;
             movementVector.X += actualStepSize;
             base.move(movementVector);
         }
 
+        /// <summary>
+        /// Atualiza a direção do movimento.
+        /// </summary>
+        /// <param name="newDirection">A nova direção do movimento.</param>
         private void UpdateDirection(int newDirection)
         {
-            //Se uma nova tecla foi pressionada, alterar a direção
             if (newDirection != 0 && newDirection != Direction)
             {
                 Direction = newDirection;
@@ -134,6 +160,5 @@ namespace components
         {
             lockMovement = false;
         }
-
     }
 }

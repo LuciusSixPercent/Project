@@ -11,12 +11,13 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Project.Modo_Historinha
 {
-    class EncerramentoDoEpisodio1:GameState
+    public class EncerramentoDoEpisodio1 : GameState
     {
-        bool pauseFlag;
+
         Video video;
-        VideoPlayer Videoplayer;
+        VideoPlayer videoplayer;
         Texture2D TexturaDovideo;
+        private bool beganPlaying;
         public EncerramentoDoEpisodio1(int id, Game1 parent)
             : base(id, parent)
         {
@@ -32,66 +33,57 @@ namespace Project.Modo_Historinha
                 exitTransitionDuration = 1000;
                 base.Initialize();
                 LoadContent();
-                Videoplayer = new VideoPlayer();
+                videoplayer = new VideoPlayer();
+                videoplayer.IsLooped = false;
             }
         }
         public override void Update(GameTime tempo)
         {
             base.Update(tempo);
-
-            if (!pauseFlag)
+            if (stateEntered)
             {
-                if (stateEntered)
+                if (!exitingState)
                 {
-                    if (Videoplayer.State == MediaState.Stopped)
+                    if (!beganPlaying)
                     {
-                        Videoplayer.IsLooped = false;
-                        Videoplayer.Play(video);
+                        videoplayer.Play(video);
+                        beganPlaying = true;
                     }
-                    if (Videoplayer.State == MediaState.Paused)
-                    {
-                        Videoplayer.Resume();
-                    }
-                    if (KeyboardHelper.IsKeyDown(Keys.Escape))
-                    {
-
-                        KeyboardHelper.LockKey(Keys.Escape);
-                        if (parent.EnterState((int)StatesIdList.PAUSE))
-                        {
-                            Alpha = 0.5f;
-                            pauseFlag = true;
-                            stateEntered = false;
-                        }
-                    }
-                    else if (KeyboardHelper.KeyReleased(Keys.Escape))
-                    {
-                        KeyboardHelper.UnlockKey(Keys.Escape);
-                    }
-                    if (Videoplayer.PlayPosition == video.Duration)
+                    HandleKeyPress();
+                    if (videoplayer.PlayPosition == video.Duration)
                     {
                         ExitState();
                     }
                 }
-                else if (!exitingState)
-                {
-                    ExitState();
-                }
             }
-            else
+            else if (exit)
             {
-                Videoplayer.Pause();
+                ExitState();
+            }
+        }
+
+        private void HandleKeyPress()
+        {
+
+            if (KeyboardHelper.IsKeyDown(Keys.Escape))
+            {
+                ExitState();
+            }
+            else if (KeyboardHelper.KeyReleased(Keys.Escape))
+            {
+                KeyboardHelper.UnlockKey(Keys.Escape);
             }
         }
         public override void Draw(GameTime gameTime)
         {
-            
-            if (Videoplayer.State != MediaState.Stopped)
-                TexturaDovideo = Videoplayer.GetTexture();
+
+            if (videoplayer.State != MediaState.Stopped)
+                TexturaDovideo = videoplayer.GetTexture();
             Rectangle screen = new Rectangle(parent.GraphicsDevice.Viewport.X, parent.GraphicsDevice.Viewport.Y, parent.GraphicsDevice.Viewport.Width, parent.GraphicsDevice.Viewport.Height);
             if (TexturaDovideo != null)
             {
                 SpriteBatch.Begin();
-                SpriteBatch.Draw(TexturaDovideo, screen, Color.White);
+                SpriteBatch.Draw(TexturaDovideo, screen, Color.White*Alpha);
                 SpriteBatch.End();
             }
         }
@@ -103,26 +95,28 @@ namespace Project.Modo_Historinha
                 contentLoaded = true;
             }
         }
-        #region Transitioning
+
         public override void EnterState()
         {
             if (!exitingState)
             {
                 base.EnterState();
                 LoadContent();
-                pauseFlag = false;
             }
         }
 
         public override void ExitState()
         {
-            if (!enteringState)
+            if (!exit)
             {
                 base.ExitState();
-                parent.Content.Unload();
-                contentLoaded = false;
+            }
+            else
+            {
+                videoplayer.Stop();
+                beganPlaying = false;
+                parent.ExitState(ID);
             }
         }
-        #endregion
     }
 }
