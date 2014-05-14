@@ -57,8 +57,8 @@ class Episodio01 : GameState
     #endregion
     #region Exercicio 04 - Modo Historinha
     public string pergunta30 = "Um dos times tem mais jogadores do que o outro... Qual dos times tem mais jogadores?";
-    public string alternativa30 = "TimeA";
-    public string alternativa31 = "TimeB";
+    public string alternativa30 = "TimeA\n(Serafina/Cosme/\nApuã)";
+    public string alternativa31 = "TimeB\n(Maria)";
     #endregion
     #region Exercicio 05 - Modo Historinha
     public string pergunta40 = "Apuã está dizendo que Cosme, Serafina e ele joguem contra Maria. Mas os times de futebol sempre devem ter a mesma quantidade de pessoas! Quantas pessoas devem ficar em cada time?";
@@ -762,7 +762,25 @@ class Episodio01 : GameState
         {
             SpriteBatch.Draw(CenarioTv, vTV, Color.White * Alpha);
         }
-        
+        #region Teste
+        MouseState mouse = Mouse.GetState();
+        if(ColisaoMouseOver(mouse,new Rectangle((int)vSerafina.X, (int)vSerafina.Y, !SerafinaTamanho ? Serafina.Width : 53, !SerafinaTamanho ? Serafina.Height : 171)) && SerafinaColor == Color.White)
+        {
+            SpriteBatch.DrawString(arial,"Serafina",new Vector2(vSerafina.X-10,vSerafina.Y-20),Color.Purple);
+        }
+        if (ColisaoMouseOver(mouse, new Rectangle((int)vApua.X, (int)vApua.Y, Apua.Width, Apua.Height)) && ApuaColor == Color.White)
+        {
+            SpriteBatch.DrawString(arial, "Apuã", new Vector2(vApua.X, vApua.Y - 20), Color.Green);
+        }
+        if (ColisaoMouseOver(mouse, new Rectangle((int)vMaria.X, (int)vMaria.Y, !MariaTamnho ? Maria.Width : 58, !MariaTamnho ? Maria.Height : 176)) && MariaColor == Color.White)
+        {
+            SpriteBatch.DrawString(arial, "Maria", new Vector2(vMaria.X - 5, vMaria.Y - 20), Color.Red);
+        }
+        if (ColisaoMouseOver(mouse, new Rectangle((int)vCosme.X, (int)vCosme.Y, !cosmeTamanho ? Cosme.Width : 58, !cosmeTamanho ? Cosme.Height : 176)) && CosmeColor == Color.White)
+        {
+            SpriteBatch.DrawString(arial, "Cosme", new Vector2(vCosme.X - 5, vCosme.Y - 20), Color.YellowGreen);
+        }
+        #endregion
         //*
 
         if (!caderno)
@@ -833,7 +851,7 @@ class Episodio01 : GameState
                         zerar = 0;//
                         //mile = 0;
                         Limitedotexto = 80;
-                        Exercicio01.Atualizar();//Eu chamo o atualizar do exercicio
+                        Exercicio01.Atualizar(parent);//Eu chamo o atualizar do exercicio
                         Exercicio01.Desenhar(SpriteBatch);//Desenho ele na tela
                         exercicio1 = Exercicio01.Continuar();// Caso o jogador vença, O Continuar() vai retornar verdadeiro, caso o contrario falso.
                         ex = exercicio1;
@@ -928,7 +946,7 @@ class Episodio01 : GameState
                         zerar = 0;
                         mile = 0;
                         Limitedotexto = 80;
-                        Exercicio02.Atualizar();
+                        Exercicio02.Atualizar(parent);
                         Exercicio02.Desenhar(SpriteBatch);
                         exercicio2 = Exercicio02.Continuar();
                         ex = exercicio2;
@@ -968,7 +986,7 @@ class Episodio01 : GameState
                         zerar = 0;
                         mile = 0;
                         Limitedotexto = 80;
-                        Exercicio03.Atualizar();
+                        Exercicio03.Atualizar(parent);
                         Exercicio03.Desenhar(SpriteBatch);
                         exercicio3 = Exercicio03.Continuar();
                         ex = exercicio3;
@@ -1034,7 +1052,7 @@ class Episodio01 : GameState
                         zerar = 0;
                         mile = 0;
                         Limitedotexto = 80;
-                        Exercicio04.Atualizar();
+                        Exercicio04.Atualizar(parent);
                         Exercicio04.Desenhar(SpriteBatch);
                         exercicio4 = Exercicio04.Continuar();
                         ex = false;
@@ -1058,7 +1076,7 @@ class Episodio01 : GameState
                     {
                         ButtonColor = Color.Transparent;
                         mile = 0;
-                        Exercicio05.Atualizar();
+                        Exercicio05.Atualizar(parent);
                         Exercicio05.Desenhar(SpriteBatch);
                         exercicio5 = Exercicio05.Continuar();
                         ex = exercicio5;
@@ -1263,7 +1281,7 @@ class Episodio01 : GameState
                             zerar = 0;
                             mile = 0;
                             Limitedotexto = 80;
-                            Exercicio06.Atualizar();
+                            Exercicio06.Atualizar(parent);
                             Exercicio06.Desenhar(SpriteBatch);
                             exercicio6 = Exercicio06.Continuar();
                             repetir = exercicio6;
@@ -1336,7 +1354,7 @@ class Episodio01 : GameState
                             zerar = 0;
                             mile = 0;
                             Limitedotexto = 80;
-                            Exercicio07.Atualizar();
+                            Exercicio07.Atualizar(parent);
                             Exercicio07.Desenhar(SpriteBatch);
                             exercicio7 = Exercicio07.Continuar();
                             repetir = exercicio7;
@@ -1381,7 +1399,7 @@ class Episodio01 : GameState
                         zerar = 0;
                         mile = 0;
                         Limitedotexto = 80;
-                        Exercicio08.Atualizar();
+                        Exercicio08.Atualizar(parent);
                         Exercicio08.Desenhar(SpriteBatch);
                         exercicio8 = Exercicio08.Continuar();
                         repetir = exercicio8;
@@ -1474,7 +1492,7 @@ class Episodio01 : GameState
                         zerar = 0;
                         mile = 0;
                         Limitedotexto = 80;
-                        Exercicio09.Atualizar();
+                        Exercicio09.Atualizar(parent);
                         Exercicio09.Desenhar(SpriteBatch);
                         exercicio9 = Exercicio09.Continuar();
                         repetir = exercicio9;
@@ -1565,7 +1583,7 @@ class Episodio01 : GameState
                             zerar = 0;
                             mile = 0;
                             Limitedotexto = 80;
-                            Exercicio10.Atualizar();
+                            Exercicio10.Atualizar(parent);
                             Exercicio10.Desenhar(SpriteBatch);
                             exercicio10 = Exercicio10.Continuar();
                             repetir = exercicio10;

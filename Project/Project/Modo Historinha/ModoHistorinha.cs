@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio;
+using Project;
 
 
 class ModoHistorinha
@@ -157,7 +158,7 @@ class ModoHistorinha
         Ini(c, NumeroRandomico, n);
     }
     int incrementoTexto = 0;
-    public void Atualizar()
+    public void Atualizar(Game1 parent)
     {
         MouseState mouse = Mouse.GetState();
         if (repetir)
@@ -204,7 +205,10 @@ class ModoHistorinha
             MediaPlayer.Stop();
             venceu = true;
         }
-        Click(mouse);
+        if (parent.IsActive)
+        {
+            Click(mouse);
+        }
         
     }
     public void Click(MouseState mouse)
@@ -453,7 +457,7 @@ class ModoHistorinha
         numerosPegos = new int[4];
         OpcoeSprite = Content.Load<Texture2D>("Imagem/Sprites/op");
         CaixadeTexto = Content.Load<Texture2D>("Imagem/Caixa_texto");
-        PosicoesDasRespostas = new int[4] { 230, 400, 570, 740 };
+        PosicoesDasRespostas = new int[4] { 100, OpcoeSprite.Width / 3 + 100, ((OpcoeSprite.Width / 3) * 2) + 100, OpcoeSprite.Width + 100 };
         for (int j = 0; j < quantidade; j++)
         {
             if (j != 0)
@@ -539,18 +543,18 @@ class ModoHistorinha
                 justified4 = 115 - (int)arial.MeasureString(res4).X;
             }
         }
-        VOpcoes1 = new Rectangle(PosicoesDasRespostas[numerosPegos[0]], altura1, OpcoeSprite.Width/4, OpcoeSprite.Height/4);
+        VOpcoes1 = new Rectangle(PosicoesDasRespostas[numerosPegos[0]], altura1, OpcoeSprite.Width/3, OpcoeSprite.Height/4);
         VOpcoes2 = new Rectangle(PosicoesDasRespostas[numerosPegos[1]], altura2, VOpcoes1.Width, VOpcoes1.Height);
         VOpcoes3 = new Rectangle(PosicoesDasRespostas[numerosPegos[2]], altura3, VOpcoes1.Width, VOpcoes1.Height);
         VOpcoes4 = new Rectangle(PosicoesDasRespostas[numerosPegos[3]], altura4, VOpcoes1.Width, VOpcoes1.Height);
         
-        Valt0 = new Vector2((VOpcoes1.X + 120)- arial.MeasureString(res1).X - justified1, VOpcoes1.Y +60);
-        Valt1 = new Vector2((VOpcoes2.X + 120) - arial.MeasureString(res2).X - justified2, VOpcoes2.Y + 60);
+        Valt0 = new Vector2((VOpcoes1.X + 120)- arial.MeasureString(res1).X - justified1, VOpcoes1.Y +50);
+        Valt1 = new Vector2((VOpcoes2.X + 120) - arial.MeasureString(res2).X - justified2, VOpcoes2.Y + 50);
         if (quantidade >=3)
-            Valt2 = new Vector2((VOpcoes3.X + 120) - arial.MeasureString(res3).X - justified3, VOpcoes3.Y + 60);
+            Valt2 = new Vector2((VOpcoes3.X + 120) - arial.MeasureString(res3).X - justified3, VOpcoes3.Y + 50);
         if (quantidade >= 4)
-            Valt3 = new Vector2((VOpcoes4.X + 120) - arial.MeasureString(res4).X - justified4, VOpcoes4.Y + 60);
-        vCaixa = new Rectangle(20, 0, CaixadeTexto.Width, CaixadeTexto.Height);
+            Valt3 = new Vector2((VOpcoes4.X + 120) - arial.MeasureString(res4).X - justified4, VOpcoes4.Y + 50);
+        vCaixa = new Rectangle(20, 600, CaixadeTexto.Width, CaixadeTexto.Height);
         Vpergunta = new Vector2(vCaixa.X+20,vCaixa.Y+20);
         
     }
